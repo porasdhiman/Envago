@@ -10,7 +10,7 @@
 
         </size>
         <solid
-            android:color="#42e0c2">
+            android:color="@color/appcolor">
 
         </solid>
         <corners android:radius="12dp"/>
