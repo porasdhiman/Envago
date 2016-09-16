@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="envago.envago.LoginActivity"
+    android:background="#ededed">
+
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"
+        android:id="@+id/logo"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:layout_below="@id/logo"
+    android:background="@drawable/rectangle"
+    android:orientation="horizontal"
+    android:id="@+id/email_linear">
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/email_icon"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:hint="E-mail"
+        android:textColorHint="#e2e2e2"
+        android:textSize="13sp"
+        android:backgroundTint="#00ffffff"
+        />
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/email_linear"
+        android:background="@drawable/rectangle"
+        android:orientation="horizontal"
+        android:id="@+id/pass_linear"
+
+        >
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/lock"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:hint="Password"
+            android:textColorHint="#FFE2E2E2"
+            android:textSize="13sp"
+            android:id="@+id/password"
+
+            android:backgroundTint="#00ffffff"
+            />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:text="Login"
+        android:textColor="#fff"
+        android:layout_below="@+id/pass_linear"
+        android:background="@drawable/rectangle_button"/>
+</RelativeLayout>
