@@ -6,8 +6,8 @@
     android:background="#ededed"
     android:paddingBottom="10dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    tools:context="envago.envago.LoginActivity">
+
+    android:paddingRight="@dimen/activity_horizontal_margin">
 
     <ImageView
         android:id="@+id/logo"
@@ -18,11 +18,41 @@
         android:src="@drawable/logo" />
 
     <LinearLayout
-        android:id="@+id/email_linear"
+        android:id="@+id/user_linear"
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:layout_below="@id/logo"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/rectangle"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/user" />
+
+        <EditText
+            android:id="@+id/user"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/transparent"
+            android:hint="Username"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textColorHint="#C2C2C2"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/email_linear"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_below="@id/user_linear"
+        android:layout_marginTop="10dp"
         android:background="@drawable/rectangle"
         android:orientation="horizontal">
 
@@ -80,56 +110,49 @@
             android:textSize="13sp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/confirmpass_linear"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_below="@id/pass_linear"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rectangle"
+        android:orientation="horizontal"
+
+        >
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/lock" />
+
+        <EditText
+            android:id="@+id/cpassword"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/transparent"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textColorHint="#C2C2C2"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+
     <Button
         android:id="@+id/login_button"
         android:layout_width="match_parent"
         android:layout_height="43dp"
-        android:layout_below="@+id/pass_linear"
+        android:layout_below="@+id/confirmpass_linear"
         android:layout_marginTop="20dp"
         android:background="@drawable/rectangle_button"
-        android:text="Log in"
+        android:text="Sign Up"
         android:textColor="#fff" />
-
-    <TextView
-        android:id="@+id/forgot_pass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/login_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="13dp"
-        android:text="Forgot Password"
-        android:textColor="@color/textcolor"
-        android:textSize="18sp" />
-
-    <LinearLayout
-        android:id="@+id/facebook_linear"
-        android:layout_width="match_parent"
-        android:layout_height="43dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/stroke_appcolor"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/fb_logo" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0.9"
-            android:gravity="center"
-            android:text="Connect With Facebook"
-            android:textColor="@color/textcolor"
-            android:textSize="14sp" />
-
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -141,16 +164,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Not Registered Yet ?"
+            android:text="Already Registered ?"
             android:textColor="#9f9f9f" />
 
         <TextView
-            android:id="@+id/signup_txt"
+            android:id="@+id/signin_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Sign Up"
+            android:text="Sign In"
             android:textColor="@color/textcolor" />
 
     </LinearLayout>
+
 </RelativeLayout>
