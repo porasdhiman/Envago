@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/textcolor"
+    android:id="@+id/main_heading">
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/search"
+        android:id="@+id/search_button"
+        android:layout_margin="14dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ENVAGO"
+        android:textColor="#fff"
+        android:textSize="19dp"
+        android:textStyle="bold"
+        android:layout_centerInParent="true"
+        android:id="@+id/title"/>
+
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/map"
+        android:id="@+id/map_button"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        />
+
+</RelativeLayout>
+
+
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/main_list"
+            android:scrollbars="none"
+            android:layout_below="@+id/main_heading"
+
+            >
+
+        </ListView>
+
+
+
+  <!--<android.support.v7.widget.ScrollingTabContainerView.TabView
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:id="@+id/tabs"
+      android:layout_alignParentBottom="true"
+      android:background="@color/colorPrimary">
+
+  </android.support.v7.widget.ScrollingTabContainerView.TabView>-->
+
+
+
+
+</RelativeLayout>

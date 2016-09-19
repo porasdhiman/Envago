@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
     LinearLayout user, mail, pass, cpass;
     int flag = 0;
     TextView signin;
+    Button signup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
         password = (EditText) findViewById(R.id.password);
         cpassword = (EditText) findViewById(R.id.cpassword);
         signin = (TextView) findViewById(R.id.signin_text);
+        signup = (Button)findViewById(R.id.signup_button);
 
         user = (LinearLayout) findViewById(R.id.user_linear);
         mail = (LinearLayout) findViewById(R.id.email_linear);
@@ -44,6 +47,7 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
         cpassword.setOnFocusChangeListener(this);
 
         signin.setOnClickListener(this);
+        signup.setOnClickListener(this);
 
     }
 
@@ -82,6 +86,13 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
             Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+        }
+
+        if (id == R.id.signup_button)
+        {
+            Intent intent = new Intent(SignupActivity.this, Homepage.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         }
 
     }

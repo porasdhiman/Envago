@@ -145,13 +145,12 @@
 
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/signup_button"
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:layout_below="@+id/confirmpass_linear"
         android:layout_marginTop="20dp"
-        android:background="@drawable/rectangle_button"
-        android:text="Sign Up"
+        android:background="@drawable/signupbutton"
         android:textColor="#fff" />
 
     <LinearLayout

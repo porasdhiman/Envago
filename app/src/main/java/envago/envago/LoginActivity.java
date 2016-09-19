@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
     EditText mail, pass;
     TextView signup;
     int flag = 0;
+    Button signin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +29,14 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
         pass = (EditText) findViewById(R.id.password);
         signup = (TextView) findViewById(R.id.signup_txt);
 
+        signin = (Button)findViewById(R.id.login_button);
+
 
         mail.setOnTouchListener(this);
         pass.setOnTouchListener(this);
 
         signup.setOnClickListener(this);
+        signin.setOnClickListener(this);
 
 
     }
@@ -66,6 +71,15 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
+
+
+        }
+
+        if (id == R.id.login_button)
+        {
+            Intent intent = new Intent(LoginActivity.this, Homepage.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         }
     }
 }

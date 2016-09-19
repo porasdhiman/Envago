@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ededed"
+    android:background="@drawable/sign_in"
     android:paddingBottom="10dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -15,7 +15,7 @@
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:src="@drawable/logo" />
+         />
 
     <LinearLayout
         android:id="@+id/email_linear"
@@ -86,8 +86,7 @@
         android:layout_height="43dp"
         android:layout_below="@+id/pass_linear"
         android:layout_marginTop="20dp"
-        android:background="@drawable/rectangle_button"
-        android:text="Log in"
+        android:background="@drawable/signinbutton"
         android:textColor="#fff" />
 
     <TextView
@@ -101,35 +100,19 @@
         android:textColor="@color/textcolor"
         android:textSize="18sp" />
 
-    <LinearLayout
+    <Button
         android:id="@+id/facebook_linear"
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="50dp"
-        android:background="@drawable/stroke_appcolor"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/fb_logo" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0.9"
-            android:gravity="center"
-            android:text="Connect With Facebook"
-            android:textColor="@color/textcolor"
-            android:textSize="14sp" />
+        android:background="@drawable/facebookbutton"
+        />
 
 
-    </LinearLayout>
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
