@@ -182,4 +182,7 @@ public class SplashActivity extends Activity {
         } catch (NoSuchAlgorithmException e) {
         }
     }
+
+
+
 }

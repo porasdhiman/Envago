@@ -31,6 +31,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
     TextView signup;
     int flag = 0;
     Button signin;
+    TextView forgot;
 
     //--------------facebook variable--------------
     CallbackManager callbackManager;
@@ -54,6 +55,8 @@ Button facebook_btn;
         pass = (EditText) findViewById(R.id.password);
         signup = (TextView) findViewById(R.id.signup_txt);
 
+        forgot=(TextView)findViewById(R.id.forgot_pass);
+
         signin = (Button)findViewById(R.id.login_button);
 
 
@@ -62,6 +65,7 @@ Button facebook_btn;
         facebook_btn.setOnClickListener(this);
         signup.setOnClickListener(this);
         signin.setOnClickListener(this);
+        forgot.setOnClickListener(this);
 
 
     }
@@ -107,6 +111,13 @@ Button facebook_btn;
         if (id == R.id.login_button)
         {
             Intent intent = new Intent(LoginActivity.this, Tab_Activity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        }
+
+        if (id==R.id.forgot_pass)
+        {
+            Intent intent = new Intent(LoginActivity.this, ForgotPassword.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         }
