@@ -36,13 +36,15 @@ public class SplashActivity extends Activity {
 
         String locationPermission = Manifest.permission.ACCESS_FINE_LOCATION;
         String coarselocationPermission = Manifest.permission.ACCESS_COARSE_LOCATION;
-       // String networklocationPermission = Manifest.permission.ACCESS_NETWORK_STATE;
-       // String callPermission = Manifest.permission.CALL_PHONE;
+        String cameraPermission = Manifest.permission.CAMERA;
+        String wstorage = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        String rstorage = Manifest.permission.READ_EXTERNAL_STORAGE;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             int hasFinePermission = SplashActivity.this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
             int hasCoarsePermission = SplashActivity.this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
-          //  int hasnetworkPermission = SplashActivity.this.checkSelfPermission(Manifest.permission.ACCESS_NETWORK_STATE);
-            //int hasCallPermission = SplashActivity.this.checkSelfPermission(Manifest.permission.CALL_PHONE);
+            int hascameraPermission = SplashActivity.this.checkSelfPermission(Manifest.permission.CAMERA);
+            int haswstorage = SplashActivity.this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            int hasrstorage = SplashActivity.this.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
             List<String> permissions = new ArrayList<String>();
             if (hasFinePermission != PackageManager.PERMISSION_GRANTED) {
                 permissions.add(locationPermission);
@@ -50,12 +52,15 @@ public class SplashActivity extends Activity {
             if (hasCoarsePermission != PackageManager.PERMISSION_GRANTED) {
                 permissions.add(coarselocationPermission);
             }
-          /*  if (hasnetworkPermission != PackageManager.PERMISSION_GRANTED) {
-                permissions.add(networklocationPermission);
+            if (hascameraPermission != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(cameraPermission);
             }
-            if (hasCallPermission != PackageManager.PERMISSION_GRANTED) {
-                permissions.add(callPermission);
-            }*/
+            if (haswstorage != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(wstorage);
+            }
+            if (hasrstorage != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(rstorage);
+            }
             if (!permissions.isEmpty()) {
                 String[] params = permissions.toArray(new String[permissions.size()]);
                 requestPermissions(params, 0);
@@ -116,16 +121,17 @@ public class SplashActivity extends Activity {
                 Map<String, Integer> perms = new HashMap<String, Integer>();
                 // Initial
                 perms.put(Manifest.permission.ACCESS_FINE_LOCATION, PackageManager.PERMISSION_GRANTED);
-               // perms.put(Manifest.permission.ACCESS_NETWORK_STATE, PackageManager.PERMISSION_GRANTED);
+                perms.put(Manifest.permission.CAMERA, PackageManager.PERMISSION_GRANTED);
                 perms.put(Manifest.permission.ACCESS_COARSE_LOCATION, PackageManager.PERMISSION_GRANTED);
-               // perms.put(Manifest.permission.CALL_PHONE, PackageManager.PERMISSION_GRANTED);
+                perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
+                perms.put(Manifest.permission.READ_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
                 // Fill with results
                 for (int i = 0; i < permissions.length; i++)
                     perms.put(permissions[i], grantResults[i]);
                 // Check for ACCESS_FINE_LOCATION
                 if (perms.get(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                        && perms.get(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED /*&& perms.get(Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED
-                        && perms.get(Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED */) {
+                        && perms.get(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && perms.get(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                        && perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && perms.get(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ) {
                     // All Permissions Granted
 
 
