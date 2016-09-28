@@ -11,7 +11,7 @@ public class Global extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Font.overrideFont(getApplicationContext(), "SERIF", "assets/fonts/avenir_book.ttf");
+        Font.overrideFont(getApplicationContext(), "SERIF", "fonts/avenir_book.ttf");
 
     }
 

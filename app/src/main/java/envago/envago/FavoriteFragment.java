@@ -24,7 +24,7 @@ public class FavoriteFragment extends Fragment {
 
         headtext=(TextView)v.findViewById( R.id.header_text);
 
-        headtext.setText("FAVORITE");
+        headtext.setText("WISHLIST");
 
                 ad_items = (ListView)v.findViewById(R.id.ad_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);

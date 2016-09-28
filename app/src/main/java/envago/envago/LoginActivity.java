@@ -2,6 +2,7 @@ package envago.envago;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,7 +38,8 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
     CallbackManager callbackManager;
     LoginButton Login_TV;
     String token;
-Button facebook_btn;
+    Button facebook_btn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,7 @@ Button facebook_btn;
         setContentView(R.layout.activity_login);
 
         callbackManager = CallbackManager.Factory.create();
-        facebook_btn=(Button)findViewById(R.id.facebook_btn);
+        facebook_btn = (Button) findViewById(R.id.facebook_btn);
         Login_TV = (LoginButton) findViewById(R.id.Fb_Login);
         Login_TV.setReadPermissions(Arrays.asList("public_profile, email"));
         fbMethod();
@@ -55,9 +57,13 @@ Button facebook_btn;
         pass = (EditText) findViewById(R.id.password);
         signup = (TextView) findViewById(R.id.signup_txt);
 
-        forgot=(TextView)findViewById(R.id.forgot_pass);
+        Typeface font = Typeface.createFromAsset(getAssets(),"fonts/avenir_book.ttf");
+        //Font.overrideFont(getApplicationContext(), "SERIF", "fonts/avenir_book.ttf");
 
-        signin = (Button)findViewById(R.id.login_button);
+
+        forgot = (TextView) findViewById(R.id.forgot_pass);
+        forgot.setTypeface(font);
+        signin = (Button) findViewById(R.id.login_button);
 
 
         mail.setOnTouchListener(this);
@@ -101,22 +107,19 @@ Button facebook_btn;
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
 
-
         }
         if (id == R.id.facebook_btn) {
             Login_TV.performClick();
 
         }
 
-        if (id == R.id.login_button)
-        {
+        if (id == R.id.login_button) {
             Intent intent = new Intent(LoginActivity.this, Tab_Activity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         }
 
-        if (id==R.id.forgot_pass)
-        {
+        if (id == R.id.forgot_pass) {
             Intent intent = new Intent(LoginActivity.this, ForgotPassword.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -136,18 +139,18 @@ Button facebook_btn;
                                             GraphResponse response) {
                         // Application code
 
-                      //  try {
+                        //  try {
 
 
-                            // name = object.getString("name");
-                           // global.setUsername(object.getString("name"));
-                            if (object.has("email")) {
+                        // name = object.getString("name");
+                        // global.setUsername(object.getString("name"));
+                        if (object.has("email")) {
 
-                                //global.setEmail(object.getString("email"));
-                            } else {
-                                //  email = "";
-                            }
-                            // id = object.getString("id");
+                            //global.setEmail(object.getString("email"));
+                        } else {
+                            //  email = "";
+                        }
+                        // id = object.getString("id");
 
                        /* if (object.has("gender"))
 
@@ -164,15 +167,15 @@ Button facebook_btn;
                             fbquotes = "";
                         }
                        */
-                            //global.setImageUrl(object.getJSONObject("picture").getJSONObject("data").getString("url"));
-                            // getFacebookFrdList();
+                        //global.setImageUrl(object.getJSONObject("picture").getJSONObject("data").getString("url"));
+                        // getFacebookFrdList();
 
 
-                            Intent sign = new Intent(LoginActivity.this, Tab_Activity.class);
+                        Intent sign = new Intent(LoginActivity.this, Tab_Activity.class);
 
-                            startActivity(sign);
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                            finish();
+                        startActivity(sign);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                        finish();
 
                        /* } catch (JSONException e) {
                             e.printStackTrace();
@@ -198,6 +201,7 @@ Button facebook_btn;
             }
         });
     }
+
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
