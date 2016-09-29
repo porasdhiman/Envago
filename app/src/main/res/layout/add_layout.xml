@@ -15,7 +15,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
 
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/create_advanture"/>
         <TextView
             android:id="@+id/create_advanture_txtView"
             android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
 
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/call_all_advanture"/>
         <TextView
             android:id="@+id/call_all_txtView"
             android:layout_width="wrap_content"
@@ -107,7 +107,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
 
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/my_chat"/>
         <TextView
             android:id="@+id/mychats_txtView"
             android:layout_width="wrap_content"
@@ -135,7 +135,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
 
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/logout"/>
         <TextView
             android:id="@+id/logout_txtView"
             android:layout_width="wrap_content"
