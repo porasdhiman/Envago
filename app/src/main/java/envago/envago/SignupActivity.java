@@ -33,7 +33,7 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
         password = (EditText) findViewById(R.id.password);
         cpassword = (EditText) findViewById(R.id.cpassword);
         signin = (TextView) findViewById(R.id.signin_text);
-        signup = (Button)findViewById(R.id.signup_button);
+        signup = (Button) findViewById(R.id.signup_button);
 
         user = (LinearLayout) findViewById(R.id.user_linear);
         mail = (LinearLayout) findViewById(R.id.email_linear);
@@ -88,8 +88,7 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
         }
 
-        if (id == R.id.signup_button)
-        {
+        if (id == R.id.signup_button) {
             Intent intent = new Intent(SignupActivity.this, Tab_Activity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);

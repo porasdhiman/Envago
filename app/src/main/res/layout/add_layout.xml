@@ -20,12 +20,12 @@
             android:id="@+id/create_advanture_txtView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create Advantures"
+            android:text="Create Adventures"
             android:layout_toRightOf="@+id/advanture_img"
             android:layout_centerVertical="true"
             android:layout_marginLeft="30dp"
             android:textColor="#fff"
-            android:textSize="20dp"/>
+            android:textSize="17sp"/>
 
     </RelativeLayout>
 
@@ -51,7 +51,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="30dp"
             android:textColor="#fff"
-            android:textSize="20dp"/>
+            android:textSize="17sp"/>
 
     </RelativeLayout>
 <View
@@ -79,12 +79,12 @@
             android:id="@+id/myadvanture_txtView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My Advantures"
+            android:text="My Adventures"
             android:layout_toRightOf="@+id/myadvanture_img"
             android:layout_centerVertical="true"
             android:layout_marginLeft="30dp"
             android:textColor="#fff"
-            android:textSize="20dp"/>
+            android:textSize="17sp"/>
 
     </RelativeLayout>
     <View
@@ -117,7 +117,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="30dp"
             android:textColor="#fff"
-            android:textSize="20dp"/>
+            android:textSize="17sp"/>
 
     </RelativeLayout>
 
@@ -132,8 +132,8 @@
         android:layout_marginBottom="10dp">
         <ImageView
             android:id="@+id/logout_img"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
 
             android:src="@drawable/logout"/>
         <TextView
@@ -145,7 +145,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="30dp"
             android:textColor="#fff"
-            android:textSize="20dp"/>
+            android:textSize="17sp"/>
 
     </RelativeLayout>
 

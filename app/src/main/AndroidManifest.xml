@@ -97,7 +97,16 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
 
+
+
         </activity>
+        <activity android:name=".CreateAdventuresActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+
+        <activity android:name=".CallVolunteers"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 

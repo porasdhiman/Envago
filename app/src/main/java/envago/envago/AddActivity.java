@@ -11,6 +11,6 @@ public class AddActivity extends ActivityInTab {
 
         super.onCreate(savedInstanceState);
 
-        navigateTo(new AddFragment(),1);
+        navigateTo(new AddFragment(), 1);
     }
 }

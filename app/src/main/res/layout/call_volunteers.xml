@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f0"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/main_heading"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/textcolor">
+
+        <ImageView
+            android:id="@+id/back_button_volunteers"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="14dp"
+            android:src="@drawable/back_button" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Account Application"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/rectangle"
+                android:hint="Full name"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_below="@+id/name"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rectangle"
+                android:gravity="start"
+                android:hint="Address"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/about"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_below="@+id/address"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rectangle"
+                android:gravity="start"
+                android:hint="About me"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/paypal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/about"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rectangle"
+                android:hint="Paypal Account"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <RelativeLayout
+                android:id="@+id/firstchk_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/paypal"
+                android:layout_marginTop="20dp"
+                android:gravity="center">
+
+                <CheckBox
+                    android:id="@+id/chk_individual"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Individual"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+
+                <CheckBox
+                    android:id="@+id/chk_group"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_toRightOf="@+id/chk_individual"
+                    android:text="Group"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_below="@+id/firstchk_group"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:background="#000" />
+
+            <RelativeLayout
+                android:id="@+id/scnd_checkgroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/divider"
+                android:gravity="center">
+
+                <CheckBox
+                    android:id="@+id/chk_licensed"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Licensed"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+
+                <CheckBox
+                    android:id="@+id/chk_notlicensed"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_toRightOf="@+id/chk_licensed"
+                    android:text="Not Licensed"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/upload_id_button"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:layout_below="@+id/scnd_checkgroup"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_dark"
+                android:text="Upload ID"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/id_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/upload_id_button"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="Drivers Licence / Passport"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+
+            <Button
+                android:id="@+id/Submit_button"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:layout_below="@+id/id_text"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rectangle_button"
+                android:text="Submit"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+    </ScrollView>
+</LinearLayout>
