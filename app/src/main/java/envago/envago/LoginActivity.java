@@ -1,16 +1,25 @@
 package envago.envago;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -21,9 +30,13 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends Activity implements View.OnTouchListener, View.OnClickListener {
 
@@ -33,19 +46,20 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
     int flag = 0;
     Button signin;
     TextView forgot;
-
+    Global global;
     //--------------facebook variable--------------
     CallbackManager callbackManager;
     LoginButton Login_TV;
     String token;
     Button facebook_btn;
+    ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_login);
-
+        global = (Global) getApplicationContext();
         callbackManager = CallbackManager.Factory.create();
         facebook_btn = (Button) findViewById(R.id.facebook_btn);
         Login_TV = (LoginButton) findViewById(R.id.Fb_Login);
@@ -57,7 +71,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
         pass = (EditText) findViewById(R.id.password);
         signup = (TextView) findViewById(R.id.signup_txt);
 
-        Typeface font = Typeface.createFromAsset(getAssets(),"fonts/avenir_book.ttf");
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/avenir_book.ttf");
         //Font.overrideFont(getApplicationContext(), "SERIF", "fonts/avenir_book.ttf");
 
 
@@ -102,9 +116,20 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
         int id = view.getId();
 
         if (id == R.id.signup_txt) {
-            Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            if (mail.length() == 0) {
+                mail.setError("Please enter Email");
+            } else if (pass.length() == 0) {
+                mail.setError("Please enter Password");
+            } else if (!CommonUtils.isEmailValid(mail.getText().toString())) {
+                mail.setError("Please enter Valid Email");
+            } else {
+                if (CommonUtils.getConnectivityStatus(LoginActivity.this)) {
+                    pd = ProgressDialog.show(LoginActivity.this, "", "Loading...");
+                    loginMethod();
+                } else {
+                    CommonUtils.openInternetDialog(LoginActivity.this);
+                }
+            }
 
 
         }
@@ -209,4 +234,64 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
 
 
     }
+
+    private void loginMethod() {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GlobalConstants.URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        pd.dismiss();
+                        Log.e("response", response);
+                        try {
+                            JSONObject obj = new JSONObject(response);
+
+                            String status = obj.getString("status");
+                            if (status.equalsIgnoreCase("1")) {
+
+                                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
+                            } else {
+                                Toast.makeText(LoginActivity.this, obj.getString("Message"), Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        pd.dismiss();
+                        Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(GlobalConstants.EMAIL, mail.getText().toString());
+                params.put(GlobalConstants.PASSWORD, pass.getText().toString());
+
+                params.put(GlobalConstants.LATITUDE, global.getDeviceToken());
+                params.put(GlobalConstants.LONGITUDE, global.getLat());
+                params.put(GlobalConstants.DEVICEID, global.getLong());
+                params.put("action", GlobalConstants.LOGIN_ACTION);
+                Log.e("Parameter for Login", params.toString());
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+
 }
