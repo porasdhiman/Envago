@@ -13,6 +13,13 @@ public class GlobalConstants {
     public static String DEVICEID="device_id";
     public static String LOGIN_ACTION="login";
 
+    public static String USERNAME="username";
+    public static String CONTACT="contact";
+    public static String USER_TYPE="user_type";
+    public static String LICENSE="license";
+    public static String FB_ID="fb_id";
+
+
 
     public static String URL="http://envagoapp.com//webservice.php";
 }

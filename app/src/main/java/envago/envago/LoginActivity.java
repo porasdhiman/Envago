@@ -53,6 +53,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
     String token;
     Button facebook_btn;
     ProgressDialog pd;
+    String username_mString, email_mString, id_mString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,48 +165,23 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
                                             GraphResponse response) {
                         // Application code
 
-                        //  try {
 
-
-                        // name = object.getString("name");
-                        // global.setUsername(object.getString("name"));
-                        if (object.has("email")) {
-
-                            //global.setEmail(object.getString("email"));
-                        } else {
-                            //  email = "";
-                        }
-                        // id = object.getString("id");
-
-                       /* if (object.has("gender"))
-
-
-                            if (object.has("birthday")) {
-                                BIRTHDAY = object.getString("birthday");
-                                Log.e("BIRTHDAY", BIRTHDAY);
+                        try {
+                            username_mString = object.getString("name");
+                            if (object.has("email")) {
+                                email_mString = object.getString("email");
+                            } else {
+                                //  email = "";
                             }
+                            id_mString = object.getString("id");
+                            pd = ProgressDialog.show(LoginActivity.this, "", "Loading...");
+                            facebookApiMethod();
 
-                        if (object.has("quotes")) {
-                            fbquotes = object.getString("quotes");
-                            Log.e("quotesss", fbquotes);
-                        } else {
-                            fbquotes = "";
-                        }
-                       */
-                        //global.setImageUrl(object.getJSONObject("picture").getJSONObject("data").getString("url"));
-                        // getFacebookFrdList();
-
-
-                        Intent sign = new Intent(LoginActivity.this, Tab_Activity.class);
-
-                        startActivity(sign);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                        finish();
-
-                       /* } catch (JSONException e) {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
-*/
+
+
                     }
                 });
                 Bundle parameters = new Bundle();
@@ -284,6 +260,72 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
                 params.put(GlobalConstants.DEVICEID, global.getLong());
                 params.put("action", GlobalConstants.LOGIN_ACTION);
                 Log.e("Parameter for Login", params.toString());
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+//-------------------------------Facebook api method------------------------------
+
+
+    private void facebookApiMethod() {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GlobalConstants.URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        pd.dismiss();
+                        Log.e("response", response);
+                        try {
+                            JSONObject obj = new JSONObject(response);
+
+                            String status = obj.getString("success");
+                            if (status.equalsIgnoreCase("1")) {
+
+                                Intent intent = new Intent(LoginActivity.this, Tab_Activity.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
+                            } else {
+                                Toast.makeText(LoginActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        pd.dismiss();
+                        Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(GlobalConstants.FB_ID, id_mString);
+                params.put(GlobalConstants.EMAIL, email_mString);
+                params.put(GlobalConstants.USERNAME, username_mString);
+
+
+                params.put(GlobalConstants.LATITUDE, global.getDeviceToken());
+                params.put(GlobalConstants.LONGITUDE, global.getLat());
+                params.put(GlobalConstants.USER_TYPE, "0");
+                params.put(GlobalConstants.LICENSE, "licensed ");
+
+                params.put(GlobalConstants.DEVICEID, global.getLong());
+                params.put("action", GlobalConstants.LOGIN_ACTION);
+                Log.e("facebook login", params.toString());
                 return params;
             }
 
