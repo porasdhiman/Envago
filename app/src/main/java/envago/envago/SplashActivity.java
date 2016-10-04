@@ -53,6 +53,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
     String TAG = "Device Token Log";
     //------------------------
     Global global;
+    SharedPreferences sp;
     //--------------Location lat long variable---------
 
     private Location mLastLocation, myLocation;
@@ -74,19 +75,9 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
 
         setContentView(R.layout.splash);
         global = (Global) getApplicationContext();
-
+        sp = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         context = getApplicationContext();
-        if (checkPlayServices()) {
-            gcm = GoogleCloudMessaging.getInstance(this);
-            regId = getRegistrationId(context);
-            Log.e(TAG, " Google Play Services APK found.");
-            if (regId.isEmpty()) {
 
-                registerInBackground();
-            }
-        } else {
-            Log.e(TAG, "No valid Google Play Services APK found.");
-        }
 
         //----------------------------------------Marshmallow Permission-----------------
 
@@ -135,11 +126,20 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
                     splashhandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                            if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
+                                Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
-                            finish();
+                                finish();
+                            } else {
+                                Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                                finish();
+                            }
+
                         }
                     }, 2000);
 
@@ -158,11 +158,19 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
                 splashhandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
+                            Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
-                        finish();
+                            finish();
+                        } else {
+                            Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                            finish();
+                        }
                     }
                 }, 2000);
 
@@ -174,6 +182,17 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
             // Toast.makeText(MainActivity.this,gps.getLatitude()+""+   gps.getLongitude(),Toast.LENGTH_SHORT).show();
         }
         buildGoogleApiClient();
+        if (checkPlayServices()) {
+            gcm = GoogleCloudMessaging.getInstance(this);
+            regId = getRegistrationId(context);
+            Log.e(TAG, " Google Play Services APK found.");
+            if (regId.isEmpty()) {
+
+                registerInBackground();
+            }
+        } else {
+            Log.e(TAG, "No valid Google Play Services APK found.");
+        }
 
 
     }
@@ -198,23 +217,25 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
                         && perms.get(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
                         && perms.get(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
                         && perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                        && perms.get(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED&&
+                        && perms.get(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         perms.get(Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED) {
                     // All Permissions Granted
 
 
                     if (CommonUtils.getConnectivityStatus(SplashActivity.this)) {
-                        Handler splashhandler = new Handler();
-                        splashhandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
+                            Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
-                                finish();
-                            }
-                        }, 2000);
+                            finish();
+                        } else {
+                            Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                            finish();
+                        }
 
                     } else {
                         CommonUtils.openInternetDialog(SplashActivity.this);
@@ -362,6 +383,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
         return true;
 
     }
+
     //---------------------------Location lat long method-----------------
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -384,6 +406,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
             mGoogleApiClient.disconnect();
         }
     }
+
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

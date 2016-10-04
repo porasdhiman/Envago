@@ -236,7 +236,7 @@ SharedPreferences.Editor ed;
                             String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
 
-                                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, Tab_Activity.class);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
