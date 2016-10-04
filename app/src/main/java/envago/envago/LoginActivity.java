@@ -117,6 +117,18 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
         int id = view.getId();
 
         if (id == R.id.signup_txt) {
+            Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
+
+        }
+        if (id == R.id.facebook_btn) {
+            Login_TV.performClick();
+
+        }
+
+        if (id == R.id.login_button) {
             if (mail.length() == 0) {
                 mail.setError("Please enter Email");
             } else if (pass.length() == 0) {
@@ -132,17 +144,6 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
                 }
             }
 
-
-        }
-        if (id == R.id.facebook_btn) {
-            Login_TV.performClick();
-
-        }
-
-        if (id == R.id.login_button) {
-            Intent intent = new Intent(LoginActivity.this, Tab_Activity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         }
 
         if (id == R.id.forgot_pass) {
@@ -223,7 +224,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
                         try {
                             JSONObject obj = new JSONObject(response);
 
-                            String status = obj.getString("status");
+                            String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
 
                                 Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
@@ -231,7 +232,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
                             } else {
-                                Toast.makeText(LoginActivity.this, obj.getString("Message"), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             }
 
 
@@ -255,9 +256,9 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
                 params.put(GlobalConstants.EMAIL, mail.getText().toString());
                 params.put(GlobalConstants.PASSWORD, pass.getText().toString());
 
-                params.put(GlobalConstants.LATITUDE, global.getDeviceToken());
-                params.put(GlobalConstants.LONGITUDE, global.getLat());
-                params.put(GlobalConstants.DEVICEID, global.getLong());
+                params.put(GlobalConstants.LATITUDE,global.getLat() );
+                params.put(GlobalConstants.LONGITUDE, global.getLong());
+                params.put(GlobalConstants.DEVICEID, global.getDeviceToken());
                 params.put("action", GlobalConstants.LOGIN_ACTION);
                 Log.e("Parameter for Login", params.toString());
                 return params;

@@ -95,12 +95,14 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
         String cameraPermission = Manifest.permission.CAMERA;
         String wstorage = Manifest.permission.WRITE_EXTERNAL_STORAGE;
         String rstorage = Manifest.permission.READ_EXTERNAL_STORAGE;
+        String networkPermission = Manifest.permission.ACCESS_NETWORK_STATE;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             int hasFinePermission = SplashActivity.this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
             int hasCoarsePermission = SplashActivity.this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
             int hascameraPermission = SplashActivity.this.checkSelfPermission(Manifest.permission.CAMERA);
             int haswstorage = SplashActivity.this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
             int hasrstorage = SplashActivity.this.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+            int hasaccessnetworkState = SplashActivity.this.checkSelfPermission(Manifest.permission.ACCESS_NETWORK_STATE);
             List<String> permissions = new ArrayList<String>();
             if (hasFinePermission != PackageManager.PERMISSION_GRANTED) {
                 permissions.add(locationPermission);
@@ -117,6 +119,9 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
             if (hasrstorage != PackageManager.PERMISSION_GRANTED) {
                 permissions.add(rstorage);
             }
+            if (hasaccessnetworkState != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(networkPermission);
+            }
             if (!permissions.isEmpty()) {
                 String[] params = permissions.toArray(new String[permissions.size()]);
                 requestPermissions(params, 0);
@@ -125,6 +130,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
 
 
                 if (CommonUtils.getConnectivityStatus(SplashActivity.this)) {
+
                     Handler splashhandler = new Handler();
                     splashhandler.postDelayed(new Runnable() {
                         @Override
@@ -167,6 +173,8 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
 
             // Toast.makeText(MainActivity.this,gps.getLatitude()+""+   gps.getLongitude(),Toast.LENGTH_SHORT).show();
         }
+        buildGoogleApiClient();
+
 
     }
 
@@ -181,13 +189,17 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
                 perms.put(Manifest.permission.ACCESS_COARSE_LOCATION, PackageManager.PERMISSION_GRANTED);
                 perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
                 perms.put(Manifest.permission.READ_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
+                perms.put(Manifest.permission.ACCESS_NETWORK_STATE, PackageManager.PERMISSION_GRANTED);
                 // Fill with results
                 for (int i = 0; i < permissions.length; i++)
                     perms.put(permissions[i], grantResults[i]);
                 // Check for ACCESS_FINE_LOCATION
                 if (perms.get(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                        && perms.get(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && perms.get(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-                        && perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && perms.get(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        && perms.get(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        && perms.get(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                        && perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                        && perms.get(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED&&
+                        perms.get(Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED) {
                     // All Permissions Granted
 
 
