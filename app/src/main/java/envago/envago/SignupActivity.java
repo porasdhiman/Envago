@@ -2,7 +2,9 @@ package envago.envago;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -38,6 +40,8 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
     Button signup;
     Global global;
     ProgressDialog pd;
+    SharedPreferences sp;
+    SharedPreferences.Editor ed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,8 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.signup);
+        sp = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
+        ed = sp.edit();
         global = (Global) getApplicationContext();
         username = (EditText) findViewById(R.id.user);
         email = (EditText) findViewById(R.id.mail);
@@ -163,6 +169,10 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
 
                             String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
+                                JSONObject data = obj.getJSONObject("data");
+
+                                ed.putString(GlobalConstants.USERID, data.getString(GlobalConstants.USERID));
+                                ed.commit();
 
                                 Intent intent = new Intent(SignupActivity.this, Tab_Activity.class);
                                 startActivity(intent);
@@ -194,16 +204,14 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
 
                 params.put(GlobalConstants.EMAIL, email.getText().toString());
                 params.put(GlobalConstants.PASSWORD, password.getText().toString());
-                params.put(GlobalConstants.CONTACT, "");
 
                 params.put(GlobalConstants.LATITUDE, global.getLat());
                 params.put(GlobalConstants.LONGITUDE, global.getLong());
-                params.put(GlobalConstants.USER_TYPE, "group");
-                params.put(GlobalConstants.LICENSE, "licensed ");
+
 
                 params.put(GlobalConstants.DEVICEID, global.getDeviceToken());
-                params.put("action", GlobalConstants.LOGIN_ACTION);
-                Log.e("Parameter for Login", params.toString());
+                params.put("action", GlobalConstants.REGISTER_ACTION);
+                Log.e("Parameter for Register", params.toString());
                 return params;
             }
 

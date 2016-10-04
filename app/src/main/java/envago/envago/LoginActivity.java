@@ -2,7 +2,9 @@ package envago.envago;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,12 +56,16 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
     Button facebook_btn;
     ProgressDialog pd;
     String username_mString, email_mString, id_mString;
-
+    SharedPreferences sp;
+SharedPreferences.Editor ed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_login);
+        sp=getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
+        ed=sp.edit();
+
         global = (Global) getApplicationContext();
         callbackManager = CallbackManager.Factory.create();
         facebook_btn = (Button) findViewById(R.id.facebook_btn);
@@ -223,7 +229,10 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
                         Log.e("response", response);
                         try {
                             JSONObject obj = new JSONObject(response);
+                            JSONObject data = obj.getJSONObject("data");
 
+                            ed.putString(GlobalConstants.USERID, data.getString(GlobalConstants.USERID));
+                            ed.commit();
                             String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
 
@@ -321,11 +330,11 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
 
                 params.put(GlobalConstants.LATITUDE, global.getLat());
                 params.put(GlobalConstants.LONGITUDE, global.getLong());
-                params.put(GlobalConstants.USER_TYPE, "group");
-                params.put(GlobalConstants.LICENSE, "licensed");
+
+
 
                 params.put(GlobalConstants.DEVICEID, global.getDeviceToken());
-                params.put("action", GlobalConstants.LOGIN_ACTION);
+                params.put("action", GlobalConstants.FACEBOOK_REGISTER_ACTION);
                 Log.e("facebook login", params.toString());
                 return params;
             }

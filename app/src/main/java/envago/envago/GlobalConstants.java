@@ -12,6 +12,8 @@ public class GlobalConstants {
     public static String LONGITUDE="longitude";
     public static String DEVICEID="device_id";
     public static String LOGIN_ACTION="login";
+    public static String REGISTER_ACTION="sign_up";
+    public static String FACEBOOK_REGISTER_ACTION="facebook_login";
 
     public static String USERNAME="username";
     public static String CONTACT="contact";
