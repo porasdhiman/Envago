@@ -196,12 +196,12 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
                 params.put(GlobalConstants.PASSWORD, password.getText().toString());
                 params.put(GlobalConstants.CONTACT, "");
 
-                params.put(GlobalConstants.LATITUDE, global.getDeviceToken());
-                params.put(GlobalConstants.LONGITUDE, global.getLat());
-                params.put(GlobalConstants.USER_TYPE, "0");
+                params.put(GlobalConstants.LATITUDE, global.getLat());
+                params.put(GlobalConstants.LONGITUDE, global.getLong());
+                params.put(GlobalConstants.USER_TYPE, "group");
                 params.put(GlobalConstants.LICENSE, "licensed ");
 
-                params.put(GlobalConstants.DEVICEID, global.getLong());
+                params.put(GlobalConstants.DEVICEID, global.getDeviceToken());
                 params.put("action", GlobalConstants.LOGIN_ACTION);
                 Log.e("Parameter for Login", params.toString());
                 return params;

@@ -319,12 +319,12 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
                 params.put(GlobalConstants.USERNAME, username_mString);
 
 
-                params.put(GlobalConstants.LATITUDE, global.getDeviceToken());
-                params.put(GlobalConstants.LONGITUDE, global.getLat());
-                params.put(GlobalConstants.USER_TYPE, "0");
-                params.put(GlobalConstants.LICENSE, "licensed ");
+                params.put(GlobalConstants.LATITUDE, global.getLat());
+                params.put(GlobalConstants.LONGITUDE, global.getLong());
+                params.put(GlobalConstants.USER_TYPE, "group");
+                params.put(GlobalConstants.LICENSE, "licensed");
 
-                params.put(GlobalConstants.DEVICEID, global.getLong());
+                params.put(GlobalConstants.DEVICEID, global.getDeviceToken());
                 params.put("action", GlobalConstants.LOGIN_ACTION);
                 Log.e("facebook login", params.toString());
                 return params;
