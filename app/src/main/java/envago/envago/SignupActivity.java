@@ -48,7 +48,8 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
     ProgressDialog pd;
     SharedPreferences sp;
     SharedPreferences.Editor ed;
-Dialog dialog2;
+    Dialog dialog2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -138,8 +139,9 @@ Dialog dialog2;
             if (!password.getText().toString().equalsIgnoreCase(cpassword.getText().toString())) {
                 Toast.makeText(SignupActivity.this, "password are not match", Toast.LENGTH_SHORT).show();
             } else {
-                dialogWindow();
+
                 registerMethod();
+                dialogWindow();
             }
         }
 
@@ -161,7 +163,7 @@ Dialog dialog2;
         return false;
     }
 
-    //------------------------------------Register Api Method
+    //------------------------------------Register Api Method------------------------------
 
     private void registerMethod() {
 
@@ -185,6 +187,7 @@ Dialog dialog2;
                                 Intent intent = new Intent(SignupActivity.this, Tab_Activity.class);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                                finish();
 
                             } else {
                                 Toast.makeText(SignupActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
@@ -229,15 +232,16 @@ Dialog dialog2;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
     //---------------------------Progrees Dialog-----------------------
-    public void dialogWindow(){
+    public void dialogWindow() {
         dialog2 = new Dialog(this);
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog2.setCanceledOnTouchOutside(false);
         dialog2.setCancelable(false);
         dialog2.setContentView(R.layout.progrees_dialog);
-        AVLoadingIndicatorView loaderView=(AVLoadingIndicatorView)dialog2.findViewById(R.id.loader_view);
+        AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
         loaderView.show();
 
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");

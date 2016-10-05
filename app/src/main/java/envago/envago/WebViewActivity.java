@@ -56,6 +56,10 @@ public class WebViewActivity extends Activity {
             web_view.loadUrl("file:///android_asset/privacypolicy.html");
 
         }
+        else if(web_view_title.getText().equals("TERMS AND CONDITIONS"));
+        {
+            web_view.loadUrl("file:///android_asset/termsandconditions.html");
+        }
        /* String doc="<iframe src='http://docs.google.com/gview?embedded=true&url=https://www.scribd.com/document/326469804/Pricing?secret_password=kReqjJCpvnq5ZnyxnA2k'"+
                 " width='100%' height='100%' style='border: none;'></iframe>";
 

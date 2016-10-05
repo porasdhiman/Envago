@@ -32,7 +32,7 @@ public class UserFragment extends Fragment {
     ImageView map_button;
     CircleImageView profilepic;
     Dialog camgllry;
-    LinearLayout settings,pricing_layout,privacy;
+    LinearLayout settings, pricing_layout, privacy, terms;
 
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -46,9 +46,10 @@ public class UserFragment extends Fragment {
         map_button = (ImageView) v.findViewById(R.id.map_button);
 
         profilepic = (CircleImageView) v.findViewById(R.id.profile_img);
-        settings=(LinearLayout)v.findViewById(R.id.settings_view);
-        pricing_layout=(LinearLayout)v.findViewById(R.id.pricing_layout);
-        privacy=(LinearLayout)v.findViewById(R.id.privacy_layout);
+        settings = (LinearLayout) v.findViewById(R.id.settings_view);
+        pricing_layout = (LinearLayout) v.findViewById(R.id.pricing_layout);
+        privacy = (LinearLayout) v.findViewById(R.id.privacy_layout);
+        terms = (LinearLayout) v.findViewById(R.id.terms_layout);
         profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,7 +70,7 @@ public class UserFragment extends Fragment {
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),EditProfileActivity.class);
+                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
@@ -78,8 +79,8 @@ public class UserFragment extends Fragment {
         pricing_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),WebViewActivity.class);
-                intent.putExtra("title","PRICING POLICY");
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra("title", "PRICING POLICY");
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
@@ -89,13 +90,21 @@ public class UserFragment extends Fragment {
         privacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),WebViewActivity.class);
-                intent.putExtra("title","PRIVACY POLICY");
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra("title", "PRIVACY POLICY");
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         });
-
+        terms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra("title", "TERMS AND CONDITIONS");
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            }
+        });
         return v;
     }
 
@@ -111,12 +120,11 @@ public class UserFragment extends Fragment {
 
     }
 
-    public void onclick()
-    {
+    public void onclick() {
         LinearLayout camera, gallery;
 
-        camera=(LinearLayout)camgllry.findViewById(R.id.camera_layout);
-        gallery=(LinearLayout)camgllry.findViewById(R.id.gallery_layout);
+        camera = (LinearLayout) camgllry.findViewById(R.id.camera_layout);
+        gallery = (LinearLayout) camgllry.findViewById(R.id.gallery_layout);
 
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,33 +140,26 @@ public class UserFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);//
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"),0);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 0);
             }
         });
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0)
-        {
-            if (resultCode == Activity.RESULT_OK)
-            {
-                if (data != null)
-                {
-                    try
-                    {
+        if (requestCode == 0) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (data != null) {
+                    try {
 
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
 
-                    } catch (IOException e)
-                    {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                 }
-            } else if (resultCode == Activity.RESULT_CANCELED)
-            {
+            } else if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
             }
         }

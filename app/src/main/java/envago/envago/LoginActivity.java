@@ -245,6 +245,7 @@ SharedPreferences.Editor ed;
                                 Intent intent = new Intent(LoginActivity.this, Tab_Activity.class);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                                finish();
 
                             } else {
                                 Toast.makeText(LoginActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
