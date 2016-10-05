@@ -107,6 +107,15 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
         int id = view.getId();
 
         if (id == R.id.signin_text) {
+
+
+            Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
+        }
+
+        if (id == R.id.signup_button) {
             if (username.getText().length() == 0) {
                 username.setError("Please enter username");
 
@@ -126,13 +135,6 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
                 pd = ProgressDialog.show(SignupActivity.this, "", "Loading...");
                 registerMethod();
             }
-
-        }
-
-        if (id == R.id.signup_button) {
-            Intent intent = new Intent(SignupActivity.this, Tab_Activity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         }
 
     }
