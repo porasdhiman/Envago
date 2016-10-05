@@ -1,15 +1,20 @@
 package envago.envago;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -31,11 +36,13 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,6 +65,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
     String username_mString, email_mString, id_mString;
     SharedPreferences sp;
 SharedPreferences.Editor ed;
+    Dialog dialog2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,7 +151,7 @@ SharedPreferences.Editor ed;
                 mail.setError("Please enter Valid Email");
             } else {
                 if (CommonUtils.getConnectivityStatus(LoginActivity.this)) {
-                    pd = ProgressDialog.show(LoginActivity.this, "", "Loading...");
+                    dialogWindow();
                     loginMethod();
                 } else {
                     CommonUtils.openInternetDialog(LoginActivity.this);
@@ -181,7 +189,7 @@ SharedPreferences.Editor ed;
                                 //  email = "";
                             }
                             id_mString = object.getString("id");
-                            pd = ProgressDialog.show(LoginActivity.this, "", "Loading...");
+                            dialogWindow();
                             facebookApiMethod();
 
                         } catch (JSONException e) {
@@ -225,7 +233,7 @@ SharedPreferences.Editor ed;
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        pd.dismiss();
+                        dialog2.dismiss();
                         Log.e("response", response);
                         try {
                             JSONObject obj = new JSONObject(response);
@@ -255,7 +263,7 @@ SharedPreferences.Editor ed;
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        pd.dismiss();
+                        dialog2.dismiss();
                         Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                     }
                 }) {
@@ -289,7 +297,7 @@ SharedPreferences.Editor ed;
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        pd.dismiss();
+                        dialog2.dismiss();
                         Log.e("response", response);
                         try {
                             JSONObject obj = new JSONObject(response);
@@ -316,7 +324,7 @@ SharedPreferences.Editor ed;
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        pd.dismiss();
+                        dialog2.dismiss();
                         Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                     }
                 }) {
@@ -345,5 +353,18 @@ SharedPreferences.Editor ed;
         requestQueue.add(stringRequest);
     }
 
+//---------------------------Progrees Dialog-----------------------
+    public void dialogWindow(){
+        dialog2 = new Dialog(this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog2.setCanceledOnTouchOutside(false);
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.progrees_dialog);
+        AVLoadingIndicatorView loaderView=(AVLoadingIndicatorView)dialog2.findViewById(R.id.loader_view);
+        loaderView.show();
 
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        dialog2.show();
+    }
 }

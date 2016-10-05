@@ -1,16 +1,20 @@
 package envago.envago;
 
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -20,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +41,7 @@ public class AddFragment extends Fragment {
     SharedPreferences sp;
     SharedPreferences.Editor ed;
     ProgressDialog pd;
+    Dialog dialog2;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -65,7 +71,7 @@ public class AddFragment extends Fragment {
         logout_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pd = ProgressDialog.show(getActivity(), "", "Loading...");
+                dialogWindow();
                 logoutMethod();
 
             }
@@ -82,14 +88,14 @@ public class AddFragment extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+                        dialog2.dismiss();
                         Log.e("response", response);
                         try {
                             JSONObject obj = new JSONObject(response);
 
                             String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
-                                JSONObject data = obj.getJSONObject("data");
+
 
                                 ed.clear();
                                 ed.commit();
@@ -112,7 +118,7 @@ public class AddFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        dialog2.dismiss();
                         Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                     }
                 }) {
@@ -130,5 +136,19 @@ public class AddFragment extends Fragment {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
+    }
+
+    public void dialogWindow() {
+        dialog2 = new Dialog(getActivity());
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog2.setCanceledOnTouchOutside(false);
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.progrees_dialog);
+        AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
+        loaderView.show();
+
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        dialog2.show();
     }
 }

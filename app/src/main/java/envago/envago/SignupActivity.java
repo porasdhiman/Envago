@@ -1,14 +1,18 @@
 package envago.envago;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -21,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +47,7 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
     ProgressDialog pd;
     SharedPreferences sp;
     SharedPreferences.Editor ed;
-
+Dialog dialog2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -132,7 +137,7 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
             if (password.getText().toString() != cpassword.getText().toString()) {
                 Toast.makeText(SignupActivity.this, "password are not match", Toast.LENGTH_SHORT).show();
             } else {
-                pd = ProgressDialog.show(SignupActivity.this, "", "Loading...");
+                dialogWindow();
                 registerMethod();
             }
         }
@@ -164,7 +169,7 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        pd.dismiss();
+                        dialog2.dismiss();
                         Log.e("response", response);
                         try {
                             JSONObject obj = new JSONObject(response);
@@ -195,7 +200,7 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        pd.dismiss();
+                        dialog2.dismiss();
                         Toast.makeText(SignupActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                     }
                 }) {
@@ -222,6 +227,19 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+    //---------------------------Progrees Dialog-----------------------
+    public void dialogWindow(){
+        dialog2 = new Dialog(this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog2.setCanceledOnTouchOutside(false);
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.progrees_dialog);
+        AVLoadingIndicatorView loaderView=(AVLoadingIndicatorView)dialog2.findViewById(R.id.loader_view);
+        loaderView.show();
 
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        dialog2.show();
+    }
 
 }
