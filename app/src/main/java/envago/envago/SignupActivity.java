@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -125,16 +126,16 @@ Dialog dialog2;
                 username.setError("Please enter username");
 
             } else if (email.getText().length() == 0) {
-                username.setError("Please enter email");
+                email.setError("Please enter email");
 
 
             }
             if (password.getText().length() == 0) {
-                username.setError("Please enter username");
+                password.setError("Please enter password");
 
 
             }
-            if (password.getText().toString() != cpassword.getText().toString()) {
+            if (!password.getText().toString().equalsIgnoreCase(cpassword.getText().toString())) {
                 Toast.makeText(SignupActivity.this, "password are not match", Toast.LENGTH_SHORT).show();
             } else {
                 dialogWindow();
@@ -223,6 +224,7 @@ Dialog dialog2;
             }
 
         };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);

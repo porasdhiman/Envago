@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -21,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -38,11 +38,9 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -282,7 +280,7 @@ SharedPreferences.Editor ed;
             }
 
         };
-
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
@@ -348,23 +346,24 @@ SharedPreferences.Editor ed;
             }
 
         };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
 
 //---------------------------Progrees Dialog-----------------------
-    public void dialogWindow(){
-        dialog2 = new Dialog(this);
-        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog2.setCanceledOnTouchOutside(false);
-        dialog2.setCancelable(false);
-        dialog2.setContentView(R.layout.progrees_dialog);
-        AVLoadingIndicatorView loaderView=(AVLoadingIndicatorView)dialog2.findViewById(R.id.loader_view);
-        loaderView.show();
+public void dialogWindow() {
+    dialog2 = new Dialog(this);
+    dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    dialog2.setCanceledOnTouchOutside(false);
+    dialog2.setCancelable(false);
+    dialog2.setContentView(R.layout.progrees_dialog);
+    AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
+    loaderView.show();
 
-        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
-        dialog2.show();
-    }
+    // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+    dialog2.show();
+}
 }

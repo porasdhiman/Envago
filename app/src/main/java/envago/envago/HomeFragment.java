@@ -1,6 +1,7 @@
 package envago.envago;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,7 +39,7 @@ public class HomeFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), MapsActivity.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.card_flip_right_out, R.anim.card_flip_left_in);
+                ((Activity)getActivity()).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         });
 

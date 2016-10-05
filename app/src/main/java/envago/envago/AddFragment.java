@@ -18,6 +18,7 @@ import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -128,11 +129,12 @@ public class AddFragment extends Fragment {
                 params.put(GlobalConstants.USERID, CommonUtils.UserID(getActivity()));
 
                 params.put("action", GlobalConstants.SINGOUT_ACTION);
-                Log.e("Parameter for Register", params.toString());
+                Log.e("Parameter for logout", params.toString());
                 return params;
             }
 
         };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);

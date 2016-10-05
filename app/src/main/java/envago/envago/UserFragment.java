@@ -32,7 +32,7 @@ public class UserFragment extends Fragment {
     ImageView map_button;
     CircleImageView profilepic;
     Dialog camgllry;
-    LinearLayout settings,pricing_layout;
+    LinearLayout settings,pricing_layout,privacy;
 
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -48,6 +48,7 @@ public class UserFragment extends Fragment {
         profilepic = (CircleImageView) v.findViewById(R.id.profile_img);
         settings=(LinearLayout)v.findViewById(R.id.settings_view);
         pricing_layout=(LinearLayout)v.findViewById(R.id.pricing_layout);
+        privacy=(LinearLayout)v.findViewById(R.id.privacy_layout);
         profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,6 +83,16 @@ public class UserFragment extends Fragment {
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
+            }
+        });
+
+        privacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),WebViewActivity.class);
+                intent.putExtra("title","PRIVACY POLICY");
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         });
 

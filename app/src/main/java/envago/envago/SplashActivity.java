@@ -77,7 +77,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
         global = (Global) getApplicationContext();
         sp = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         context = getApplicationContext();
-
+        buildGoogleApiClient();
 
         //----------------------------------------Marshmallow Permission-----------------
 
@@ -127,6 +127,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
                         @Override
                         public void run() {
                             if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
+                                mGoogleApiClient.connect();
                                 Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -159,6 +160,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
                     @Override
                     public void run() {
                         if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
+                            mGoogleApiClient.connect();
                             Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
                             startActivity(intent);
                             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -181,7 +183,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
 
             // Toast.makeText(MainActivity.this,gps.getLatitude()+""+   gps.getLongitude(),Toast.LENGTH_SHORT).show();
         }
-        buildGoogleApiClient();
+
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
             regId = getRegistrationId(context);
@@ -224,6 +226,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
 
                     if (CommonUtils.getConnectivityStatus(SplashActivity.this)) {
                         if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
+                            mGoogleApiClient.connect();
                             Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
                             startActivity(intent);
                             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
