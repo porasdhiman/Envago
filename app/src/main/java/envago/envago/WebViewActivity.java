@@ -56,7 +56,7 @@ public class WebViewActivity extends Activity {
             web_view.loadUrl("file:///android_asset/privacypolicy.html");
 
         }
-        else if(web_view_title.getText().equals("TERMS AND CONDITIONS"));
+        else
         {
             web_view.loadUrl("file:///android_asset/termsandconditions.html");
         }

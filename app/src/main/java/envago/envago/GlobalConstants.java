@@ -8,6 +8,13 @@ public class GlobalConstants {
     public static String USERID="user_id";
     public static String EMAIL="email";
     public static String PASSWORD="password";
+    public static String FIRST_NAME="firstname";
+    public static String LAST_NAME="lastname";
+    public static String ADDRESS="address";
+    public static String PAYPAL="paypal_address";
+    public static String ABOUT="about_me";
+    public static String DOCUMENT="document";
+    public static String IMAGE="image";
     public static String LATITUDE="latitude";
     public static String LONGITUDE="longitude";
     public static String DEVICEID="device_id";
@@ -22,6 +29,8 @@ public class GlobalConstants {
     public static String LICENSE="license";
     public static String FB_ID="fb_id";
     public static String SINGOUT_ACTION="logout";
+    public static String GETPROFILE_ACTION="get_profile";
+    public static String CHANGE_PASS_ACTION="change_password";
 
 
     public static String URL="http://envagoapp.com//webservice.php";
