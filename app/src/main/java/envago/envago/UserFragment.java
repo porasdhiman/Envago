@@ -115,7 +115,7 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), EditProfileActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,2);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
             }
@@ -224,10 +224,20 @@ public class UserFragment extends Fragment {
         } else if (requestCode == 1) {
             onCaptureImageResult(data);
             camgllry.dismiss();
-        } else if (resultCode == Activity.RESULT_CANCELED) {
-            Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
-            camgllry.dismiss();
+        }else if (requestCode == 2) {
+            if (preferences.getString(GlobalConstants.IMAGE, "").length() == 0) {
+
+            } else {
+
+                if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
+                    Picasso.with(getActivity()).load(preferences.getString(GlobalConstants.IMAGE, ""));
+                } else {
+                    profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
+                }
+            }
+            username.setText(preferences.getString(GlobalConstants.USERNAME, ""));
         }
+
     }
 
 

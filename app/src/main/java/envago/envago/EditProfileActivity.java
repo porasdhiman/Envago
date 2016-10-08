@@ -130,6 +130,7 @@ public class EditProfileActivity extends Activity {
         sumbit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getvalues();
                 dialogWindow();
                 editprofile();
 
@@ -237,8 +238,6 @@ public class EditProfileActivity extends Activity {
                     if (msg.equalsIgnoreCase("1")) {
                         String msg_response = response_obj.getString("msg");
 
-                        finish();
-                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 
                         Toast.makeText(getApplicationContext(), msg_response, Toast.LENGTH_SHORT).show();
                     } else {

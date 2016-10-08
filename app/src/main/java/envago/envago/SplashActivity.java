@@ -127,7 +127,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
                         @Override
                         public void run() {
                             if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
-                                mGoogleApiClient.connect();
+                                locatioMethod();
                                 Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -160,7 +160,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
                     @Override
                     public void run() {
                         if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
-                            mGoogleApiClient.connect();
+
                             Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
                             startActivity(intent);
                             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -226,12 +226,14 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
 
                     if (CommonUtils.getConnectivityStatus(SplashActivity.this)) {
                         if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
-                            mGoogleApiClient.connect();
+                            locatioMethod();
                             Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
                             startActivity(intent);
                             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
                             finish();
+
+
                         } else {
                             Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
                             startActivity(intent);
@@ -244,6 +246,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
                         CommonUtils.openInternetDialog(SplashActivity.this);
                         finish();
                     }
+
                     // Toast.makeText(MainActivity.this,gps.getLatitude()+""+   gps.getLongitude(),Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -442,5 +445,27 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         mGoogleApiClient.connect();
+    }
+    public void locatioMethod(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            Toast.makeText(SplashActivity.this, "" + mLastLocation.getLatitude() + " " + mLastLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+            global.setLat(String.valueOf(mLastLocation.getLatitude()));
+            global.setLong(String.valueOf(mLastLocation.getLongitude()));
+
+
+        } else {
+            Toast.makeText(this, "not work", Toast.LENGTH_LONG).show();
+        }
     }
 }
