@@ -155,17 +155,15 @@ public class UserFragment extends Fragment {
         } else {
 
             username.setText(preferences.getString(GlobalConstants.USERNAME, ""));
-          //  String img_url = preferences.getString(GlobalConstants.IMAGE, "");
+            //  String img_url = preferences.getString(GlobalConstants.IMAGE, "");
             if (preferences.getString(GlobalConstants.IMAGE, "").length() == 0) {
 
             } else {
 
-                if (preferences.getString(GlobalConstants.IMAGE,"").contains("http")) {
+                if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
                     Picasso.with(getActivity()).load(preferences.getString(GlobalConstants.IMAGE, ""));
-                }
-                else
-                {
-                    profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE,""))));
+                } else {
+                    profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
                 }
             }
 
@@ -323,7 +321,7 @@ public class UserFragment extends Fragment {
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
         dialog2.show();
     }
-
+//-------------------------------image-upload-------------------------------------------
     private void onSelectFromGalleryResult(Intent data) {
         Bitmap bm = null;
         if (data != null) {

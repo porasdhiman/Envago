@@ -44,7 +44,7 @@
             android:orientation="vertical">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_img"
+                android:id="@+id/profile_img_editprofile"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
@@ -477,6 +477,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/rectangle_button"
                 android:text="Save"
+                android:id="@+id/edit_sumbit_buttn"
                 android:textColor="#fff" />
         </LinearLayout>
 

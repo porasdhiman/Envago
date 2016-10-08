@@ -31,6 +31,7 @@ public class GlobalConstants {
     public static String SINGOUT_ACTION="logout";
     public static String GETPROFILE_ACTION="get_profile";
     public static String CHANGE_PASS_ACTION="change_password";
+    public static String EDIT_PROFILE_ACTION="edit_profile";
 
 
     public static String URL="http://envagoapp.com//webservice.php";
