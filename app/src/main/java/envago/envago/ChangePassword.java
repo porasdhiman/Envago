@@ -45,6 +45,7 @@ public class ChangePassword extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         setContentView(R.layout.change_password);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -93,8 +94,13 @@ public class ChangePassword extends Activity {
 
     }
 
-
-    //--------------------------Change=pass_APi------------------------------------
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.slide_out_left, R.anim.slide_in_left);
+    }
+//--------------------------Change=pass_APi------------------------------------
 
 
     public void password_change() {

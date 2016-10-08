@@ -107,7 +107,7 @@ public class UserFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), MapsActivity.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.card_flip_right_out, R.anim.card_flip_left_in);
+
             }
         });
 
@@ -116,7 +116,7 @@ public class UserFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), EditProfileActivity.class);
                 startActivityForResult(intent,2);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
 
             }
         });

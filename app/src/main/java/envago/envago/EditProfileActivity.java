@@ -73,6 +73,7 @@ public class EditProfileActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.edit_profile);

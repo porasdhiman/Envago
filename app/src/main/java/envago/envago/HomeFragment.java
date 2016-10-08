@@ -39,7 +39,6 @@ public class HomeFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), MapsActivity.class);
                 startActivity(intent);
-                ((Activity)getActivity()).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         });
 

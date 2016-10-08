@@ -87,7 +87,12 @@ public class ActivityInTab extends FragmentActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+ /*   public void open() {
+        Intent intent = new Intent(ActivityInTab.this, MapsActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
+    }*/
     public void progress() {
         Log.e("dddddddddddd", "open");
         progressDialog = ProgressDialog.show(ActivityInTab.this, "", "Sending Fax...");
@@ -102,6 +107,11 @@ public class ActivityInTab extends FragmentActivity {
 
     }
 
-    /*close connection to Google Play Services*/
+    @Override
+    protected void onResume() {
+        super.onResume();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+    }
+/*close connection to Google Play Services*/
 
 }

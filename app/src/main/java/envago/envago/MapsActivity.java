@@ -74,6 +74,8 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
