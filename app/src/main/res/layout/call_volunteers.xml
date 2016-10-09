@@ -151,6 +151,16 @@
 
             </RelativeLayout>
 
+            <ImageView
+                android:id="@+id/document_pic"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/scnd_checkgroup"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/earth"
+                android:elevation="1dp"/>
+
             <Button
                 android:id="@+id/upload_id_button"
                 android:layout_width="match_parent"
@@ -176,7 +186,7 @@
 
 
             <Button
-                android:id="@+id/Submit_button"
+                android:id="@+id/submit_button"
                 android:layout_width="match_parent"
                 android:layout_height="43dp"
                 android:layout_below="@+id/id_text"

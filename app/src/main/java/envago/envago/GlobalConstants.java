@@ -10,6 +10,7 @@ public class GlobalConstants {
     public static String PASSWORD="password";
     public static String FIRST_NAME="firstname";
     public static String LAST_NAME="lastname";
+    public static String FULL_NAME="fullname";
     public static String ADDRESS="address";
     public static String PAYPAL="paypal_address";
     public static String ABOUT="about_me";
@@ -32,6 +33,7 @@ public class GlobalConstants {
     public static String GETPROFILE_ACTION="get_profile";
     public static String CHANGE_PASS_ACTION="change_password";
     public static String EDIT_PROFILE_ACTION="edit_profile";
+    public static String UPLOAD_DOCUMENT_ACTION="upload_document";
 
 
     public static String URL="http://envagoapp.com//webservice.php";
