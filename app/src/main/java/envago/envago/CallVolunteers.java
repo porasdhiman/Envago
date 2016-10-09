@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,7 +29,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -56,7 +60,8 @@ public class CallVolunteers extends Activity implements View.OnClickListener, Vi
     EditText name, address, about, paypal;
     CheckBox individual, group, licensed, nlicensed;
     ImageView back_button, document_pic;
-    Button upload_id, submit;
+    Button submit;
+    RelativeLayout upload_id;
     String selectedImagePath = "";
     Dialog camgllry;
     String usertype, license;
@@ -64,12 +69,13 @@ public class CallVolunteers extends Activity implements View.OnClickListener, Vi
     SharedPreferences.Editor editor;
     HttpEntity resEntity;
     String message;
+    Dialog dialog2;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         setContentView(R.layout.call_volunteers);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -94,7 +100,7 @@ public class CallVolunteers extends Activity implements View.OnClickListener, Vi
         back_button = (ImageView) findViewById(R.id.back_button_volunteers);
         document_pic = (ImageView) findViewById(R.id.document_pic);
 
-        upload_id = (Button) findViewById(R.id.upload_id_button);
+        upload_id = (RelativeLayout) findViewById(R.id.upload_id_button);
         submit = (Button) findViewById(R.id.submit_button);
 
         individual.setOnClickListener(this);
@@ -191,8 +197,25 @@ public class CallVolunteers extends Activity implements View.OnClickListener, Vi
         }
 
         if (id == R.id.submit_button) {
-            new Thread(null, address_request, "")
-                    .start();
+            if(address.getText().toString().length()==0){
+address.setError("Please enter Address");
+            }else if(paypal.getText().toString().length()==0){
+                paypal.setError("Please enter paypal");
+            }else if(about.getText().toString().length()==0){
+                about.setError("Please enter about");
+            }else if(license.length()==0){
+                Toast.makeText(CallVolunteers.this,"Please select license or not licensed",Toast.LENGTH_SHORT).show();
+            }else if(usertype.length()==0){
+                Toast.makeText(CallVolunteers.this,"Please select group or individual",Toast.LENGTH_SHORT).show();
+            }else if(name.getText().toString().length()==0){
+                name.setError("Please enter name");
+
+            }else{
+                dialogWindow();
+                new Thread(null, address_request, "")
+                        .start();
+            }
+
 
         }
 
@@ -212,7 +235,7 @@ public class CallVolunteers extends Activity implements View.OnClickListener, Vi
     }
 
     public void onclick() {
-        LinearLayout camera, gallery;
+        final LinearLayout camera, gallery;
 
         camera = (LinearLayout) camgllry.findViewById(R.id.camera_layout);
         gallery = (LinearLayout) camgllry.findViewById(R.id.gallery_layout);
@@ -222,6 +245,7 @@ public class CallVolunteers extends Activity implements View.OnClickListener, Vi
             public void onClick(View view) {
                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
                 startActivityForResult(intent, 1);
+                camgllry.dismiss();
             }
         });
 
@@ -232,27 +256,32 @@ public class CallVolunteers extends Activity implements View.OnClickListener, Vi
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);//
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 0);
+                camgllry.dismiss();
             }
         });
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0) {
+
             if (resultCode == Activity.RESULT_OK) {
+                if (requestCode == 0) {
                 if (data != null) {
 
 
                     onSelectFromGalleryResult(data);
-                    camgllry.dismiss();
-                    document_pic.setVisibility(View.VISIBLE);
+
+                   // document_pic.setVisibility(View.VISIBLE);
 
                 }
-            }
+            }else{
+
+                }
         } else if (requestCode == 1) {
+
             onCaptureImageResult(data);
-            camgllry.dismiss();
-            document_pic.setVisibility(View.VISIBLE);
+            //camgllry.dismiss();
+          //  document_pic.setVisibility(View.VISIBLE);
 
         }
 
@@ -338,7 +367,7 @@ public class CallVolunteers extends Activity implements View.OnClickListener, Vi
     Handler address_request_Handler = new Handler() {
         public void handleMessage(Message msg) {
             String res = (String) msg.obj;
-           // dialog2.dismiss();
+            dialog2.dismiss();
             if (res.equalsIgnoreCase("true")) {
                // terms_dialog.dismiss();
                 Toast.makeText(CallVolunteers.this, message,
@@ -370,7 +399,7 @@ public class CallVolunteers extends Activity implements View.OnClickListener, Vi
             if (selectedImagePath.length() > 0) {
                 File file1 = new File(selectedImagePath);
                 FileBody bin1 = new FileBody(file1, "image/png");
-                reqEntity.addPart("image", bin1);
+                reqEntity.addPart(GlobalConstants.DOCUMENT, bin1);
             }
 
             reqEntity.addPart(GlobalConstants.USERID, new StringBody(CommonUtils.UserID(this)));
@@ -386,7 +415,7 @@ public class CallVolunteers extends Activity implements View.OnClickListener, Vi
 
             post.setEntity(reqEntity);
 
-            Log.e("params",reqEntity.toString());
+            Log.e("params",selectedImagePath+" "+usertype+" "+license+" "+GlobalConstants.UPLOAD_DOCUMENT_ACTION+" "+name.getText()+" "+address.getText());
             HttpResponse response = client.execute(post);
             resEntity = response.getEntity();
 
@@ -545,6 +574,20 @@ public class CallVolunteers extends Activity implements View.OnClickListener, Vi
 
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+    //---------------------------Progrees Dialog-----------------------
+    public void dialogWindow() {
+        dialog2 = new Dialog(this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog2.setCanceledOnTouchOutside(false);
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.progrees_dialog);
+        AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
+        loaderView.show();
+
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        dialog2.show();
     }
 }
 
