@@ -39,7 +39,9 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ad_list">
+        android:id="@+id/ad_list"
+        android:divider="#fff"
+        android:dividerHeight="5dp">
 
     </ListView>
 

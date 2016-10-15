@@ -1,9 +1,13 @@
 package envago.envago;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +41,7 @@ public class Adventure_list extends Activity {
     ArrayList<HashMap<String,String>> event_list = new ArrayList<>();
     String main_id, sub_id;
     Global global;
+    Dialog dialog2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +67,7 @@ public class Adventure_list extends Activity {
             sub_id = getIntent().getExtras().getString("sub_id");
 
         }
+        dialogWindow();
         get_list();
 
     }
@@ -70,6 +77,7 @@ public class Adventure_list extends Activity {
         StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
+                dialog2.dismiss();
                 Log.e("Categoryyyy", s);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -111,7 +119,7 @@ public class Adventure_list extends Activity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                dialog2.dismiss();
             }
         }) {
             @Override
@@ -143,5 +151,19 @@ public class Adventure_list extends Activity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(Adventure_list.this);
         requestQueue.add(cat_request);
+    }
+    //---------------------------Progrees Dialog-----------------------
+    public void dialogWindow() {
+        dialog2 = new Dialog(this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog2.setCanceledOnTouchOutside(false);
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.progrees_dialog);
+        AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
+        loaderView.show();
+
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        dialog2.show();
     }
 }

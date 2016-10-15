@@ -25,7 +25,7 @@ public class Global extends Application {
         Lat = lat;
     }
 
-    String Lat;
+    String Lat="";
 
     public String getLong() {
         return Long;
@@ -35,7 +35,7 @@ public class Global extends Application {
         Long = aLong;
     }
 
-    String Long;
+    String Long="";
     @Override
     public void onCreate() {
         super.onCreate();

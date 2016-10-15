@@ -2,8 +2,11 @@ package envago.envago;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -13,6 +16,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -23,8 +27,15 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -38,7 +49,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by jhang on 9/18/2016.
  */
-public class SplashActivity extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class SplashActivity extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
+       , ResultCallback<LocationSettingsResult> {
 
     // --------------code for gcm
     public static final String EXTRA_MESSAGE = "message";
@@ -63,6 +75,9 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
     /**
      * Represents a geographical location.
      */
+
+    protected LocationRequest locationRequest;
+    int REQUEST_CHECK_SETTINGS = 100;
 
 
     protected String mLatitudeLabel;
@@ -126,26 +141,28 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
                     splashhandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
-                                locatioMethod();
-                                Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
-                                finish();
-                            } else {
-                                Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
+                                    locatioMethod();
+                                    Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
+                                    startActivity(intent);
+                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
-                                finish();
-                            }
+                                    finish();
+                                } else {
+                                    Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
+                                    startActivity(intent);
+                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                                    finish();
+                                }
+
 
                         }
                     }, 2000);
 
                 } else {
-                    CommonUtils.openInternetDialog(SplashActivity.this);
+                    Toast.makeText(SplashActivity.this,"Please check your network connection and restart app",Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 // We already have permission, so handle as norma
@@ -159,25 +176,27 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
                 splashhandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
 
-                            Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                            if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
 
-                            finish();
-                        } else {
-                            Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
-                            finish();
-                        }
+                                finish();
+                            } else {
+                                Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                                finish();
+                            }
+
                     }
                 }, 2000);
 
             } else {
-                CommonUtils.openInternetDialog(SplashActivity.this);
+                Toast.makeText(SplashActivity.this,"Please check your network connection and restart app",Toast.LENGTH_SHORT).show();
                 finish();
             }
 
@@ -223,9 +242,9 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
                         perms.get(Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED) {
                     // All Permissions Granted
 
+                        if (CommonUtils.getConnectivityStatus(SplashActivity.this)) {
 
-                    if (CommonUtils.getConnectivityStatus(SplashActivity.this)) {
-                        if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
+
                             locatioMethod();
                             Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
                             startActivity(intent);
@@ -235,17 +254,9 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
 
 
                         } else {
-                            Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
+                            Toast.makeText(SplashActivity.this,"Please check your network connection and restart app",Toast.LENGTH_SHORT).show();
                             finish();
                         }
-
-                    } else {
-                        CommonUtils.openInternetDialog(SplashActivity.this);
-                        finish();
-                    }
 
                     // Toast.makeText(MainActivity.this,gps.getLatitude()+""+   gps.getLongitude(),Toast.LENGTH_SHORT).show();
 
@@ -397,6 +408,10 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(30 * 1000);
+        locationRequest.setFastestInterval(5 * 1000);
     }
 
     @Override
@@ -415,6 +430,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -433,7 +449,51 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
 
 
         } else {
-            Toast.makeText(this, "not work", Toast.LENGTH_LONG).show();
+           /* mLocationManager=(LocationManager)getSystemService(Context.LOCATION_SERVICE);
+            if(mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                buildAlertMessageNoGPS();
+            }*/
+            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                    .addLocationRequest(locationRequest);
+            builder.setAlwaysShow(true);
+            PendingResult<LocationSettingsResult> result =
+                    LocationServices.SettingsApi.checkLocationSettings(
+                            mGoogleApiClient,
+                            builder.build()
+                    );
+
+            result.setResultCallback(this);
+
+        }
+    }
+    @Override
+    public void onResult(@NonNull LocationSettingsResult locationSettingsResult) {
+        final Status status = locationSettingsResult.getStatus();
+        switch (status.getStatusCode()) {
+            case LocationSettingsStatusCodes.SUCCESS:
+
+                // NO need to show the dialog;
+
+                break;
+
+            case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                //  Location settings are not satisfied. Show the user a dialog
+
+                try {
+                    // Show the dialog by calling startResolutionForResult(), and check the result
+                    // in onActivityResult().
+
+                    status.startResolutionForResult(SplashActivity.this, REQUEST_CHECK_SETTINGS);
+
+                } catch (IntentSender.SendIntentException e) {
+
+                    //failed to show
+                }
+                break;
+
+            case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                // Location settings are unavailable so not possible to show any dialog now
+                break;
         }
     }
 
@@ -441,7 +501,21 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
     public void onConnectionSuspended(int i) {
 
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CHECK_SETTINGS) {
 
+            if (resultCode == RESULT_OK) {
+                finish();
+                Toast.makeText(getApplicationContext(), "GPS is enabled please restart app", Toast.LENGTH_LONG).show();
+
+            } else {
+
+                Toast.makeText(getApplicationContext(), "GPS is not enabled", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         mGoogleApiClient.connect();
@@ -464,8 +538,8 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
             global.setLong(String.valueOf(mLastLocation.getLongitude()));
 
 
-        } else {
-            Toast.makeText(this, "not work", Toast.LENGTH_LONG).show();
         }
     }
+
+
 }
