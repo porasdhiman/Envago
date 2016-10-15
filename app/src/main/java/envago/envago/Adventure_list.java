@@ -2,13 +2,16 @@ package envago.envago;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,6 +49,8 @@ public class Adventure_list extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
         setContentView(R.layout.adventure_list);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -69,6 +74,14 @@ public class Adventure_list extends Activity {
         }
         dialogWindow();
         get_list();
+        ad_items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i=new Intent(Adventure_list.this,DetailsActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        });
 
     }
     //--------------------------------List-API----------------------------
@@ -107,7 +120,9 @@ public class Adventure_list extends Activity {
                             event_list.add(details);
 
                         }
-                        ad_items.setAdapter(new Adventure_list_adapter(getApplicationContext(), event_list));
+                        if(event_list.size()>0) {
+                            ad_items.setAdapter(new Adventure_list_adapter(getApplicationContext(), event_list));
+                        }
 
                     }
                 } catch (JSONException e) {

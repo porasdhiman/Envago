@@ -10,7 +10,22 @@
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:scaleType="centerCrop"/>
+    <TextView
+        android:id="@+id/start_event_txtView"
+        android:layout_width="150dp"
+        android:layout_height="25dp"
+        android:textSize="16sp"
+        android:textColor="#fff"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="12dp"
+        android:visibility="gone"
+
+        android:background="@drawable/start_event_back"
+        android:text="Start event"
+        android:gravity="center"
+        />
     <ImageView
+        android:id="@+id/heart_img"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:src="@drawable/heart"

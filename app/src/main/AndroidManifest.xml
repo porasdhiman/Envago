@@ -115,7 +115,9 @@
         <activity android:name=".CallVolunteers"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
-    </application>
+        <activity android:name=".DetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
 
     <intent-filter>
         <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -137,5 +139,6 @@
 
     <service android:name="envago.envago.GcmIntentService" />
 
+    </application>
 
 </manifest>

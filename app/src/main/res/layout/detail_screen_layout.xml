@@ -1,0 +1,124 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/main_heading"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/textcolor">
+
+        <ImageView
+            android:id="@+id/detail_back_button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="14dp"
+            android:src="@drawable/back_button" />
+
+        <TextView
+            android:id="@+id/header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="ENVAGO"
+            android:textColor="#fff"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager_introduction"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:fitsSystemWindows="true"
+                tools:listitem="@layout/pager_item" />
+
+            <RelativeLayout
+                android:id="@+id/viewPagerIndicator"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="-50dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/viewPagerCountDots"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:orientation="horizontal" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="-5dp"
+                android:background="#191F28"
+                >
+                <TextView
+                    android:id="@+id/about_txtView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="About"
+                    android:textSize="18dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="30dp"
+                    android:textColor="@color/textcolor"/>
+                <TextView
+                    android:id="@+id/route_txtView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Route"
+                    android:textSize="18dp"
+
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="30dp"
+                    android:textColor="#fff"/>
+
+                <TextView
+                    android:id="@+id/review_txtView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Review"
+                    android:textSize="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="30dp"
+                    android:textColor="#fff"/>
+            </RelativeLayout>
+            //---------------About layout---------------------------
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

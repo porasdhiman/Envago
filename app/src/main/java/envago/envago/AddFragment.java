@@ -57,7 +57,7 @@ public class AddFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CreateAdventuresActivity.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
             }
         });
 
@@ -66,7 +66,7 @@ public class AddFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CallVolunteers.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
             }
         });
         logout_layout.setOnClickListener(new View.OnClickListener() {

@@ -47,10 +47,10 @@ public class GlobalConstants {
     public static String EVENT_IMAGES = "images";
     public static String EVENT_FAV = "is_liked";
     public static String EVENT_START_DATE = "event_start_date";
+    public static String ACTION_LIKE_EVENT = "like_event";
 
 
-
-
+    public static String LIKE_STATUS = "like_status";
 
     public static String URL="http://envagoapp.com//webservice.php";
 }

@@ -137,7 +137,7 @@ public class UserFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
                 intent.putExtra("title", "PRIVACY POLICY");
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
             }
         });
         terms.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +146,7 @@ public class UserFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
                 intent.putExtra("title", "TERMS AND CONDITIONS");
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
             }
         });
         if (preferences.getString(GlobalConstants.USERNAME, "").equalsIgnoreCase("")) {
