@@ -23,6 +23,9 @@ public class GlobalConstants {
     public static String FORGOT_ACTION="forgot_password";
     public static String REGISTER_ACTION="sign_up";
     public static String FACEBOOK_REGISTER_ACTION="facebook_login";
+    public static String EVENT_CAT_ID="event_cat_id";
+    public static String MAIN_CAT_ID="main_cat_id";
+    public static String RESPONSE_TYPE="response_type";
 
     public static String USERNAME="username";
     public static String CONTACT="contact";
@@ -34,6 +37,19 @@ public class GlobalConstants {
     public static String CHANGE_PASS_ACTION="change_password";
     public static String EDIT_PROFILE_ACTION="edit_profile";
     public static String UPLOAD_DOCUMENT_ACTION="upload_document";
+    public static String GET_EVENT_FILTER="get_events_filter";
+
+
+    public static String EVENT_ID = "event_id";
+    public static String EVENT_NAME = "name";
+    public static String EVENT_LOC = "location";
+    public static String EVENT_PRICE = "price";
+    public static String EVENT_IMAGES = "images";
+    public static String EVENT_FAV = "is_liked";
+    public static String EVENT_START_DATE = "event_start_date";
+
+
+
 
 
     public static String URL="http://envagoapp.com//webservice.php";

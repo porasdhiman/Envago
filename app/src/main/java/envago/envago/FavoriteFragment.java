@@ -28,7 +28,7 @@ public class FavoriteFragment extends Fragment {
 
                 ad_items = (ListView)v.findViewById(R.id.ad_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
-        ad_items.setAdapter(new Adventure_list_adapter(getActivity(), images));
+      //  ad_items.setAdapter(new Adventure_list_adapter(getActivity(), images));
 
 
         return v;
