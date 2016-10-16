@@ -53,4 +53,5 @@ public class GlobalConstants {
     public static String LIKE_STATUS = "like_status";
 
     public static String URL="http://envagoapp.com//webservice.php";
+    public static String DETAILS_EVENT_ACTION="get_single_event";
 }
