@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/main_heading"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/textcolor">
+
+        <ImageView
+            android:id="@+id/back_button_create"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="14dp"
+            android:src="@drawable/back_button" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Create an Adventure"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager_introduction"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:fitsSystemWindows="true"/>
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                android:id="@+id/add_image_adventure"
+                android:src="@drawable/add_button"/>
+
+            <RelativeLayout
+                android:id="@+id/viewPagerIndicator"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="-50dp"
+                android:gravity="center">
+
+
+                <LinearLayout
+                    android:id="@+id/viewPagerCountDots"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:orientation="horizontal" />
+
+
+
+            </RelativeLayout>
+
+
+</RelativeLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Name Of Adventure"
+        android:padding="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/adventure_stroke"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+        <!--level_spinner-->
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="10dp"
+
+            android:padding="10dp"
+            android:layout_weight="0.6"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/adventure_stroke"
+            android:textSize="16sp"/>
+        <!--Category_spinner-->
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="16dp"
+            android:hint="Name Of Adventure"
+            android:padding="10dp"
+            android:layout_weight="0.4"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/adventure_stroke"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <!--Calender-->
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Start Date"
+        android:padding="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/adventure_stroke"
+        android:textSize="16sp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="End Date"
+        android:padding="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/adventure_stroke"
+        android:textSize="16sp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Starting point"
+        android:padding="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/adventure_stroke"
+        android:textSize="16sp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Ending oint"
+        android:padding="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/adventure_stroke"
+        android:textSize="16sp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Meeting point"
+        android:padding="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/adventure_stroke"
+        android:textSize="16sp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Meeting Time"
+        android:padding="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/adventure_stroke"
+        android:textSize="16sp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Type the event description here..."
+        android:padding="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/adventure_stroke"
+        android:textSize="16sp"/>
+
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_marginTop="10dp"
+        android:background="#c2c2c2" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Places"
+        android:layout_gravity="center"
+        android:textColor="#000"
+        android:layout_marginLeft="10dp"
+        />
+
+        <EditText
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="10"
+            android:padding="10dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/adventure_stroke"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_marginTop="10dp"
+        android:background="#c2c2c2" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pricing"
+            android:textColor="#000"
+            android:layout_marginLeft="10dp"
+            />
+
+        <EditText
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="$249"
+            android:padding="10dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/adventure_stroke"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Criteria/eligibility - age, fitness, experience..."
+        android:padding="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/adventure_stroke"
+        android:textSize="16sp"/>
+
+
+    <RelativeLayout
+        android:id="@+id/firstchk_group_create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="10dp">
+
+        <CheckBox
+            android:id="@+id/chk_transport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="14sp"
+            />
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_toRightOf="@+id/chk_transport"
+            android:id="@+id/img_transport"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transportation"
+            android:layout_centerVertical="true"
+
+            android:id="@+id/_text_transport"
+            android:layout_toRightOf="@+id/img_transport"/>
+
+
+        <CheckBox
+            android:id="@+id/chk_meal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/_text_transport"
+            android:textColor="#000"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_toRightOf="@+id/chk_meal"
+            android:id="@+id/img_meal"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meal"
+            android:layout_centerVertical="true"
+
+            android:layout_toRightOf="@+id/img_meal"
+            android:id="@+id/text_meal"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/secondchk_group_create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+
+        <CheckBox
+            android:id="@+id/chk_accomodation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="14sp"
+            />
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_toRightOf="@+id/chk_accomodation"
+            android:id="@+id/img_accomodation"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accomodation"
+            android:layout_centerVertical="true"
+
+            android:id="@+id/text_accomodation"
+            android:layout_toRightOf="@+id/img_accomodation"/>
+
+
+        <CheckBox
+            android:id="@+id/chk_gear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/text_accomodation"
+            android:textColor="#000"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_toRightOf="@+id/chk_gear"
+            android:id="@+id/img_gear"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gear"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/img_gear"
+            android:id="@+id/text_gear"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/thirdchk_group_create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35dp">
+
+        <CheckBox
+            android:id="@+id/chk_tent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="14sp"
+            />
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_toRightOf="@+id/chk_tent"
+            android:id="@+id/img_tent"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tent"
+            android:layout_centerVertical="true"
+            android:id="@+id/text_tent"
+            android:layout_toRightOf="@+id/img_tent"/>
+
+
+
+
+    </RelativeLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Disclaimer(Optional)"
+        android:padding="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/adventure_stroke"
+        android:textSize="16sp"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="@drawable/red_button"
+        android:text="Submit"
+        android:textColor="#fff"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="15dp"/>
+</LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
