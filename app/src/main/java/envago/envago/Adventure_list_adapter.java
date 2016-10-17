@@ -172,7 +172,7 @@ public class Adventure_list_adapter extends BaseAdapter {
         } catch (java.text.ParseException e) {
             e.printStackTrace();
         }
-        if (currentDate.equals(eventDate)) {
+        if (eventDate.equals(currentDate)||eventDate.before(currentDate)) {
             holder.start_event_txtView.setVisibility(View.VISIBLE);
         } else {
             holder.start_event_txtView.setVisibility(View.GONE);

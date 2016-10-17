@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <RelativeLayout
         android:id="@+id/main_heading"
         android:layout_width="match_parent"
@@ -32,557 +33,600 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/pager_introduction"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:fitsSystemWindows="true"/>
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_centerInParent="true"
-                android:id="@+id/add_image_adventure"
-                android:src="@drawable/add_button"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager_introduction"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:fitsSystemWindows="true" />
+
+                <ImageView
+                    android:id="@+id/add_image_adventure"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/add_button" />
+
+                <RelativeLayout
+                    android:id="@+id/viewPagerIndicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="-50dp"
+                    android:gravity="center">
+
+
+                    <LinearLayout
+                        android:id="@+id/viewPagerCountDots_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:orientation="horizontal" />
+
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/name_of_advanture_editText"
+
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Name Of Adventure"
+                android:padding="10dp"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1">
+                <!--level_spinner-->
+                <Spinner
+                    android:id="@+id/level_cat_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.6"
+                    android:background="@drawable/adventure_stroke"
+                    android:entries="@array/level"
+                    android:padding="10dp"
+                    android:textSize="16sp" />
+                <!--Category_spinner-->
+                <Spinner
+                    android:id="@+id/event_cat_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/adventure_stroke"
+                    android:entries="@array/event_cat"
+                    android:hint="Name Of Adventure"
+                    android:padding="10dp"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <!--Calender-->
+
+            <TextView
+                android:id="@+id/start_date_textVeiw"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Start Date"
+                android:padding="10dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/end_date_textView"
+
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="End Date"
+                android:padding="10dp"
+                android:textSize="16sp" />
 
             <RelativeLayout
-                android:id="@+id/viewPagerIndicator"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="-50dp"
-                android:gravity="center">
+                android:id="@+id/start_date_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke">
 
-
-                <LinearLayout
-                    android:id="@+id/viewPagerCountDots"
+                <AutoCompleteTextView
+                    android:id="@+id/start_point_loc"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center"
-                    android:orientation="horizontal" />
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/add_loc"
+                    android:background="@null"
 
+                    android:hint="Starting point"
+                    android:singleLine="true"
+                    android:textSize="16sp" />
+
+
+                <ImageView
+                    android:id="@+id/add_loc"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/plus" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/loc1"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_below="@+id/start_date_layout"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:visibility="gone"
+                android:background="@drawable/adventure_stroke">
+
+                <AutoCompleteTextView
+                    android:id="@+id/loc1_txtView"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_toLeftOf="@+id/minus1_img"
+                    android:background="@null"
+                    android:hint="Location 1"
+
+                    android:singleLine="true"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/minus1_img"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/minus"
+
+                    />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/loc2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/loc1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:visibility="gone">
+
+                <AutoCompleteTextView
+                    android:id="@+id/loc2_txtView"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_toLeftOf="@+id/minus2_img"
+                    android:hint="Location 2"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/minus2_img"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/minus" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/loc3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/loc2"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:visibility="gone">
+
+                <AutoCompleteTextView
+                    android:id="@+id/loc3_txtView"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+
+                    android:layout_toLeftOf="@+id/minus3_img"
+
+                    android:background="@null"
+                    android:hint="Location 3"
+                    android:singleLine="true"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/minus3_img"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/minus" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/loc4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/loc3"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:visibility="gone">
+
+                <AutoCompleteTextView
+                    android:id="@+id/loc4_txtView"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_toLeftOf="@+id/minus4_img"
+
+                    android:background="@null"
+                    android:hint="Location 4"
+                    android:singleLine="true"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/minus4_img"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/minus" />
 
 
             </RelativeLayout>
 
 
-</RelativeLayout>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="Name Of Adventure"
-        android:padding="10dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/adventure_stroke"
-        android:textSize="16sp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1">
-        <!--level_spinner-->
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="10dp"
-
-            android:padding="10dp"
-            android:layout_weight="0.6"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/adventure_stroke"
-            android:textSize="16sp"/>
-        <!--Category_spinner-->
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="16dp"
-            android:hint="Name Of Adventure"
-            android:padding="10dp"
-            android:layout_weight="0.4"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/adventure_stroke"
-            android:textSize="16sp"/>
-    </LinearLayout>
-
-    <!--Calender-->
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="Start Date"
-        android:padding="10dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/adventure_stroke"
-        android:textSize="16sp"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="End Date"
-        android:padding="10dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/adventure_stroke"
-        android:textSize="16sp"/>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/start_date_layout">
-
-        <AutoCompleteTextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/adventure_stroke"
-            android:hint="Starting point"
-            android:padding="10dp"
-            android:id="@+id/start_date_edit"
-            android:paddingRight="30dp"
-            android:singleLine="true"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="25dp"
-            android:src="@drawable/plus" />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/loc1"
-            android:layout_below="@+id/start_date_edit"
-            android:visibility="gone">
-
             <AutoCompleteTextView
+                android:id="@+id/end_point_txtView"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/adventure_stroke"
-                android:hint="Starting point"
+                android:hint="Ending point"
                 android:padding="10dp"
-                android:paddingRight="30dp"
-                android:singleLine="true"
                 android:textSize="16sp" />
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="25dp"
-                android:layout_marginTop="25dp"
-                android:src="@drawable/minus"
-                android:visibility="gone"/>
-
-
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/loc2"
-            android:layout_below="@+id/loc1"
-            android:visibility="gone">
-
             <AutoCompleteTextView
+                android:id="@+id/meeting_point_txtView"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/adventure_stroke"
-                android:hint="Location 2"
+                android:hint="Meeting point"
                 android:padding="10dp"
-                android:paddingRight="30dp"
-                android:singleLine="true"
                 android:textSize="16sp" />
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="25dp"
-                android:layout_marginTop="25dp"
-                android:src="@drawable/minus"
-                android:visibility="gone"/>
-
-
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/loc3"
-            android:layout_below="@+id/loc2"
-            android:visibility="gone">
-
-            <AutoCompleteTextView
+            <TextView
+                android:id="@+id/meeting_time_txtView"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/adventure_stroke"
-                android:hint="Location 3"
+                android:hint="Meeting Time"
                 android:padding="10dp"
-                android:paddingRight="30dp"
-                android:singleLine="true"
                 android:textSize="16sp" />
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="25dp"
-                android:layout_marginTop="25dp"
-                android:src="@drawable/minus"
-                android:visibility="gone"/>
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/loc4"
-            android:layout_below="@+id/loc3"
-            android:visibility="gone">
-
-            <AutoCompleteTextView
+            <EditText
+                android:id="@+id/event_desc_txtView"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="100dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/adventure_stroke"
-                android:hint="Location 3"
+                android:hint="Type the event description here..."
                 android:padding="10dp"
-                android:paddingRight="30dp"
-                android:singleLine="true"
+                android:scrollHorizontally="true"
+                android:scrollbars="vertical"
                 android:textSize="16sp" />
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="25dp"
-                android:layout_marginTop="25dp"
-                android:src="@drawable/minus"
-                android:visibility="gone"/>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginTop="10dp"
+                android:background="#c2c2c2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text="Places"
+                    android:textColor="#000" />
+
+                <EditText
+
+                    android:id="@+id/places_txtview"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/adventure_stroke"
+                    android:hint="10"
+                    android:padding="10dp"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginTop="10dp"
+                android:background="#c2c2c2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Pricing"
+                    android:textColor="#000" />
+
+                <EditText
+                    android:id="@+id/pricing_txtView"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/adventure_stroke"
+                    android:hint="$249"
+                    android:padding="10dp"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/criteria_txtView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Criteria/eligibility - age, fitness, experience..."
+                android:padding="10dp"
+                android:textSize="16sp" />
 
 
-        </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/firstchk_group_create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp">
+
+                <CheckBox
+                    android:id="@+id/chk_transport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/img_transport"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_toRightOf="@+id/chk_transport"
+                    android:src="@drawable/transportation" />
+
+                <TextView
+                    android:id="@+id/_text_transport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+
+                    android:layout_toRightOf="@+id/img_transport"
+                    android:text="Transportation" />
 
 
-    </RelativeLayout>
+                <CheckBox
+                    android:id="@+id/chk_meal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_toRightOf="@+id/_text_transport"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="Ending oint"
-        android:padding="10dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/adventure_stroke"
-        android:textSize="16sp"/>
+                <ImageView
+                    android:id="@+id/img_meal"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_toRightOf="@+id/chk_meal"
+                    android:src="@drawable/meal" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="Meeting point"
-        android:padding="10dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/adventure_stroke"
-        android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/text_meal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="Meeting Time"
-        android:padding="10dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/adventure_stroke"
-        android:textSize="16sp"/>
+                    android:layout_toRightOf="@+id/img_meal"
+                    android:text="Meal" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="Type the event description here..."
-        android:padding="10dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/adventure_stroke"
-        android:textSize="16sp"/>
+            </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/secondchk_group_create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp">
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:layout_marginTop="10dp"
-        android:background="#c2c2c2" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:orientation="horizontal">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Places"
-        android:layout_gravity="center"
-        android:textColor="#000"
-        android:layout_marginLeft="10dp"
-        />
+                <CheckBox
+                    android:id="@+id/chk_accomodation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
 
-        <EditText
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:hint="10"
-            android:padding="10dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/adventure_stroke"
-            android:textSize="16sp"/>
+                <ImageView
+                    android:id="@+id/img_accomodation"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_toRightOf="@+id/chk_accomodation"
+                    android:src="@drawable/accomodation" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/text_accomodation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:layout_marginTop="10dp"
-        android:background="#c2c2c2" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pricing"
-            android:textColor="#000"
-            android:layout_marginLeft="10dp"
-            />
-
-        <EditText
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:hint="$249"
-            android:padding="10dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/adventure_stroke"
-            android:textSize="16sp"/>
-
-    </LinearLayout>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="Criteria/eligibility - age, fitness, experience..."
-        android:padding="10dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/adventure_stroke"
-        android:textSize="16sp"/>
+                    android:layout_toRightOf="@+id/img_accomodation"
+                    android:text="Accomodation" />
 
 
-    <RelativeLayout
-        android:id="@+id/firstchk_group_create"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="16dp">
+                <CheckBox
+                    android:id="@+id/chk_gear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_toRightOf="@+id/text_accomodation"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
 
-        <CheckBox
-            android:id="@+id/chk_transport"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:textSize="14sp"
-            />
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@mipmap/ic_launcher"
-            android:layout_toRightOf="@+id/chk_transport"
-            android:id="@+id/img_transport"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Transportation"
-            android:layout_centerVertical="true"
+                <ImageView
+                    android:id="@+id/img_gear"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_toRightOf="@+id/chk_gear"
+                    android:src="@drawable/gear" />
 
-            android:id="@+id/_text_transport"
-            android:layout_toRightOf="@+id/img_transport"/>
+                <TextView
+                    android:id="@+id/text_gear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/img_gear"
+                    android:text="Gear" />
 
+            </RelativeLayout>
 
-        <CheckBox
-            android:id="@+id/chk_meal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_toRightOf="@+id/_text_transport"
-            android:textColor="#000"
-            android:textSize="14sp" />
+            <RelativeLayout
+                android:id="@+id/thirdchk_group_create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp">
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@mipmap/ic_launcher"
-            android:layout_toRightOf="@+id/chk_meal"
-            android:id="@+id/img_meal"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Meal"
-            android:layout_centerVertical="true"
+                <CheckBox
+                    android:id="@+id/chk_tent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
 
-            android:layout_toRightOf="@+id/img_meal"
-            android:id="@+id/text_meal"/>
+                <ImageView
+                    android:id="@+id/img_tent"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_toRightOf="@+id/chk_tent"
+                    android:src="@mipmap/ic_launcher" />
 
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/secondchk_group_create"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        >
-
-        <CheckBox
-            android:id="@+id/chk_accomodation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:textSize="14sp"
-            />
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@mipmap/ic_launcher"
-            android:layout_toRightOf="@+id/chk_accomodation"
-            android:id="@+id/img_accomodation"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Accomodation"
-            android:layout_centerVertical="true"
-
-            android:id="@+id/text_accomodation"
-            android:layout_toRightOf="@+id/img_accomodation"/>
+                <TextView
+                    android:id="@+id/text_tent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/img_tent"
+                    android:text="Tent" />
 
 
-        <CheckBox
-            android:id="@+id/chk_gear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_toRightOf="@+id/text_accomodation"
-            android:textColor="#000"
-            android:textSize="14sp" />
+            </RelativeLayout>
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@mipmap/ic_launcher"
-            android:layout_toRightOf="@+id/chk_gear"
-            android:id="@+id/img_gear"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gear"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/img_gear"
-            android:id="@+id/text_gear"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/thirdchk_group_create"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp">
-
-        <CheckBox
-            android:id="@+id/chk_tent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:textSize="14sp"
-            />
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@mipmap/ic_launcher"
-            android:layout_toRightOf="@+id/chk_tent"
-            android:id="@+id/img_tent"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tent"
-            android:layout_centerVertical="true"
-            android:id="@+id/text_tent"
-            android:layout_toRightOf="@+id/img_tent"/>
+            <EditText
+                android:id="@+id/disclaimer_txtView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Disclaimer(Optional)"
+                android:padding="10dp"
+                android:textSize="16sp" />
 
 
+            <Button
+                android:id="@+id/submit_event_btn"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/red_button"
+                android:text="Submit"
+                android:textColor="#fff" />
+        </LinearLayout>
 
-
-    </RelativeLayout>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="Disclaimer(Optional)"
-        android:padding="10dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/adventure_stroke"
-        android:textSize="16sp"/>
-
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="43dp"
-        android:background="@drawable/red_button"
-        android:text="Submit"
-        android:textColor="#fff"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="15dp"/>
+    </ScrollView>
 </LinearLayout>
-
-        </ScrollView>
-    </LinearLayout>
