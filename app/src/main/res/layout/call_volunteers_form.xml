@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/main_heading"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/textcolor">
+
+        <ImageView
+            android:id="@+id/back_button_create"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="14dp"
+            android:src="@drawable/back_button" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Go Volunteer"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/pager_introduction"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:fitsSystemWindows="true" />
+
+                <ImageView
+                    android:id="@+id/add_image_adventure"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/add_button" />
+
+                <RelativeLayout
+                    android:id="@+id/viewPagerIndicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="-50dp"
+                    android:gravity="center">
+
+
+                    <LinearLayout
+                        android:id="@+id/viewPagerCountDots"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:orientation="horizontal" />
+
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Name Of Volunteer.."
+                android:padding="10dp"
+                android:textSize="16sp" />
+            <!--Category_spinner-->
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.4"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Name Of Adventure"
+                android:padding="10dp"
+                android:textSize="16sp" />
+
+
+            <!--Calender-->
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Start Date"
+                android:padding="10dp"
+                android:textSize="16sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="End Date"
+                android:padding="10dp"
+                android:textSize="16sp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/start_date_layout">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/adventure_stroke"
+                    android:hint="Starting point"
+                    android:padding="10dp"
+                    android:id="@+id/start_date_edit"
+                    android:paddingRight="30dp"
+                    android:singleLine="true"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="25dp"
+                    android:src="@drawable/plus" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/loc1"
+                android:layout_below="@+id/start_date_edit"
+                android:visibility="gone">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/adventure_stroke"
+                    android:hint="Starting point"
+                    android:padding="10dp"
+                    android:paddingRight="30dp"
+                    android:singleLine="true"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="25dp"
+                    android:src="@drawable/minus"
+                    android:visibility="gone"/>
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/loc2"
+                android:layout_below="@+id/loc1"
+                android:visibility="gone">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/adventure_stroke"
+                    android:hint="Location 2"
+                    android:padding="10dp"
+                    android:paddingRight="30dp"
+                    android:singleLine="true"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="25dp"
+                    android:src="@drawable/minus"
+                    android:visibility="gone"/>
+
+
+            </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/loc3"
+                    android:layout_below="@+id/loc2"
+                    android:visibility="gone">
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/adventure_stroke"
+                        android:hint="Location 3"
+                        android:padding="10dp"
+                        android:paddingRight="30dp"
+                        android:singleLine="true"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginTop="25dp"
+                        android:src="@drawable/minus"
+                        android:visibility="gone"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/loc4"
+                    android:layout_below="@+id/loc3"
+                    android:visibility="gone">
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/adventure_stroke"
+                        android:hint="Location 3"
+                        android:padding="10dp"
+                        android:paddingRight="30dp"
+                        android:singleLine="true"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginTop="25dp"
+                        android:src="@drawable/minus"
+                        android:visibility="gone"/>
+
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Ending Point"
+                android:padding="10dp"
+                android:textSize="16sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Meeting point"
+                android:padding="10dp"
+                android:textSize="16sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Meeting Time"
+                android:padding="10dp"
+                android:textSize="16sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Type the event description here..."
+                android:padding="10dp"
+                android:textSize="16sp" />
+
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginTop="10dp"
+                android:background="#c2c2c2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:text="Places"
+                    android:textColor="#000" />
+
+                <EditText
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/adventure_stroke"
+                    android:hint="10"
+                    android:padding="10dp"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginTop="10dp"
+                android:background="#c2c2c2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Pricing"
+                    android:textColor="#000" />
+
+                <EditText
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/adventure_stroke"
+                    android:hint="$249"
+                    android:padding="10dp"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Criteria/eligibility - age, fitness, experience..."
+                android:padding="10dp"
+                android:textSize="16sp" />
+
+
+            <RelativeLayout
+                android:id="@+id/firstchk_group_create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp">
+
+                <CheckBox
+                    android:id="@+id/chk_transport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/img_transport"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_toRightOf="@+id/chk_transport"
+                    android:src="@drawable/transportation" />
+
+                <TextView
+                    android:id="@+id/_text_transport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/img_transport"
+                    android:text="Transportation" />
+
+
+                <CheckBox
+                    android:id="@+id/chk_meal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_toRightOf="@+id/_text_transport"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/img_meal"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_toRightOf="@+id/chk_meal"
+                    android:src="@drawable/meal" />
+
+                <TextView
+                    android:id="@+id/text_meal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/img_meal"
+                    android:text="Meal" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/secondchk_group_create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp">
+
+                <CheckBox
+                    android:id="@+id/chk_accomodation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/img_accomodation"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_toRightOf="@+id/chk_accomodation"
+                    android:src="@drawable/accomodation" />
+
+                <TextView
+                    android:id="@+id/text_accomodation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/img_accomodation"
+                    android:text="Accomodation" />
+
+
+                <CheckBox
+                    android:id="@+id/chk_gear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_toRightOf="@+id/text_accomodation"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/img_gear"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_toRightOf="@+id/chk_gear"
+                    android:src="@drawable/gear" />
+
+                <TextView
+                    android:id="@+id/text_gear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/img_gear"
+                    android:text="Gear" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/thirdchk_group_create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp">
+
+                <CheckBox
+                    android:id="@+id/chk_tent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/img_tent"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_toRightOf="@+id/chk_tent"
+                    android:src="@drawable/tent" />
+
+                <TextView
+                    android:id="@+id/text_tent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/img_tent"
+                    android:text="Tent" />
+
+
+            </RelativeLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Disclaimer(Optional)"
+                android:padding="10dp"
+                android:textSize="16sp" />
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/red_button"
+                android:text="Submit"
+                android:textColor="#fff" />
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

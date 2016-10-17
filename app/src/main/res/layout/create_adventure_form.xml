@@ -43,13 +43,13 @@
             android:orientation="vertical">
 
             <android.support.v4.view.ViewPager
-                android:id="@+id/viewpager_introduction"
+                android:id="@+id/pager_introduction"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:fitsSystemWindows="true"/>
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_centerInParent="true"
                 android:id="@+id/add_image_adventure"
                 android:src="@drawable/add_button"/>
@@ -64,7 +64,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/viewPagerCountDots_layout"
+                    android:id="@+id/viewPagerCountDots"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
@@ -143,16 +143,161 @@
         android:background="@drawable/adventure_stroke"
         android:textSize="16sp"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="Starting point"
-        android:padding="10dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/adventure_stroke"
-        android:textSize="16sp"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_date_layout">
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/adventure_stroke"
+            android:hint="Starting point"
+            android:padding="10dp"
+            android:id="@+id/start_date_edit"
+            android:paddingRight="30dp"
+            android:singleLine="true"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/plus" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loc1"
+            android:layout_below="@+id/start_date_edit"
+            android:visibility="gone">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Starting point"
+                android:padding="10dp"
+                android:paddingRight="30dp"
+                android:singleLine="true"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/minus"
+                android:visibility="gone"/>
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loc2"
+            android:layout_below="@+id/loc1"
+            android:visibility="gone">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Location 2"
+                android:padding="10dp"
+                android:paddingRight="30dp"
+                android:singleLine="true"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/minus"
+                android:visibility="gone"/>
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loc3"
+            android:layout_below="@+id/loc2"
+            android:visibility="gone">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Location 3"
+                android:padding="10dp"
+                android:paddingRight="30dp"
+                android:singleLine="true"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/minus"
+                android:visibility="gone"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loc4"
+            android:layout_below="@+id/loc3"
+            android:visibility="gone">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/adventure_stroke"
+                android:hint="Location 3"
+                android:padding="10dp"
+                android:paddingRight="30dp"
+                android:singleLine="true"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/minus"
+                android:visibility="gone"/>
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 
     <EditText
         android:layout_width="match_parent"
@@ -277,8 +422,8 @@
         android:id="@+id/firstchk_group_create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp">
 
         <CheckBox
             android:id="@+id/chk_transport"
@@ -332,7 +477,7 @@
         android:id="@+id/secondchk_group_create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_marginLeft="16dp"
         >
 
         <CheckBox
@@ -387,7 +532,7 @@
         android:id="@+id/thirdchk_group_create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="35dp">
+        android:layout_marginLeft="16dp">
 
         <CheckBox
             android:id="@+id/chk_tent"
