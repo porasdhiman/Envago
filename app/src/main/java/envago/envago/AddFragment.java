@@ -55,7 +55,7 @@ public class AddFragment extends Fragment {
         createAdventures.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CreateAdventuresActivity.class);
+                Intent intent = new Intent(getActivity(), AdventureForm.class);
                 startActivity(intent);
 
             }

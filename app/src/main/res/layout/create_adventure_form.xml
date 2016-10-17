@@ -43,7 +43,7 @@
             android:orientation="vertical">
 
             <android.support.v4.view.ViewPager
-                android:id="@+id/pager_introduction"
+                android:id="@+id/viewpager_introduction"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:fitsSystemWindows="true"/>
@@ -64,7 +64,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/viewPagerCountDots"
+                    android:id="@+id/viewPagerCountDots_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
