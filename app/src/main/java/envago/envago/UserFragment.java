@@ -265,7 +265,7 @@ public class UserFragment extends Fragment {
                         editor.putString(GlobalConstants.PAYPAL, json_data.getString(GlobalConstants.PAYPAL));
                         editor.putString(GlobalConstants.ABOUT, json_data.getString(GlobalConstants.ABOUT));
                         editor.putString(GlobalConstants.DOCUMENT, json_data.getString(GlobalConstants.DOCUMENT));
-                        editor.putString(GlobalConstants.IMAGE, json_data.getString(GlobalConstants.IMAGE));
+                        editor.putString(GlobalConstants.IMAGE, "http://envagoapp.com/uploads/"+json_data.getString(GlobalConstants.IMAGE));
 
                         editor.commit();
 

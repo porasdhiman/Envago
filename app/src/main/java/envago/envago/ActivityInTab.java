@@ -34,11 +34,9 @@ public class ActivityInTab extends FragmentActivity {
 
         FragmentTransaction anim_frag = fragmentManager.beginTransaction();
 
-        if (i == 1) {
-           // anim_frag.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left);
-        } else {
-           // anim_frag.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right);
-        }
+
+        anim_frag.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+
 
         anim_frag.replace(R.id.contentintab, fragment).addToBackStack(null).commit();
 

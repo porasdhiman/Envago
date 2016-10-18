@@ -52,8 +52,8 @@
 
                 <ImageView
                     android:id="@+id/add_image_adventure"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:layout_centerInParent="true"
                     android:src="@drawable/add_button" />
 
@@ -91,7 +91,7 @@
                 android:background="@drawable/adventure_stroke"
                 android:hint="Name Of Adventure"
                 android:padding="10dp"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -109,7 +109,7 @@
                     android:background="@drawable/adventure_stroke"
                     android:entries="@array/level"
                     android:padding="10dp"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
                 <!--Category_spinner-->
                 <Spinner
                     android:id="@+id/event_cat_spinner"
@@ -123,7 +123,7 @@
                     android:entries="@array/event_cat"
                     android:hint="Name Of Adventure"
                     android:padding="10dp"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <!--Calender-->
@@ -138,7 +138,7 @@
                 android:background="@drawable/adventure_stroke"
                 android:hint="Start Date"
                 android:padding="10dp"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/end_date_textView"
@@ -151,7 +151,7 @@
                 android:background="@drawable/adventure_stroke"
                 android:hint="End Date"
                 android:padding="10dp"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <RelativeLayout
                 android:id="@+id/start_date_layout"
@@ -172,7 +172,7 @@
 
                     android:hint="Starting point"
                     android:singleLine="true"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
 
                 <ImageView
@@ -206,7 +206,7 @@
                     android:hint="Location 1"
 
                     android:singleLine="true"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/minus1_img"
@@ -241,7 +241,7 @@
                     android:hint="Location 2"
                     android:background="@null"
                     android:singleLine="true"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/minus2_img"
@@ -277,7 +277,7 @@
                     android:background="@null"
                     android:hint="Location 3"
                     android:singleLine="true"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/minus3_img"
@@ -311,7 +311,7 @@
                     android:background="@null"
                     android:hint="Location 4"
                     android:singleLine="true"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/minus4_img"
@@ -336,7 +336,7 @@
                 android:background="@drawable/adventure_stroke"
                 android:hint="Ending point"
                 android:padding="10dp"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <AutoCompleteTextView
                 android:id="@+id/meeting_point_txtView"
@@ -348,7 +348,7 @@
                 android:background="@drawable/adventure_stroke"
                 android:hint="Meeting point"
                 android:padding="10dp"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/meeting_time_txtView"
@@ -360,7 +360,7 @@
                 android:background="@drawable/adventure_stroke"
                 android:hint="Meeting Time"
                 android:padding="10dp"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/event_desc_txtView"
@@ -374,7 +374,7 @@
                 android:padding="10dp"
                 android:scrollHorizontally="true"
                 android:scrollbars="vertical"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
 
             <View
@@ -387,6 +387,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
+                android:layout_marginLeft="16dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -395,6 +396,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:text="Places"
+
                     android:textColor="#000" />
 
                 <EditText
@@ -402,13 +404,13 @@
                     android:id="@+id/places_txtview"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_gravity="center_vertical"
                     android:background="@drawable/adventure_stroke"
                     android:hint="10"
                     android:padding="10dp"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -421,12 +423,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
+                android:layout_marginLeft="16dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
                     android:text="Pricing"
                     android:textColor="#000" />
 
@@ -434,13 +438,13 @@
                     android:id="@+id/pricing_txtView"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_gravity="center_vertical"
                     android:background="@drawable/adventure_stroke"
                     android:hint="$249"
                     android:padding="10dp"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -454,7 +458,7 @@
                 android:background="@drawable/adventure_stroke"
                 android:hint="Criteria/eligibility - age, fitness, experience..."
                 android:padding="10dp"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
 
             <RelativeLayout
@@ -473,8 +477,10 @@
 
                 <ImageView
                     android:id="@+id/img_transport"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="5dp"
+
                     android:layout_toRightOf="@+id/chk_transport"
                     android:src="@drawable/transportation" />
 
@@ -483,7 +489,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-
+                    android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/img_transport"
                     android:text="Transportation" />
 
@@ -499,8 +505,10 @@
 
                 <ImageView
                     android:id="@+id/img_meal"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="5dp"
+
                     android:layout_toRightOf="@+id/chk_meal"
                     android:src="@drawable/meal" />
 
@@ -509,6 +517,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
 
                     android:layout_toRightOf="@+id/img_meal"
                     android:text="Meal" />
@@ -530,9 +539,11 @@
 
                 <ImageView
                     android:id="@+id/img_accomodation"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_toRightOf="@+id/chk_accomodation"
+                    android:layout_marginLeft="5dp"
+
                     android:src="@drawable/accomodation" />
 
                 <TextView
@@ -540,6 +551,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
 
                     android:layout_toRightOf="@+id/img_accomodation"
                     android:text="Accomodation" />
@@ -556,8 +568,10 @@
 
                 <ImageView
                     android:id="@+id/img_gear"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="5dp"
+
                     android:layout_toRightOf="@+id/chk_gear"
                     android:src="@drawable/gear" />
 
@@ -566,6 +580,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/img_gear"
                     android:text="Gear" />
 
@@ -586,16 +601,20 @@
 
                 <ImageView
                     android:id="@+id/img_tent"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="5dp"
+
                     android:layout_toRightOf="@+id/chk_tent"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@drawable/tent" />
 
                 <TextView
                     android:id="@+id/text_tent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+
                     android:layout_toRightOf="@+id/img_tent"
                     android:text="Tent" />
 
@@ -612,7 +631,7 @@
                 android:background="@drawable/adventure_stroke"
                 android:hint="Disclaimer(Optional)"
                 android:padding="10dp"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
 
             <Button

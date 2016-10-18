@@ -8,6 +8,7 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,21 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
+import android.widget.Toast;
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @SuppressWarnings("deprecation")
@@ -24,6 +40,7 @@ public class Tab_Activity extends TabActivity {
     SharedPreferences sharedPreferences;
     Editor mEditor;
     ProgressDialog progressDialog;
+    Global global;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -34,6 +51,8 @@ public class Tab_Activity extends TabActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
+        global = (Global) getApplicationContext();
+        VerifiedMethod();
         tabHost = getTabHost();
 
         setTabs();
@@ -72,7 +91,7 @@ public class Tab_Activity extends TabActivity {
                     //TextView tv1 = (TextView) vg.getChildAt(1);
                     @SuppressWarnings("unused")
                     ImageView img = (ImageView) vg.getChildAt(0);
-					/*if (i == index) {
+                    /*if (i == index) {
 
 						tv1.setTextColor(Color.parseColor("#0076be"));
 
@@ -128,9 +147,65 @@ public class Tab_Activity extends TabActivity {
 
     }
 
+    private void VerifiedMethod() {
 
 
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GlobalConstants.URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("response", response);
+                        try {
+                            JSONObject obj = new JSONObject(response);
 
+                            String status = obj.getString("success");
+                            if (status.equalsIgnoreCase("1")) {
+                                if (obj.getString("doc_status").equalsIgnoreCase("0")) {
+                                    global.setIsVerified("Not Approved");
+                                } else if (obj.getString("doc_status").equalsIgnoreCase("1")) {
+                                    global.setIsVerified("Approved");
+                                } else if (obj.getString("doc_status").equalsIgnoreCase("2")) {
+                                    global.setIsVerified("Document Not Submitted Yet");
+                                } else {
+                                    global.setIsVerified("Document Submitted But no approved Yet");
+                                }
+
+
+                            } else {
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(Tab_Activity.this, error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(GlobalConstants.USERID, CommonUtils.UserID(Tab_Activity.this));
+
+                params.put("action", GlobalConstants.VERIFIED_ACTION);
+                Log.e("facebook login", params.toString());
+                return params;
+            }
+
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
 
 
 }

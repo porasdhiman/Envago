@@ -36,6 +36,17 @@ public class Global extends Application {
     }
 
     String Long="";
+
+    public String getIsVerified() {
+        return isVerified;
+    }
+
+    public void setIsVerified(String isVerified) {
+        this.isVerified = isVerified;
+    }
+
+    String isVerified;
+
     @Override
     public void onCreate() {
         super.onCreate();

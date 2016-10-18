@@ -5,13 +5,15 @@
 
     <string name="place_details">&lt;b&gt;%1$s&lt;/b&gt;&lt;br/&gt;&lt;i&gt;Place Id: %2$s&lt;/i&gt;&lt;br/&gt;Address: %3$s&lt;br/&gt;Phone: %4$s&lt;br/&gt;Website: %5$s</string>
 <string-array name="level">
+    <item>level</item>
     <item>1</item>
-    <item>1</item>
-    <item>1</item>
-    <item>1</item>
+    <item>2</item>
+    <item>3</item>
+    <item>4</item>
 
 </string-array>
     <string-array name="event_cat">
+        <item>Catgory</item>
         <item>Air</item>
         <item>Earth</item>
         <item>Water</item>

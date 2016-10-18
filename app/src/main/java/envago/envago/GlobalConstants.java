@@ -54,4 +54,11 @@ public class GlobalConstants {
 
     public static String URL="http://envagoapp.com//webservice.php";
     public static String DETAILS_EVENT_ACTION="get_single_event";
+    public static String VERIFIED_ACTION="get_document_status";
+    public static String CREATE_EVENT_ACTION="create_event";
+    public static String EVENT_END_DATE="event_end_date";
+    public static String EVENT_TIME="time";
+    public static String EVENT_LEVEL="level";
+    public static String EVENT_METTING_POINT="meeting_point";
+    public static String LOCATION="location";
 }

@@ -18,6 +18,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.ContactsContract;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -29,12 +31,14 @@ import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -61,6 +65,18 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
+import com.wang.avi.AVLoadingIndicatorView;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -78,7 +94,7 @@ import java.util.Locale;
  * Created by jhang on 10/16/2016.
  */
 public class AdventureForm extends FragmentActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks {
+        GoogleApiClient.ConnectionCallbacks, View.OnTouchListener {
     ViewPager pager_image;
     ImageView add_imageView;
     ArrayList<String> list_image = new ArrayList<>();
@@ -98,7 +114,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
     private int minute;
     private DatePickerDialog fromDatePickerDialog;
     private SimpleDateFormat dateFormatter;
-    int i, j = 1;
+    int i, j = 1, k;
 
     boolean tran = true, acc = true, tent = true, meal = true, gear = true;
     ImageView add_loc, minus1_img, minus2_img, minus3_img, minus4_img;
@@ -116,8 +132,14 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
 
     private int mYear, mMonth, mDay, mHour, mMinute;
     CheckBox chk_transport, chk_meal, chk_accomodation, chk_gear, chk_tent;
-    String trans_mString, tent_mString, meal_mString, gear_mString, acc_mString, main_id, sub_cat_id;
+    String trans_mString, tent_mString, meal_mString, gear_mString, acc_mString, main_id = "", sub_cat_id, level_mString = "";
 
+    Button submit_event_btn;
+    HttpEntity resEntity;
+    String message;
+    Dialog dialog2;
+    String meeting_point_lat, meeting_point_long, start_lat, start_lng, end_lat, end_lng,loc1_location="",loc2_location="",loc3_location="",loc4_location="";
+    String loc1_lat = "", loc1_lng = "", loc2_lat = "", loc2_lng = "", loc3_lat = "", loc3_lng = "", loc4_lat = "", loc4_lng = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +152,13 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
 
 
         setContentView(R.layout.create_adventure_form);
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .enableAutoManage(this, GOOGLE_API_CLIENT_ID, this)
+                .addConnectionCallbacks(this)
+                .build();
         pager_image = (ViewPager) findViewById(R.id.viewpager_introduction);
+        submit_event_btn = (Button) findViewById(R.id.submit_event_btn);
         loc1 = (RelativeLayout) findViewById(R.id.loc1);
         loc2 = (RelativeLayout) findViewById(R.id.loc2);
         loc3 = (RelativeLayout) findViewById(R.id.loc3);
@@ -147,6 +175,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         minus2_img.setOnClickListener(this);
         minus3_img.setOnClickListener(this);
         minus4_img.setOnClickListener(this);
+        submit_event_btn.setOnClickListener(this);
         pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots_layout);
         advanture_editText = (EditText) findViewById(R.id.name_of_advanture_editText);
         places_txtview = (EditText) findViewById(R.id.places_txtview);
@@ -158,6 +187,8 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         disclaimer_txtView = (EditText) findViewById(R.id.disclaimer_txtView);
         start_date_textVeiw = (TextView) findViewById(R.id.start_date_textVeiw);
         end_date_textVeiw = (TextView) findViewById(R.id.end_date_textView);
+        start_date_textVeiw.setOnClickListener(this);
+        end_date_textVeiw.setOnClickListener(this);
         meeting_time_txtView = (TextView) findViewById(R.id.meeting_time_txtView);
         meeting_time_txtView.setOnClickListener(this);
         chk_transport = (CheckBox) findViewById(R.id.chk_transport);
@@ -179,14 +210,36 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         minute = calendar.get(Calendar.MINUTE);
 
         //-------------------------------Call AutocompleteTxtView-----------------
-        buildGoogleApiClient();
         autoSpinnerView();
+
+
         event_cat_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                main_id = "1";
-                sub_cat_id = String.valueOf(position + 1);
+                if (position == 0) {
 
+                } else {
+                    main_id = "1";
+                    sub_cat_id = String.valueOf(position);
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        level_cat_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+
+                } else {
+                    level_mString = level_cat_spinner.getSelectedItem().toString();
+
+                }
             }
 
             @Override
@@ -522,13 +575,16 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
                     } else if (j == 2) {
                         loc2.setVisibility(View.VISIBLE);
                         j++;
+                        minus1_img.setVisibility(View.GONE);
 
                     } else if (j == 3) {
                         loc3.setVisibility(View.VISIBLE);
                         j++;
+                        minus2_img.setVisibility(View.GONE);
 
                     } else if (j == 4) {
                         loc4.setVisibility(View.VISIBLE);
+                        minus3_img.setVisibility(View.GONE);
                         add_loc.setVisibility(View.GONE);
 
                     }
@@ -540,23 +596,26 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
             case R.id.minus1_img:
 
                 loc1.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(),String.valueOf(j),Toast.LENGTH_SHORT).show();
+
 
                 break;
             case R.id.minus2_img:
 
                 loc2.setVisibility(View.GONE);
+                minus1_img.setVisibility(View.VISIBLE);
                 j--;
-                Toast.makeText(getApplicationContext(),String.valueOf(j),Toast.LENGTH_SHORT).show();
+
 
                 break;
             case R.id.minus3_img:
                 loc3.setVisibility(View.GONE);
+                minus2_img.setVisibility(View.VISIBLE);
                 j--;
-                Toast.makeText(getApplicationContext(),String.valueOf(j),Toast.LENGTH_SHORT).show();
+
 
                 break;
             case R.id.minus4_img:
+                minus3_img.setVisibility(View.VISIBLE);
                 loc4.setVisibility(View.GONE);
                 j--;
                 add_loc.setVisibility(View.VISIBLE);
@@ -614,7 +673,13 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
                 } else {
                     meal = true;
                     meal_mString = "0";
+
                 }
+                break;
+            case R.id.submit_event_btn:
+                dialogWindow();
+                new Thread(null, address_request, "")
+                        .start();
                 break;
         }
     }
@@ -643,24 +708,13 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
 
     }
 
-    //----------------------------------location name method--------------
-    protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-
-                .addApi(Places.GEO_DATA_API)
-
-                .enableAutoManage(this, GOOGLE_API_CLIENT_ID, this)
-                .build();
-    }
 
     //-------------------------------Autolocation Method------------------------
     private AdapterView.OnItemClickListener mAutocompleteClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            /*
-             * Retrieve the place ID of the selected item from the Adapter. The
+			/*
+			 * Retrieve the place ID of the selected item from the Adapter. The
 			 * adapter stores each Place suggestion in a PlaceAutocomplete
 			 * object from which we read the place ID.
 			 */
@@ -668,19 +722,18 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
             final PlaceAutocompleteAdapter.PlaceAutocomplete item = autoAdapter.getItem(position);
             final String placeId = String.valueOf(item.placeId);
 
-            //  Log.i("TAG", "placeid: " + global.getPlace_id());
-            Log.i("TAG", "Autocomplete item selected: " + item.description);
+            Log.i("Advanture", "Autocomplete item selected: " + item.description);
 
 			/*
-             * Issue a request to the Places Geo Data API to retrieve a Place
+			 * Issue a request to the Places Geo Data API to retrieve a Place
 			 * object with additional details about the place.
 			 */
             PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
             placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
 
-            //Toast.makeText(getApplicationContext(), "Clicked: " + item.description, Toast.LENGTH_SHORT).show();
-            Log.i("TAG", "Called getPlaceById to get Place details for " + item.placeId);
+            Toast.makeText(getApplicationContext(), "Clicked: " + item.description, Toast.LENGTH_SHORT).show();
 
+            Log.i("Advanture", "Called getPlaceById to get Place details for " + item.placeId);
         }
     };
 
@@ -693,7 +746,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         public void onResult(PlaceBuffer places) {
             if (!places.getStatus().isSuccess()) {
 
-                Log.e("Tag", "Place query did not complete. Error: " + places.getStatus().toString());
+                Log.e("Advanture", "Place query did not complete. Error: " + places.getStatus().toString());
                 places.release();
                 return;
             }
@@ -701,21 +754,53 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
             final Place place = places.get(0);
 
             final CharSequence thirdPartyAttribution = places.getAttributions();
-            CharSequence attributions = places.getAttributions();
 
-            //------------Place.getLatLng use for get Lat long According to select location name-------------------
+            Log.i("Advanture", "Place details received: " + place.getName());
             String latlong = place.getLatLng().toString().split(":")[1];
             String completeLatLng = latlong.substring(1, latlong.length() - 1);
             // Toast.makeText(MapsActivity.this,completeLatLng,Toast.LENGTH_SHORT).show();
             String lat = completeLatLng.split(",")[0];
             lat = lat.substring(1, lat.length());
             String lng = completeLatLng.split(",")[1];
+            if(k==1){
+                start_lat=lat;
+                start_lng=lng;
+            }else if(k==2){
+                loc1_lat=lat;
+                loc1_lat=lng;
+                loc1_location=loc1_txtView.getText().toString();
+            }else if(k==3){
+                loc2_lat=lat;
+                loc2_lat=lng;
+                loc2_location=loc2_txtView.getText().toString();
+            }else if(k==4){
+                loc3_lat=lat;
+                loc3_lat=lng;
+                loc3_location=loc3_txtView.getText().toString();
+            }else if(k==5){
+                loc4_lat=lat;
+                loc4_lat=lng;
+                loc4_location=loc4_txtView.getText().toString();
+            }else if(k==6){
+                end_lat=lat;
+                end_lng=lng;
+            }else if(k==7){
+                meeting_point_lat=lat;
+                meeting_point_long=lng;
+            }
             Toast.makeText(AdventureForm.this, lat + lng, Toast.LENGTH_SHORT).show();
+
 
 
             places.release();
         }
     };
+
+    /**
+     * Callback for results from a Places Geo Data API query that shows the
+     * first place result in the details view on screen.
+     */
+
 
     private static Spanned formatPlaceDetails(Resources res, CharSequence name, String id, CharSequence address,
                                               CharSequence phoneNumber, Uri websiteUri) {
@@ -734,17 +819,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
                 Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mGoogleApiClient.connect();
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mGoogleApiClient.disconnect();
-    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -778,6 +853,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         start_point_loc.setThreshold(1);
 
         start_point_loc.setAdapter(autoAdapter);
+        start_point_loc.setOnTouchListener(this);
 
         loc1_txtView = (AutoCompleteTextView) findViewById(R.id.loc1_txtView);
 
@@ -797,6 +873,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         loc1_txtView.setThreshold(1);
 
         loc1_txtView.setAdapter(autoAdapter);
+        loc1_txtView.setOnTouchListener(this);
 
         loc2_txtView = (AutoCompleteTextView) findViewById(R.id.loc2_txtView);
 
@@ -816,6 +893,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         loc2_txtView.setThreshold(1);
 
         loc2_txtView.setAdapter(autoAdapter);
+        loc2_txtView.setOnTouchListener(this);
         loc3_txtView = (AutoCompleteTextView) findViewById(R.id.loc2_txtView);
 
         loc3_txtView.setOnItemClickListener(mAutocompleteClickListener);
@@ -834,6 +912,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         loc3_txtView.setThreshold(1);
 
         loc3_txtView.setAdapter(autoAdapter);
+        loc3_txtView.setOnTouchListener(this);
         loc4_txtView = (AutoCompleteTextView) findViewById(R.id.loc4_txtView);
 
         loc4_txtView.setOnItemClickListener(mAutocompleteClickListener);
@@ -852,7 +931,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         loc4_txtView.setThreshold(1);
 
         loc4_txtView.setAdapter(autoAdapter);
-
+        loc4_txtView.setOnTouchListener(this);
         end_point_txtView = (AutoCompleteTextView) findViewById(R.id.end_point_txtView);
 
         end_point_txtView.setOnItemClickListener(mAutocompleteClickListener);
@@ -871,6 +950,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         end_point_txtView.setThreshold(1);
 
         end_point_txtView.setAdapter(autoAdapter);
+        end_point_txtView.setOnTouchListener(this);
 
         meeting_point_txtView = (AutoCompleteTextView) findViewById(R.id.meeting_point_txtView);
 
@@ -890,6 +970,8 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         meeting_point_txtView.setThreshold(1);
 
         meeting_point_txtView.setAdapter(autoAdapter);
+        meeting_point_txtView.setOnTouchListener(this);
+
     }
 
     public void timePicker() {
@@ -912,4 +994,201 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         timePickerDialog.show();
     }
 
+    //-------------------------------------------------Api method-----------------------
+
+    Runnable address_request = new Runnable() {
+        String res = "false";
+
+
+        @Override
+        public void run() {
+            try {
+
+                res = doFileUpload();
+            } catch (Exception e) {
+
+            }
+            Message msg = new Message();
+            msg.obj = res;
+            address_request_Handler.sendMessage(msg);
+        }
+    };
+
+    Handler address_request_Handler = new Handler() {
+        public void handleMessage(Message msg) {
+            String res = (String) msg.obj;
+            dialog2.dismiss();
+            if (res.equalsIgnoreCase("true")) {
+                // terms_dialog.dismiss();
+                Toast.makeText(AdventureForm.this, message,
+                        Toast.LENGTH_SHORT).show();
+
+            } else {
+                Toast.makeText(AdventureForm.this, message,
+                        Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+    };
+
+    // ------------------------------------------------------upload
+    // method---------------
+    private String doFileUpload() {
+        String success = "false";
+
+        String urlString = GlobalConstants.URL;
+        try {
+            HttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost(urlString);
+            MultipartEntity reqEntity = new MultipartEntity();
+
+            File file1 = new File(list_image.get(0));
+            FileBody bin1 = new FileBody(file1, "image/png");
+            reqEntity.addPart("image1", bin1);
+
+            File file2 = new File(list_image.get(1));
+            FileBody bin2 = new FileBody(file2, "image/png");
+            reqEntity.addPart("image2", bin2);
+
+
+            reqEntity.addPart(GlobalConstants.USERID, new StringBody(CommonUtils.UserID(this)));
+
+
+            reqEntity.addPart(GlobalConstants.MAIN_CAT_ID, new StringBody(main_id));
+            reqEntity.addPart(GlobalConstants.EVENT_CAT_ID, new StringBody(sub_cat_id));
+            reqEntity.addPart(GlobalConstants.EVENT_NAME, new StringBody(advanture_editText.getText().toString()));
+            reqEntity.addPart(GlobalConstants.EVENT_START_DATE, new StringBody(start_date_textVeiw.getText().toString()));
+            reqEntity.addPart(GlobalConstants.EVENT_END_DATE, new StringBody(end_date_textVeiw.getText().toString()));
+            reqEntity.addPart(GlobalConstants.EVENT_TIME, new StringBody(meeting_time_txtView.getText().toString()));
+            reqEntity.addPart(GlobalConstants.EVENT_LEVEL, new StringBody(level_mString));
+            reqEntity.addPart(GlobalConstants.EVENT_METTING_POINT, new StringBody(meeting_point_txtView.getText().toString()));
+
+            reqEntity.addPart("meeting_point_latitude", new StringBody(meeting_point_lat));
+
+            reqEntity.addPart("meeting_point_longitude", new StringBody(meeting_point_long));
+
+            reqEntity.addPart("crireria_eligibilty", new StringBody(criteria_txtView.getText().toString()));
+
+            reqEntity.addPart(GlobalConstants.LOCATION, new StringBody(start_point_loc.getText().toString()));
+            reqEntity.addPart(GlobalConstants.LATITUDE, new StringBody(start_lat));
+
+            reqEntity.addPart(GlobalConstants.LONGITUDE, new StringBody(start_lng));
+
+            reqEntity.addPart("end_location", new StringBody(end_point_txtView.getText().toString()));
+            reqEntity.addPart("end_latitude", new StringBody(end_lat));
+
+            reqEntity.addPart("end_longitude", new StringBody(end_lng));
+
+            reqEntity.addPart("location_1", new StringBody(loc1_location));
+            reqEntity.addPart("loc_1_latitude", new StringBody(loc1_lat));
+
+            reqEntity.addPart("loc_1_longitude", new StringBody(loc1_lng));
+            reqEntity.addPart("location_2", new StringBody(loc2_location));
+            reqEntity.addPart("loc_2_latitude", new StringBody(loc2_lat));
+
+            reqEntity.addPart("loc_2_longitude", new StringBody(loc2_lng));
+            reqEntity.addPart("location_3", new StringBody(loc3_location));
+            reqEntity.addPart("loc_3_latitude", new StringBody(loc3_lat));
+
+            reqEntity.addPart("loc_3_longitude", new StringBody(loc3_lng));
+            reqEntity.addPart("location_4", new StringBody(loc4_location));
+            reqEntity.addPart("loc_4_latitude", new StringBody(loc4_lat));
+
+            reqEntity.addPart("loc_4_longitude", new StringBody(loc4_lng));
+            reqEntity.addPart("description", new StringBody(event_desc_txtView.getText().toString()));
+            reqEntity.addPart("no_of_places", new StringBody(places_txtview.getText().toString()));
+            reqEntity.addPart("price", new StringBody(pcicing_txtview.getText().toString()));
+            reqEntity.addPart("transport", new StringBody(trans_mString));
+            reqEntity.addPart("meals", new StringBody(meal_mString));
+
+            reqEntity.addPart("tent", new StringBody(tent_mString));
+            reqEntity.addPart("accomodation", new StringBody(acc_mString));
+            reqEntity.addPart("gear", new StringBody(gear_mString));
+            reqEntity.addPart("disclaimer", new StringBody(disclaimer_txtView.getText().toString()));
+
+
+            reqEntity.addPart("action", new StringBody(GlobalConstants.CREATE_EVENT_ACTION));
+
+            post.setEntity(reqEntity);
+
+            Log.e("params", list_image.get(0) + " " + list_image.get(0) + " " + start_point_loc.getText().toString() + " " + end_point_txtView.getText().toString() + " " +
+                    meeting_point_txtView.getText().toString() + " " + loc1_location+ " " + loc2_location
+                    + " " + loc3_location+" " + loc4_location);
+            HttpResponse response = client.execute(post);
+            resEntity = response.getEntity();
+
+            final String response_str = EntityUtils.toString(resEntity);
+            if (resEntity != null) {
+                JSONObject obj = new JSONObject(response_str);
+                String status = obj.getString("success");
+                if (status.equalsIgnoreCase("1")) {
+                    success = "true";
+                    message = obj.getString("msg");
+                } else {
+                    success = "false";
+                    message = obj.getString("msg");
+                }
+
+                /*JSONObject resp = new JSONObject(response_str);
+                String status = resp.getString("status");
+                String message = resp.getString("message");
+                if (status.equals("1")) {
+
+                    success = "true";
+
+                } else {
+
+                    success = "false";
+
+                }
+*/
+            }
+        } catch (Exception ex) {
+        }
+        return success;
+    }
+
+    //---------------------------Progrees Dialog-----------------------
+    public void dialogWindow() {
+        dialog2 = new Dialog(this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog2.setCanceledOnTouchOutside(false);
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.progrees_dialog);
+        AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
+        loaderView.show();
+
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        dialog2.show();
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (v.getId()) {
+            case R.id.start_point_loc:
+                k = 1;
+                break;
+            case R.id.end_point_txtView:
+                k = 6;
+                break;
+            case R.id.meeting_point_txtView:
+                k = 7;
+                break;
+            case R.id.loc1_txtView:
+                k = 2;
+                break;
+            case R.id.loc2_txtView:
+                k = 3;
+                break;
+            case R.id.loc3_txtView:
+                k = 4;
+                break;
+            case R.id.loc4_txtView:
+                k = 5;
+                break;
+        }
+        return false;
+    }
 }

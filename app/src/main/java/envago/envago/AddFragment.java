@@ -43,10 +43,12 @@ public class AddFragment extends Fragment {
     SharedPreferences.Editor ed;
     ProgressDialog pd;
     Dialog dialog2;
+    Global global;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         View v = inflater.inflate(R.layout.add_layout, container, false);
+        global = (Global) getActivity().getApplicationContext();
         sp = getActivity().getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         ed = sp.edit();
         call_all = (RelativeLayout) v.findViewById(R.id.call_all_layout);
@@ -55,8 +57,13 @@ public class AddFragment extends Fragment {
         createAdventures.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //if(global.getIsVerified().equalsIgnoreCase("Approved")) {
                 Intent intent = new Intent(getActivity(), AdventureForm.class);
                 startActivity(intent);
+                /*}else{
+                    Intent intent = new Intent(getActivity(), CreateAdventuresActivity.class);
+                    startActivity(intent);
+                }*/
 
             }
         });
@@ -64,9 +71,13 @@ public class AddFragment extends Fragment {
         call_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CallVolunteers.class);
-                startActivity(intent);
-
+                if (global.getIsVerified().equalsIgnoreCase("Approved")) {
+                    Intent intent = new Intent(getActivity(), CallVolunteerForm.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getActivity(), CallVolunteers.class);
+                    startActivity(intent);
+                }
             }
         });
         logout_layout.setOnClickListener(new View.OnClickListener() {
