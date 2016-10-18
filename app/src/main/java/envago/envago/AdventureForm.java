@@ -138,7 +138,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
     HttpEntity resEntity;
     String message;
     Dialog dialog2;
-    String meeting_point_lat, meeting_point_long, start_lat, start_lng, end_lat, end_lng,loc1_location="",loc2_location="",loc3_location="",loc4_location="";
+    String meeting_point_lat, meeting_point_long, start_lat, start_lng, end_lat, end_lng, loc1_location = "", loc2_location = "", loc3_location = "", loc4_location = "";
     String loc1_lat = "", loc1_lng = "", loc2_lat = "", loc2_lng = "", loc3_lat = "", loc3_lng = "", loc4_lat = "", loc4_lng = "";
 
     @Override
@@ -678,6 +678,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
                 break;
             case R.id.submit_event_btn:
                 dialogWindow();
+                Log.e("arreay value",list_image.toString());
                 new Thread(null, address_request, "")
                         .start();
                 break;
@@ -710,11 +711,12 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
 
 
     //-------------------------------Autolocation Method------------------------
+    //-------------------------------Autolocation Method------------------------
     private AdapterView.OnItemClickListener mAutocompleteClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			/*
-			 * Retrieve the place ID of the selected item from the Adapter. The
+            /*
+             * Retrieve the place ID of the selected item from the Adapter. The
 			 * adapter stores each Place suggestion in a PlaceAutocomplete
 			 * object from which we read the place ID.
 			 */
@@ -722,31 +724,29 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
             final PlaceAutocompleteAdapter.PlaceAutocomplete item = autoAdapter.getItem(position);
             final String placeId = String.valueOf(item.placeId);
 
-            Log.i("Advanture", "Autocomplete item selected: " + item.description);
+            //  Log.i("TAG", "placeid: " + global.getPlace_id());
+            Log.i("TAG", "Autocomplete item selected: " + item.description);
 
 			/*
-			 * Issue a request to the Places Geo Data API to retrieve a Place
+             * Issue a request to the Places Geo Data API to retrieve a Place
 			 * object with additional details about the place.
 			 */
             PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
             placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
 
-            Toast.makeText(getApplicationContext(), "Clicked: " + item.description, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Clicked: " + item.description, Toast.LENGTH_SHORT).show();
+            Log.i("TAG", "Called getPlaceById to get Place details for " + item.placeId);
 
-            Log.i("Advanture", "Called getPlaceById to get Place details for " + item.placeId);
         }
     };
 
-    /**
-     * Callback for results from a Places Geo Data API query that shows the
-     * first place result in the details view on screen.
-     */
+
     private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>() {
         @Override
         public void onResult(PlaceBuffer places) {
             if (!places.getStatus().isSuccess()) {
 
-                Log.e("Advanture", "Place query did not complete. Error: " + places.getStatus().toString());
+                Log.e("", "Place query did not complete. Error: " + places.getStatus().toString());
                 places.release();
                 return;
             }
@@ -755,52 +755,44 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
 
             final CharSequence thirdPartyAttribution = places.getAttributions();
 
-            Log.i("Advanture", "Place details received: " + place.getName());
+
             String latlong = place.getLatLng().toString().split(":")[1];
             String completeLatLng = latlong.substring(1, latlong.length() - 1);
             // Toast.makeText(MapsActivity.this,completeLatLng,Toast.LENGTH_SHORT).show();
             String lat = completeLatLng.split(",")[0];
             lat = lat.substring(1, lat.length());
             String lng = completeLatLng.split(",")[1];
-            if(k==1){
-                start_lat=lat;
-                start_lng=lng;
-            }else if(k==2){
-                loc1_lat=lat;
-                loc1_lat=lng;
-                loc1_location=loc1_txtView.getText().toString();
-            }else if(k==3){
-                loc2_lat=lat;
-                loc2_lat=lng;
-                loc2_location=loc2_txtView.getText().toString();
-            }else if(k==4){
-                loc3_lat=lat;
-                loc3_lat=lng;
-                loc3_location=loc3_txtView.getText().toString();
-            }else if(k==5){
-                loc4_lat=lat;
-                loc4_lat=lng;
-                loc4_location=loc4_txtView.getText().toString();
-            }else if(k==6){
-                end_lat=lat;
-                end_lng=lng;
-            }else if(k==7){
-                meeting_point_lat=lat;
-                meeting_point_long=lng;
-            }
             Toast.makeText(AdventureForm.this, lat + lng, Toast.LENGTH_SHORT).show();
-
-
+            if (k == 1) {
+                start_lat = lat;
+                start_lng = lng;
+            } else if (k == 2) {
+                loc1_lat = lat;
+                loc1_lat = lng;
+                loc1_location = loc1_txtView.getText().toString();
+            } else if (k == 3) {
+                loc2_lat = lat;
+                loc2_lat = lng;
+                loc2_location = loc2_txtView.getText().toString();
+            } else if (k == 4) {
+                loc3_lat = lat;
+                loc3_lat = lng;
+                loc3_location = loc3_txtView.getText().toString();
+            } else if (k == 5) {
+                loc4_lat = lat;
+                loc4_lat = lng;
+                loc4_location = loc4_txtView.getText().toString();
+            } else if (k == 6) {
+                end_lat = lat;
+                end_lng = lng;
+            } else if (k == 7) {
+                meeting_point_lat = lat;
+                meeting_point_long = lng;
+            }
 
             places.release();
         }
     };
-
-    /**
-     * Callback for results from a Places Geo Data API query that shows the
-     * first place result in the details view on screen.
-     */
-
 
     private static Spanned formatPlaceDetails(Resources res, CharSequence name, String id, CharSequence address,
                                               CharSequence phoneNumber, Uri websiteUri) {
@@ -808,6 +800,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         return Html.fromHtml(res.getString(R.string.place_details, name, id, address, phoneNumber, websiteUri));
 
     }
+
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -818,7 +811,6 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         Toast.makeText(this, "Could not connect to Google API Client: Error " + connectionResult.getErrorCode(),
                 Toast.LENGTH_SHORT).show();
     }
-
 
 
     @Override
@@ -836,8 +828,20 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
 
     public void autoSpinnerView() {
         start_point_loc = (AutoCompleteTextView) findViewById(R.id.start_point_loc);
+        loc1_txtView = (AutoCompleteTextView) findViewById(R.id.loc1_txtView);
+        loc2_txtView = (AutoCompleteTextView) findViewById(R.id.loc2_txtView);
 
+        loc3_txtView = (AutoCompleteTextView) findViewById(R.id.loc3_txtView);
+        loc4_txtView = (AutoCompleteTextView) findViewById(R.id.loc4_txtView);
+        end_point_txtView = (AutoCompleteTextView) findViewById(R.id.end_point_txtView);
+        meeting_point_txtView = (AutoCompleteTextView) findViewById(R.id.meeting_point_txtView);
         start_point_loc.setOnItemClickListener(mAutocompleteClickListener);
+        loc1_txtView.setOnItemClickListener(mAutocompleteClickListener);
+        loc2_txtView.setOnItemClickListener(mAutocompleteClickListener);
+        loc3_txtView.setOnItemClickListener(mAutocompleteClickListener);
+        loc4_txtView.setOnItemClickListener(mAutocompleteClickListener);
+        end_point_txtView.setOnItemClickListener(mAutocompleteClickListener);
+        meeting_point_txtView.setOnItemClickListener(mAutocompleteClickListener);
         autoAdapter = new PlaceAutocompleteAdapter(this, android.R.layout.simple_list_item_1,
                 BOUNDS_MOUNTAIN_VIEW, null) {
             @Override
@@ -855,117 +859,36 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         start_point_loc.setAdapter(autoAdapter);
         start_point_loc.setOnTouchListener(this);
 
-        loc1_txtView = (AutoCompleteTextView) findViewById(R.id.loc1_txtView);
-
-        loc1_txtView.setOnItemClickListener(mAutocompleteClickListener);
-        autoAdapter = new PlaceAutocompleteAdapter(this, android.R.layout.simple_list_item_1,
-                BOUNDS_MOUNTAIN_VIEW, null) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView text = (TextView) view.findViewById(android.R.id.text1);
-                text.setTextColor(Color.BLACK);
-                text.setTextSize(14);
-                return view;
-            }
-        };
 
         loc1_txtView.setThreshold(1);
 
         loc1_txtView.setAdapter(autoAdapter);
         loc1_txtView.setOnTouchListener(this);
 
-        loc2_txtView = (AutoCompleteTextView) findViewById(R.id.loc2_txtView);
-
-        loc2_txtView.setOnItemClickListener(mAutocompleteClickListener);
-        autoAdapter = new PlaceAutocompleteAdapter(this, android.R.layout.simple_list_item_1,
-                BOUNDS_MOUNTAIN_VIEW, null) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView text = (TextView) view.findViewById(android.R.id.text1);
-                text.setTextColor(Color.BLACK);
-                text.setTextSize(14);
-                return view;
-            }
-        };
 
         loc2_txtView.setThreshold(1);
 
         loc2_txtView.setAdapter(autoAdapter);
         loc2_txtView.setOnTouchListener(this);
-        loc3_txtView = (AutoCompleteTextView) findViewById(R.id.loc2_txtView);
 
-        loc3_txtView.setOnItemClickListener(mAutocompleteClickListener);
-        autoAdapter = new PlaceAutocompleteAdapter(this, android.R.layout.simple_list_item_1,
-                BOUNDS_MOUNTAIN_VIEW, null) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView text = (TextView) view.findViewById(android.R.id.text1);
-                text.setTextColor(Color.BLACK);
-                text.setTextSize(14);
-                return view;
-            }
-        };
 
         loc3_txtView.setThreshold(1);
 
         loc3_txtView.setAdapter(autoAdapter);
         loc3_txtView.setOnTouchListener(this);
-        loc4_txtView = (AutoCompleteTextView) findViewById(R.id.loc4_txtView);
 
-        loc4_txtView.setOnItemClickListener(mAutocompleteClickListener);
-        autoAdapter = new PlaceAutocompleteAdapter(this, android.R.layout.simple_list_item_1,
-                BOUNDS_MOUNTAIN_VIEW, null) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView text = (TextView) view.findViewById(android.R.id.text1);
-                text.setTextColor(Color.BLACK);
-                text.setTextSize(14);
-                return view;
-            }
-        };
 
         loc4_txtView.setThreshold(1);
 
         loc4_txtView.setAdapter(autoAdapter);
         loc4_txtView.setOnTouchListener(this);
-        end_point_txtView = (AutoCompleteTextView) findViewById(R.id.end_point_txtView);
 
-        end_point_txtView.setOnItemClickListener(mAutocompleteClickListener);
-        autoAdapter = new PlaceAutocompleteAdapter(this, android.R.layout.simple_list_item_1,
-                BOUNDS_MOUNTAIN_VIEW, null) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView text = (TextView) view.findViewById(android.R.id.text1);
-                text.setTextColor(Color.BLACK);
-                text.setTextSize(14);
-                return view;
-            }
-        };
 
         end_point_txtView.setThreshold(1);
 
         end_point_txtView.setAdapter(autoAdapter);
         end_point_txtView.setOnTouchListener(this);
 
-        meeting_point_txtView = (AutoCompleteTextView) findViewById(R.id.meeting_point_txtView);
-
-        meeting_point_txtView.setOnItemClickListener(mAutocompleteClickListener);
-        autoAdapter = new PlaceAutocompleteAdapter(this, android.R.layout.simple_list_item_1,
-                BOUNDS_MOUNTAIN_VIEW, null) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView text = (TextView) view.findViewById(android.R.id.text1);
-                text.setTextColor(Color.BLACK);
-                text.setTextSize(14);
-                return view;
-            }
-        };
 
         meeting_point_txtView.setThreshold(1);
 
@@ -1113,8 +1036,8 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
             post.setEntity(reqEntity);
 
             Log.e("params", list_image.get(0) + " " + list_image.get(0) + " " + start_point_loc.getText().toString() + " " + end_point_txtView.getText().toString() + " " +
-                    meeting_point_txtView.getText().toString() + " " + loc1_location+ " " + loc2_location
-                    + " " + loc3_location+" " + loc4_location);
+                    meeting_point_txtView.getText().toString() + " " + loc1_location + " " + loc2_location
+                    + " " + loc3_location + " " + loc4_location);
             HttpResponse response = client.execute(post);
             resEntity = response.getEntity();
 
@@ -1169,24 +1092,31 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         switch (v.getId()) {
             case R.id.start_point_loc:
                 k = 1;
+
                 break;
             case R.id.end_point_txtView:
                 k = 6;
+
                 break;
             case R.id.meeting_point_txtView:
                 k = 7;
+
                 break;
             case R.id.loc1_txtView:
                 k = 2;
+
                 break;
             case R.id.loc2_txtView:
                 k = 3;
+
                 break;
             case R.id.loc3_txtView:
                 k = 4;
+
                 break;
             case R.id.loc4_txtView:
                 k = 5;
+
                 break;
         }
         return false;
