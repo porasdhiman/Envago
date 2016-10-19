@@ -139,6 +139,12 @@ public class Adventure_list_adapter extends BaseAdapter {
         } else {
             holder.backimg.setImageResource(R.mipmap.ic_launcher);
         }
+        if (images.get(i).get(GlobalConstants.EVENT_FAV).equals("0")) {
+            holder.heart_img.setImageResource(R.drawable.heart);
+        } else {
+            holder.heart_img.setImageResource(R.drawable.heart_field);
+
+        }
 
         holder.heart_img.setOnClickListener(new View.OnClickListener() {
             @Override

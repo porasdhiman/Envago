@@ -21,7 +21,7 @@
         android:visibility="gone"
 
         android:background="@drawable/start_event_back"
-        android:text="Start event"
+        android:text="EVENT STARTED"
         android:gravity="center"
         />
     <ImageView

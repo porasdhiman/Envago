@@ -40,12 +40,27 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/pager_introduction"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:fitsSystemWindows="true"
-                tools:listitem="@layout/pager_item" />
+                android:layout_height="match_parent">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/pager_introduction"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:fitsSystemWindows="true"
+                    tools:listitem="@layout/pager_item" />
+
+                <ImageView
+                    android:id="@+id/heart_img"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/heart" />
+
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/viewPagerIndicator"
@@ -117,59 +132,78 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-
-                    <TextView
-                        android:id="@+id/status_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/textcolor"
-                        android:padding="4dp"
-                        android:text="EVENT STARTED"
-                        android:textColor="#fff" />
-
-                    <RatingBar
-                        android:id="@+id/stars"
-                        style="?android:attr/ratingBarStyleSmall"
-                        android:layout_width="100dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@+id/status_text"
-                        android:isIndicator="false"
-                        android:numStars="5"
-                        android:stepSize="1.0" />
-
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/event_info_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:layout_toRightOf="@+id/stars"
-                        android:background="@color/appcolor"
-                        android:padding="4dp"
-                        android:text="0"
-                        android:textColor="#fff" />
+                        android:layout_marginRight="10dp"
+                        android:orientation="horizontal">
 
+                        <TextView
+                            android:id="@+id/status_text"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_toLeftOf="@+id/stars"
+                            android:background="@drawable/start_event_back"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:text="EVENT STARTED"
+                            android:textColor="#fff"
+                            android:visibility="gone" />
+
+                        <RatingBar
+                            android:id="@+id/stars"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="8dp"
+                            android:isIndicator="false"
+                            android:numStars="5"
+                            android:progressTint="@android:color/holo_orange_light"
+                            android:stepSize="1.0" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_toRightOf="@+id/stars"
+                            android:background="@drawable/level_txt_back"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:text="0"
+                            android:textColor="#fff" />
+                    </LinearLayout>
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/orginiser_img"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:layout_margin="30dp"
+                        android:layout_below="@+id/event_info_layout"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
                         android:src="@mipmap/app_icon" />
 
                     <TextView
+                        android:id="@+id/event_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/event_info_layout"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="30dp"
                         android:layout_toRightOf="@+id/orginiser_img"
                         android:text="Orginizer Name"
-                        android:textSize="16sp" />
+
+                        android:textSize="14sp" />
 
                 </RelativeLayout>
 
@@ -187,11 +221,11 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/calnder_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:id="@+id/calnder_img"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginLeft="15dp"
                         android:src="@drawable/calender_detail" />
 
                     <TextView
@@ -199,177 +233,360 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:textColor="#000"
-                        android:layout_toRightOf="@+id/calnder_img"
                         android:layout_marginLeft="15dp"
-                        android:text="Date goes here" />
+                        android:layout_toRightOf="@+id/calnder_img"
+                        android:text="Date goes here"
+                        android:textColor="#000" />
 
                     <TextView
                         android:id="@+id/days_details"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:textColor="#000"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="40dp"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="80dp"
-                        android:text="days goes here" />
+                        android:layout_marginRight="15dp"
+                        android:text="days goes here"
+                        android:textColor="#000" />
 
                 </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="1"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Location"
-                        android:textColor="#000"
-                        android:layout_weight="0.1"
-                        android:gravity="start"
                         android:id="@+id/location_txt"
-                        android:layout_marginLeft="15dp"/>
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:gravity="start"
+                        android:text="Location"
+                        android:textColor="#000" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Name Goes here"
-                        android:layout_weight="0.1"
-                        android:gravity="start"
-                        android:textSize="12sp"
                         android:id="@+id/location_name"
-                        android:layout_marginLeft="15dp"/>
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:gravity="start"
 
+                        android:singleLine="true"
+                        android:text="Name Goes here"
+                        android:textSize="12sp" />
 
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/location_detail" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="1"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Level"
-                        android:textColor="#000"
-                        android:layout_weight="0.15"
-                        android:gravity="start"
                         android:id="@+id/levl_txt"
-                        android:layout_marginLeft="15dp"/>
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+
+                        android:gravity="start"
+                        android:text="Level"
+                        android:textColor="#000" />
 
                     <RelativeLayout
-                        android:layout_width="40dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.8">
-
-                        <View
-                            android:id="@+id/divider"
-                            android:layout_width="match_parent"
-                            android:layout_height="0.8dp"
-                            android:layout_marginTop="10dp"
-                            android:background="#c2c2c2"
-                            android:layout_marginRight="56dp"
-                            />
+                        android:background="@drawable/line2">
 
 
                         <TextView
+                            android:id="@+id/level1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_marginRight="12dp"
+                            android:background="@drawable/level_txt_back"
                             android:gravity="center"
-                            android:background="@color/appcolor"
                             android:padding="4dp"
-                            android:id="@+id/level1"
                             android:text="1"
+                            android:visibility="invisible"
                             android:textColor="#fff" />
+
                         <TextView
+                            android:id="@+id/level2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="50dp"
-                            android:layout_marginRight="12dp"
-                            android:gravity="center"
-                            android:id="@+id/level2"
+                            android:layout_marginLeft="20dp"
                             android:layout_toRightOf="@+id/level1"
-                            android:background="@color/appcolor"
+                            android:background="@drawable/level_txt_back"
+                            android:gravity="center"
                             android:padding="4dp"
                             android:text="2"
-                            android:textColor="#fff" />
+                            android:textColor="#fff"
+
+                            android:visibility="invisible" />
 
                         <TextView
+                            android:id="@+id/level3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="50dp"
-                            android:layout_marginRight="12dp"
-                            android:gravity="center"
+                            android:layout_marginLeft="20dp"
                             android:layout_toRightOf="@+id/level2"
-                            android:background="@color/appcolor"
+                            android:background="@drawable/level_txt_back"
+                            android:gravity="center"
                             android:padding="4dp"
                             android:text="3"
-                            android:id="@+id/level3"
-                            android:textColor="#fff" />
+                            android:textColor="#fff"
+
+                            android:visibility="invisible" />
 
 
                         <TextView
+                            android:id="@+id/level4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="50dp"
-                            android:layout_marginRight="12dp"
-                            android:gravity="center"
+                            android:layout_marginLeft="20dp"
                             android:layout_toRightOf="@+id/level3"
-                            android:background="@color/appcolor"
+                            android:background="@drawable/level_txt_back"
+                            android:gravity="center"
                             android:padding="4dp"
                             android:text="4"
-                            android:id="@+id/level4"
-                            android:textColor="#fff" />
+                            android:textColor="#fff"
+                            android:visibility="invisible" />
 
                     </RelativeLayout>
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="1"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Meeting"
-                        android:textColor="#000"
-                        android:layout_weight="0.1"
-                        android:gravity="start"
                         android:id="@+id/meeting_text"
-                        android:layout_marginLeft="15dp"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Name Goes here"
-                        android:layout_weight="0.4"
+                        android:layout_marginLeft="15dp"
                         android:gravity="start"
-                        android:textSize="12sp"
+                        android:text="Meeting"
+                        android:textColor="#000" />
+
+                    <TextView
                         android:id="@+id/meeting_desc"
-                        android:layout_marginLeft="15dp"/>
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="start"
+                        android:singleLine="true"
+                        android:text="Name Goes here"
+                        android:textSize="12sp" />
 
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/location_detail" />
 
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="7dp"
+                        android:src="@drawable/clock" />
 
+                    <TextView
+                        android:id="@+id/time_txtView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="start"
+                        android:singleLine="true"
+                        android:text="3:00"
+                        android:layout_marginRight="10dp"
+                        android:textSize="12sp" />
                 </LinearLayout>
-
+<View
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="15dp"
+    android:background="#d1d1d1"/>
                 <TextView
                     android:id="@+id/lower_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:textSize="12sp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="25dp"
+                    android:background="#d1d1d1"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="5"
+                    android:layout_marginTop="15dp">
+                    <ImageView
+                        android:id="@+id/transport"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/tansport_gray"
+                        android:layout_weight="1"/>
+                    <ImageView
+                        android:id="@+id/accomodation"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/accomodation_gray"
+                        android:layout_weight="1"/>
+                    <ImageView
+                        android:id="@+id/tent"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/tent_gray"
+                        android:layout_weight="1"/>
+                    <ImageView
+                        android:id="@+id/gear"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/gear_gray"
+                        android:layout_weight="1"/>
+                    <ImageView
+                        android:id="@+id/meals"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/food_gray"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="#d1d1d1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="14dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Disclaimer"
+                    android:textColor="#000"/>
+                <TextView
+                    android:id="@+id/Disclaimer_txtView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:textSize="12sp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="#d1d1d1"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="Who's going"
+                    android:textSize="14sp"
+                    android:textColor="#000"/>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_toLeftOf="@+id/places_count_txtView"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/place_img"/>
+                    <TextView
+                        android:id="@+id/places_count_txtView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text=""
+                        android:layout_centerVertical="true"
+                        android:textSize="12sp"
+                        android:textColor="#000"/>
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="#d1d1d1"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/event_info_layout"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@mipmap/app_icon" />
+                    <de.hdodenhof.circleimageview.CircleImageView
+
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_below="@+id/event_info_layout"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@mipmap/app_icon" />
+                    <de.hdodenhof.circleimageview.CircleImageView
+
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_below="@+id/event_info_layout"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@mipmap/app_icon" />
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/purchase_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="14sp" />
+                    android:background="@drawable/red_button"
+                    android:text=""
+                    android:textColor="#fff" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+
+                    />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

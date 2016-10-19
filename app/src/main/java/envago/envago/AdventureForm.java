@@ -678,7 +678,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
                 break;
             case R.id.submit_event_btn:
                 dialogWindow();
-                Log.e("arreay value",list_image.toString());
+                Log.e("arreay value", list_image.toString());
                 new Thread(null, address_request, "")
                         .start();
                 break;
@@ -974,70 +974,104 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
             FileBody bin2 = new FileBody(file2, "image/png");
             reqEntity.addPart("image2", bin2);
 
-
+            Log.e("image params", list_image.get(0) + " " + list_image.get(0));
             reqEntity.addPart(GlobalConstants.USERID, new StringBody(CommonUtils.UserID(this)));
 
 
             reqEntity.addPart(GlobalConstants.MAIN_CAT_ID, new StringBody(main_id));
+            Log.e("main  id", main_id);
             reqEntity.addPart(GlobalConstants.EVENT_CAT_ID, new StringBody(sub_cat_id));
+            Log.e("sub_cat_id", sub_cat_id);
             reqEntity.addPart(GlobalConstants.EVENT_NAME, new StringBody(advanture_editText.getText().toString()));
+            Log.e("name", advanture_editText.getText().toString());
             reqEntity.addPart(GlobalConstants.EVENT_START_DATE, new StringBody(start_date_textVeiw.getText().toString()));
+            Log.e(GlobalConstants.EVENT_START_DATE, start_date_textVeiw.getText().toString());
             reqEntity.addPart(GlobalConstants.EVENT_END_DATE, new StringBody(end_date_textVeiw.getText().toString()));
+            Log.e(GlobalConstants.EVENT_END_DATE, end_date_textVeiw.getText().toString());
             reqEntity.addPart(GlobalConstants.EVENT_TIME, new StringBody(meeting_time_txtView.getText().toString()));
+            Log.e(GlobalConstants.EVENT_TIME, meeting_time_txtView.getText().toString());
             reqEntity.addPart(GlobalConstants.EVENT_LEVEL, new StringBody(level_mString));
+            Log.e(GlobalConstants.EVENT_LEVEL, level_mString);
             reqEntity.addPart(GlobalConstants.EVENT_METTING_POINT, new StringBody(meeting_point_txtView.getText().toString()));
+            Log.e(GlobalConstants.EVENT_METTING_POINT, meeting_point_txtView.getText().toString());
 
             reqEntity.addPart("meeting_point_latitude", new StringBody(meeting_point_lat));
+            Log.e("meeting_point_latitude", meeting_point_lat);
 
             reqEntity.addPart("meeting_point_longitude", new StringBody(meeting_point_long));
+            Log.e("meeting_point_longitude", meeting_point_long);
 
             reqEntity.addPart("crireria_eligibilty", new StringBody(criteria_txtView.getText().toString()));
+            Log.e("crireria_eligibilty", criteria_txtView.getText().toString());
 
             reqEntity.addPart(GlobalConstants.LOCATION, new StringBody(start_point_loc.getText().toString()));
+            Log.e(GlobalConstants.LOCATION, start_point_loc.getText().toString());
             reqEntity.addPart(GlobalConstants.LATITUDE, new StringBody(start_lat));
+            Log.e(GlobalConstants.LATITUDE, start_lat);
 
             reqEntity.addPart(GlobalConstants.LONGITUDE, new StringBody(start_lng));
-
+            Log.e(GlobalConstants.LONGITUDE, start_lng);
             reqEntity.addPart("end_location", new StringBody(end_point_txtView.getText().toString()));
+            Log.e("end_location", end_point_txtView.getText().toString());
             reqEntity.addPart("end_latitude", new StringBody(end_lat));
+            Log.e("end_latitude", end_lat);
 
             reqEntity.addPart("end_longitude", new StringBody(end_lng));
+            Log.e("end_longitude", end_lng);
 
             reqEntity.addPart("location_1", new StringBody(loc1_location));
+            Log.e("location_1", loc1_location);
             reqEntity.addPart("loc_1_latitude", new StringBody(loc1_lat));
+            Log.e("loc_1_latitude", loc1_lat);
 
             reqEntity.addPart("loc_1_longitude", new StringBody(loc1_lng));
+            Log.e("loc_1_longitude", loc1_lng);
             reqEntity.addPart("location_2", new StringBody(loc2_location));
+            Log.e("location_2", loc2_location);
             reqEntity.addPart("loc_2_latitude", new StringBody(loc2_lat));
+            Log.e("loc_2_latitude", loc2_lat);
 
             reqEntity.addPart("loc_2_longitude", new StringBody(loc2_lng));
+            Log.e("loc_2_longitude", loc2_lng);
             reqEntity.addPart("location_3", new StringBody(loc3_location));
+            Log.e("location_3", loc3_location);
             reqEntity.addPart("loc_3_latitude", new StringBody(loc3_lat));
-
+            Log.e("loc_3_latitude", loc3_lat);
             reqEntity.addPart("loc_3_longitude", new StringBody(loc3_lng));
+            Log.e("loc_3_longitude", loc3_lng);
             reqEntity.addPart("location_4", new StringBody(loc4_location));
+            Log.e("location_4", loc4_location);
             reqEntity.addPart("loc_4_latitude", new StringBody(loc4_lat));
-
+            Log.e("loc_4_latitude", loc4_lat);
             reqEntity.addPart("loc_4_longitude", new StringBody(loc4_lng));
+            Log.e("loc_4_longitude", loc4_lng);
             reqEntity.addPart("description", new StringBody(event_desc_txtView.getText().toString()));
+            Log.e("description", event_desc_txtView.getText().toString());
             reqEntity.addPart("no_of_places", new StringBody(places_txtview.getText().toString()));
+            Log.e("no_of_places", places_txtview.getText().toString());
             reqEntity.addPart("price", new StringBody(pcicing_txtview.getText().toString()));
+            Log.e("price", pcicing_txtview.getText().toString());
             reqEntity.addPart("transport", new StringBody(trans_mString));
+            Log.e("transport", trans_mString);
             reqEntity.addPart("meals", new StringBody(meal_mString));
+            Log.e("meals", meal_mString);
 
             reqEntity.addPart("tent", new StringBody(tent_mString));
+            Log.e("tent", tent_mString);
             reqEntity.addPart("accomodation", new StringBody(acc_mString));
+            Log.e("accomodation", acc_mString);
             reqEntity.addPart("gear", new StringBody(gear_mString));
+            Log.e("gear", gear_mString);
             reqEntity.addPart("disclaimer", new StringBody(disclaimer_txtView.getText().toString()));
+            Log.e("disclaimer", disclaimer_txtView.getText().toString());
 
 
             reqEntity.addPart("action", new StringBody(GlobalConstants.CREATE_EVENT_ACTION));
+            Log.e("action", GlobalConstants.CREATE_EVENT_ACTION);
 
             post.setEntity(reqEntity);
 
-            Log.e("params", list_image.get(0) + " " + list_image.get(0) + " " + start_point_loc.getText().toString() + " " + end_point_txtView.getText().toString() + " " +
-                    meeting_point_txtView.getText().toString() + " " + loc1_location + " " + loc2_location
-                    + " " + loc3_location + " " + loc4_location);
+
             HttpResponse response = client.execute(post);
             resEntity = response.getEntity();
 
