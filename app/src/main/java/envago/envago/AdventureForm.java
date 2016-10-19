@@ -1,6 +1,5 @@
 package envago.envago;
 
-import android.*;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -8,7 +7,6 @@ import android.app.TimePickerDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -20,12 +18,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.ContactsContract;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
@@ -54,17 +50,11 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.apache.http.HttpEntity;
@@ -159,10 +149,12 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
                 .build();
         pager_image = (ViewPager) findViewById(R.id.viewpager_introduction);
         submit_event_btn = (Button) findViewById(R.id.submit_event_btn);
+
         loc1 = (RelativeLayout) findViewById(R.id.loc1);
         loc2 = (RelativeLayout) findViewById(R.id.loc2);
         loc3 = (RelativeLayout) findViewById(R.id.loc3);
         loc4 = (RelativeLayout) findViewById(R.id.loc4);
+
         add_imageView = (ImageView) findViewById(R.id.add_image_adventure);
         add_imageView.setOnClickListener(this);
         add_loc = (ImageView) findViewById(R.id.add_loc);

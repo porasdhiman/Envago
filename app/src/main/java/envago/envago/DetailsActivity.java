@@ -1,18 +1,17 @@
 package envago.envago;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
-import android.content.Intent;
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-
 import android.support.v4.view.ViewPager;
-
 import android.util.Log;
 import android.view.View;
-
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -29,6 +28,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -41,6 +46,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -55,10 +62,14 @@ public class DetailsActivity extends Activity implements View.OnClickListener, V
     private ImageView[] dots;
     private ViewPagerAdapter mAdapter;
     Dialog dialog2;
-    TextView status_text,lower_description_txtView, event_name,places_txtView, level_no1, level_no2, level_no3, level_no4, date_details, meeting_desc, time_txtVIew, location_name_txtView;
+    TextView status_text,lower_description_txtView, admin_name,places_txtView, level_no1, level_no2, level_no3, admin_description, level_no4, date_details, meeting_desc, time_txtVIew, location_name_txtView, rating;
     ImageView heart_img,accomodation_txtView,transport_txtView,meal_txtView,gear_txtView,tent_txtView;
+    CircleImageView  orginiser_img;
     ArrayList<String> list = new ArrayList<>();
     Button purchase_btn;
+
+    com.nostra13.universalimageloader.core.ImageLoader imageLoader;
+    DisplayImageOptions options;
 
     int i;
 
@@ -75,7 +86,7 @@ public class DetailsActivity extends Activity implements View.OnClickListener, V
 
         pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         status_text = (TextView) findViewById(R.id.status_text);
-        event_name = (TextView) findViewById(R.id.event_name);
+        admin_name = (TextView) findViewById(R.id.event_name);
         date_details = (TextView) findViewById(R.id.date_details);
         meeting_desc = (TextView) findViewById(R.id.meeting_desc);
         time_txtVIew = (TextView) findViewById(R.id.time_txtView);
@@ -83,10 +94,12 @@ public class DetailsActivity extends Activity implements View.OnClickListener, V
         level_no2 = (TextView) findViewById(R.id.level2);
         level_no3 = (TextView) findViewById(R.id.level3);
         level_no4 = (TextView) findViewById(R.id.level4);
+        admin_description = (TextView)findViewById(R.id.upper_description);
         location_name_txtView = (TextView) findViewById(R.id.location_name);
         heart_img = (ImageView) findViewById(R.id.heart_img);
         heart_img.setOnClickListener(this);
-
+        orginiser_img = (CircleImageView)findViewById(R.id.orginiser_img);
+        rating=(TextView)findViewById(R.id.counter);
         lower_description_txtView=(TextView)findViewById(R.id.lower_description);
         accomodation_txtView=(ImageView)findViewById(R.id.accomodation);
         transport_txtView=(ImageView)findViewById(R.id.transport);
@@ -96,6 +109,14 @@ public class DetailsActivity extends Activity implements View.OnClickListener, V
         places_txtView=(TextView)findViewById(R.id.places_count_txtView);
         purchase_btn=(Button)findViewById(R.id.purchase_btn);
         purchase_btn.setOnClickListener(this);
+
+        imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
+        options = new DisplayImageOptions.Builder()
+                .showStubImage(R.mipmap.ic_launcher)        //	Display Stub Image
+                .showImageForEmptyUri(R.mipmap.ic_launcher)    //	If Empty image found
+                .cacheInMemory()
+                .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
+        initImageLoader();
         dialogWindow();
         singleEventMethod();
 
@@ -172,15 +193,40 @@ public class DetailsActivity extends Activity implements View.OnClickListener, V
 
                             String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
+
                                 JSONArray data = obj.getJSONArray("data");
                                 for (int j = 0; j < data.length(); j++) {
                                     JSONObject objArry = data.getJSONObject(j);
+                                    JSONObject adminobj = objArry.getJSONObject("event_admin");
+
                                     JSONArray images = objArry.getJSONArray(GlobalConstants.EVENT_IMAGES);
                                     for (int i = 0; i < images.length(); i++) {
                                         JSONObject imagObj = images.getJSONObject(i);
                                         list.add("http://envagoapp.com/uploads/" + imagObj.getString(GlobalConstants.IMAGE));
                                     }
-                                    event_name.setText(objArry.getString(GlobalConstants.EVENT_NAME));
+
+                                    admin_name.setText(adminobj.getString(GlobalConstants.ADMIN_NAME));
+
+                                    String url = "http://envagoapp.com/uploads/" + adminobj.getString(GlobalConstants.ADMIN_IMAGE);
+                                    if (url != null && !url.equalsIgnoreCase("null")
+                                            && !url.equalsIgnoreCase("")) {
+                                        imageLoader.displayImage(url,orginiser_img, options,
+                                                new SimpleImageLoadingListener() {
+                                                    @Override
+                                                    public void onLoadingComplete(String imageUri,
+                                                                                  View view, Bitmap loadedImage) {
+                                                        super.onLoadingComplete(imageUri, view,
+                                                                loadedImage);
+
+                                                    }
+                                                });
+                                    } else {
+                                        orginiser_img.setImageResource(R.mipmap.ic_launcher);
+                                    }
+
+                                    admin_description.setText(adminobj.getString(GlobalConstants.ADMIN_ABOUT));
+                                    rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
+
                                     if (dateMatchMethod(objArry.getString(GlobalConstants.EVENT_START_DATE))) {
                                         status_text.setVisibility(View.VISIBLE);
                                     } else {
@@ -314,6 +360,33 @@ public class DetailsActivity extends Activity implements View.OnClickListener, V
         }
 
 
+    }
+
+    //-------------------------------Image-save-cache------------------------------
+
+
+    private void initImageLoader() {
+        int memoryCacheSize;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+            int memClass = ((ActivityManager)
+                    getSystemService(Context.ACTIVITY_SERVICE))
+                    .getMemoryClass();
+            memoryCacheSize = (memClass / 8) * 1024 * 1024;
+        } else {
+            memoryCacheSize = 2 * 1024 * 1024;
+        }
+
+        final ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+                DetailsActivity.this).threadPoolSize(5)
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .memoryCacheSize(memoryCacheSize)
+                .memoryCache(new FIFOLimitedMemoryCache(memoryCacheSize - 1000000))
+                .denyCacheImageMultipleSizesInMemory()
+                .discCacheFileNameGenerator(new Md5FileNameGenerator())
+                .tasksProcessingOrder(QueueProcessingType.LIFO).enableLogging()
+                .build();
+
+        com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
     }
 
 }

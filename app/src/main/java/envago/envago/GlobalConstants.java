@@ -61,4 +61,9 @@ public class GlobalConstants {
     public static String EVENT_LEVEL="level";
     public static String EVENT_METTING_POINT="meeting_point";
     public static String LOCATION="location";
+    public static String ADMIN_ABOUT="about_me";
+    public static String ADMIN_NAME="fullname";
+    public static String ADMIN_RATING="rating";
+    public static String ADMIN_IMAGE="image";
+
 }
