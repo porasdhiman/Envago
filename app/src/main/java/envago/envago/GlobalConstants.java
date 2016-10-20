@@ -66,4 +66,5 @@ public class GlobalConstants {
     public static String ADMIN_RATING="rating";
     public static String ADMIN_IMAGE="image";
 
+
 }

@@ -131,7 +131,7 @@ SharedPreferences.Editor ed;
         if (id == R.id.signup_txt) {
             Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
             startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
 
         }
@@ -161,7 +161,7 @@ SharedPreferences.Editor ed;
         if (id == R.id.forgot_pass) {
             Intent intent = new Intent(LoginActivity.this, ForgotPassword.class);
             startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
     }
 
@@ -244,7 +244,7 @@ SharedPreferences.Editor ed;
 
                                 Intent intent = new Intent(LoginActivity.this, Tab_Activity.class);
                                 startActivity(intent);
-                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 finish();
 
                             } else {
@@ -306,7 +306,7 @@ SharedPreferences.Editor ed;
 
                                 Intent intent = new Intent(LoginActivity.this, Tab_Activity.class);
                                 startActivity(intent);
-                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
                             } else {
                                 Toast.makeText(LoginActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
@@ -367,4 +367,6 @@ public void dialogWindow() {
     // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
     dialog2.show();
 }
+
+
 }

@@ -193,7 +193,7 @@
                             android:background="@drawable/level_txt_back"
                             android:gravity="center"
                             android:padding="3dp"
-                            android:text="220"
+                            android:text=""
                             android:textColor="#fff" />
                     </LinearLayout>
 

@@ -3,6 +3,8 @@ package envago.envago;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -21,9 +23,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,7 +75,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by vikas on 15-10-2016.
  */
 public class DetailsActivity extends FragmentActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback ,View.OnTouchListener{
+        GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback, View.OnTouchListener {
     protected View view;
     private ImageButton btnNext, btnFinish;
     private ViewPager intro_images;
@@ -89,7 +93,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     CircleImageView orginiser_img;
     ArrayList<String> list = new ArrayList<>();
     Button purchase_btn;
-
+    RatingBar stars;
     String meeting_loc, meeting_lat, meeting_long, ending_loc, ending_lat, ending_long;
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
@@ -116,7 +120,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
 
         pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
-
+        stars = (RatingBar) findViewById(R.id.stars);
+        stars.setOnTouchListener(null);
         about_layout = (LinearLayout) findViewById(R.id.about_layout);
         map_layout = (LinearLayout) findViewById(R.id.map_layout);
         status_text = (TextView) findViewById(R.id.status_text);
@@ -637,12 +642,21 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
         rating_save = (TextView) rating_dialog.findViewById(R.id.save_button);
         rating_cancel = (TextView) rating_dialog.findViewById(R.id.cancel_button);
+        final RatingBar stars_dailog = (RatingBar) rating_dialog.findViewById(R.id.stars_dailog);
+        final EditText rating_cmnt = (EditText) rating_dialog.findViewById(R.id.rating_edittext);
 
 
         rating_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (rating_cmnt.getText().toString().length() == 0) {
+                    rating_cmnt.setError("Please enter comment");
+                } else if (String.valueOf(stars_dailog.getRating()).equalsIgnoreCase("0")) {
+                    Toast.makeText(DetailsActivity.this, "Please select rating star", Toast.LENGTH_SHORT).show();
+                } else {
+                    dialogWindow();
+                    ratingApiMethod(rating_cmnt.getText().toString(), String.valueOf(stars_dailog.getRating()).split(".")[0]);
+                }
             }
         });
 
@@ -653,4 +667,60 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
             }
         });
     }
+
+    private void ratingApiMethod(final String text, final String rate) {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GlobalConstants.URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        dialog2.dismiss();
+                        Log.e("response", response);
+                        try {
+                            JSONObject obj = new JSONObject(response);
+
+                            String status = obj.getString("success");
+                            if (status.equalsIgnoreCase("1")) {
+                                rating_dialog.dismiss();
+                                Toast.makeText(DetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(DetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        dialog2.dismiss();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(GlobalConstants.USERID, CommonUtils.UserID(DetailsActivity.this));
+                params.put(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
+                params.put("text", text);
+                params.put("rating", rate);
+
+
+                params.put("action", "add_reviews");
+                Log.e("facebook login", params.toString());
+                return params;
+            }
+
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
 }
