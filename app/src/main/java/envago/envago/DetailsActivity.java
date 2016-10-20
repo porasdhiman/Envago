@@ -27,10 +27,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -84,11 +86,12 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     private ImageView[] dots;
     private ViewPagerAdapter mAdapter;
     Dialog dialog2, rating_dialog;
-
+    ListView review_list;
+    ArrayList<HashMap<String, String>> review_list_array = new ArrayList<>();
     TextView status_text, lower_description_txtView, admin_name, places_txtView, level_no1, level_no2,
             level_no3, admin_description, level_no4, date_details, meeting_desc, time_txtVIew,
-            location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel;
-    LinearLayout about_layout, map_layout, event_info_layout;
+            location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview;
+    LinearLayout about_layout, map_layout, event_info_layout, review_layout;
     ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView;
     CircleImageView orginiser_img;
     ArrayList<String> list = new ArrayList<>();
@@ -117,8 +120,9 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         intro_images = (ViewPager) findViewById(R.id.pager_introduction);
-
-
+        review_txtview = (TextView) findViewById(R.id.review_txtView);
+        review_layout = (LinearLayout) findViewById(R.id.review_layout);
+        review_list = (ListView) findViewById(R.id.review_list);
         pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         stars = (RatingBar) findViewById(R.id.stars);
         stars.setOnTouchListener(null);
@@ -154,6 +158,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         purchase_btn.setOnClickListener(this);
         about_txtView.setOnClickListener(this);
         route_txtView.setOnClickListener(this);
+        review_txtview.setOnClickListener(this);
 
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
@@ -202,16 +207,43 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
             case R.id.about_txtView:
                 about_layout.setVisibility(View.VISIBLE);
                 map_layout.setVisibility(View.GONE);
+                review_layout.setVisibility(View.GONE);
+                about_txtView.setTextColor(getResources().getColor(R.color.textcolor));
+                route_txtView.setTextColor(getResources().getColor(R.color.White));
+                review_txtview.setTextColor(getResources().getColor(R.color.White));
+
 
                 break;
             case R.id.route_txtView:
                 about_layout.setVisibility(View.GONE);
                 map_layout.setVisibility(View.VISIBLE);
+                review_layout.setVisibility(View.GONE);
+
+                route_txtView.setTextColor(getResources().getColor(R.color.textcolor));
+                about_txtView.setTextColor(getResources().getColor(R.color.White));
+                review_txtview.setTextColor(getResources().getColor(R.color.White));
+
                 break;
 
             case R.id.event_info_layout:
 
                 rating_dialog();
+                break;
+
+            case R.id.review_txtView:
+                about_layout.setVisibility(View.GONE);
+                map_layout.setVisibility(View.GONE);
+                review_layout.setVisibility(View.VISIBLE);
+                if(review_list_array.size()==0) {
+                    getreviewlist();
+                }else{
+                    review_list.setAdapter(new ReviewList_Adapter(review_list_array, DetailsActivity.this));
+            }
+
+                review_txtview.setTextColor(getResources().getColor(R.color.textcolor));
+                route_txtView.setTextColor(getResources().getColor(R.color.White));
+                about_txtView.setTextColor(getResources().getColor(R.color.White));
+                break;
         }
 
     }
@@ -316,7 +348,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
                                     admin_description.setText(adminobj.getString(GlobalConstants.ADMIN_ABOUT));
                                     rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
-
+                                    stars.setRating(Float.parseFloat(rating.getText().toString()));
                                     if (dateMatchMethod(objArry.getString(GlobalConstants.EVENT_START_DATE))) {
                                         status_text.setVisibility(View.VISIBLE);
                                     } else {
@@ -401,6 +433,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
 
                 params.put("action", GlobalConstants.DETAILS_EVENT_ACTION);
+
                 Log.e("Single Event Param", params.toString());
                 return params;
             }
@@ -410,6 +443,70 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
+
+
+    //------------------------------------------------GET-Review-List-API--------------------------------------
+
+
+    public void getreviewlist() {
+        StringRequest listReq = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                Log.e("rating data", s);
+                try {
+                    JSONObject obj = new JSONObject(s);
+
+                    String response = obj.getString("success");
+
+                    if (response.equalsIgnoreCase("1")) {
+                        JSONArray array = obj.getJSONArray("reviews");
+
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject obj1 = array.getJSONObject(i);
+
+                            JSONObject mainobj = obj1.getJSONObject("user");
+
+                            HashMap<String, String> data = new HashMap<>();
+
+                            data.put(GlobalConstants.USERNAME, mainobj.getString(GlobalConstants.USERNAME));
+                            data.put("text", obj1.getString("text"));
+                            data.put("rating", obj1.getString("rating"));
+
+                            review_list_array.add(data);
+
+
+                        }
+                        review_list.setAdapter(new ReviewList_Adapter(review_list_array, DetailsActivity.this));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                HashMap<String, String> params = new HashMap<>();
+
+                params.put(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
+
+                params.put("action", "get_reviews_list");
+                Log.e("rating param", params.toString());
+                return params;
+            }
+        };
+
+        listReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 4, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(listReq);
     }
 
     //---------------------------Progrees Dialog-----------------------

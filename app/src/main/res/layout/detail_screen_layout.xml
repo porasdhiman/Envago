@@ -175,7 +175,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="8dp"
-                            android:isIndicator="false"
+                            android:isIndicator="true"
                             android:numStars="5"
                             android:clickable="false"
                             android:focusableInTouchMode="false"
@@ -630,6 +630,26 @@
                     android:layout_height="match_parent"
                     android:id="@+id/map"
                     android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+            </LinearLayout>
+
+            //------------------------Review-layout---------------------
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:visibility="gone"
+                android:id="@+id/review_layout">
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/review_list"
+                    >
+
+                </ListView>
+
+
 
             </LinearLayout>
         </LinearLayout>
