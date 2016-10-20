@@ -39,7 +39,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -123,6 +129,7 @@
                     android:textColor="#fff"
                     android:textSize="18dp" />
             </RelativeLayout>
+                </LinearLayout>
             <!--About layout-->
             <LinearLayout
                 android:id="@+id/about_layout"
@@ -448,36 +455,36 @@
 
                     <ImageView
                         android:id="@+id/transport"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_weight="1"
                         android:src="@drawable/tansport_gray" />
 
                     <ImageView
                         android:id="@+id/accomodation"
-                        android:layout_width="30dp"
-                        android:layout_height="40dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_weight="1"
                         android:src="@drawable/accomodation_gray" />
 
                     <ImageView
                         android:id="@+id/tent"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_weight="1"
                         android:src="@drawable/tent_gray" />
 
                     <ImageView
                         android:id="@+id/gear"
-                        android:layout_width="30dp"
-                        android:layout_height="40dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_weight="1"
                         android:src="@drawable/gear_gray" />
 
                     <ImageView
                         android:id="@+id/meals"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_weight="1"
                         android:src="@drawable/food_gray" />
                 </LinearLayout>
@@ -615,7 +622,7 @@
             <LinearLayout
                 android:id="@+id/map_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="fill_parent"
                 android:visibility="gone">
                 <fragment
                     android:layout_width="match_parent"
