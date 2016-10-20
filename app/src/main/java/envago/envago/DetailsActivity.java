@@ -1,14 +1,21 @@
 package envago.envago;
 
+import android.*;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -28,9 +35,21 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
@@ -45,6 +64,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -53,7 +73,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by vikas on 15-10-2016.
  */
-public class DetailsActivity extends Activity implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class DetailsActivity extends FragmentActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback {
     protected View view;
     private ImageButton btnNext, btnFinish;
     private ViewPager intro_images;
@@ -62,9 +83,12 @@ public class DetailsActivity extends Activity implements View.OnClickListener, V
     private ImageView[] dots;
     private ViewPagerAdapter mAdapter;
     Dialog dialog2;
-    TextView status_text,lower_description_txtView, admin_name,places_txtView, level_no1, level_no2, level_no3, admin_description, level_no4, date_details, meeting_desc, time_txtVIew, location_name_txtView, rating;
-    ImageView heart_img,accomodation_txtView,transport_txtView,meal_txtView,gear_txtView,tent_txtView;
-    CircleImageView  orginiser_img;
+    TextView status_text, lower_description_txtView, admin_name, places_txtView, level_no1, level_no2,
+            level_no3, admin_description, level_no4, date_details, meeting_desc, time_txtVIew,
+            location_name_txtView, rating, about_txtView, route_txtView;
+    LinearLayout about_layout, map_layout;
+    ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView;
+    CircleImageView orginiser_img;
     ArrayList<String> list = new ArrayList<>();
     Button purchase_btn;
 
@@ -72,6 +96,14 @@ public class DetailsActivity extends Activity implements View.OnClickListener, V
     DisplayImageOptions options;
 
     int i;
+    //--------------------------------------MAp object-----------
+    Marker marker;
+    private GoogleMap mMap;
+    private Hashtable<String, String> markers;
+
+    private Location mLastLocation;
+    //--------------Google search api variable------------
+    protected GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +117,12 @@ public class DetailsActivity extends Activity implements View.OnClickListener, V
 
 
         pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
+        about_layout = (LinearLayout) findViewById(R.id.about_layout);
+        map_layout = (LinearLayout) findViewById(R.id.map_layout);
         status_text = (TextView) findViewById(R.id.status_text);
         admin_name = (TextView) findViewById(R.id.event_name);
+        about_txtView = (TextView) findViewById(R.id.about_txtView);
+        route_txtView = (TextView) findViewById(R.id.route_txtView);
         date_details = (TextView) findViewById(R.id.date_details);
         meeting_desc = (TextView) findViewById(R.id.meeting_desc);
         time_txtVIew = (TextView) findViewById(R.id.time_txtView);
@@ -94,21 +130,23 @@ public class DetailsActivity extends Activity implements View.OnClickListener, V
         level_no2 = (TextView) findViewById(R.id.level2);
         level_no3 = (TextView) findViewById(R.id.level3);
         level_no4 = (TextView) findViewById(R.id.level4);
-        admin_description = (TextView)findViewById(R.id.upper_description);
+        admin_description = (TextView) findViewById(R.id.upper_description);
         location_name_txtView = (TextView) findViewById(R.id.location_name);
         heart_img = (ImageView) findViewById(R.id.heart_img);
         heart_img.setOnClickListener(this);
-        orginiser_img = (CircleImageView)findViewById(R.id.orginiser_img);
-        rating=(TextView)findViewById(R.id.counter);
-        lower_description_txtView=(TextView)findViewById(R.id.lower_description);
-        accomodation_txtView=(ImageView)findViewById(R.id.accomodation);
-        transport_txtView=(ImageView)findViewById(R.id.transport);
-        meal_txtView=(ImageView)findViewById(R.id.meals);
-        gear_txtView=(ImageView)findViewById(R.id.gear);
-        tent_txtView=(ImageView)findViewById(R.id.tent);
-        places_txtView=(TextView)findViewById(R.id.places_count_txtView);
-        purchase_btn=(Button)findViewById(R.id.purchase_btn);
+        orginiser_img = (CircleImageView) findViewById(R.id.orginiser_img);
+        rating = (TextView) findViewById(R.id.counter);
+        lower_description_txtView = (TextView) findViewById(R.id.lower_description);
+        accomodation_txtView = (ImageView) findViewById(R.id.accomodation);
+        transport_txtView = (ImageView) findViewById(R.id.transport);
+        meal_txtView = (ImageView) findViewById(R.id.meals);
+        gear_txtView = (ImageView) findViewById(R.id.gear);
+        tent_txtView = (ImageView) findViewById(R.id.tent);
+        places_txtView = (TextView) findViewById(R.id.places_count_txtView);
+        purchase_btn = (Button) findViewById(R.id.purchase_btn);
         purchase_btn.setOnClickListener(this);
+        about_txtView.setOnClickListener(this);
+        route_txtView.setOnClickListener(this);
 
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
@@ -119,6 +157,13 @@ public class DetailsActivity extends Activity implements View.OnClickListener, V
         initImageLoader();
         dialogWindow();
         singleEventMethod();
+
+        //------------- map object initilization------------
+        buildGoogleApiClient();
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        markers = new Hashtable<String, String>();
+        mapFragment.getMapAsync(this);
 
     }
 
@@ -146,6 +191,17 @@ public class DetailsActivity extends Activity implements View.OnClickListener, V
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.about_txtView:
+                about_layout.setVisibility(View.VISIBLE);
+                map_layout.setVisibility(View.GONE);
+
+                break;
+            case R.id.route_txtView:
+                about_layout.setVisibility(View.GONE);
+                map_layout.setVisibility(View.VISIBLE);
+                break;
+        }
 
     }
 
@@ -210,7 +266,7 @@ public class DetailsActivity extends Activity implements View.OnClickListener, V
                                     String url = "http://envagoapp.com/uploads/" + adminobj.getString(GlobalConstants.ADMIN_IMAGE);
                                     if (url != null && !url.equalsIgnoreCase("null")
                                             && !url.equalsIgnoreCase("")) {
-                                        imageLoader.displayImage(url,orginiser_img, options,
+                                        imageLoader.displayImage(url, orginiser_img, options,
                                                 new SimpleImageLoadingListener() {
                                                     @Override
                                                     public void onLoadingComplete(String imageUri,
@@ -245,41 +301,41 @@ public class DetailsActivity extends Activity implements View.OnClickListener, V
                                     }
                                     meeting_desc.setText(objArry.getString(GlobalConstants.EVENT_METTING_POINT));
                                     time_txtVIew.setText(objArry.getString("time"));
-                                    i=Integer.parseInt(objArry.getString("is_liked"));
-                                    if(i==1){
+                                    i = Integer.parseInt(objArry.getString("is_liked"));
+                                    if (i == 1) {
                                         heart_img.setImageResource(R.drawable.heart_field);
-                                    }else{
+                                    } else {
                                         heart_img.setImageResource(R.drawable.heart);
                                     }
                                     lower_description_txtView.setText(objArry.getString("description"));
 
-                                    if(objArry.getString("transport").equalsIgnoreCase("0")){
+                                    if (objArry.getString("transport").equalsIgnoreCase("0")) {
                                         transport_txtView.setImageResource(R.drawable.tansport_gray);
-                                    }else{
+                                    } else {
                                         transport_txtView.setImageResource(R.drawable.transportation);
                                     }
-                                    if(objArry.getString("meals").equalsIgnoreCase("0")){
+                                    if (objArry.getString("meals").equalsIgnoreCase("0")) {
                                         meal_txtView.setImageResource(R.drawable.food_gray);
-                                    }else{
+                                    } else {
                                         meal_txtView.setImageResource(R.drawable.meal);
                                     }
-                                    if(objArry.getString("accomodation").equalsIgnoreCase("0")){
+                                    if (objArry.getString("accomodation").equalsIgnoreCase("0")) {
                                         accomodation_txtView.setImageResource(R.drawable.accomodation_gray);
-                                    }else{
+                                    } else {
                                         accomodation_txtView.setImageResource(R.drawable.accomodation);
                                     }
-                                    if(objArry.getString("gear").equalsIgnoreCase("0")){
+                                    if (objArry.getString("gear").equalsIgnoreCase("0")) {
                                         gear_txtView.setImageResource(R.drawable.gear_gray);
-                                    }else{
+                                    } else {
                                         gear_txtView.setImageResource(R.drawable.gear);
                                     }
-                                    if(objArry.getString("tent").equalsIgnoreCase("0")){
+                                    if (objArry.getString("tent").equalsIgnoreCase("0")) {
                                         tent_txtView.setImageResource(R.drawable.tent_gray);
-                                    }else{
+                                    } else {
                                         tent_txtView.setImageResource(R.drawable.tent);
                                     }
-                                    places_txtView.setText(objArry.getString("total_no_of_places")+"Places");
-                                    purchase_btn.setText("$"+objArry.getString(GlobalConstants.EVENT_PRICE));
+                                    places_txtView.setText(objArry.getString("total_no_of_places") + "Places");
+                                    purchase_btn.setText("$" + objArry.getString(GlobalConstants.EVENT_PRICE));
                                 }
                                 pagerAdapterMethod(list);
 
@@ -387,6 +443,159 @@ public class DetailsActivity extends Activity implements View.OnClickListener, V
                 .build();
 
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
+    }
+
+    //----------------------Map method---------------------
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.e("TAG", "onConnectionFailed: ConnectionResult.getErrorCode() = " + connectionResult.getErrorCode());
+
+        // TODO(Developer): Check error code and notify the user of error state
+        // and resolution.
+        Toast.makeText(this, "Could not connect to Google API Client: Error " + connectionResult.getErrorCode(),
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mGoogleApiClient.disconnect();
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+            // Add a marker in Sydney and move the camera
+            LatLng postion = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+            Marker mark = mMap.addMarker(new MarkerOptions().position(postion).title("My Postion"));
+            markers.put(mark.getId(), "http://img.india-forums.com/images/100x100/37525-a-still-image-of-akshay-kumar.jpg");
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 15));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+            //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(Marker marker) {
+                    finish();
+                }
+            });
+
+        } else {
+            // Toast.makeText(this, "Please check GPS and restart App", Toast.LENGTH_LONG).show();
+        }
+        Log.i("search", "Google Places API connected.");
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+        Log.e("search", "Google Places API connection suspended.");
+    }
+
+    //------------------------Adapter for info window--------------------------------
+    class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+
+        private View view;
+        Marker marker;
+
+        public CustomInfoWindowAdapter() {
+            view = getLayoutInflater().inflate(R.layout.custom_info_window,
+                    null);
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+
+            if (this.marker != null
+                    && this.marker.isInfoWindowShown()) {
+                this.marker.hideInfoWindow();
+                this.marker.showInfoWindow();
+            }
+            return null;
+        }
+
+        @Override
+        public View getInfoWindow(final Marker marker) {
+            this.marker = marker;
+
+            String url = null;
+
+            if (marker.getId() != null && markers != null && markers.size() > 0) {
+                if (markers.get(marker.getId()) != null &&
+                        markers.get(marker.getId()) != null) {
+                    url = markers.get(marker.getId());
+                }
+            }
+            final ImageView image = ((ImageView) view.findViewById(R.id.badge));
+
+            if (url != null && !url.equalsIgnoreCase("null")
+                    && !url.equalsIgnoreCase("")) {
+                imageLoader.displayImage(url, image, options,
+                        new SimpleImageLoadingListener() {
+                            @Override
+                            public void onLoadingComplete(String imageUri,
+                                                          View view, Bitmap loadedImage) {
+                                super.onLoadingComplete(imageUri, view,
+                                        loadedImage);
+                                getInfoContents(marker);
+                            }
+                        });
+            } else {
+                image.setImageResource(R.mipmap.ic_launcher);
+            }
+
+            final String title = marker.getTitle();
+            final TextView titleUi = ((TextView) view.findViewById(R.id.title));
+            if (title != null) {
+                titleUi.setText(title);
+            } else {
+                titleUi.setText("");
+            }
+
+            final String snippet = marker.getSnippet();
+            final TextView snippetUi = ((TextView) view
+                    .findViewById(R.id.snippet));
+            if (snippet != null) {
+                snippetUi.setText(snippet);
+            } else {
+                snippetUi.setText("");
+            }
+
+            return view;
+        }
+
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
     }
 
 }
