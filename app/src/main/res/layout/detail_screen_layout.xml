@@ -177,6 +177,8 @@
                             android:layout_marginTop="8dp"
                             android:isIndicator="false"
                             android:numStars="5"
+                            android:clickable="false"
+                            android:focusableInTouchMode="false"
                             android:progressTint="@android:color/holo_orange_light"
                             android:stepSize="1.0" />
 
@@ -223,10 +225,10 @@
                     android:id="@+id/upper_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="14sp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -400,7 +402,6 @@
                         android:singleLine="true"
                         android:text="Name Goes here"
                         android:textSize="12sp" />
-
 
 
                     <ImageView

@@ -1,7 +1,5 @@
 package envago.envago;
 
-import android.*;
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
@@ -18,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -38,7 +37,6 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -49,7 +47,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
@@ -74,7 +71,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by vikas on 15-10-2016.
  */
 public class DetailsActivity extends FragmentActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback {
+        GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback ,View.OnTouchListener{
     protected View view;
     private ImageButton btnNext, btnFinish;
     private ViewPager intro_images;
@@ -82,16 +79,18 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     private int dotsCount;
     private ImageView[] dots;
     private ViewPagerAdapter mAdapter;
-    Dialog dialog2;
+    Dialog dialog2, rating_dialog;
+
     TextView status_text, lower_description_txtView, admin_name, places_txtView, level_no1, level_no2,
             level_no3, admin_description, level_no4, date_details, meeting_desc, time_txtVIew,
-            location_name_txtView, rating, about_txtView, route_txtView;
-    LinearLayout about_layout, map_layout;
+            location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel;
+    LinearLayout about_layout, map_layout, event_info_layout;
     ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView;
     CircleImageView orginiser_img;
     ArrayList<String> list = new ArrayList<>();
     Button purchase_btn;
 
+    String meeting_loc, meeting_lat, meeting_long, ending_loc, ending_lat, ending_long;
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
 
@@ -117,6 +116,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
 
         pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
+
         about_layout = (LinearLayout) findViewById(R.id.about_layout);
         map_layout = (LinearLayout) findViewById(R.id.map_layout);
         status_text = (TextView) findViewById(R.id.status_text);
@@ -143,6 +143,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         gear_txtView = (ImageView) findViewById(R.id.gear);
         tent_txtView = (ImageView) findViewById(R.id.tent);
         places_txtView = (TextView) findViewById(R.id.places_count_txtView);
+        event_info_layout = (LinearLayout) findViewById(R.id.event_info_layout);
+        event_info_layout.setOnClickListener(this);
         purchase_btn = (Button) findViewById(R.id.purchase_btn);
         purchase_btn.setOnClickListener(this);
         about_txtView.setOnClickListener(this);
@@ -201,6 +203,10 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                 about_layout.setVisibility(View.GONE);
                 map_layout.setVisibility(View.VISIBLE);
                 break;
+
+            case R.id.event_info_layout:
+
+                rating_dialog();
         }
 
     }
@@ -260,6 +266,29 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         JSONObject imagObj = images.getJSONObject(i);
                                         list.add("http://envagoapp.com/uploads/" + imagObj.getString(GlobalConstants.IMAGE));
                                     }
+//----------------------------------Map-Loaction-variable-----------------------------
+                                    meeting_loc = objArry.getString(GlobalConstants.EVENT_METTING_POINT);
+                                    meeting_lat = objArry.getString("meeting_point_latitude");
+                                    meeting_long = objArry.getString("meeting_point_longitude");
+
+                                    ending_loc = objArry.getString("end_location");
+                                    ending_lat = objArry.getString("end_latitude");
+                                    ending_long = objArry.getString("end_longitude");
+                                    mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+                                    // Add a marker in Sydney and move the camera
+                                    LatLng postion = new LatLng(Double.parseDouble(meeting_lat), Double.parseDouble(meeting_long));
+                                    Marker mark = mMap.addMarker(new MarkerOptions().position(postion).title("Meeting Point").snippet(meeting_loc));
+                                    markers.put(mark.getId(), list.get(0));
+
+
+                                    LatLng postion_end = new LatLng(Double.parseDouble(ending_lat), Double.parseDouble(ending_long));
+                                    Marker mark_end = mMap.addMarker(new MarkerOptions().position(postion_end).title("Ending Point").snippet(ending_loc));
+                                    markers.put(mark_end.getId(), list.get(0));
+                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 15));
+                                    mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
+                                    //--------------------------------end-map-location-variable---------------------------------------------
+
 
                                     admin_name.setText(adminobj.getString(GlobalConstants.ADMIN_NAME));
 
@@ -489,20 +518,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
-            mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
-            // Add a marker in Sydney and move the camera
-            LatLng postion = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-            Marker mark = mMap.addMarker(new MarkerOptions().position(postion).title("My Postion"));
-            markers.put(mark.getId(), "http://img.india-forums.com/images/100x100/37525-a-still-image-of-akshay-kumar.jpg");
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 15));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-            //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                @Override
-                public void onInfoWindowClick(Marker marker) {
-                    finish();
-                }
-            });
+
 
         } else {
             // Toast.makeText(this, "Please check GPS and restart App", Toast.LENGTH_LONG).show();
@@ -514,6 +530,11 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     public void onConnectionSuspended(int i) {
 
         Log.e("search", "Google Places API connection suspended.");
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return false;
     }
 
     //------------------------Adapter for info window--------------------------------
@@ -598,4 +619,38 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                 .build();
     }
 
+
+    //-------------------------------Rating-Dailog--------------------------------
+
+
+    public void rating_dialog() {
+        rating_dialog = new Dialog(this);
+        rating_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //  rating_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.w));
+        rating_dialog.setCanceledOnTouchOutside(true);
+        rating_dialog.setContentView(R.layout.review_layout);
+       /* AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
+        loaderView.show();*/
+
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        rating_dialog.show();
+
+        rating_save = (TextView) rating_dialog.findViewById(R.id.save_button);
+        rating_cancel = (TextView) rating_dialog.findViewById(R.id.cancel_button);
+
+
+        rating_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        rating_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rating_dialog.dismiss();
+            }
+        });
+    }
 }
