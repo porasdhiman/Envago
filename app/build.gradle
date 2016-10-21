@@ -40,4 +40,5 @@ dependencies {
     compile ('com.github.worker8:tourguide:1.0.17-SNAPSHOT@aar'){
         transitive=true
     }
+
 }

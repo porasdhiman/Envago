@@ -2,6 +2,9 @@ package envago.envago;
 
 import android.app.Application;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created by jhang on 9/27/2016.
  */
@@ -46,6 +49,16 @@ public class Global extends Application {
     }
 
     String isVerified;
+
+    public ArrayList<HashMap<String, String>> getEvent_list() {
+        return event_list;
+    }
+
+    public void setEvent_list(ArrayList<HashMap<String, String>> event_list) {
+        this.event_list = event_list;
+    }
+
+    ArrayList<HashMap<String,String>> event_list=new ArrayList<>();
 
     @Override
     public void onCreate() {

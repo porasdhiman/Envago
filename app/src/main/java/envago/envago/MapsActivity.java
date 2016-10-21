@@ -2,11 +2,14 @@ package envago.envago;
 
 import android.Manifest;
 import android.app.ActivityManager;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -20,6 +23,7 @@ import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -27,6 +31,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -50,8 +62,16 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.wang.avi.AVLoadingIndicatorView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback {
@@ -71,6 +91,11 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
     String lat, lng;
+    ArrayList<HashMap<String, String>> event_list = new ArrayList<>();
+    Global global;
+    int i;
+    Marker mark;
+    Dialog dialog2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +103,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        global = (Global) getApplicationContext();
 
        /* mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Places.GEO_DATA_API)
@@ -157,7 +183,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             Log.i("TAG", "Autocomplete item selected: " + item.description);
 
 			/*
-			 * Issue a request to the Places Geo Data API to retrieve a Place
+             * Issue a request to the Places Geo Data API to retrieve a Place
 			 * object with additional details about the place.
 			 */
             PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
@@ -189,27 +215,15 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             CharSequence attributions = places.getAttributions();
 
 
-
             //------------Place.getLatLng use for get Lat long According to select location name-------------------
-            String latlong=place.getLatLng().toString().split(":")[1];
-            String completeLatLng=latlong.substring(1,latlong.length()-1);
-           // Toast.makeText(MapsActivity.this,completeLatLng,Toast.LENGTH_SHORT).show();
-            String lat=completeLatLng.split(",")[0];
-            lat=lat.substring(1,lat.length());
-            String lng=completeLatLng.split(",")[1];
-            Toast.makeText(MapsActivity.this, lat+lng, Toast.LENGTH_SHORT).show();
-            LatLng postion = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-            Marker mark = mMap.addMarker(new MarkerOptions().position(postion).title("My Postion"));
-            markers.put(mark.getId(), "http://img.india-forums.com/images/100x100/37525-a-still-image-of-akshay-kumar.jpg");
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 15));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-            //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                @Override
-                public void onInfoWindowClick(Marker marker) {
-                    finish();
-                }
-            });
+            String latlong = place.getLatLng().toString().split(":")[1];
+            String completeLatLng = latlong.substring(1, latlong.length() - 1);
+            // Toast.makeText(MapsActivity.this,completeLatLng,Toast.LENGTH_SHORT).show();
+            String lat = completeLatLng.split(",")[0];
+            lat = lat.substring(1, lat.length());
+            String lng = completeLatLng.split(",")[1];
+            dialogWindow();
+            get_list();
             places.release();
         }
     };
@@ -258,23 +272,12 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
         }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
-            mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
-            // Add a marker in Sydney and move the camera
-            LatLng postion = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-            Marker mark = mMap.addMarker(new MarkerOptions().position(postion).title("My Postion"));
-            markers.put(mark.getId(), "http://img.india-forums.com/images/100x100/37525-a-still-image-of-akshay-kumar.jpg");
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 15));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-            //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                @Override
-                public void onInfoWindowClick(Marker marker) {
-                    finish();
-                }
-            });
+            lat = String.valueOf(mLastLocation.getLatitude());
+            lng = String.valueOf(mLastLocation.getLongitude());
+            eventLocOnMap();
 
         } else {
-           // Toast.makeText(this, "Please check GPS and restart App", Toast.LENGTH_LONG).show();
+            // Toast.makeText(this, "Please check GPS and restart App", Toast.LENGTH_LONG).show();
         }
         Log.i("search", "Google Places API connected.");
     }
@@ -336,6 +339,17 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             } else {
                 image.setImageResource(R.mipmap.ic_launcher);
             }
+            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(Marker marker) {
+                    Toast.makeText(MapsActivity.this,marker.getId(),Toast.LENGTH_SHORT).show();
+                       /* Intent j=new Intent(MapsActivity.this,DetailsActivity.class);
+                        j.putExtra(GlobalConstants.EVENT_ID,global.getEvent_list().get(i).get(GlobalConstants.EVENT_ID));
+                        startActivity(j);
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);*/
+
+                }
+            });
 
             final String title = marker.getTitle();
             final TextView titleUi = ((TextView) view.findViewById(R.id.title));
@@ -393,4 +407,122 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
                 .enableAutoManage(this, GOOGLE_API_CLIENT_ID, this)
                 .build();
     }
+
+    public void get_list() {
+        StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                dialog2.dismiss();
+                Log.e("Categoryyyy", s);
+                try {
+                    JSONObject obj = new JSONObject(s);
+                    String res = obj.getString("success");
+
+                    if (res.equalsIgnoreCase("1")) {
+
+                        // JSONObject data = obj.getJSONObject("data");
+
+                        JSONArray events = obj.getJSONArray("data");
+                        for (int i = 0; i < events.length(); i++) {
+                            JSONObject arrobj = events.getJSONObject(i);
+
+                            HashMap<String, String> details = new HashMap<>();
+
+                            details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.EVENT_ID));
+                            details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
+                            details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
+                            details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
+                            details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                            details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
+                            details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
+                            details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
+                            details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+
+
+                            event_list.add(details);
+
+                        }
+                        global.getEvent_list().clear();
+                        global.setEvent_list(event_list);
+                        Toast.makeText(MapsActivity.this, global.getEvent_list().toString(), Toast.LENGTH_SHORT).show();
+                        eventLocOnMap();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog2.dismiss();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+
+                params.put(GlobalConstants.USERID, CommonUtils.UserID(MapsActivity.this));
+
+
+                params.put(GlobalConstants.LATITUDE, lat);
+                params.put(GlobalConstants.LONGITUDE, lng);
+                params.put(GlobalConstants.RESPONSE_TYPE, "map");
+
+                params.put("action", GlobalConstants.GET_EVENT_FILTER);
+
+                Log.e("paramsssssssss", params.toString());
+                return params;
+            }
+        };
+
+        cat_request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(MapsActivity.this);
+        requestQueue.add(cat_request);
+    }
+
+    public void eventLocOnMap() {
+        if (mMap != null) {
+            mMap.clear();
+        }
+        {
+            mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+            // Add a marker in Sydney and move the camera
+            for (i = 0; i < global.getEvent_list().size(); i++) {
+                LatLng postion = new LatLng(Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LATITUDE)), Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LONGITUDE)));
+                mark = mMap.addMarker(new MarkerOptions().position(postion).title(global.getEvent_list().get(i).get(GlobalConstants.EVENT_NAME)).snippet(global.getEvent_list().get(i).get(GlobalConstants.EVENT_NAME)));
+
+                markers.put(mark.getId(), "http://envagoapp.com/uploads/" + global.getEvent_list().get(i).get(GlobalConstants.EVENT_IMAGES));
+
+                //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+            }
+
+           /* LatLng postion=new LatLng(Double.parseDouble(lat),Double.parseDouble(lng));
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 15));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+*/
+        }
+    }
+
+    //---------------------------Progrees Dialog-----------------------
+    public void dialogWindow() {
+        dialog2 = new Dialog(this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog2.setCanceledOnTouchOutside(false);
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.progrees_dialog);
+        AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
+        loaderView.show();
+
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        dialog2.show();
+    }
+
+
 }
