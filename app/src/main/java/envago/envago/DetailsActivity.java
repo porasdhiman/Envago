@@ -3,8 +3,6 @@ package envago.envago;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -234,11 +232,11 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                 about_layout.setVisibility(View.GONE);
                 map_layout.setVisibility(View.GONE);
                 review_layout.setVisibility(View.VISIBLE);
-                if(review_list_array.size()==0) {
+                if (review_list_array.size() == 0) {
                     getreviewlist();
-                }else{
+                } else {
                     review_list.setAdapter(new ReviewList_Adapter(review_list_array, DetailsActivity.this));
-            }
+                }
 
                 review_txtview.setTextColor(getResources().getColor(R.color.textcolor));
                 route_txtView.setTextColor(getResources().getColor(R.color.White));
@@ -347,9 +345,9 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     }
 
                                     admin_description.setText(adminobj.getString(GlobalConstants.ADMIN_ABOUT));
-                                    if(objArry.getString(GlobalConstants.ADMIN_RATING).contains(".")){
-                                        rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".",""));
-                                    }else{
+                                    if (objArry.getString(GlobalConstants.ADMIN_RATING).contains(".")) {
+                                        rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
+                                    } else {
                                         rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
                                     }
 
