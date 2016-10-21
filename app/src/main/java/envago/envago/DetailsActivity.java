@@ -347,7 +347,12 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     }
 
                                     admin_description.setText(adminobj.getString(GlobalConstants.ADMIN_ABOUT));
-                                    rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
+                                    if(objArry.getString(GlobalConstants.ADMIN_RATING).contains(".")){
+                                        rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".",""));
+                                    }else{
+                                        rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
+                                    }
+
                                     stars.setRating(Float.parseFloat(rating.getText().toString()));
                                     if (dateMatchMethod(objArry.getString(GlobalConstants.EVENT_START_DATE))) {
                                         status_text.setVisibility(View.VISIBLE);
