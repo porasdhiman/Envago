@@ -88,7 +88,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     ArrayList<HashMap<String, String>> review_list_array = new ArrayList<>();
     TextView status_text, lower_description_txtView, admin_name, places_txtView, level_no1, level_no2,
             level_no3, admin_description, level_no4, date_details, meeting_desc, time_txtVIew,
-            location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview;
+            location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview,header_textview;
     LinearLayout about_layout, map_layout, event_info_layout, review_layout;
     ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView;
     CircleImageView orginiser_img;
@@ -98,6 +98,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     String meeting_loc, meeting_lat, meeting_long, ending_loc, ending_lat, ending_long;
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
+    ImageView back_button;
 
     int i;
     //--------------------------------------MAp object-----------
@@ -137,6 +138,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         level_no2 = (TextView) findViewById(R.id.level2);
         level_no3 = (TextView) findViewById(R.id.level3);
         level_no4 = (TextView) findViewById(R.id.level4);
+        header_textview = (TextView)findViewById(R.id.header_text);
         admin_description = (TextView) findViewById(R.id.upper_description);
         location_name_txtView = (TextView) findViewById(R.id.location_name);
         heart_img = (ImageView) findViewById(R.id.heart_img);
@@ -149,6 +151,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         meal_txtView = (ImageView) findViewById(R.id.meals);
         gear_txtView = (ImageView) findViewById(R.id.gear);
         tent_txtView = (ImageView) findViewById(R.id.tent);
+        back_button=(ImageView)findViewById(R.id.detail_back_button);
         places_txtView = (TextView) findViewById(R.id.places_count_txtView);
         event_info_layout = (LinearLayout) findViewById(R.id.event_info_layout);
         event_info_layout.setOnClickListener(this);
@@ -157,7 +160,12 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         about_txtView.setOnClickListener(this);
         route_txtView.setOnClickListener(this);
         review_txtview.setOnClickListener(this);
-
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
                 .showStubImage(R.mipmap.ic_launcher)        //	Display Stub Image
@@ -326,6 +334,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
 
                                     admin_name.setText(adminobj.getString(GlobalConstants.ADMIN_NAME));
+                                    header_textview.setText(objArry.getString(GlobalConstants.EVENT_NAME));
+
 
                                     String url = "http://envagoapp.com/uploads/" + adminobj.getString(GlobalConstants.ADMIN_IMAGE);
                                     if (url != null && !url.equalsIgnoreCase("null")

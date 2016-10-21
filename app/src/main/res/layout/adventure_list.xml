@@ -23,7 +23,7 @@
                 android:textSize="17sp"
                 android:textStyle="bold"
                 android:layout_centerInParent="true"
-                android:id="@+id/header_text"/>
+                android:id="@+id/header_text_adv"/>
 
         <ImageView
             android:layout_width="35dp"

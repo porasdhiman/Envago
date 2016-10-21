@@ -46,6 +46,7 @@ public class Adventure_list extends Activity {
     Global global;
     Dialog dialog2;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,12 +59,45 @@ public class Adventure_list extends Activity {
         }
 
         global =(Global) getApplicationContext();
-        headtext = (TextView) findViewById(R.id.header_text);
+        headtext = (TextView) findViewById(R.id.header_text_adv);
 
-        headtext.setText("TITLE");
         ad_items = (ListView) findViewById(R.id.ad_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
         Log.e("Status",getIntent().getExtras().getString("status"));
+
+        String category_name = getIntent().getExtras().getString("cat");
+
+        if (category_name.equalsIgnoreCase("0"))
+        {
+            headtext.setText("Air");
+        }
+        else if (category_name.equalsIgnoreCase("1"))
+        {
+            headtext.setText("Earth");
+
+        }
+        else if (category_name.equalsIgnoreCase("2"))
+        {
+            headtext.setText("Water");
+
+        }
+        else if (category_name.equalsIgnoreCase("3"))
+        {
+            headtext.setText("Rock & Ice");
+
+        }
+        else if (category_name.equalsIgnoreCase("4"))
+        {
+            headtext.setText("Go Volunteer");
+
+        }
+        else
+        {
+            headtext.setText("All");
+
+        }
+
+
 
         if (getIntent().getExtras().getString("status").equalsIgnoreCase("single"))
 
@@ -118,9 +152,12 @@ public class Adventure_list extends Activity {
                             details.put(GlobalConstants.LONGITUDE,arrobj.getString(GlobalConstants.LONGITUDE));
 
 
+
                             event_list.add(details);
 
+
                         }
+
                         if(event_list.size()>0) {
                             ad_items.setAdapter(new Adventure_list_adapter(getApplicationContext(), event_list));
                         }

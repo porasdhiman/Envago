@@ -18,7 +18,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.telecom.Call;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -70,6 +69,7 @@ public class CallVolunteers extends Activity implements View.OnClickListener, Vi
     HttpEntity resEntity;
     String message;
     Dialog dialog2;
+
 
 
     @Override

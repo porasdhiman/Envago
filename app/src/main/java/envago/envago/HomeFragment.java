@@ -1,7 +1,6 @@
 package envago.envago;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -60,19 +58,24 @@ public class HomeFragment extends Fragment {
         categories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), Adventure_list.class);
 
                 if (position == 0 || position == 1 || position == 2 || position == 3) {
-                    Intent intent = new Intent(getActivity(), Adventure_list.class);
                     intent.putExtra("status", "single");
                     intent.putExtra("main_id", "1");
                     intent.putExtra("sub_id", String.valueOf(position + 1));
+                    intent.putExtra("cat", String.valueOf(position));
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 } else if (position == 4) {
 
+                  /*  intent.putExtra("cat", String.valueOf(position));
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+*/
                 } else {
-                    Intent intent = new Intent(getActivity(), Adventure_list.class);
                     intent.putExtra("status", "all");
+                    intent.putExtra("cat", String.valueOf(position));
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 }

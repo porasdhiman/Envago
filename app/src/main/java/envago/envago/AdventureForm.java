@@ -123,7 +123,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
     private int mYear, mMonth, mDay, mHour, mMinute;
     CheckBox chk_transport, chk_meal, chk_accomodation, chk_gear, chk_tent;
     String trans_mString, tent_mString, meal_mString, gear_mString, acc_mString, main_id = "", sub_cat_id, level_mString = "";
-
+    ImageView back_button;
     Button submit_event_btn;
     HttpEntity resEntity;
     String message;
@@ -154,6 +154,8 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         loc2 = (RelativeLayout) findViewById(R.id.loc2);
         loc3 = (RelativeLayout) findViewById(R.id.loc3);
         loc4 = (RelativeLayout) findViewById(R.id.loc4);
+
+        back_button= (ImageView)findViewById(R.id.back_button_create);
 
         add_imageView = (ImageView) findViewById(R.id.add_image_adventure);
         add_imageView.setOnClickListener(this);
@@ -196,7 +198,13 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
 
         calendar = Calendar.getInstance();
 
-
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                overridePendingTransition(R.anim.slide_out_left, R.anim.slide_in_left);
+            }
+        });
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         // Current Minute
         minute = calendar.get(Calendar.MINUTE);
