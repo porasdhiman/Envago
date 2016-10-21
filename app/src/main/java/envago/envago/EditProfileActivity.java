@@ -124,7 +124,6 @@ public class EditProfileActivity extends Activity {
             @Override
             public void onClick(View view) {
                 finish();
-                overridePendingTransition(R.anim.slide_out_left, R.anim.slide_in_left);
             }
         });
 

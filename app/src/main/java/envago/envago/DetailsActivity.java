@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,11 +86,13 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     private ViewPagerAdapter mAdapter;
     Dialog dialog2, rating_dialog;
     ListView review_list;
+    RelativeLayout event_info_layout;
+
     ArrayList<HashMap<String, String>> review_list_array = new ArrayList<>();
     TextView status_text, lower_description_txtView, admin_name, places_txtView, level_no1, level_no2,
             level_no3, admin_description, level_no4, date_details, meeting_desc, time_txtVIew,
             location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview,header_textview;
-    LinearLayout about_layout, map_layout, event_info_layout, review_layout;
+    LinearLayout about_layout, map_layout,  review_layout;
     ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView;
     CircleImageView orginiser_img;
     ArrayList<String> list = new ArrayList<>();
@@ -99,6 +102,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
     ImageView back_button;
+
 
     int i;
     //--------------------------------------MAp object-----------
@@ -153,7 +157,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         tent_txtView = (ImageView) findViewById(R.id.tent);
         back_button=(ImageView)findViewById(R.id.detail_back_button);
         places_txtView = (TextView) findViewById(R.id.places_count_txtView);
-        event_info_layout = (LinearLayout) findViewById(R.id.event_info_layout);
+        event_info_layout = (RelativeLayout) findViewById(R.id.event_info_layout);
         event_info_layout.setOnClickListener(this);
         purchase_btn = (Button) findViewById(R.id.purchase_btn);
         purchase_btn.setOnClickListener(this);

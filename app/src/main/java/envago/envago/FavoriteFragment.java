@@ -39,6 +39,7 @@ import java.util.Map;
  */
 public class FavoriteFragment extends Fragment {
     ListView ad_items;
+
    // public int[] images = {R.drawable.air, R.drawable.earth, R.drawable.water, R.drawable.rockice, R.drawable.volunteer, R.drawable.all};
     TextView headtext;
     ArrayList<HashMap<String,String>> event_list = new ArrayList<>();
@@ -51,7 +52,7 @@ public class FavoriteFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.adventure_list, container, false);
 
-        headtext=(TextView)v.findViewById( R.id.header_text);
+        headtext=(TextView)v.findViewById( R.id.header_text_adv);
 
         headtext.setText("WISHLIST");
 

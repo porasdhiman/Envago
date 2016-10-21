@@ -12,8 +12,8 @@
         android:layout_marginLeft="20dp">
         <ImageView
             android:id="@+id/advanture_img"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
 
             android:src="@drawable/create_advanture"/>
         <TextView
@@ -25,7 +25,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="30dp"
             android:textColor="#fff"
-            android:textSize="17sp"/>
+            android:textSize="14sp"/>
 
     </RelativeLayout>
 
@@ -38,8 +38,8 @@
         android:layout_below="@+id/advanture_layout">
         <ImageView
             android:id="@+id/call_all_img"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
 
             android:src="@drawable/call_all_advanture"/>
         <TextView
@@ -51,7 +51,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="30dp"
             android:textColor="#fff"
-            android:textSize="17sp"/>
+            android:textSize="14sp"/>
 
     </RelativeLayout>
 <View
@@ -71,8 +71,8 @@
         android:layout_below="@+id/view1">
         <ImageView
             android:id="@+id/myadvanture_img"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
 
             android:src="@drawable/my_advanture"/>
         <TextView
@@ -84,7 +84,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="30dp"
             android:textColor="#fff"
-            android:textSize="17sp"/>
+            android:textSize="14sp"/>
 
     </RelativeLayout>
     <View
@@ -104,8 +104,8 @@
         android:layout_below="@+id/view2">
         <ImageView
             android:id="@+id/mychats_img"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
 
             android:src="@drawable/my_chat"/>
         <TextView
@@ -117,7 +117,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="30dp"
             android:textColor="#fff"
-            android:textSize="17sp"/>
+            android:textSize="14sp"/>
 
     </RelativeLayout>
 
@@ -132,8 +132,8 @@
         android:layout_marginBottom="10dp">
         <ImageView
             android:id="@+id/logout_img"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
 
             android:src="@drawable/logout"/>
         <TextView
@@ -145,7 +145,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="30dp"
             android:textColor="#fff"
-            android:textSize="17sp"/>
+            android:textSize="14sp"/>
 
     </RelativeLayout>
 

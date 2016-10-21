@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#fff">
 
     <RelativeLayout
         android:id="@+id/main_heading"
@@ -59,7 +60,7 @@
                 <android.support.v4.view.ViewPager
                     android:id="@+id/pager_introduction"
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
+                    android:layout_height="180dp"
                     android:fitsSystemWindows="true"
                     tools:listitem="@layout/pager_item" />
 
@@ -70,6 +71,20 @@
                     android:layout_alignParentRight="true"
                     android:layout_margin="12dp"
                     android:src="@drawable/heart" />
+                <TextView
+                    android:id="@+id/status_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/start_event_back"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:visibility="gone"
+                    android:text="EVENT STARTED"
+                    android:textColor="#fff"
+                    android:textSize="12sp"
+                     />
 
 
             </RelativeLayout>
@@ -147,40 +162,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:id="@+id/event_info_layout"
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
+
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/status_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginRight="30dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_toLeftOf="@+id/stars"
-                            android:background="@drawable/start_event_back"
-                            android:gravity="center"
-                            android:padding="4dp"
-                            android:text="EVENT STARTED"
-                            android:textColor="#fff"
-                            android:textSize="12sp"
-                            android:visibility="gone" />
+
 
                         <RatingBar
                             android:id="@+id/stars"
                             style="?android:attr/ratingBarStyleSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="8dp"
                             android:isIndicator="true"
+                            android:layout_centerVertical="true"
+                            android:layout_centerInParent="true"
                             android:numStars="5"
                             android:clickable="false"
                             android:focusableInTouchMode="false"
@@ -189,18 +190,19 @@
 
                         <TextView
                             android:id="@+id/counter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="12dp"
                             android:layout_marginTop="8dp"
-                            android:layout_toRightOf="@+id/stars"
+                            android:layout_gravity= "end"
+                            android:layout_alignParentRight="true"
                             android:background="@drawable/level_txt_back"
                             android:gravity="center"
                             android:padding="3dp"
                             android:text=""
                             android:textColor="#fff" />
-                    </LinearLayout>
+                    </RelativeLayout>
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/orginiser_img"
