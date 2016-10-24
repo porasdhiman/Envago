@@ -28,7 +28,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wang.avi.AVLoadingIndicatorView;
@@ -68,19 +70,21 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
     SharedPreferences.Editor editor;
     HttpEntity resEntity;
     String message;
-    Dialog dialog2;
+    Dialog dialog2,message_dialog;
+    Global global;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         setContentView(R.layout.createadventures_activity);
+        global=(Global)getApplicationContext();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
 
-
+        message_dialog();
         name = (EditText) findViewById(R.id.name_create);
         address = (EditText) findViewById(R.id.address_create);
         about = (EditText) findViewById(R.id.about_create);
@@ -150,6 +154,34 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
             about.setBackground(getResources().getDrawable(R.drawable.rectangle));
             paypal.setBackground(getResources().getDrawable(R.drawable.stroke));
         }
+    }
+
+    public void message_dialog() {
+        message_dialog = new Dialog(this);
+        message_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //  rating_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.w));
+        message_dialog.setCanceledOnTouchOutside(true);
+        message_dialog.setContentView(R.layout.message_dialog);
+       /* AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
+        loaderView.show();*/
+
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        message_dialog.show();
+
+         TextView message_txt = (TextView) message_dialog.findViewById(R.id.message_txt);
+        message_txt.setText(global.getIsVerified());
+
+         LinearLayout ok_layout = (LinearLayout) message_dialog.findViewById(R.id.ok_layout);
+
+
+        ok_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                message_dialog.dismiss();
+            }
+        });
+
+
     }
 
     @Override

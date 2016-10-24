@@ -57,13 +57,13 @@ public class AddFragment extends Fragment {
         createAdventures.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //if(global.getIsVerified().equalsIgnoreCase("Approved")) {
+                if(global.getIsVerified().equalsIgnoreCase("Approved")) {
                 Intent intent = new Intent(getActivity(), AdventureForm.class);
                 startActivity(intent);
-                /*}else{
+                }else{
                     Intent intent = new Intent(getActivity(), CreateAdventuresActivity.class);
                     startActivity(intent);
-                }*/
+                }
 
             }
         });
