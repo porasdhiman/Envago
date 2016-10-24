@@ -17,6 +17,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+
     }
     buildTypes {
         release {
@@ -40,5 +42,7 @@ dependencies {
     compile ('com.github.worker8:tourguide:1.0.17-SNAPSHOT@aar'){
         transitive=true
     }
+    compile files('libs/PayPalAndroidSDK.jar')
+
 
 }
