@@ -26,6 +26,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -122,7 +123,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
 
     private int mYear, mMonth, mDay, mHour, mMinute;
     CheckBox chk_transport, chk_meal, chk_accomodation, chk_gear, chk_tent;
-    String trans_mString, tent_mString, meal_mString, gear_mString, acc_mString, main_id = "", sub_cat_id, level_mString = "";
+    String trans_mString = "0", tent_mString = "0", meal_mString = "0", gear_mString = "0", acc_mString = "0", main_id = "", sub_cat_id, level_mString = "";
     ImageView back_button;
     Button submit_event_btn;
     HttpEntity resEntity;
@@ -155,7 +156,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         loc3 = (RelativeLayout) findViewById(R.id.loc3);
         loc4 = (RelativeLayout) findViewById(R.id.loc4);
 
-        back_button= (ImageView)findViewById(R.id.back_button_create);
+        back_button = (ImageView) findViewById(R.id.back_button_create);
 
         add_imageView = (ImageView) findViewById(R.id.add_image_adventure);
         add_imageView.setOnClickListener(this);
@@ -195,6 +196,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         chk_gear.setOnClickListener(this);
         chk_meal.setOnClickListener(this);
         chk_tent.setOnClickListener(this);
+        event_desc_txtView.setMovementMethod(new ScrollingMovementMethod());
 
         calendar = Calendar.getInstance();
 
@@ -677,10 +679,45 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
                 }
                 break;
             case R.id.submit_event_btn:
-                dialogWindow();
-                Log.e("arreay value", list_image.toString());
-                new Thread(null, address_request, "")
-                        .start();
+
+                if (main_id.equalsIgnoreCase("")) {
+                    Toast.makeText(AdventureForm.this, "Please select catgory", Toast.LENGTH_SHORT).show();
+                } else if (level_mString.equalsIgnoreCase("")) {
+                    Toast.makeText(AdventureForm.this, "Please select level", Toast.LENGTH_SHORT).show();
+                } else if (advanture_editText.length() == 0) {
+                    advanture_editText.setError("Please enter advanture name");
+                } else if (start_date_textVeiw.length() == 0) {
+                    start_date_textVeiw.setError("Please enter start date name");
+                } else if (end_date_textVeiw.length() == 0) {
+                    end_date_textVeiw.setError("Please enter end date name");
+                } else if (meeting_point_txtView.length() == 0) {
+                    meeting_point_txtView.setError("Please select meeting location");
+                } else if (meeting_time_txtView.length() == 0) {
+                    meeting_time_txtView.setError("Please select meeting time");
+                } else if (start_point_loc.length() == 0) {
+                    start_point_loc.setError("Please select starting location");
+                } else if (end_point_txtView.length() == 0) {
+                    end_point_txtView.setError("Please select ending location");
+                } else if (criteria_txtView.length() == 0) {
+                    criteria_txtView.setError("Please enter criteria");
+                } else if (event_desc_txtView.length() == 0) {
+                    event_desc_txtView.setError("Please enter description");
+                } else if (disclaimer_txtView.length() == 0) {
+                    disclaimer_txtView.setError("Please enter disclaomer");
+
+                } else if (places_txtview.length() == 0) {
+                    places_txtview.setError("Please enter place");
+
+                } else if (pcicing_txtview.length() == 0) {
+                    pcicing_txtview.setError("Please enter price");
+
+                } else {
+                    dialogWindow();
+
+                    new Thread(null, address_request, "")
+                            .start();
+                }
+
                 break;
         }
     }
@@ -1049,8 +1086,10 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
             Log.e("description", event_desc_txtView.getText().toString());
             reqEntity.addPart("no_of_places", new StringBody(places_txtview.getText().toString()));
             Log.e("no_of_places", places_txtview.getText().toString());
-            reqEntity.addPart("price", new StringBody(pcicing_txtview.getText().toString()));
-            Log.e("price", pcicing_txtview.getText().toString());
+            reqEntity.addPart("whats_included", new StringBody(""));
+            Log.e("whats_included", "");
+            reqEntity.addPart("meals", new StringBody(meal_mString));
+            Log.e("meals", meal_mString);
             reqEntity.addPart("transport", new StringBody(trans_mString));
             Log.e("transport", trans_mString);
             reqEntity.addPart("meals", new StringBody(meal_mString));

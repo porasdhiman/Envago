@@ -372,6 +372,7 @@
                 android:background="@drawable/adventure_stroke"
                 android:hint="Type the event description here..."
                 android:padding="10dp"
+                android:gravity="top"
                 android:scrollHorizontally="true"
                 android:scrollbars="vertical"
                 android:textSize="14sp" />
@@ -455,6 +456,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="15dp"
+                android:gravity="top"
                 android:background="@drawable/adventure_stroke"
                 android:hint="Criteria/eligibility - age, fitness, experience..."
                 android:padding="10dp"
@@ -628,6 +630,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="15dp"
+                android:gravity="top"
                 android:background="@drawable/adventure_stroke"
                 android:hint="Disclaimer(Optional)"
                 android:padding="10dp"
@@ -644,7 +647,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/red_button"
                 android:text="Submit"
-                android:textColor="#fff" />
+                android:textColor="#000" />
         </LinearLayout>
 
     </ScrollView>
