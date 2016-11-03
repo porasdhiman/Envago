@@ -703,7 +703,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
                 } else if (event_desc_txtView.length() == 0) {
                     event_desc_txtView.setError("Please enter description");
                 } else if (disclaimer_txtView.length() == 0) {
-                    disclaimer_txtView.setError("Please enter disclaomer");
+                    disclaimer_txtView.setError("Please enter disclaimer");
 
                 } else if (places_txtview.length() == 0) {
                     places_txtview.setError("Please enter place");

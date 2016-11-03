@@ -54,7 +54,9 @@ public class Adventure_list_adapter extends BaseAdapter {
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
     String url;
-
+    String months[] = { " ", "Janguary", "Febuary", "March", "April", "May",
+            "June", "July", "August", "Spetember", "October", "November",
+            "December", };
     public Adventure_list_adapter(Context applicationContext, ArrayList<HashMap<String, String>> images) {
         this.images = images;
         this.applicationContext = applicationContext;
@@ -122,7 +124,13 @@ public class Adventure_list_adapter extends BaseAdapter {
 
         holder.ad_name.setText(images.get(i).get(GlobalConstants.EVENT_NAME));
         holder.price.setText(images.get(i).get(GlobalConstants.EVENT_PRICE));
-        holder.date.setText(images.get(i).get(GlobalConstants.EVENT_START_DATE));
+        String data=images.get(i).get(GlobalConstants.EVENT_START_DATE);
+        String split[] = data.split("-");
+        String minth = split[1];
+        String date=split[2];
+        int mm = Integer.parseInt(minth);
+
+        holder.date.setText(date+" "+months[mm]);
         holder.location.setText(images.get(i).get(GlobalConstants.EVENT_LOC));
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {

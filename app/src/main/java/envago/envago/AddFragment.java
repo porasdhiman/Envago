@@ -83,8 +83,13 @@ public class AddFragment extends Fragment {
         logout_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialogWindow();
-                logoutMethod();
+                ed.clear();
+                ed.commit();
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+               /* dialogWindow();
+                logoutMethod();*/
 
             }
         });
