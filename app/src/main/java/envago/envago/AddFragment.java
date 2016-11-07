@@ -38,7 +38,7 @@ import java.util.Map;
  */
 public class AddFragment extends Fragment {
 
-    RelativeLayout call_all, createAdventures, logout_layout;
+    RelativeLayout call_all, createAdventures, logout_layout, myadventure;
     SharedPreferences sp;
     SharedPreferences.Editor ed;
     ProgressDialog pd;
@@ -52,6 +52,7 @@ public class AddFragment extends Fragment {
         sp = getActivity().getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         ed = sp.edit();
         call_all = (RelativeLayout) v.findViewById(R.id.call_all_layout);
+        myadventure=(RelativeLayout)v.findViewById(R.id.myadvanture_layout);
         createAdventures = (RelativeLayout) v.findViewById(R.id.advanture_layout);
         logout_layout = (RelativeLayout) v.findViewById(R.id.logout_layout);
         createAdventures.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +91,15 @@ public class AddFragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                /* dialogWindow();
                 logoutMethod();*/
+
+            }
+        });
+        myadventure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),MyAdventures.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
             }
         });

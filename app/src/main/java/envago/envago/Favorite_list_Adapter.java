@@ -49,6 +49,9 @@ public class Favorite_list_Adapter extends BaseAdapter {
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
     String url;
+    String months[] = { " ", "Jan", "Feb", "Mar", "Apr", "May",
+            "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
+            "Dec", };
 
     public Favorite_list_Adapter(Context applicationContext, ArrayList<HashMap<String, String>> images) {
         this.images = images;
@@ -120,7 +123,13 @@ public class Favorite_list_Adapter extends BaseAdapter {
 
         holder.ad_name.setText(images.get(i).get(GlobalConstants.EVENT_NAME));
         holder.price.setText(images.get(i).get(GlobalConstants.EVENT_PRICE));
-        holder.date.setText(images.get(i).get(GlobalConstants.EVENT_START_DATE));
+        String data=images.get(i).get(GlobalConstants.EVENT_START_DATE);
+        String split[] = data.split("-");
+        String minth = split[1];
+        String date=split[2];
+        int mm = Integer.parseInt(minth);
+
+        holder.date.setText(date+" "+months[mm]+" "+split[0]);
         holder.location.setText(images.get(i).get(GlobalConstants.EVENT_LOC));
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {

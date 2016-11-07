@@ -166,7 +166,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
 
-            </activity>
+        </activity>
         <activity android:name="com.paypal.android.sdk.payments.PaymentActivity" />
         <activity android:name="com.paypal.android.sdk.payments.LoginActivity" />
         <activity android:name="com.paypal.android.sdk.payments.PaymentMethodActivity" />
@@ -177,11 +177,17 @@
         <activity
             android:name="io.card.payment.CardIOActivity"
             android:configChanges="keyboardHidden|orientation" />
+
         <service
             android:name="com.paypal.android.sdk.payments.PayPalService"
             android:exported="false" />
 
+        <activity
+            android:name=".MyAdventures"
+            android:screenOrientation="portrait">
 
+        </activity>
     </application>
+
 
 </manifest>

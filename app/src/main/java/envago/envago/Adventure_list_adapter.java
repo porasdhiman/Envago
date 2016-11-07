@@ -2,7 +2,6 @@ package envago.envago;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.util.Log;
@@ -19,11 +18,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.plus.model.people.Person;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -31,7 +27,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
-import org.apache.james.mime4j.field.datetime.parser.ParseException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,9 +49,9 @@ public class Adventure_list_adapter extends BaseAdapter {
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
     String url;
-    String months[] = { " ", "Janguary", "Febuary", "March", "April", "May",
-            "June", "July", "August", "Spetember", "October", "November",
-            "December", };
+    String months[] = { " ", "Jan", "Feb", "Mar", "Apr", "May",
+            "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
+            "Dec", };
     public Adventure_list_adapter(Context applicationContext, ArrayList<HashMap<String, String>> images) {
         this.images = images;
         this.applicationContext = applicationContext;
@@ -130,7 +125,7 @@ public class Adventure_list_adapter extends BaseAdapter {
         String date=split[2];
         int mm = Integer.parseInt(minth);
 
-        holder.date.setText(date+" "+months[mm]);
+        holder.date.setText(date+" "+months[mm]+" "+split[0]);
         holder.location.setText(images.get(i).get(GlobalConstants.EVENT_LOC));
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {

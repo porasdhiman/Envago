@@ -16,12 +16,15 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:textColor="#fff"
-        android:padding="4dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
         android:layout_marginTop="12dp"
         android:layout_marginLeft="12dp"
         android:visibility="gone"
         android:background="@drawable/start_event_back"
-        android:text="STARTED"
+        android:text="Started"
         android:gravity="center"
         />
     <ImageView
