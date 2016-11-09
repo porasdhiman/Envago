@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,7 +47,7 @@ public class Adventure_list extends Activity {
     Global global;
     Dialog dialog2;
 
-
+ImageView back_img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +61,7 @@ public class Adventure_list extends Activity {
 
         global =(Global) getApplicationContext();
         headtext = (TextView) findViewById(R.id.header_text_adv);
-
+        back_img=(ImageView)findViewById(R.id.back_img);
         ad_items = (ListView) findViewById(R.id.ad_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
         Log.e("Status",getIntent().getExtras().getString("status"));
@@ -70,30 +71,37 @@ public class Adventure_list extends Activity {
         if (category_name.equalsIgnoreCase("0"))
         {
             headtext.setText("Air");
+            back_img.setImageResource(R.drawable.air_back);
+
         }
         else if (category_name.equalsIgnoreCase("1"))
         {
             headtext.setText("Earth");
+            back_img.setImageResource(R.drawable.earth_back);
 
         }
         else if (category_name.equalsIgnoreCase("2"))
         {
             headtext.setText("Water");
+            back_img.setImageResource(R.drawable.watering_back);
 
         }
         else if (category_name.equalsIgnoreCase("3"))
         {
             headtext.setText("Rock & Ice");
+            back_img.setImageResource(R.drawable.rock_back);
 
         }
         else if (category_name.equalsIgnoreCase("4"))
         {
             headtext.setText("Go Volunteer");
+            back_img.setImageResource(R.drawable.air_back);
 
         }
         else
         {
             headtext.setText("All");
+            back_img.setImageResource(R.drawable.all_back);
 
         }
 
@@ -160,6 +168,7 @@ public class Adventure_list extends Activity {
 
                         if(event_list.size()>0) {
                             ad_items.setAdapter(new Adventure_list_adapter(getApplicationContext(), event_list));
+                            back_img.setVisibility(View.GONE);
                         }
 
                     }

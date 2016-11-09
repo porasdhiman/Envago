@@ -186,7 +186,7 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
 
                                 Intent intent = new Intent(SignupActivity.this, Tab_Activity.class);
                                 startActivity(intent);
-                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
                                 finish();
 
                             } else {

@@ -58,8 +58,8 @@ public class Adventure_list_adapter extends BaseAdapter {
         inflater = LayoutInflater.from(applicationContext);
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
-                .showStubImage(R.mipmap.ic_launcher)        //	Display Stub Image
-                .showImageForEmptyUri(R.mipmap.ic_launcher)    //	If Empty image found
+                .showStubImage(R.drawable.placeholder_image1)        //	Display Stub Image
+                .showImageForEmptyUri(R.drawable.placeholder_image1)    //	If Empty image found
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();

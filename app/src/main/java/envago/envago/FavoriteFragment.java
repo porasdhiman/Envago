@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,6 +45,7 @@ public class FavoriteFragment extends Fragment {
     TextView headtext;
     ArrayList<HashMap<String,String>> event_list = new ArrayList<>();
     Dialog dialog2;
+ImageView back_img;
 
 
 
@@ -55,13 +57,14 @@ public class FavoriteFragment extends Fragment {
         headtext=(TextView)v.findViewById( R.id.header_text_adv);
 
         headtext.setText("WISHLIST");
-
+        back_img=(ImageView)v.findViewById(R.id.back_img);
                 ad_items = (ListView)v.findViewById(R.id.ad_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
      // ad_items.setAdapter(new Adventure_list_adapter(getActivity(), images));
 
         dialogWindow();
         get_list();
+        back_img.setImageResource(R.drawable.favourites_back);
 
         ad_items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -113,6 +116,7 @@ public class FavoriteFragment extends Fragment {
                         }
                         if(event_list.size()>0) {
                             ad_items.setAdapter(new Favorite_list_Adapter(getActivity(), event_list));
+                            back_img.setVisibility(View.GONE);
                         }
 
                     }

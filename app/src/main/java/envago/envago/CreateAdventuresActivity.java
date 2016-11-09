@@ -304,11 +304,11 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
 
                 }
             } else {
-
+                onCaptureImageResult(data);
             }
         } else if (requestCode == 1) {
 
-            onCaptureImageResult(data);
+           // onCaptureImageResult(data);
             //camgllry.dismiss();
             //  document_pic.setVisibility(View.VISIBLE);
 
@@ -370,7 +370,7 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
             MultipartEntity reqEntity = new MultipartEntity();
             if (selectedImagePath.length() > 0) {
                 File file1 = new File(selectedImagePath);
-                FileBody bin1 = new FileBody(file1, "image/png");
+                FileBody bin1 = new FileBody(file1);
                 reqEntity.addPart(GlobalConstants.DOCUMENT, bin1);
             }
 
@@ -387,7 +387,7 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
 
             post.setEntity(reqEntity);
 
-            Log.e("params", selectedImagePath + " " + usertype + " " + license + " " + GlobalConstants.UPLOAD_DOCUMENT_ACTION + " " + name.getText() + " " + address.getText());
+            Log.e("params", CommonUtils.UserID(this)+" "+selectedImagePath + " " + usertype + " " + license + " " + GlobalConstants.UPLOAD_DOCUMENT_ACTION + " " + name.getText() + " " + address.getText());
             HttpResponse response = client.execute(post);
             resEntity = response.getEntity();
 
@@ -436,12 +436,12 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
                 e.printStackTrace();
             }
         }
-        document_pic.setImageBitmap(bm);
+        //document_pic.setImageBitmap(bm);
         Uri uri = getImageUri(CreateAdventuresActivity.this, bm);
+        document_pic.setImageURI(uri);
         try {
             selectedImagePath = getFilePath(CreateAdventuresActivity.this, uri);
-            editor.putString(GlobalConstants.DOCUMENT, selectedImagePath);
-            editor.commit();
+
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -453,7 +453,7 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
         // Uri uri=data.getData();
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+       // thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
         FileOutputStream fo;
@@ -467,12 +467,12 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
         } catch (IOException e) {
             e.printStackTrace();
         }
-        document_pic.setImageBitmap(thumbnail);
+        //document_pic.setImageBitmap(thumbnail);
         Uri uri = getImageUri(CreateAdventuresActivity.this, thumbnail);
+        document_pic.setImageURI(uri);
         try {
             selectedImagePath = getFilePath(CreateAdventuresActivity.this, uri);
-            editor.putString(GlobalConstants.DOCUMENT, selectedImagePath);
-            editor.commit();
+
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
