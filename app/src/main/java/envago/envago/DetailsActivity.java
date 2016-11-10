@@ -115,7 +115,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     DisplayImageOptions options;
     ImageView back_button;
 
-
+Button signup_btn;
     int i;
     //--------------------------------------MAp object-----------
     Marker marker;
@@ -146,7 +146,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
     PayPalPayment thingToBuy;
 
-
+Global global;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +156,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
+        global=(Global)getApplicationContext() ;
         intro_images = (ViewPager) findViewById(R.id.pager_introduction);
         review_txtview = (TextView) findViewById(R.id.review_txtView);
         review_layout = (LinearLayout) findViewById(R.id.review_layout);
@@ -194,6 +195,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         event_info_layout = (RelativeLayout) findViewById(R.id.event_info_layout);
         event_info_layout.setOnClickListener(this);
         purchase_btn = (Button) findViewById(R.id.purchase_btn);
+        signup_btn=(Button) findViewById(R.id.signup_btn);
+        signup_btn.setOnClickListener(this);
         purchase_btn.setOnClickListener(this);
         about_txtView.setOnClickListener(this);
         route_txtView.setOnClickListener(this);
@@ -213,6 +216,12 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         initImageLoader();
         dialogWindow();
         singleEventMethod();
+
+        if(getIntent().getExtras().getString("user").equalsIgnoreCase("user")){
+            signup_btn.setVisibility(View.GONE);
+        }else{
+            signup_btn.setVisibility(View.VISIBLE);
+        }
 
         //------------- map object initilization------------
         buildGoogleApiClient();
@@ -299,6 +308,10 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                 intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
                 startActivityForResult(intent, REQUEST_CODE_PAYMENT);
                 break;
+            case R.id.signup_btn:
+               Intent i=new Intent(DetailsActivity.this,ConfirmDetailsActivity.class);
+                startActivity(i);
+                break;
 
         }
 
@@ -357,8 +370,9 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     JSONArray images = objArry.getJSONArray(GlobalConstants.EVENT_IMAGES);
                                     for (int i = 0; i < images.length(); i++) {
                                         JSONObject imagObj = images.getJSONObject(i);
-                                        list.add("http://envagoapp.com/uploads/" + imagObj.getString(GlobalConstants.IMAGE));
+                                        list.add("http://worksdelight.com/envago/uploads/" + imagObj.getString(GlobalConstants.IMAGE));
                                     }
+
 //----------------------------------Map-Loaction-variable-----------------------------
                                     meeting_loc = objArry.getString(GlobalConstants.EVENT_METTING_POINT);
                                     meeting_lat = objArry.getString("meeting_point_latitude");
@@ -385,9 +399,10 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
                                     admin_name.setText(adminobj.getString(GlobalConstants.ADMIN_NAME));
                                     header_textview.setText(objArry.getString(GlobalConstants.EVENT_NAME));
+                                    global.setEvent_name(objArry.getString(GlobalConstants.EVENT_NAME));
 
 
-                                    String url = "http://envagoapp.com/uploads/" + adminobj.getString(GlobalConstants.ADMIN_IMAGE);
+                                    String url = "http://worksdelight.com/envago/uploads/" + adminobj.getString(GlobalConstants.ADMIN_IMAGE);
                                     if (url != null && !url.equalsIgnoreCase("null")
                                             && !url.equalsIgnoreCase("")) {
                                         imageLoader.displayImage(url, orginiser_img, options,
@@ -417,8 +432,12 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     } else {
                                         status_text.setVisibility(View.GONE);
                                     }
+                                    global.setEvent_time(objArry.getString("time"));
                                     date_details.setText(objArry.getString(GlobalConstants.EVENT_START_DATE));
+                                    global.setEvent_start_date(objArry.getString(GlobalConstants.EVENT_START_DATE));
+                                    global.setEvent_end_date(objArry.getString(GlobalConstants.EVENT_END_DATE));
                                     location_name_txtView.setText(objArry.getString(GlobalConstants.LOCATION));
+                                    global.setEvent_loc(objArry.getString(GlobalConstants.LOCATION));
                                     if (objArry.getString(GlobalConstants.EVENT_LEVEL).equalsIgnoreCase("1")) {
                                         level_no1.setVisibility(View.VISIBLE);
                                     } else if (objArry.getString(GlobalConstants.EVENT_LEVEL).equalsIgnoreCase("2")) {
@@ -465,6 +484,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     }
                                     places_txtView.setText(objArry.getString("total_no_of_places") + "Places");
                                     purchase_btn.setText("$" + objArry.getString(GlobalConstants.EVENT_PRICE));
+                                    global.setEvent_price( objArry.getString(GlobalConstants.EVENT_PRICE));
                                 }
                                 pagerAdapterMethod(list);
 

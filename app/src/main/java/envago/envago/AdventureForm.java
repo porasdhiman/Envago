@@ -131,7 +131,6 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
     Dialog dialog2;
     String meeting_point_lat, meeting_point_long, start_lat, start_lng, end_lat, end_lng, loc1_location = "", loc2_location = "", loc3_location = "", loc4_location = "";
     String loc1_lat = "", loc1_lng = "", loc2_lat = "", loc2_lng = "", loc3_lat = "", loc3_lng = "", loc4_lat = "", loc4_lng = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -1031,43 +1030,34 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
             Log.e(GlobalConstants.EVENT_LEVEL, level_mString);
             reqEntity.addPart(GlobalConstants.EVENT_METTING_POINT, new StringBody(meeting_point_txtView.getText().toString()));
             Log.e(GlobalConstants.EVENT_METTING_POINT, meeting_point_txtView.getText().toString());
-
             reqEntity.addPart("meeting_point_latitude", new StringBody(meeting_point_lat));
             Log.e("meeting_point_latitude", meeting_point_lat);
-
             reqEntity.addPart("meeting_point_longitude", new StringBody(meeting_point_long));
             Log.e("meeting_point_longitude", meeting_point_long);
-
             reqEntity.addPart("crireria_eligibilty", new StringBody(criteria_txtView.getText().toString()));
             Log.e("crireria_eligibilty", criteria_txtView.getText().toString());
-
             reqEntity.addPart(GlobalConstants.LOCATION, new StringBody(start_point_loc.getText().toString()));
             Log.e(GlobalConstants.LOCATION, start_point_loc.getText().toString());
             reqEntity.addPart(GlobalConstants.LATITUDE, new StringBody(start_lat));
             Log.e(GlobalConstants.LATITUDE, start_lat);
-
             reqEntity.addPart(GlobalConstants.LONGITUDE, new StringBody(start_lng));
             Log.e(GlobalConstants.LONGITUDE, start_lng);
             reqEntity.addPart("end_location", new StringBody(end_point_txtView.getText().toString()));
             Log.e("end_location", end_point_txtView.getText().toString());
             reqEntity.addPart("end_latitude", new StringBody(end_lat));
             Log.e("end_latitude", end_lat);
-
             reqEntity.addPart("end_longitude", new StringBody(end_lng));
             Log.e("end_longitude", end_lng);
-
             reqEntity.addPart("location_1", new StringBody(loc1_location));
             Log.e("location_1", loc1_location);
             reqEntity.addPart("loc_1_latitude", new StringBody(loc1_lat));
             Log.e("loc_1_latitude", loc1_lat);
-
             reqEntity.addPart("loc_1_longitude", new StringBody(loc1_lng));
             Log.e("loc_1_longitude", loc1_lng);
             reqEntity.addPart("location_2", new StringBody(loc2_location));
             Log.e("location_2", loc2_location);
             reqEntity.addPart("loc_2_latitude", new StringBody(loc2_lat));
             Log.e("loc_2_latitude", loc2_lat);
-
             reqEntity.addPart("loc_2_longitude", new StringBody(loc2_lng));
             Log.e("loc_2_longitude", loc2_lng);
             reqEntity.addPart("location_3", new StringBody(loc3_location));
@@ -1085,16 +1075,15 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
             reqEntity.addPart("description", new StringBody(event_desc_txtView.getText().toString()));
             Log.e("description", event_desc_txtView.getText().toString());
             reqEntity.addPart("no_of_places", new StringBody(places_txtview.getText().toString()));
+            reqEntity.addPart("price", new StringBody(pcicing_txtview.getText().toString()));
             Log.e("no_of_places", places_txtview.getText().toString());
-            reqEntity.addPart("whats_included", new StringBody(""));
-            Log.e("whats_included", "");
+            Log.e("price", places_txtview.getText().toString());
+            reqEntity.addPart("whats_included", new StringBody("dddd"));
+            Log.e("whats_included", "dddd");
             reqEntity.addPart("meals", new StringBody(meal_mString));
             Log.e("meals", meal_mString);
             reqEntity.addPart("transport", new StringBody(trans_mString));
             Log.e("transport", trans_mString);
-            reqEntity.addPart("meals", new StringBody(meal_mString));
-            Log.e("meals", meal_mString);
-
             reqEntity.addPart("tent", new StringBody(tent_mString));
             Log.e("tent", tent_mString);
             reqEntity.addPart("accomodation", new StringBody(acc_mString));
@@ -1103,17 +1092,11 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
             Log.e("gear", gear_mString);
             reqEntity.addPart("disclaimer", new StringBody(disclaimer_txtView.getText().toString()));
             Log.e("disclaimer", disclaimer_txtView.getText().toString());
-
-
             reqEntity.addPart("action", new StringBody(GlobalConstants.CREATE_EVENT_ACTION));
             Log.e("action", GlobalConstants.CREATE_EVENT_ACTION);
-
             post.setEntity(reqEntity);
-
-
             HttpResponse response = client.execute(post);
             resEntity = response.getEntity();
-
             final String response_str = EntityUtils.toString(resEntity);
             if (resEntity != null) {
                 JSONObject obj = new JSONObject(response_str);

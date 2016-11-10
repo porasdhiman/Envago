@@ -71,7 +71,6 @@ public class CallVolunteers extends Activity implements View.OnClickListener, Vi
     Dialog dialog2;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,20 +196,20 @@ public class CallVolunteers extends Activity implements View.OnClickListener, Vi
         }
 
         if (id == R.id.submit_button) {
-            if(address.getText().toString().length()==0){
-address.setError("Please enter Address");
-            }else if(paypal.getText().toString().length()==0){
+            if (address.getText().toString().length() == 0) {
+                address.setError("Please enter Address");
+            } else if (paypal.getText().toString().length() == 0) {
                 paypal.setError("Please enter paypal");
-            }else if(about.getText().toString().length()==0){
+            } else if (about.getText().toString().length() == 0) {
                 about.setError("Please enter about");
-            }else if(license.length()==0){
-                Toast.makeText(CallVolunteers.this,"Please select license or not licensed",Toast.LENGTH_SHORT).show();
-            }else if(usertype.length()==0){
-                Toast.makeText(CallVolunteers.this,"Please select group or individual",Toast.LENGTH_SHORT).show();
-            }else if(name.getText().toString().length()==0){
+            } else if (license.length() == 0) {
+                Toast.makeText(CallVolunteers.this, "Please select license or not licensed", Toast.LENGTH_SHORT).show();
+            } else if (usertype.length() == 0) {
+                Toast.makeText(CallVolunteers.this, "Please select group or individual", Toast.LENGTH_SHORT).show();
+            } else if (name.getText().toString().length() == 0) {
                 name.setError("Please enter name");
 
-            }else{
+            } else {
                 dialogWindow();
                 new Thread(null, address_request, "")
                         .start();
@@ -264,112 +263,54 @@ address.setError("Please enter Address");
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-            if (resultCode == Activity.RESULT_OK) {
-                if (requestCode == 0) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 0) {
                 if (data != null) {
 
 
                     onSelectFromGalleryResult(data);
 
-                   // document_pic.setVisibility(View.VISIBLE);
+                    // document_pic.setVisibility(View.VISIBLE);
 
                 }
-            }else{
-
-                }
+            } else {
+                onCaptureImageResult(data);
+            }
         } else if (requestCode == 1) {
 
-            onCaptureImageResult(data);
+
             //camgllry.dismiss();
-          //  document_pic.setVisibility(View.VISIBLE);
+            //  document_pic.setVisibility(View.VISIBLE);
 
         }
 
     }
 
 
-    //--------------------------------form-API-------------------------------------
+    Runnable address_request = new Runnable() {
+        String res = "false";
 
-   /* public void send_document() {
-        StringRequest request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                try {
-                    JSONObject response = new JSONObject(s);
-                    String response_name= response.getString("success");
 
-                    if (response_name.equalsIgnoreCase("1"))
-                    {
-                        String message = response.getString("msg");
-                        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        Toast.makeText(getApplicationContext(),response.getString("msg"),Toast.LENGTH_SHORT).show();
+        @Override
+        public void run() {
+            try {
 
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+                res = doFileUpload();
+            } catch (Exception e) {
 
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-
-                Map<String, String> params = new HashMap<>();
-                params.put(GlobalConstants.USERID, CommonUtils.UserID(CallVolunteers.this));
-                params.put(GlobalConstants.FULL_NAME, name.getText().toString());
-                params.put(GlobalConstants.ADDRESS, address.getText().toString());
-                params.put(GlobalConstants.PAYPAL, paypal.getText().toString());
-                params.put(GlobalConstants.ABOUT, about.getText().toString());
-                params.put(GlobalConstants.USER_TYPE, usertype);
-                params.put(GlobalConstants.LICENSE, license);
-                params.put(GlobalConstants.DOCUMENT,preferences.getString("document",""));
-                params.put("action", GlobalConstants.UPLOAD_DOCUMENT_ACTION);
-
-                Log.e("Document", params.toString());
-                return params;
-            }
-        };
-
-        request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        RequestQueue requestQueue = Volley.newRequestQueue(CallVolunteers.this);
-        requestQueue.add(request);
-    }*/
-   Runnable address_request = new Runnable() {
-       String res = "false";
-
-
-       @Override
-       public void run() {
-           try {
-
-               res = doFileUpload();
-           } catch (Exception e) {
-
-           }
-           Message msg = new Message();
-           msg.obj = res;
-           address_request_Handler.sendMessage(msg);
-       }
-   };
+            Message msg = new Message();
+            msg.obj = res;
+            address_request_Handler.sendMessage(msg);
+        }
+    };
 
     Handler address_request_Handler = new Handler() {
         public void handleMessage(Message msg) {
             String res = (String) msg.obj;
             dialog2.dismiss();
             if (res.equalsIgnoreCase("true")) {
-               // terms_dialog.dismiss();
+                // terms_dialog.dismiss();
                 Toast.makeText(CallVolunteers.this, message,
                         Toast.LENGTH_SHORT).show();
               /*  Intent sign = new Intent(CallVolunteers.this, LoginActivity.class);
@@ -386,12 +327,13 @@ address.setError("Please enter Address");
         }
 
     };
+
     // ------------------------------------------------------upload
     // method---------------
     private String doFileUpload() {
         String success = "false";
 
-        String urlString = GlobalConstants.URL ;
+        String urlString = GlobalConstants.URL;
         try {
             HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(urlString);
@@ -415,7 +357,7 @@ address.setError("Please enter Address");
 
             post.setEntity(reqEntity);
 
-            Log.e("params",selectedImagePath+" "+usertype+" "+license+" "+GlobalConstants.UPLOAD_DOCUMENT_ACTION+" "+name.getText()+" "+address.getText());
+            Log.e("params", selectedImagePath + " " + usertype + " " + license + " " + GlobalConstants.UPLOAD_DOCUMENT_ACTION + " " + name.getText() + " " + address.getText());
             HttpResponse response = client.execute(post);
             resEntity = response.getEntity();
 
@@ -425,10 +367,10 @@ address.setError("Please enter Address");
                 String status = obj.getString("success");
                 if (status.equalsIgnoreCase("1")) {
                     success = "true";
-                    message=obj.getString("msg");
+                    message = obj.getString("msg");
                 } else {
                     success = "false";
-                    message=obj.getString("msg");
+                    message = obj.getString("msg");
                 }
 
                 /*JSONObject resp = new JSONObject(response_str);
@@ -575,6 +517,7 @@ address.setError("Please enter Address");
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
+
     //---------------------------Progrees Dialog-----------------------
     public void dialogWindow() {
         dialog2 = new Dialog(this);

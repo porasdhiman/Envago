@@ -35,6 +35,9 @@
             android:name=".SignupActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ConfirmDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>

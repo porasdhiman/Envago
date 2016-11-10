@@ -56,7 +56,7 @@ public class Favorite_list_Adapter extends BaseAdapter {
     public Favorite_list_Adapter(Context applicationContext, ArrayList<HashMap<String, String>> images) {
         this.images = images;
         this.applicationContext = applicationContext;
-        inflater = LayoutInflater.from(applicationContext);
+
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
                 .showStubImage(R.drawable.placeholder_image1)        //	Display Stub Image
@@ -64,6 +64,7 @@ public class Favorite_list_Adapter extends BaseAdapter {
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
+        inflater = LayoutInflater.from(applicationContext);
     }
 
     @Override
@@ -119,7 +120,7 @@ public class Favorite_list_Adapter extends BaseAdapter {
             holder = (Adventure_holder) view.getTag();
         }
 
-        url = "http://envagoapp.com/uploads/" + images.get(i).get(GlobalConstants.EVENT_IMAGES);
+        url = "http://worksdelight.com/envago/uploads/" + images.get(i).get(GlobalConstants.EVENT_IMAGES);
 
         holder.ad_name.setText(images.get(i).get(GlobalConstants.EVENT_NAME));
         holder.price.setText(images.get(i).get(GlobalConstants.EVENT_PRICE));

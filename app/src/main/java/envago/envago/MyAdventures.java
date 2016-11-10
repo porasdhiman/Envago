@@ -2,6 +2,7 @@ package envago.envago;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -71,6 +73,16 @@ public class MyAdventures extends Activity implements View.OnTouchListener {
 
         planning.setOnTouchListener(this);
         goingto.setOnTouchListener(this);
+        planning_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i=new Intent(MyAdventures.this,DetailsActivity.class);
+                i.putExtra(GlobalConstants.EVENT_ID,event_list.get(position).get(GlobalConstants.EVENT_ID));
+                i.putExtra("user","user");
+                startActivity(i);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        });
     }
 
     @Override
@@ -87,6 +99,7 @@ public class MyAdventures extends Activity implements View.OnTouchListener {
             goingtolayout.setBackgroundColor(getResources().getColor(R.color.transparent));
             goingto.setTextColor(getResources().getColor(R.color.White));
 
+            event_list.clear();
             dialogWindow();
             get_list();
         }
@@ -100,6 +113,7 @@ public class MyAdventures extends Activity implements View.OnTouchListener {
             goingtolayout.setBackgroundColor(getResources().getColor(R.color.White));
             goingto.setTextColor(getResources().getColor(R.color.textcolor));
 
+            event_list.clear();
             dialogWindow();
             get_list_goingto();
         }

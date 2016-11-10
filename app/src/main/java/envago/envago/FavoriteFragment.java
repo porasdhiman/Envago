@@ -71,6 +71,7 @@ ImageView back_img;
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i=new Intent(getActivity(),DetailsActivity.class);
                 i.putExtra(GlobalConstants.EVENT_ID,event_list.get(position).get(GlobalConstants.EVENT_ID));
+                i.putExtra("user","non user");
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
