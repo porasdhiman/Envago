@@ -53,6 +53,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -103,8 +104,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     ArrayList<HashMap<String, String>> review_list_array = new ArrayList<>();
     TextView status_text, lower_description_txtView, admin_name, places_txtView, level_no1, level_no2,
             level_no3, admin_description, level_no4, date_details, meeting_desc, time_txtVIew,
-            location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview,header_textview;
-    LinearLayout about_layout, map_layout,  review_layout;
+            location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview, header_textview;
+    LinearLayout about_layout, map_layout, review_layout;
     ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView;
     CircleImageView orginiser_img;
     ArrayList<String> list = new ArrayList<>();
@@ -115,7 +116,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     DisplayImageOptions options;
     ImageView back_button;
 
-Button signup_btn;
+    Button signup_btn;
     int i;
     //--------------------------------------MAp object-----------
     Marker marker;
@@ -123,6 +124,7 @@ Button signup_btn;
     private Hashtable<String, String> markers;
 
     private Location mLastLocation;
+    ArrayList<Location> listing = new ArrayList<>();
     //--------------Google search api variable------------
     protected GoogleApiClient mGoogleApiClient;
 
@@ -146,7 +148,7 @@ Button signup_btn;
 
     PayPalPayment thingToBuy;
 
-Global global;
+    Global global;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,7 +158,7 @@ Global global;
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
-        global=(Global)getApplicationContext() ;
+        global = (Global) getApplicationContext();
         intro_images = (ViewPager) findViewById(R.id.pager_introduction);
         review_txtview = (TextView) findViewById(R.id.review_txtView);
         review_layout = (LinearLayout) findViewById(R.id.review_layout);
@@ -177,7 +179,7 @@ Global global;
         level_no2 = (TextView) findViewById(R.id.level2);
         level_no3 = (TextView) findViewById(R.id.level3);
         level_no4 = (TextView) findViewById(R.id.level4);
-        header_textview = (TextView)findViewById(R.id.header_text);
+        header_textview = (TextView) findViewById(R.id.header_text);
         admin_description = (TextView) findViewById(R.id.upper_description);
         location_name_txtView = (TextView) findViewById(R.id.location_name);
         heart_img = (ImageView) findViewById(R.id.heart_img);
@@ -190,12 +192,12 @@ Global global;
         meal_txtView = (ImageView) findViewById(R.id.meals);
         gear_txtView = (ImageView) findViewById(R.id.gear);
         tent_txtView = (ImageView) findViewById(R.id.tent);
-        back_button=(ImageView)findViewById(R.id.detail_back_button);
+        back_button = (ImageView) findViewById(R.id.detail_back_button);
         places_txtView = (TextView) findViewById(R.id.places_count_txtView);
         event_info_layout = (RelativeLayout) findViewById(R.id.event_info_layout);
         event_info_layout.setOnClickListener(this);
         purchase_btn = (Button) findViewById(R.id.purchase_btn);
-        signup_btn=(Button) findViewById(R.id.signup_btn);
+        signup_btn = (Button) findViewById(R.id.signup_btn);
         signup_btn.setOnClickListener(this);
         purchase_btn.setOnClickListener(this);
         about_txtView.setOnClickListener(this);
@@ -217,9 +219,9 @@ Global global;
         dialogWindow();
         singleEventMethod();
 
-        if(getIntent().getExtras().getString("user").equalsIgnoreCase("user")){
+        if (getIntent().getExtras().getString("user").equalsIgnoreCase("user")) {
             signup_btn.setVisibility(View.GONE);
-        }else{
+        } else {
             signup_btn.setVisibility(View.VISIBLE);
         }
 
@@ -309,7 +311,7 @@ Global global;
                 startActivityForResult(intent, REQUEST_CODE_PAYMENT);
                 break;
             case R.id.signup_btn:
-               Intent i=new Intent(DetailsActivity.this,ConfirmDetailsActivity.class);
+                Intent i = new Intent(DetailsActivity.this, ConfirmDetailsActivity.class);
                 startActivity(i);
                 break;
 
@@ -393,6 +395,15 @@ Global global;
                                     markers.put(mark_end.getId(), list.get(0));
                                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 15));
                                     mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+                                    Location li = new Location("");
+                                    li.setLatitude(Double.parseDouble(meeting_lat));
+                                    li.setLongitude(Double.parseDouble(meeting_long));
+                                    Location l2 = new Location("");
+                                    l2.setLatitude(Double.parseDouble(ending_lat));
+                                    l2.setLongitude(Double.parseDouble(ending_long));
+                                    listing.add(li);
+                                    listing.add(l2);
+                                    drawPrimaryLinePath(listing);
 
                                     //--------------------------------end-map-location-variable---------------------------------------------
 
@@ -484,7 +495,7 @@ Global global;
                                     }
                                     places_txtView.setText(objArry.getString("total_no_of_places") + "Places");
                                     purchase_btn.setText("$" + objArry.getString(GlobalConstants.EVENT_PRICE));
-                                    global.setEvent_price( objArry.getString(GlobalConstants.EVENT_PRICE));
+                                    global.setEvent_price(objArry.getString(GlobalConstants.EVENT_PRICE));
                                 }
                                 pagerAdapterMethod(list);
 
@@ -924,7 +935,6 @@ Global global;
 //                        Toast.makeText(getActivity(), "Registered", Toast.LENGTH_LONG).show();
 
 
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -991,6 +1001,31 @@ Global global;
         // Stop service when done
         stopService(new Intent(DetailsActivity.this, PayPalService.class));
         super.onDestroy();
+    }
+
+    //---------------------------route--------------------------------------
+    private void drawPrimaryLinePath(ArrayList<Location> listLocsToDraw) {
+        if (mMap == null) {
+            return;
+        }
+
+        if (listLocsToDraw.size() < 2) {
+            return;
+        }
+
+        PolylineOptions options = new PolylineOptions();
+
+        options.color(Color.parseColor("#CC0000FF"));
+        options.width(5);
+        options.visible(true);
+
+        for (Location locRecorded : listLocsToDraw) {
+            options.add(new LatLng(locRecorded.getLatitude(),
+                    locRecorded.getLongitude()));
+        }
+
+        mMap.addPolyline(options);
+
     }
 
 }

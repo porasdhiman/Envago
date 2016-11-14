@@ -38,7 +38,7 @@ import java.util.Map;
  */
 public class AddFragment extends Fragment {
 
-    RelativeLayout call_all, createAdventures, logout_layout, myadventure;
+    RelativeLayout call_all, createAdventures, logout_layout, myadventure,mychats_layout;
     SharedPreferences sp;
     SharedPreferences.Editor ed;
     ProgressDialog pd;
@@ -55,6 +55,14 @@ public class AddFragment extends Fragment {
         myadventure=(RelativeLayout)v.findViewById(R.id.myadvanture_layout);
         createAdventures = (RelativeLayout) v.findViewById(R.id.advanture_layout);
         logout_layout = (RelativeLayout) v.findViewById(R.id.logout_layout);
+        mychats_layout=(RelativeLayout)v.findViewById(R.id.mychats_layout);
+        mychats_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyChatActivity.class);
+                startActivity(intent);
+            }
+        });
         createAdventures.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
