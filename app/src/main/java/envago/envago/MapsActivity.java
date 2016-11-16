@@ -81,6 +81,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
     private Location mLastLocation;
+    ImageView previous_btn;
     //--------------Google search api variable------------
     protected GoogleApiClient mGoogleApiClient;
 
@@ -148,6 +149,13 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
         mAutocompleteView.setThreshold(1);
 
         mAutocompleteView.setAdapter(mAdapter);
+        previous_btn=(ImageView)findViewById(R.id.previous_btn);
+        previous_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 

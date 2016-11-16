@@ -55,16 +55,16 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@drawable/loc_pos" />
         </RelativeLayout>
 
         <ImageView
             android:id="@+id/previous_btn"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
-            android:src="@drawable/map" />
+            android:src="@drawable/back_list_to_home" />
 
     </RelativeLayout>
 

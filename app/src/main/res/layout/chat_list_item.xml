@@ -22,7 +22,7 @@
         android:layout_toRightOf="@+id/chat_img"
         android:layout_toLeftOf="@+id/next_img"
 
-        android:text="sdssfdsf"
+        android:text=""
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="10dp"

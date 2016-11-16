@@ -115,7 +115,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
     ImageView back_button;
-
+    ArrayList<HashMap<String, String>> mapLatLong = new ArrayList<>();
     Button signup_btn;
     int i;
     //--------------------------------------MAp object-----------
@@ -380,6 +380,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     meeting_lat = objArry.getString("meeting_point_latitude");
                                     meeting_long = objArry.getString("meeting_point_longitude");
 
+
                                     ending_loc = objArry.getString("end_location");
                                     ending_lat = objArry.getString("end_latitude");
                                     ending_long = objArry.getString("end_longitude");
@@ -390,14 +391,22 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     markers.put(mark.getId(), list.get(0));
 
 
+
+
                                     LatLng postion_end = new LatLng(Double.parseDouble(ending_lat), Double.parseDouble(ending_long));
                                     Marker mark_end = mMap.addMarker(new MarkerOptions().position(postion_end).title("Ending Point").snippet(ending_loc));
                                     markers.put(mark_end.getId(), list.get(0));
-                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 15));
+
+                                    LatLng postion_start = new LatLng(Double.parseDouble(objArry.getString("latitude")), Double.parseDouble(objArry.getString("longitude")));
+                                    Marker mark_start = mMap.addMarker(new MarkerOptions().position(postion_start).title("Starting Point").snippet(objArry.getString("location")));
+                                    markers.put(mark_start.getId(), list.get(0));
+                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion_start, 12));
                                     mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
+
                                     Location li = new Location("");
-                                    li.setLatitude(Double.parseDouble(meeting_lat));
-                                    li.setLongitude(Double.parseDouble(meeting_long));
+                                    li.setLatitude(Double.parseDouble(objArry.getString("latitude")));
+                                    li.setLongitude(Double.parseDouble(objArry.getString("longitude")));
                                     Location l2 = new Location("");
                                     l2.setLatitude(Double.parseDouble(ending_lat));
                                     l2.setLongitude(Double.parseDouble(ending_long));
