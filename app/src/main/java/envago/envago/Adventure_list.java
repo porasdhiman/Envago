@@ -134,7 +134,7 @@ ImageView back_img;
         StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                dialog2.dismiss();
+
                 Log.e("Categoryyyy", s);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -170,8 +170,9 @@ ImageView back_img;
                         if(event_list.size()>0) {
                             ad_items.setAdapter(new Adventure_list_adapter(getApplicationContext(), event_list));
                             back_img.setVisibility(View.GONE);
-                        }
 
+                        }
+                        dialog2.dismiss();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -85,7 +85,7 @@ ImageView back_img;
         StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                dialog2.dismiss();
+
                 Log.e("Categoryyyy", s);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -119,6 +119,7 @@ ImageView back_img;
                             ad_items.setAdapter(new Favorite_list_Adapter(getActivity(), event_list));
                             back_img.setVisibility(View.GONE);
                         }
+                        dialog2.dismiss();
 
                     }
                 } catch (JSONException e) {

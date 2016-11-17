@@ -172,7 +172,7 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        dialog2.dismiss();
+
                         Log.e("response", response);
                         try {
                             JSONObject obj = new JSONObject(response);
@@ -192,7 +192,7 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
                             } else {
                                 Toast.makeText(SignupActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             }
-
+                            dialog2.dismiss();
 
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -62,15 +62,16 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
     ProgressDialog pd;
     String username_mString, email_mString, id_mString;
     SharedPreferences sp;
-SharedPreferences.Editor ed;
+    SharedPreferences.Editor ed;
     Dialog dialog2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_login);
-        sp=getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
-        ed=sp.edit();
+        sp = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
+        ed = sp.edit();
 
         global = (Global) getApplicationContext();
         callbackManager = CallbackManager.Factory.create();
@@ -231,7 +232,7 @@ SharedPreferences.Editor ed;
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        dialog2.dismiss();
+
                         Log.e("response", response);
                         try {
                             JSONObject obj = new JSONObject(response);
@@ -250,7 +251,7 @@ SharedPreferences.Editor ed;
                             } else {
                                 Toast.makeText(LoginActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             }
-
+                            dialog2.dismiss();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -272,7 +273,7 @@ SharedPreferences.Editor ed;
                 params.put(GlobalConstants.EMAIL, mail.getText().toString());
                 params.put(GlobalConstants.PASSWORD, pass.getText().toString());
 
-                params.put(GlobalConstants.LATITUDE,global.getLat() );
+                params.put(GlobalConstants.LATITUDE, global.getLat());
                 params.put(GlobalConstants.LONGITUDE, global.getLong());
                 params.put(GlobalConstants.DEVICEID, global.getDeviceToken());
                 params.put("action", GlobalConstants.LOGIN_ACTION);
@@ -296,7 +297,7 @@ SharedPreferences.Editor ed;
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        dialog2.dismiss();
+
                         Log.e("response", response);
                         try {
                             JSONObject obj = new JSONObject(response);
@@ -311,7 +312,7 @@ SharedPreferences.Editor ed;
                             } else {
                                 Toast.makeText(LoginActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             }
-
+                            dialog2.dismiss();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -339,7 +340,6 @@ SharedPreferences.Editor ed;
                 params.put(GlobalConstants.LONGITUDE, global.getLong());
 
 
-
                 params.put(GlobalConstants.DEVICEID, global.getDeviceToken());
                 params.put("action", GlobalConstants.FACEBOOK_REGISTER_ACTION);
                 Log.e("facebook login", params.toString());
@@ -353,20 +353,20 @@ SharedPreferences.Editor ed;
         requestQueue.add(stringRequest);
     }
 
-//---------------------------Progrees Dialog-----------------------
-public void dialogWindow() {
-    dialog2 = new Dialog(this);
-    dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
-    dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-    dialog2.setCanceledOnTouchOutside(false);
-    dialog2.setCancelable(false);
-    dialog2.setContentView(R.layout.progrees_dialog);
-    AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
-    loaderView.show();
+    //---------------------------Progrees Dialog-----------------------
+    public void dialogWindow() {
+        dialog2 = new Dialog(this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog2.setCanceledOnTouchOutside(false);
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.progrees_dialog);
+        AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
+        loaderView.show();
 
-    // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
-    dialog2.show();
-}
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        dialog2.show();
+    }
 
 
 }
