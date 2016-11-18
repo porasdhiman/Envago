@@ -276,6 +276,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
                 params.put(GlobalConstants.LATITUDE, global.getLat());
                 params.put(GlobalConstants.LONGITUDE, global.getLong());
                 params.put(GlobalConstants.DEVICEID, global.getDeviceToken());
+                params.put("device_type", "android");
                 params.put("action", GlobalConstants.LOGIN_ACTION);
                 Log.e("Parameter for Login", params.toString());
                 return params;
@@ -338,7 +339,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener, Vie
 
                 params.put(GlobalConstants.LATITUDE, global.getLat());
                 params.put(GlobalConstants.LONGITUDE, global.getLong());
-
+                params.put("device_type", "android");
 
                 params.put(GlobalConstants.DEVICEID, global.getDeviceToken());
                 params.put("action", GlobalConstants.FACEBOOK_REGISTER_ACTION);

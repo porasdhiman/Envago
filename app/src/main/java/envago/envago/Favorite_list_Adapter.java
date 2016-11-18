@@ -120,7 +120,7 @@ public class Favorite_list_Adapter extends BaseAdapter {
             holder = (Adventure_holder) view.getTag();
         }
 
-        url = "http://worksdelight.com/envago/uploads/" + images.get(i).get(GlobalConstants.EVENT_IMAGES);
+        url ="http://worksdelight.com/envago/uploads/" + images.get(i).get(GlobalConstants.EVENT_IMAGES);
 
         holder.ad_name.setText(images.get(i).get(GlobalConstants.EVENT_NAME));
         holder.price.setText(images.get(i).get(GlobalConstants.EVENT_PRICE));

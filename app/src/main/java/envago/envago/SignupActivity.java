@@ -218,6 +218,8 @@ public class SignupActivity extends Activity implements View.OnFocusChangeListen
 
                 params.put(GlobalConstants.LATITUDE, global.getLat());
                 params.put(GlobalConstants.LONGITUDE, global.getLong());
+                params.put("device_type", "android");
+
 
 
                 params.put(GlobalConstants.DEVICEID, global.getDeviceToken());
