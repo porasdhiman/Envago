@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_volunteers_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="envago.envago.Volunteers_list">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/textcolor"
+        android:id="@+id/main_heading_vol">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/back_button"
+            android:id="@+id/back_button_vol"
+            android:layout_margin="14dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ENVAGO"
+            android:textColor="#fff"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:id="@+id/title_vol"/>
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/map"
+            android:id="@+id/map_button_vol"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            />
+
+    </RelativeLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/volunteers_listview"
+        android:layout_below="@+id/main_heading_vol">
+
+    </ListView>
+
+</RelativeLayout>

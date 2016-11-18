@@ -69,10 +69,10 @@ public class HomeFragment extends Fragment {
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 } else if (position == 4) {
 
-                  /*  intent.putExtra("cat", String.valueOf(position));
-                    startActivity(intent);
+                    intent.putExtra("cat", String.valueOf(position));
+                    Intent intent1 = new Intent(getActivity(),Volunteers_list.class);
+                    startActivity(intent1);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-*/
                 } else {
                     intent.putExtra("status", "all");
                     intent.putExtra("cat", String.valueOf(position));
