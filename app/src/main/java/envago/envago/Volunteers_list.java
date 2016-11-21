@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,11 +31,11 @@ public class Volunteers_list extends Activity {
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
 
-        back_button = (ImageView)findViewById(R.id.back_button_vol);
+        back_button = (ImageView) findViewById(R.id.back_button_vol);
 
-        main_heading = (TextView)findViewById(R.id.title_vol);
+        main_heading = (TextView) findViewById(R.id.title_vol);
         main_heading.setText("Go Volunteers");
-        map_button=(ImageView)findViewById(R.id.map_button_vol);
+        map_button = (ImageView) findViewById(R.id.map_button_vol);
         map_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,6 +48,22 @@ public class Volunteers_list extends Activity {
         vol_categories = (ListView) findViewById(R.id.volunteers_listview);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
         vol_categories.setAdapter(new CategoriesAdapter(getApplicationContext(), images));
+
+
+        vol_categories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                Intent intent = new Intent(Volunteers_list.this,Volunteer_lists.class);
+
+
+                if (position == 0 || position == 1 || position == 2 || position == 3 || position == 4 || position == 5)
+                {
+                    intent.putExtra("status_vol", "single");
+
+                }
+            }
+        });
 
 
         back_button.setOnClickListener(new View.OnClickListener() {

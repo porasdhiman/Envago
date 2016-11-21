@@ -128,6 +128,10 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     //--------------Google search api variable------------
     protected GoogleApiClient mGoogleApiClient;
 
+    String months[] = { " ", "Jan", "Feb", "Mar", "Apr", "May",
+            "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
+            "Dec", };
+
     //-----------------------------------Paypal variable
 
     private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
@@ -149,6 +153,9 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     PayPalPayment thingToBuy;
 
     Global global;
+    Date startDate,endDate;
+
+    TextView days_details;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,6 +205,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         event_info_layout.setOnClickListener(this);
         purchase_btn = (Button) findViewById(R.id.purchase_btn);
         signup_btn = (Button) findViewById(R.id.signup_btn);
+        days_details = (TextView)findViewById(R.id.days_details);
         signup_btn.setOnClickListener(this);
         purchase_btn.setOnClickListener(this);
         about_txtView.setOnClickListener(this);
@@ -453,7 +461,27 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         status_text.setVisibility(View.GONE);
                                     }
                                     global.setEvent_time(objArry.getString("time"));
-                                    date_details.setText(objArry.getString(GlobalConstants.EVENT_START_DATE));
+                                    String date_data=objArry.getString(GlobalConstants.EVENT_START_DATE);
+                                    String split[] = date_data.split("-");
+                                    String minth = split[1];
+                                    String date=split[2];
+                                    int mm = Integer.parseInt(minth);
+                                    Calendar c = Calendar.getInstance();
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat(
+                                            "yyyy-MM-dd");
+                                    String dateafter = dateFormat.format(c.getTime());
+                                    startDate=new Date();
+                                    endDate=new Date();
+                                    try {
+                                        startDate=dateFormat.parse(date_data);
+                                        endDate=dateFormat.parse(dateafter);
+
+                                    } catch (java.text.ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    date_details.setText(date+" "+months[mm]+" "+split[0]);
+
+                                    days_details.setText(String.valueOf(getDaysDifference(startDate,endDate))+" Days");
                                     global.setEvent_start_date(objArry.getString(GlobalConstants.EVENT_START_DATE));
                                     global.setEvent_end_date(objArry.getString(GlobalConstants.EVENT_END_DATE));
                                     location_name_txtView.setText(objArry.getString(GlobalConstants.LOCATION));
@@ -1036,6 +1064,16 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
         mMap.addPolyline(options);
 
+    }
+
+    //------------------date-method-----------
+
+    public static int getDaysDifference(Date fromDate, Date toDate)
+    {
+        if(fromDate==null||toDate==null)
+            return 0;
+
+        return (int)( (toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
     }
 
 }
