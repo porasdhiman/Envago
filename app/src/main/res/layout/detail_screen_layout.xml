@@ -6,37 +6,6 @@
     android:orientation="vertical"
     android:background="#fff">
 
-    <RelativeLayout
-        android:id="@+id/main_heading"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/textcolor">
-
-
-        <TextView
-            android:id="@+id/header_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center_horizontal"
-            android:text="ENVAGO"
-            android:paddingRight="20dp"
-            android:paddingLeft="35dp"
-            android:singleLine="true"
-            android:textColor="#fff"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/detail_back_button"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:src="@drawable/back_button" />
-
-    </RelativeLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -680,5 +649,36 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/main_heading"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/textcolor">
+
+
+        <TextView
+            android:id="@+id/header_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:text="ENVAGO"
+            android:paddingRight="20dp"
+            android:paddingLeft="35dp"
+            android:singleLine="true"
+            android:textColor="#fff"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/detail_back_button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/back_button" />
+
+    </RelativeLayout>
 
 </LinearLayout>
