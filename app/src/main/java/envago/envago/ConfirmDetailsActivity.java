@@ -1,18 +1,29 @@
 package envago.envago;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.paypal.android.sdk.payments.PayPalAuthorization;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalFuturePaymentActivity;
@@ -20,12 +31,16 @@ import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by vikas on 10-11-2016.
@@ -37,7 +52,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
     //-----------------------------------Paypal variable
 
     private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
-    private static final String CONFIG_CLIENT_ID = "Af64A4qjlISjmdbpxvgMs47i5Yl_Quuh8u4Ah-tfxo_DRH2ya-9MQpIEY2XLElcraeq2ox8Xvx6kUJRx";
+    private static final String CONFIG_CLIENT_ID = "ATu7TrT4HhoSprVHhzQYVhVoI_QrBo_-vUDqSMPWnrGJqvOtSyo4rJ-3mAVn-iaW5EyN7oeI3OjG09Jt";
 
     private static final int REQUEST_CODE_PAYMENT = 1;
     private static final int REQUEST_CODE_FUTURE_PAYMENT = 2;
@@ -56,6 +71,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
     Global global;
     int i = 1,total,Change_total;
     Date startDate,endDate;
+    Dialog dialog2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +140,8 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                     try {
                         System.out.println(confirm.toJSONObject().toString(4));
                         System.out.println(confirm.getPayment().toJSONObject().toString(4));
-
+                        dialogWindow();
+                        joinEventApi();
 //                        Toast.makeText(getActivity(), "Registered", Toast.LENGTH_LONG).show();
 
 
@@ -231,5 +248,74 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
             return 0;
 
         return (int)( (toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
+    }
+
+    //-------------------------------join event api-------------------------------
+    private void joinEventApi() {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GlobalConstants.URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        dialog2.dismiss();
+                        Log.e("response", response);
+                        try {
+                            JSONObject obj = new JSONObject(response);
+
+                            String status = obj.getString("success");
+                            if (status.equalsIgnoreCase("1")) {
+                                Toast.makeText(ConfirmDetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(ConfirmDetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        dialog2.dismiss();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(GlobalConstants.USERID, CommonUtils.UserID(ConfirmDetailsActivity.this));
+                params.put(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
+                params.put("no_of_tickets", String.valueOf(i));
+                params.put("total_price", total_money.getText().toString());
+
+
+                params.put("action", "join_event");
+                Log.e("join_event", params.toString());
+                return params;
+            }
+
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+    //---------------------------Progrees Dialog-----------------------
+    public void dialogWindow() {
+        dialog2 = new Dialog(this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog2.setCanceledOnTouchOutside(false);
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.progrees_dialog);
+        AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
+        loaderView.show();
+
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        dialog2.show();
     }
 }

@@ -178,7 +178,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_below="@+id/event_info_layout"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="15dp"
                         android:layout_marginTop="20dp"
                         android:src="@mipmap/app_icon" />
 
@@ -189,7 +189,7 @@
                         android:layout_below="@+id/event_info_layout"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="27dp"
                         android:layout_toRightOf="@+id/orginiser_img"
                         android:text="Orginizer Name"
 
@@ -481,6 +481,7 @@
                     android:background="#d1d1d1" />
 
                 <TextView
+                    android:id="@+id/desclaimer_txt_show"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
@@ -554,7 +555,7 @@
                     android:layout_marginRight="15dp"
                     android:orientation="horizontal">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                  <!--  <de.hdodenhof.circleimageview.CircleImageView
 
                         android:layout_width="60dp"
                         android:layout_height="60dp"
@@ -562,24 +563,8 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="20dp"
                         android:src="@mipmap/app_icon" />
+-->
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_below="@+id/event_info_layout"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="20dp"
-                        android:src="@mipmap/app_icon" />
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_below="@+id/event_info_layout"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="20dp"
-                        android:src="@mipmap/app_icon" />
                 </LinearLayout>
 
 

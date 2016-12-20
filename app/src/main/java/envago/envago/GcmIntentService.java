@@ -58,10 +58,12 @@ public class GcmIntentService extends IntentService {
                 }
 
 
-
-
-                    sendNotification("Ouryatar App", extras.getString("message"));
-
+                Log.e("envago app", extras.toString());
+                if (extras.getString("content_title").contains("message")) {
+                    sendNotification("Envago App", extras.getString("content_title"));
+                } else {
+                    sendNotification("Envago App", extras.getString("content_title"));
+                }
 
 
             }
@@ -76,8 +78,13 @@ public class GcmIntentService extends IntentService {
         NotificationManager mNotificationManager = (NotificationManager) this
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
+        if (extras.getString("content_title").contains("message")) {
+            contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MyChatActivity.class), 0);
+
+        } else {
             contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, Tab_Activity.class), 0);
 
+        }
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_launcher).setContentTitle(notificationTitle).setAutoCancel(true)

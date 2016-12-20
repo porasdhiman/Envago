@@ -65,7 +65,7 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
     RelativeLayout upload_id;
     String selectedImagePath = "";
     Dialog camgllry;
-    String usertype, license;
+    String usertype="", license="";
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     HttpEntity resEntity;
@@ -232,9 +232,9 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
                 paypal.setError("Please enter paypal");
             } else if (about.getText().toString().length() == 0) {
                 about.setError("Please enter about");
-            } else if (license.length() == 0) {
+            } else if (license.equalsIgnoreCase("")) {
                 Toast.makeText(CreateAdventuresActivity.this, "Please select license or not licensed", Toast.LENGTH_SHORT).show();
-            } else if (usertype.length() == 0) {
+            } else if (usertype.equalsIgnoreCase("")) {
                 Toast.makeText(CreateAdventuresActivity.this, "Please select group or individual", Toast.LENGTH_SHORT).show();
             } else if (name.getText().toString().length() == 0) {
                 name.setError("Please enter name");

@@ -159,6 +159,7 @@
         <activity
             android:name="io.card.payment.CardIOActivity"
             android:configChanges="keyboardHidden|orientation" />
+        <activity android:name="io.card.payment.DataEntryActivity" />
 
         <service
             android:name="com.paypal.android.sdk.payments.PayPalService"

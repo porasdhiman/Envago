@@ -104,7 +104,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     ArrayList<HashMap<String, String>> review_list_array = new ArrayList<>();
     TextView status_text, lower_description_txtView, admin_name, places_txtView, level_no1, level_no2,
             level_no3, admin_description, level_no4, date_details, meeting_desc, time_txtVIew,
-            location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview, header_textview;
+            location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview, header_textview,Disclaimer_txtView;
     LinearLayout about_layout, map_layout, review_layout;
     ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView;
     CircleImageView orginiser_img;
@@ -135,7 +135,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     //-----------------------------------Paypal variable
 
     private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
-    private static final String CONFIG_CLIENT_ID = "Af64A4qjlISjmdbpxvgMs47i5Yl_Quuh8u4Ah-tfxo_DRH2ya-9MQpIEY2XLElcraeq2ox8Xvx6kUJRx";
+    private static final String CONFIG_CLIENT_ID = "ATu7TrT4HhoSprVHhzQYVhVoI_QrBo_-vUDqSMPWnrGJqvOtSyo4rJ-3mAVn-iaW5EyN7oeI3OjG09Jt";
 
     private static final int REQUEST_CODE_PAYMENT = 1;
     private static final int REQUEST_CODE_FUTURE_PAYMENT = 2;
@@ -155,7 +155,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     Global global;
     Date startDate,endDate;
 
-    TextView days_details;
+    TextView days_details,desclaimer_txt_show;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,6 +194,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         orginiser_img = (CircleImageView) findViewById(R.id.orginiser_img);
         rating = (TextView) findViewById(R.id.counter);
         lower_description_txtView = (TextView) findViewById(R.id.lower_description);
+        Disclaimer_txtView=(TextView)findViewById(R.id.Disclaimer_txtView);
+        desclaimer_txt_show=(TextView)findViewById(R.id.desclaimer_txt_show);
         accomodation_txtView = (ImageView) findViewById(R.id.accomodation);
         transport_txtView = (ImageView) findViewById(R.id.transport);
         meal_txtView = (ImageView) findViewById(R.id.meals);
@@ -320,6 +322,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                 break;
             case R.id.signup_btn:
                 Intent i = new Intent(DetailsActivity.this, ConfirmDetailsActivity.class);
+                i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
                 startActivity(i);
                 break;
 
@@ -530,6 +533,13 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     } else {
                                         tent_txtView.setImageResource(R.drawable.tent);
                                     }
+                                    if (objArry.getString("disclaimer").equalsIgnoreCase(null)||objArry.getString("disclaimer").equalsIgnoreCase("")) {
+                                        desclaimer_txt_show.setVisibility(view.GONE);
+                                    } else {
+                                        desclaimer_txt_show.setVisibility(view.VISIBLE);
+                                        Disclaimer_txtView.setText(objArry.getString("disclaimer"));
+                                    }
+
                                     places_txtView.setText(objArry.getString("total_no_of_places") + "Places");
                                     purchase_btn.setText("$" + objArry.getString(GlobalConstants.EVENT_PRICE));
                                     global.setEvent_price(objArry.getString(GlobalConstants.EVENT_PRICE));

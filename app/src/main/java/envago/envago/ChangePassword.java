@@ -45,7 +45,7 @@ public class ChangePassword extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
         setContentView(R.layout.change_password);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -88,7 +88,6 @@ public class ChangePassword extends Activity {
 
 
                 finish();
-                overridePendingTransition(R.anim.slide_out_left, R.anim.slide_in_left);
             }
         });
 

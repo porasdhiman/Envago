@@ -118,7 +118,7 @@ public class Adventure_list_adapter extends BaseAdapter {
         url = "http://worksdelight.com/envago/uploads/" + images.get(i).get(GlobalConstants.EVENT_IMAGES);
 
         holder.ad_name.setText(images.get(i).get(GlobalConstants.EVENT_NAME));
-        holder.price.setText(images.get(i).get(GlobalConstants.EVENT_PRICE));
+        holder.price.setText("$"+images.get(i).get(GlobalConstants.EVENT_PRICE));
         String data=images.get(i).get(GlobalConstants.EVENT_START_DATE);
         String split[] = data.split("-");
         String minth = split[1];

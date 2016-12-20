@@ -1077,7 +1077,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
             reqEntity.addPart("no_of_places", new StringBody(places_txtview.getText().toString()));
             reqEntity.addPart("price", new StringBody(pcicing_txtview.getText().toString()));
             Log.e("no_of_places", places_txtview.getText().toString());
-            Log.e("price", places_txtview.getText().toString());
+            Log.e("price", pcicing_txtview.getText().toString());
             reqEntity.addPart("whats_included", new StringBody("dddd"));
             Log.e("whats_included", "dddd");
             reqEntity.addPart("meals", new StringBody(meal_mString));

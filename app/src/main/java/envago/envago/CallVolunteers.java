@@ -187,7 +187,6 @@ public class CallVolunteers extends Activity implements View.OnClickListener, Vi
 
         if (id == R.id.back_button_volunteers) {
             finish();
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
         }
 
 
