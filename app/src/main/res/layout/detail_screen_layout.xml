@@ -50,7 +50,7 @@
                     android:gravity="center"
                     android:padding="4dp"
                     android:visibility="gone"
-                    android:text="Event Started"
+                    android:text="Started"
                     android:textColor="#fff"
                     android:textSize="12sp"
                      />
@@ -142,7 +142,7 @@
 
                         <RatingBar
                             android:id="@+id/stars"
-                            style="?android:attr/ratingBarStyleSmall"
+                            style="?android:attr/ratingBarStyleIndicator"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -192,7 +192,8 @@
                         android:layout_marginTop="27dp"
                         android:layout_toRightOf="@+id/orginiser_img"
                         android:text="Orginizer Name"
-
+                        android:textStyle="bold"
+                        android:textColor="#000"
                         android:textSize="14sp" />
 
                 </RelativeLayout>
@@ -204,6 +205,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
+                    android:textColor="#000"
                     android:textSize="14sp" />
 
                 <RelativeLayout
@@ -259,6 +261,7 @@
                         android:gravity="start"
                         android:layout_gravity="center_vertical"
                         android:text="Location"
+                        android:textStyle="bold"
                         android:textColor="#000" />
 
                     <TextView
@@ -268,6 +271,7 @@
                         android:gravity="start"
                         android:layout_gravity="center_vertical"
                         android:singleLine="true"
+                        android:textColor="#000"
                         android:text="Name Goes here"
                         android:textSize="12sp" />
 
@@ -288,6 +292,7 @@
                         android:layout_gravity="center_vertical"
                         android:gravity="start"
                         android:text="Level"
+                        android:textStyle="bold"
                         android:textColor="#000" />
 
                     <RelativeLayout
@@ -368,6 +373,7 @@
                         android:gravity="start"
                         android:layout_gravity="center_vertical"
                         android:text="Meeting"
+                        android:textStyle="bold"
                         android:textColor="#000" />
 
                     <TextView
@@ -377,6 +383,7 @@
                         android:gravity="start"
                         android:layout_gravity="center_vertical"
                         android:singleLine="true"
+                        android:textColor="#000"
                         android:text="Name Goes here"
                         android:textSize="12sp" />
                     <View
@@ -401,6 +408,7 @@
                         android:layout_gravity="center_vertical"
                         android:singleLine="true"
                         android:text="3:00"
+                        android:textColor="#000"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -488,6 +496,7 @@
                     android:layout_marginTop="15dp"
                     android:text="Disclaimer"
                     android:textColor="#000"
+                    android:textStyle="bold"
                     android:textSize="14dp" />
 
                 <TextView
@@ -496,6 +505,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
+                    android:textColor="#000"
                     android:layout_marginTop="15dp"
                     android:textSize="12sp" />
 
@@ -520,6 +530,7 @@
                         android:layout_alignParentLeft="true"
                         android:text="Who's going"
                         android:textColor="#000"
+                        android:textStyle="bold"
                         android:textSize="14sp" />
 
                     <ImageView

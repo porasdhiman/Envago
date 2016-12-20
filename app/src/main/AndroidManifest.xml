@@ -169,6 +169,7 @@
             android:name=".MyAdventures"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".Volunteers_list"></activity>
+
     </application>
 
 </manifest>
