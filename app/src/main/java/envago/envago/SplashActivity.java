@@ -22,6 +22,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Base64;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -83,6 +86,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
     protected String mLatitudeLabel;
     protected String mLongitudeLabel;
 
+RelativeLayout splash_img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +97,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
         sp = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         context = getApplicationContext();
         buildGoogleApiClient();
+        splash_img=(RelativeLayout)findViewById(R.id.splash_img);
 
         //----------------------------------------Marshmallow Permission-----------------
 
@@ -142,20 +147,30 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
                         @Override
                         public void run() {
 
-                                if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
-                                    locatioMethod();
-                                    Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
-                                    startActivity(intent);
-                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                            splash_img.setBackgroundResource(R.drawable.splash_2);
+                            Handler splashhandler = new Handler();
+                            splashhandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
 
-                                    finish();
-                                } else {
-                                    Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
-                                    startActivity(intent);
-                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                    splash_img.setBackgroundResource(R.drawable.splash_2);
 
-                                    finish();
+                                    if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
+
+                                        Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
+                                        startActivity(intent);
+                                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                                        finish();
+                                    } else {
+                                        Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
+                                        startActivity(intent);
+                                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                                        finish();
+                                    }
                                 }
+                            }, 1000);
 
 
                         }
@@ -177,20 +192,31 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
                     @Override
                     public void run() {
 
-                            if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
+                        splash_img.setBackgroundResource(R.drawable.splash_2);
+                        Handler splashhandler = new Handler();
+                        splashhandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
 
-                                Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                splash_img.setBackgroundResource(R.drawable.splash_2);
 
-                                finish();
-                            } else {
-                                Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                if (CommonUtils.UserID(SplashActivity.this).equalsIgnoreCase("")) {
 
-                                finish();
+                                    Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
+                                    startActivity(intent);
+                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                                    finish();
+                                } else {
+                                    Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
+                                    startActivity(intent);
+                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                                    finish();
+                                }
                             }
+                        }, 1000);
+
 
                     }
                 }, 2000);
@@ -443,7 +469,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
         }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
-            Toast.makeText(SplashActivity.this, "" + mLastLocation.getLatitude() + " " + mLastLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+           // Toast.makeText(SplashActivity.this, "" + mLastLocation.getLatitude() + " " + mLastLocation.getLongitude(), Toast.LENGTH_SHORT).show();
             global.setLat(String.valueOf(mLastLocation.getLatitude()));
             global.setLong(String.valueOf(mLastLocation.getLongitude()));
 
@@ -533,7 +559,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
         }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
-            Toast.makeText(SplashActivity.this, "" + mLastLocation.getLatitude() + " " + mLastLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(SplashActivity.this, "" + mLastLocation.getLatitude() + " " + mLastLocation.getLongitude(), Toast.LENGTH_SHORT).show();
             global.setLat(String.valueOf(mLastLocation.getLatitude()));
             global.setLong(String.valueOf(mLastLocation.getLongitude()));
 

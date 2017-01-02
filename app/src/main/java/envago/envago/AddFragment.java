@@ -94,7 +94,7 @@ public class AddFragment extends Fragment {
             public void onClick(View view) {
                 ed.clear();
                 ed.commit();
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                Intent intent = new Intent(getActivity(), ActivityLogin.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                /* dialogWindow();

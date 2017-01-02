@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -41,6 +42,7 @@ public class MyChatActivity extends Activity {
     ArrayList<HashMap<String, String>> list = new ArrayList<>();
     Dialog dialog2;
     Global global;
+    ShimmerFrameLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,9 @@ public class MyChatActivity extends Activity {
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         chat_list = (ListView) findViewById(R.id.chat_list);
-        dialogWindow();
+       // dialogWindow();
+        container=(ShimmerFrameLayout)findViewById(R.id.shimmer_view_container) ;
+        container.startShimmerAnimation();
         get_list();
         chat_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -73,7 +77,7 @@ public class MyChatActivity extends Activity {
         StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                dialog2.dismiss();
+             //   dialog2.dismiss();
                 Log.e("Categoryyyy", s);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -99,6 +103,8 @@ public class MyChatActivity extends Activity {
                         }
 
                         if (list.size() > 0) {
+                            container.setVisibility(View.GONE);
+                            chat_list.setVisibility(View.VISIBLE);
                             chat_list.setAdapter(new ChatListAdapter(MyChatActivity.this, list));
                         }
 
@@ -112,7 +118,7 @@ public class MyChatActivity extends Activity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                dialog2.dismiss();
+                //dialog2.dismiss();
             }
         }) {
             @Override

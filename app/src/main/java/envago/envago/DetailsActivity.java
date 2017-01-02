@@ -156,7 +156,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     Date startDate,endDate;
 
     TextView days_details,desclaimer_txt_show;
-
+ImageView dumy_imageview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,7 +167,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         }
         global = (Global) getApplicationContext();
         intro_images = (ViewPager) findViewById(R.id.pager_introduction);
-        review_txtview = (TextView) findViewById(R.id.review_txtView);
+        dumy_imageview=(ImageView)findViewById(R.id.dumy_imageview);
+       // review_txtview = (TextView) findViewById(R.id.review_txtView);
         review_layout = (LinearLayout) findViewById(R.id.review_layout);
         review_list = (ListView) findViewById(R.id.review_list);
         pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
@@ -177,22 +178,22 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         map_layout = (LinearLayout) findViewById(R.id.map_layout);
         status_text = (TextView) findViewById(R.id.status_text);
         admin_name = (TextView) findViewById(R.id.event_name);
-        about_txtView = (TextView) findViewById(R.id.about_txtView);
-        route_txtView = (TextView) findViewById(R.id.route_txtView);
+       // about_txtView = (TextView) findViewById(R.id.about_txtView);
+        //route_txtView = (TextView) findViewById(R.id.route_txtView);
         date_details = (TextView) findViewById(R.id.date_details);
         meeting_desc = (TextView) findViewById(R.id.meeting_desc);
         time_txtVIew = (TextView) findViewById(R.id.time_txtView);
-        level_no1 = (TextView) findViewById(R.id.level1);
+      /*  level_no1 = (TextView) findViewById(R.id.level1);
         level_no2 = (TextView) findViewById(R.id.level2);
         level_no3 = (TextView) findViewById(R.id.level3);
-        level_no4 = (TextView) findViewById(R.id.level4);
+        level_no4 = (TextView) findViewById(R.id.level4);*/
         header_textview = (TextView) findViewById(R.id.header_text);
         admin_description = (TextView) findViewById(R.id.upper_description);
         location_name_txtView = (TextView) findViewById(R.id.location_name);
         heart_img = (ImageView) findViewById(R.id.heart_img);
         heart_img.setOnClickListener(this);
         orginiser_img = (CircleImageView) findViewById(R.id.orginiser_img);
-        rating = (TextView) findViewById(R.id.counter);
+        //rating = (TextView) findViewById(R.id.counter);
         lower_description_txtView = (TextView) findViewById(R.id.lower_description);
         Disclaimer_txtView=(TextView)findViewById(R.id.Disclaimer_txtView);
         desclaimer_txt_show=(TextView)findViewById(R.id.desclaimer_txt_show);
@@ -203,16 +204,16 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         tent_txtView = (ImageView) findViewById(R.id.tent);
         back_button = (ImageView) findViewById(R.id.detail_back_button);
         places_txtView = (TextView) findViewById(R.id.places_count_txtView);
-        event_info_layout = (RelativeLayout) findViewById(R.id.event_info_layout);
-        event_info_layout.setOnClickListener(this);
+        //event_info_layout = (RelativeLayout) findViewById(R.id.event_info_layout);
+        //event_info_layout.setOnClickListener(this);
         purchase_btn = (Button) findViewById(R.id.purchase_btn);
-        signup_btn = (Button) findViewById(R.id.signup_btn);
+       // signup_btn = (Button) findViewById(R.id.signup_btn);
         days_details = (TextView)findViewById(R.id.days_details);
-        signup_btn.setOnClickListener(this);
-        purchase_btn.setOnClickListener(this);
-        about_txtView.setOnClickListener(this);
-        route_txtView.setOnClickListener(this);
-        review_txtview.setOnClickListener(this);
+        //signup_btn.setOnClickListener(this);
+       purchase_btn.setOnClickListener(this);
+       // about_txtView.setOnClickListener(this);
+        //route_txtView.setOnClickListener(this);
+       // review_txtview.setOnClickListener(this);
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -229,11 +230,11 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         dialogWindow();
         singleEventMethod();
 
-        if (getIntent().getExtras().getString("user").equalsIgnoreCase("user")) {
+      /*  if (getIntent().getExtras().getString("user").equalsIgnoreCase("user")) {
             signup_btn.setVisibility(View.GONE);
         } else {
             signup_btn.setVisibility(View.VISIBLE);
-        }
+        }*/
 
         //------------- map object initilization------------
         buildGoogleApiClient();
@@ -267,13 +268,13 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
             pager_indicator.addView(dots[i], params);
         }
 
-        dots[0].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
+       dots[0].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.about_txtView:
+           /* case R.id.about_txtView:
                 about_layout.setVisibility(View.VISIBLE);
                 map_layout.setVisibility(View.GONE);
                 review_layout.setVisibility(View.GONE);
@@ -292,14 +293,14 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                 about_txtView.setTextColor(getResources().getColor(R.color.White));
                 review_txtview.setTextColor(getResources().getColor(R.color.White));
 
-                break;
+                break;*/
 
-            case R.id.event_info_layout:
+           /* case R.id.event_info_layout:
 
                 rating_dialog();
                 break;
-
-            case R.id.review_txtView:
+*/
+         /*   case R.id.review_txtView:
                 about_layout.setVisibility(View.GONE);
                 map_layout.setVisibility(View.GONE);
                 review_layout.setVisibility(View.VISIBLE);
@@ -312,7 +313,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                 review_txtview.setTextColor(getResources().getColor(R.color.textcolor));
                 route_txtView.setTextColor(getResources().getColor(R.color.White));
                 about_txtView.setTextColor(getResources().getColor(R.color.White));
-                break;
+                break;*/
             case R.id.purchase_btn:
                 thingToBuy = new PayPalPayment(new BigDecimal("10"), "USD",
                         "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
@@ -320,11 +321,11 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                 intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
                 startActivityForResult(intent, REQUEST_CODE_PAYMENT);
                 break;
-            case R.id.signup_btn:
+          /*  case R.id.signup_btn:
                 Intent i = new Intent(DetailsActivity.this, ConfirmDetailsActivity.class);
                 i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
                 startActivity(i);
-                break;
+                break;*/
 
         }
 
@@ -353,11 +354,15 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
     public void pagerAdapterMethod(ArrayList<String> list) {
         this.list = list;
-        mAdapter = new ViewPagerAdapter(DetailsActivity.this, list);
-        intro_images.setAdapter(mAdapter);
-        intro_images.setCurrentItem(0);
-        intro_images.setOnPageChangeListener(this);
-        setUiPageViewController();
+        if(list.size()!=0) {
+            dumy_imageview.setVisibility(View.GONE);
+            intro_images.setVisibility(View.VISIBLE);
+            mAdapter = new ViewPagerAdapter(DetailsActivity.this, list);
+            intro_images.setAdapter(mAdapter);
+            intro_images.setCurrentItem(0);
+            intro_images.setOnPageChangeListener(this);
+            setUiPageViewController();
+        }
     }
 
     private void singleEventMethod() {
@@ -386,6 +391,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         list.add("http://worksdelight.com/envago/uploads/" + imagObj.getString(GlobalConstants.IMAGE));
                                     }
 
+/*
 //----------------------------------Map-Loaction-variable-----------------------------
                                     meeting_loc = objArry.getString(GlobalConstants.EVENT_METTING_POINT);
                                     meeting_lat = objArry.getString("meeting_point_latitude");
@@ -424,6 +430,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     listing.add(li);
                                     listing.add(l2);
                                     drawPrimaryLinePath(listing);
+*/
 
                                     //--------------------------------end-map-location-variable---------------------------------------------
 
@@ -452,12 +459,14 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
                                     admin_description.setText(adminobj.getString(GlobalConstants.ADMIN_ABOUT));
                                     if (objArry.getString(GlobalConstants.ADMIN_RATING).contains(".")) {
-                                        rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
+                                       // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
+                                        stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", "")));
                                     } else {
-                                        rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
+                                       // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
+                                        stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING)));
                                     }
 
-                                    stars.setRating(Float.parseFloat(rating.getText().toString()));
+
                                     if (dateMatchMethod(objArry.getString(GlobalConstants.EVENT_START_DATE))) {
                                         status_text.setVisibility(View.VISIBLE);
                                     } else {
@@ -489,7 +498,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     global.setEvent_end_date(objArry.getString(GlobalConstants.EVENT_END_DATE));
                                     location_name_txtView.setText(objArry.getString(GlobalConstants.LOCATION));
                                     global.setEvent_loc(objArry.getString(GlobalConstants.LOCATION));
-                                    if (objArry.getString(GlobalConstants.EVENT_LEVEL).equalsIgnoreCase("1")) {
+                                   /* if (objArry.getString(GlobalConstants.EVENT_LEVEL).equalsIgnoreCase("1")) {
                                         level_no1.setVisibility(View.VISIBLE);
                                     } else if (objArry.getString(GlobalConstants.EVENT_LEVEL).equalsIgnoreCase("2")) {
                                         level_no2.setVisibility(View.VISIBLE);
@@ -497,7 +506,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         level_no3.setVisibility(View.VISIBLE);
                                     } else {
                                         level_no4.setVisibility(View.VISIBLE);
-                                    }
+                                    }*/
                                     meeting_desc.setText(objArry.getString(GlobalConstants.EVENT_METTING_POINT));
                                     time_txtVIew.setText(objArry.getString("time"));
                                     i = Integer.parseInt(objArry.getString("is_liked"));

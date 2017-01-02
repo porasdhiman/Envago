@@ -82,7 +82,7 @@ public class ForgotPassword extends Activity {
                             String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
 
-                                Intent intent = new Intent(ForgotPassword.this, LoginActivity.class);
+                                Intent intent = new Intent(ForgotPassword.this, ActivityLogin.class);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_left);
                                 finish();

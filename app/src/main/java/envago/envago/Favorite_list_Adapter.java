@@ -42,10 +42,11 @@ import java.util.Map;
  */
 public class Favorite_list_Adapter extends BaseAdapter {
 
-    ArrayList<HashMap<String, String>> images;
+
     LayoutInflater inflater;
     Context applicationContext;
     Adventure_holder holder = null;
+    ArrayList<HashMap<String, String>> images;
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
     String url;

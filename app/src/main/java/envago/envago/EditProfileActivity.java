@@ -16,14 +16,18 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -51,18 +55,20 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by jhang on 9/27/2016.
  */
-public class EditProfileActivity extends Activity {
+public class EditProfileActivity extends Fragment {
 
 
     LinearLayout change_pass;
-    EditText username_edit, email_edit, name_edit, phone_edit, paypal_edit, document_edit, about_edit;
-    ImageView user_tick, email_tick, name_tick, phone_tick, paypal_tick, document_tick, about_tick, back_button;
+    TextView username_edit, email_edit, name_edit, phone_edit, paypal_edit, document_edit, about_edit;
+    ImageView camera_icon_img,user_tick, email_tick, name_tick, phone_tick, paypal_tick, document_tick, about_tick, back_button;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
-    CircleImageView profileimg;
+    ImageView profileimg;
     Button sumbit;
     Dialog dialog2;
     String selectedImagePath = "";
@@ -70,8 +76,80 @@ public class EditProfileActivity extends Activity {
 
 
     String username_var, email_var, name_var, phone_var, paypal_var, document_var, about_var;
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-    @Override
+
+        // TODO Auto-generated method stub
+        View v = inflater.inflate(R.layout.edit_profile, container, false);
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getActivity().setStatusBarColor(getResources().getColor(R.color.textcolor));
+        }*/
+
+        preferences =  getActivity().getSharedPreferences(GlobalConstants.PREFNAME, MODE_PRIVATE);
+        editor = preferences.edit();
+
+
+        profileimg = (ImageView)v. findViewById(R.id.profile_img_editprofile);
+        camera_icon_img=(ImageView)v. findViewById(R.id.camera_icon_img);
+        //  change_pass = (LinearLayout) findViewById(R.id.body_phone_changepass);
+        username_edit = (TextView) v.findViewById(R.id.username_edit);
+        email_edit = (TextView) v.findViewById(R.id.email_edit);
+        name_edit = (TextView)v. findViewById(R.id.name_edit);
+        phone_edit = (TextView) v.findViewById(R.id.phone_edit);
+        paypal_edit = (TextView)v. findViewById(R.id.paypal_edit);
+        document_edit = (TextView)v. findViewById(R.id.document_edit);
+        about_edit = (TextView) v.findViewById(R.id.about_edit);
+        // sumbit = (Button) findViewById(R.id.edit_sumbit_buttn);
+
+      /*  user_tick = (ImageView) findViewById(R.id.right_img);
+        email_tick = (ImageView) findViewById(R.id.right_img_email);
+        name_tick = (ImageView) findViewById(R.id.right_img_name);
+        phone_tick = (ImageView) findViewById(R.id.right_img_phone);
+        paypal_tick = (ImageView) findViewById(R.id.right_img_paypal);
+        document_tick = (ImageView) findViewById(R.id.right_img_id);
+        about_tick = (ImageView) findViewById(R.id.right_img_about);
+        back_button = (ImageView) findViewById(R.id.back_editprofile);
+*/
+        getinfo();
+        getvalues();
+
+      /*  change_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(EditProfileActivity.this, ChangePassword.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            }
+        });
+*//*
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+*/
+       /* sumbit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getvalues();
+                dialogWindow();
+                editprofile();
+
+            }
+        });*/
+
+        camera_icon_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dailog();
+            }
+        });
+return v;
+    }
+   /* @Override
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         super.onCreate(savedInstanceState);
@@ -87,18 +165,19 @@ public class EditProfileActivity extends Activity {
         editor = preferences.edit();
 
 
-        profileimg = (CircleImageView) findViewById(R.id.profile_img_editprofile);
-        change_pass = (LinearLayout) findViewById(R.id.body_phone_changepass);
-        username_edit = (EditText) findViewById(R.id.username_edit);
-        email_edit = (EditText) findViewById(R.id.email_edit);
-        name_edit = (EditText) findViewById(R.id.name_edit);
-        phone_edit = (EditText) findViewById(R.id.phone_edit);
-        paypal_edit = (EditText) findViewById(R.id.paypal_edit);
-        document_edit = (EditText) findViewById(R.id.document_edit);
-        about_edit = (EditText) findViewById(R.id.about_edit);
-        sumbit = (Button) findViewById(R.id.edit_sumbit_buttn);
+        profileimg = (ImageView) findViewById(R.id.profile_img_editprofile);
+        camera_icon_img=(ImageView) findViewById(R.id.camera_icon_img);
+      //  change_pass = (LinearLayout) findViewById(R.id.body_phone_changepass);
+        username_edit = (TextView) findViewById(R.id.username_edit);
+        email_edit = (TextView) findViewById(R.id.email_edit);
+        name_edit = (TextView) findViewById(R.id.name_edit);
+        phone_edit = (TextView) findViewById(R.id.phone_edit);
+        paypal_edit = (TextView) findViewById(R.id.paypal_edit);
+        document_edit = (TextView) findViewById(R.id.document_edit);
+        about_edit = (TextView) findViewById(R.id.about_edit);
+       // sumbit = (Button) findViewById(R.id.edit_sumbit_buttn);
 
-        user_tick = (ImageView) findViewById(R.id.right_img);
+      *//*  user_tick = (ImageView) findViewById(R.id.right_img);
         email_tick = (ImageView) findViewById(R.id.right_img_email);
         name_tick = (ImageView) findViewById(R.id.right_img_name);
         phone_tick = (ImageView) findViewById(R.id.right_img_phone);
@@ -106,11 +185,11 @@ public class EditProfileActivity extends Activity {
         document_tick = (ImageView) findViewById(R.id.right_img_id);
         about_tick = (ImageView) findViewById(R.id.right_img_about);
         back_button = (ImageView) findViewById(R.id.back_editprofile);
-
+*//*
         getinfo();
         getvalues();
 
-        change_pass.setOnClickListener(new View.OnClickListener() {
+      *//*  change_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -119,15 +198,15 @@ public class EditProfileActivity extends Activity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         });
-
+*//**//*
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-
-        sumbit.setOnClickListener(new View.OnClickListener() {
+*//*
+       *//* sumbit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getvalues();
@@ -135,9 +214,9 @@ public class EditProfileActivity extends Activity {
                 editprofile();
 
             }
-        });
+        });*//*
 
-        profileimg.setOnClickListener(new View.OnClickListener() {
+        camera_icon_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dailog();
@@ -145,7 +224,7 @@ public class EditProfileActivity extends Activity {
         });
 
 
-    }
+    }*/
     //------------------------profile-info-method---------------------------------------------
 
     public void getinfo() {
@@ -164,7 +243,7 @@ public class EditProfileActivity extends Activity {
         } else {
 
             if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
-                Picasso.with(this).load(preferences.getString(GlobalConstants.IMAGE, ""));
+                Picasso.with(getActivity()).load(preferences.getString(GlobalConstants.IMAGE, ""));
             } else {
                 profileimg.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
             }
@@ -174,50 +253,49 @@ public class EditProfileActivity extends Activity {
 
         } else {
             username_edit.setText(username);
-            user_tick.setImageResource(R.drawable.right_red);
+           // user_tick.setImageResource(R.drawable.right_red);
         }
 
         if (email.length() == 0) {
 
         } else {
             email_edit.setText(email);
-            email_tick.setImageResource(R.drawable.right_red);
+
         }
 
         if (name.length() == 0) {
 
         } else {
             name_edit.setText(name);
-            name_tick.setImageResource(R.drawable.right_red);
+
         }
 
         if (phone.length() == 0) {
 
         } else {
             phone_edit.setText(phone);
-            phone_tick.setImageResource(R.drawable.right_red);
+
         }
 
         if (paypal.length() == 0) {
 
         } else {
             paypal_edit.setText(paypal);
-            paypal_tick.setImageResource(R.drawable.right_red);
+
         }
 
         if (document.length() == 0) {
 
         } else {
-            document_edit.setText(document);
-            document_tick.setImageResource(R.drawable.right_red);
+          //  document_edit.setText(document);
+
         }
         if (about.length() == 0) {
 
         } else {
             about_edit.setText(about);
-            about_tick.setImageResource(R.drawable.right_red);
-        }
 
+        }
         editor.commit();
 
     }
@@ -239,9 +317,9 @@ public class EditProfileActivity extends Activity {
                         String msg_response = response_obj.getString("msg");
 
 
-                        Toast.makeText(getApplicationContext(), msg_response, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), msg_response, Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), response_obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), response_obj.getString("msg"), Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -260,7 +338,7 @@ public class EditProfileActivity extends Activity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put(GlobalConstants.USERID, CommonUtils.UserID(EditProfileActivity.this));
+                params.put(GlobalConstants.USERID, CommonUtils.UserID(getActivity()));
                 params.put(GlobalConstants.USERNAME, username_var);
                 params.put(GlobalConstants.EMAIL, email_var);
                 params.put(GlobalConstants.CONTACT, phone_var);
@@ -275,9 +353,9 @@ public class EditProfileActivity extends Activity {
             }
         };
 
-        edit_profile.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        edit_profile.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(edit_profile);
     }
 
@@ -334,7 +412,7 @@ public class EditProfileActivity extends Activity {
     }
 
     public void dialogWindow() {
-        dialog2 = new Dialog(this);
+        dialog2 = new Dialog(getActivity());
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog2.setCanceledOnTouchOutside(false);
@@ -349,7 +427,7 @@ public class EditProfileActivity extends Activity {
 
     //---------------------------Camera----upload----------------------
     public void dailog() {
-        camgllry = new Dialog(this);
+        camgllry = new Dialog(getActivity());
         camgllry.requestWindowFeature(Window.FEATURE_NO_TITLE);
         camgllry.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         camgllry.setContentView(R.layout.camera_dialog);
@@ -401,7 +479,7 @@ public class EditProfileActivity extends Activity {
             onCaptureImageResult(data);
             camgllry.dismiss();
         } else if (resultCode == Activity.RESULT_CANCELED) {
-            Toast.makeText(EditProfileActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
             camgllry.dismiss();
         }
     }
@@ -410,15 +488,15 @@ public class EditProfileActivity extends Activity {
         Bitmap bm = null;
         if (data != null) {
             try {
-                bm = MediaStore.Images.Media.getBitmap(EditProfileActivity.this.getContentResolver(), data.getData());
+                bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         profileimg.setImageBitmap(bm);
-        Uri uri = getImageUri(EditProfileActivity.this, bm);
+        Uri uri = getImageUri(getActivity(), bm);
         try {
-            selectedImagePath = getFilePath(EditProfileActivity.this, uri);
+            selectedImagePath = getFilePath(getActivity(), uri);
             editor.putString(GlobalConstants.IMAGE, selectedImagePath);
             editor.commit();
         } catch (URISyntaxException e) {
@@ -447,9 +525,9 @@ public class EditProfileActivity extends Activity {
             e.printStackTrace();
         }
         profileimg.setImageBitmap(thumbnail);
-        Uri uri = getImageUri(EditProfileActivity.this, thumbnail);
+        Uri uri = getImageUri(getActivity(), thumbnail);
         try {
-            selectedImagePath = getFilePath(EditProfileActivity.this, uri);
+            selectedImagePath = getFilePath(getActivity(), uri);
             editor.putString(GlobalConstants.IMAGE, selectedImagePath);
             editor.commit();
         } catch (URISyntaxException e) {

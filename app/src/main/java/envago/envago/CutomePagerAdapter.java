@@ -2,29 +2,33 @@ package envago.envago;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 
 public class CutomePagerAdapter extends PagerAdapter {
 
     Context mContext;
     LayoutInflater mLayoutInflater;
-    int[] img;
+    String[] upper_txt;
+    String[] bottom_txt;
 
-    public CutomePagerAdapter(Context context, int[] img) {
+    public CutomePagerAdapter(Context context, String[] upper_txt,String[] bottom_txt) {
         mContext = context;
-        this.img = img;
+        this.upper_txt = upper_txt;
+        this.bottom_txt = bottom_txt;
 
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return img.length;
+        return upper_txt.length;
     }
 
     @Override
@@ -37,10 +41,16 @@ public class CutomePagerAdapter extends PagerAdapter {
 
         View itemView = mLayoutInflater.inflate(R.layout.splash_multiple_image, container, false);
 
-        ImageView center_txtView = (ImageView) itemView.findViewById(R.id.pager_img);
+      /*  ImageView center_txtView = (ImageView) itemView.findViewById(R.id.pager_img);
         center_txtView.setBackgroundResource(img[position]);
         container.addView(itemView);
+*/
+        TextView slider_txt=(TextView)itemView.findViewById(R.id.slider_txt);
+        TextView slider_txt_bottom=(TextView)itemView.findViewById(R.id.slider_bottom_txt);
 
+        slider_txt.setText(upper_txt[position]);
+        slider_txt_bottom.setText(bottom_txt[position]);
+        container.addView(itemView);
         return itemView;
 
     }

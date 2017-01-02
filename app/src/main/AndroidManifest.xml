@@ -25,10 +25,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".ActivityLogin"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".SignupActivity"
+            android:name=".RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ConfirmDetailsActivity"
@@ -89,10 +89,10 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
-        <activity
+       <!-- <activity
             android:name=".EditProfileActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden" />-->
         <activity
             android:name=".ForgotPassword"
             android:screenOrientation="portrait"
@@ -170,6 +170,11 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".Volunteers_list"></activity>
 
+
+        <activity
+            android:name=".SearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

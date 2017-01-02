@@ -20,4 +20,17 @@
         <item>Rock &amp; Ice </item>
 
     </string-array>
+
+
+    <string-array name="slide1_txt">
+    <item> Browse and List \n Unique Adventures</item>
+    <item>Become an \n Adventure Planner</item>
+    <item>Connect with \n Adventure Seekers</item>
+    </string-array>
+    <string-array name="slide1_bottom_txt">
+        <item>  Browse adventures from around the globe</item>
+        <item>Earn income following your passion</item>
+        <item>The first adventure community marketplace</item>
+    </string-array>
+
 </resources>

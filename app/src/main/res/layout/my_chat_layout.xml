@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/main_heading"
@@ -13,21 +15,108 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_margin="14dp"
-            android:src="@drawable/back_button" />
+            android:layout_alignParentRight="true"
+            android:src="@drawable/search" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My chat"
+            android:text="Chats"
             android:textColor="#fff"
             android:textSize="18sp"
             android:layout_centerInParent="true"/>
 
 
     </RelativeLayout>
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        app:duration="1000"
+        app:repeat_delay="500">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/chat_img"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/Gray"
+            android:layout_centerVertical="true"
+            app:civ_border_color="#434343"
+            app:civ_border_overlay="true"
+            app:civ_border_width="1dp" />
+        <TextView
+            android:id="@+id/chat_address_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/chat_img"
+            android:layout_toLeftOf="@+id/next_img"
+
+            android:text="Canyoneering"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/Gray"
+            android:textColor="@color/Gray"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/chat_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/chat_img"
+            android:layout_toLeftOf="@+id/next_img"
+            android:layout_below="@+id/chat_address_name"
+            android:text=""
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/Gray"
+            android:textColor="@color/Gray"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/chat_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/chat_img"
+            android:layout_toLeftOf="@+id/next_img"
+            android:layout_below="@+id/chat_name"
+            android:text="hello how are u?"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/Gray"
+            android:textColor="@color/Gray"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/next_img"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:textSize="13sp"
+            android:background="@color/Gray"
+            android:textColor="@color/Gray"
+            android:text="26 feb 2016"/>
+
+
+        </RelativeLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <ListView
         android:id="@+id/chat_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#000"
-        android:dividerHeight="2dp"></ListView>
+        android:divider="@color/Gray"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:visibility="gone"
+        android:dividerHeight="1dp"></ListView>
 </LinearLayout>

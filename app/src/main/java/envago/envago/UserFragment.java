@@ -18,6 +18,8 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,13 +64,13 @@ public class UserFragment extends Fragment {
     ImageView map_button;
     CircleImageView profilepic;
     Dialog camgllry;
-    LinearLayout settings, pricing_layout, privacy, terms;
+    TextView settings, pricing_layout, privacy, terms;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     TextView username;
     Dialog dialog2;
     String selectedImagePath = "";
-
+TextView View_and_edit_profile_txtView;
 
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -86,38 +88,40 @@ public class UserFragment extends Fragment {
         editor = preferences.edit();
 
 
-        map_button = (ImageView) v.findViewById(R.id.map_button);
+
 
         profilepic = (CircleImageView) v.findViewById(R.id.profile_img);
-        settings = (LinearLayout) v.findViewById(R.id.settings_view);
-        pricing_layout = (LinearLayout) v.findViewById(R.id.pricing_layout);
-        privacy = (LinearLayout) v.findViewById(R.id.privacy_layout);
+        settings = (TextView) v.findViewById(R.id.settings_txtView);
+        pricing_layout = (TextView) v.findViewById(R.id.pricing_policy_txtView);
+        privacy = (TextView) v.findViewById(R.id.privacy_policy_txtView);
         username = (TextView) v.findViewById(R.id.username);
-        terms = (LinearLayout) v.findViewById(R.id.terms_layout);
-        profilepic.setOnClickListener(new View.OnClickListener() {
+        terms = (TextView) v.findViewById(R.id.terms_txtView);
+        View_and_edit_profile_txtView=(TextView)v.findViewById(R.id.View_and_edit_profile_txtView);
+       /* profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 dailog();
             }
-        });
-        map_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        });*/
 
-                Intent intent = new Intent(getActivity(), MapsActivity.class);
-                startActivity(intent);
-
-            }
-        });
 
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+                FragmentTransaction anim_frag = fragmentManager.beginTransaction();
+
+
+                anim_frag.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+
+
+                anim_frag.replace(R.id.contentintab, new EditProfileActivity()).addToBackStack(null).commit();
+             /*   Intent intent = new Intent(getActivity(), EditProfileActivity.class);
                 startActivityForResult(intent,2);
 
-
+*/
             }
         });
         pricing_layout.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +150,12 @@ public class UserFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
                 intent.putExtra("title", "TERMS AND CONDITIONS");
                 startActivity(intent);
+
+            }
+        });
+        View_and_edit_profile_txtView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });

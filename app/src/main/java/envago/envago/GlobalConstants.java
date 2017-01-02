@@ -67,4 +67,10 @@ public class GlobalConstants {
     public static String ADMIN_IMAGE="image";
 
 
+    public static String Is_SUGGESTED="is_suggested";
+    public static String ID="id";
+    public static String CAT_ID="id";
+    public static String EVENT_CAT_NAME="event_cat_name";
+    public static String EVENT_CAT_COUNT="event_count";
+
 }

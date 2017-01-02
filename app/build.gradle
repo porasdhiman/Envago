@@ -47,6 +47,7 @@ dependencies {
         transitive=true
     }
     compile files('libs/PayPalAndroidSDK.jar')
+    compile 'com.facebook.shimmer:shimmer:0.1.0@aar'
 
 
 }

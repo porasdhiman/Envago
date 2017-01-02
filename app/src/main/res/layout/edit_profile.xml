@@ -36,72 +36,77 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_img_editprofile"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:src="@mipmap/ic_launcher"
-                app:civ_border_color="#434343"
-                app:civ_border_overlay="true"
-                app:civ_border_width="1dp" />
-
-            <View
+            android:orientation="vertical"
+            >
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="0.9dp"
-                android:layout_marginTop="15dp"
-                android:background="#afafaf">
+                android:layout_height="wrap_content">
 
-            </View>
+            <ImageView
+                android:id="@+id/profile_img_editprofile"
+                android:layout_width="match_parent"
+                android:layout_height="340dp"
+                android:layout_gravity="center"
+
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_launcher"
+               />
+                <ImageView
+                    android:id="@+id/camera_icon_img"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="300dp"
+
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/ic_launcher"/>
+            </RelativeLayout>
+
+
 
             <RelativeLayout
                 android:id="@+id/body_user"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:padding="10dp">
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
 
                 <TextView
                     android:id="@+id/user_textview"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:text="Username"
+                    android:textStyle="bold"
                     android:textColor="#000" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/right_img"
-                    android:layout_toRightOf="@+id/user_textview"
+                   android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="15sp"
                     android:background="@null"
                     android:hint="username"
                     android:id="@+id/username_edit"
                     android:textColor="#000"
-                    android:textSize="14sp"
+
                     />
 
-                <ImageView
-                    android:id="@+id/right_img"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
 
-                    android:layout_weight="1"
-                    android:src="@drawable/right" />
 
             </RelativeLayout>
 
@@ -109,6 +114,9 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.9dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:background="#afafaf">
 
             </View>
@@ -117,7 +125,9 @@
                 android:id="@+id/body_name"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:padding="10dp">
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
 
                 <TextView
                     android:id="@+id/name_textview"
@@ -126,33 +136,25 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:text="Name"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
                     android:textColor="#000" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/right_img_name"
-                    android:layout_toRightOf="@+id/name_textview"
+                   android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:background="@null"
                     android:hint="name"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="10dp"
                     android:id="@+id/name_edit"
                     android:textColor="#000"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     />
 
-                <ImageView
-                    android:id="@+id/right_img_name"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-
-                    android:layout_weight="1"
-                    android:src="@drawable/right" />
 
             </RelativeLayout>
 
@@ -160,7 +162,10 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.9dp"
-                android:background="#afafaf">
+                android:background="#afafaf"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
 
             </View>
 
@@ -168,7 +173,9 @@
                 android:id="@+id/body_email"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:padding="10dp">
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
 
                 <TextView
                     android:id="@+id/email_textview"
@@ -176,34 +183,28 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
                     android:text="Email"
                     android:textColor="#000"
-                    android:textSize="14sp"
+
                     />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/right_img_email"
-                    android:layout_toRightOf="@+id/email_textview"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
                     android:background="@null"
                     android:hint="email"
                     android:id="@+id/email_edit"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textColor="#000"
                     />
 
-                <ImageView
-                    android:id="@+id/right_img_email"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
 
-                    android:layout_weight="1"
-                    android:src="@drawable/right" />
 
             </RelativeLayout>
 
@@ -211,7 +212,10 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.9dp"
-                android:background="#afafaf">
+                android:background="#afafaf"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
 
             </View>
 
@@ -219,7 +223,9 @@
                 android:id="@+id/body_phone"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:padding="10dp">
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
 
                 <TextView
                     android:id="@+id/phone_textview"
@@ -229,32 +235,23 @@
                     android:layout_centerVertical="true"
                     android:text="Phone"
                     android:textColor="#000"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
                     />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/right_img_phone"
-                    android:layout_toRightOf="@+id/phone_textview"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
                     android:background="@null"
                     android:hint="phone"
                     android:id="@+id/phone_edit"
                     android:textColor="#000"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     />
-
-                <ImageView
-                    android:id="@+id/right_img_phone"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-
-                    android:layout_weight="1"
-                    android:src="@drawable/right" />
 
             </RelativeLayout>
 
@@ -262,11 +259,14 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.9dp"
-                android:background="#afafaf">
+                android:background="#afafaf"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
 
             </View>
 
-            <LinearLayout
+         <!--   <LinearLayout
                 android:id="@+id/body_phone_changepass"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -280,7 +280,7 @@
                     android:layout_height="wrap_content"
                     android:text="Change Password"
                     android:textColor="#000"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
                 <View
                     android:layout_width="120dp"
@@ -291,15 +291,10 @@
 
             </LinearLayout>
 
+-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.9dp"
-                android:background="#afafaf">
 
-            </View>
-
-            <LinearLayout
+           <!-- <LinearLayout
                 android:id="@+id/heading"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -324,46 +319,42 @@
                 android:layout_height="0.9dp"
                 android:background="#afafaf">
 
-            </View>
+            </View>-->
 
 
             <RelativeLayout
                 android:id="@+id/paypal_body"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:padding="10dp">
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
 
                 <TextView
                     android:id="@+id/paypal_textview"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:text="Paypal Address"
                     android:textColor="#000"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
                     />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/right_img_paypal"
-                    android:layout_toRightOf="@+id/paypal_textview"
+                    android:layout_alignParentRight="true"
+
                     android:background="@null"
                     android:textColor="#000"
                     android:id="@+id/paypal_edit"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
-                <ImageView
-                    android:id="@+id/right_img_paypal"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_weight="1"
-                    android:src="@drawable/right" />
+
 
             </RelativeLayout>
 
@@ -371,7 +362,10 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.9dp"
-                android:background="#afafaf">
+                android:background="#afafaf"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
 
             </View>
 
@@ -379,7 +373,9 @@
                 android:id="@+id/id_body"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:padding="10dp">
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
 
                 <TextView
                     android:id="@+id/id_textview"
@@ -389,28 +385,23 @@
                     android:layout_centerVertical="true"
                     android:text="Upload ID"
                     android:textColor="#000"
-                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
                     />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/right_img_id"
-                    android:layout_toRightOf="@+id/id_textview"
+                  android:text="Tap to view"
+                    android:layout_alignParentRight="true"
                     android:background="@null"
                     android:textColor="#000"
                     android:id="@+id/document_edit"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
-                <ImageView
-                    android:id="@+id/right_img_id"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/right" />
+
 
             </RelativeLayout>
 
@@ -418,15 +409,21 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.9dp"
-                android:background="#afafaf">
+                android:background="#afafaf"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
 
             </View>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/about_body"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:padding="10dp">
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/about_textview"
@@ -436,49 +433,47 @@
                     android:layout_centerVertical="true"
                     android:text="About me"
                     android:textColor="#000"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
                     />
 
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="10dp"
-                    android:textSize="14sp"
+
+                    android:textSize="15sp"
                     android:id="@+id/about_edit"
-                    android:layout_toLeftOf="@+id/right_img_about"
-                    android:layout_toRightOf="@+id/about_textview"
+                   android:layout_marginTop="10dp"
+                    android:padding="10dp"
                     android:background="@null"
                     android:textColor="#000"
                    />
 
-                <ImageView
-                    android:id="@+id/right_img_about"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/right" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.9dp"
-                android:background="#afafaf">
+                android:background="#afafaf"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
 
             </View>
 
 
-            <Button
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="43dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/rectangle_button"
-                android:text="Save"
-                android:id="@+id/edit_sumbit_buttn"
-                android:textColor="#fff" />
+                android:layout_height="30dp"
+
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
+
+            </View>
+
         </LinearLayout>
 
 

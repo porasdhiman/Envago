@@ -1,67 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-<RelativeLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:background="@color/textcolor"
-    android:id="@+id/main_heading">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/search"
-        android:id="@+id/search_button"
-        android:layout_margin="14dp"/>
+    <RelativeLayout
+        android:id="@+id/main_heading"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/textcolor">
 
-    <TextView
-        android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/search_button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="14dp"
+            android:src="@drawable/plus" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Advantures"
+            android:textColor="#fff"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/map_button"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:src="@drawable/map" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ENVAGO"
-        android:textColor="#fff"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"
-        android:id="@+id/title"/>
+        >
 
-    <ImageView
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:src="@drawable/map"
-        android:id="@+id/map_button"
-        android:layout_alignParentRight="true"
-        android:layout_margin="10dp"
-        />
-
-</RelativeLayout>
-
-
-
-        <ListView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/main_list"
-            android:scrollbars="none"
-            android:layout_below="@+id/main_heading"
-
-            >
-
-        </ListView>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
 
+            <LinearLayout
+                android:id="@+id/featured_linear_layout"
 
-  <!--<android.support.v7.widget.ScrollingTabContainerView.TabView
-      android:layout_width="match_parent"
-      android:layout_height="40dp"
-      android:id="@+id/tabs"
-      android:layout_alignParentBottom="true"
-      android:background="@color/colorPrimary">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-  </android.support.v7.widget.ScrollingTabContainerView.TabView>-->
+                <TextView
+                    android:id="@+id/view_top_txtView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Featured Adventures"
+                    android:textColor="@color/textcolor"
+                    android:textSize="18sp" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/view_item_pager1"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="10dp"></android.support.v4.view.ViewPager>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/all_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="All Categories"
+
+                    android:textColor="@color/textcolor"
+                    android:textSize="18sp" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/cat_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_marginTop="10dp"
+                    android:fitsSystemWindows="true"
+
+                    tools:listitem="@layout/advanture_pager_item_for_cat">
+
+                </android.support.v4.view.ViewPager>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/suggested_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/view_top_txtView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text=" Suggested Adventures"
+                    android:textColor="@color/textcolor"
+                    android:textSize="18sp" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/view_item_pager2"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="10dp"></android.support.v4.view.ViewPager>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/featured_planners_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+               >
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Featured Planners"
+                    android:textColor="@color/textcolor"
+                    android:textSize="18sp" />
+
+                <ListView
+                    android:id="@+id/main_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/main_heading"
+
+                    android:paddingBottom="10dp"
+                    android:scrollbars="none">
+
+                </ListView>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+    <!--<android.support.v7.widget.ScrollingTabContainerView.TabView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/tabs"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary">
+
+    </android.support.v7.widget.ScrollingTabContainerView.TabView>-->
 
 
-
-
-</RelativeLayout>
+</LinearLayout>

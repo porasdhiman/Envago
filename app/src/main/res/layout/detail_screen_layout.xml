@@ -2,9 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    android:background="#fff">
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,124 +14,132 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/pager_introduction"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:fitsSystemWindows="true"
-                    tools:listitem="@layout/pager_item" />
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/dumy_imageview"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:scaleType="fitXY"
+                      android:src="@drawable/placeholder_image1" />
 
-                <ImageView
-                    android:id="@+id/heart_img"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="12dp"
-                    android:src="@drawable/heart" />
-                <TextView
-                    android:id="@+id/status_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/start_event_back"
-                    android:gravity="center"
-                    android:padding="4dp"
-                    android:visibility="gone"
-                    android:text="Started"
-                    android:textColor="#fff"
-                    android:textSize="12sp"
-                     />
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/pager_introduction"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:fitsSystemWindows="true"
+                        tools:listitem="@layout/pager_item"
+                        android:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/heart_img"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="12dp"
+                        android:src="@drawable/heart" />
+
+                    <TextView
+                        android:id="@+id/status_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/start_event_back"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="Event Started"
+                        android:textColor="#fff"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
 
 
-            </RelativeLayout>
+                </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/viewPagerIndicator"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="-50dp"
-                android:gravity="center">
-
-                <LinearLayout
-                    android:id="@+id/viewPagerCountDots"
+                <RelativeLayout
+                    android:id="@+id/viewPagerIndicator"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center"
-                    android:orientation="horizontal" />
+                    android:layout_height="55dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="-50dp"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:id="@+id/viewPagerCountDots"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:orientation="horizontal" />
 
 
-            </RelativeLayout>
+                </RelativeLayout>
 
-            <RelativeLayout
+               <!-- <RelativeLayout
 
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="-5dp"
-                android:background="#191F28">
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="-5dp"
+                    android:background="#191F28">
 
-                <TextView
-                    android:id="@+id/about_txtView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="30dp"
-                    android:text="About"
-                    android:textColor="@color/textcolor"
-                    android:textSize="18dp" />
+                    <TextView
+                        android:id="@+id/about_txtView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="30dp"
+                        android:text="About"
+                        android:textColor="@color/textcolor"
+                        android:textSize="18dp" />
 
-                <TextView
-                    android:id="@+id/route_txtView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
+                    <TextView
+                        android:id="@+id/route_txtView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
 
-                    android:layout_marginRight="30dp"
-                    android:text="Route"
-                    android:textColor="#fff"
-                    android:textSize="18dp" />
+                        android:layout_marginRight="30dp"
+                        android:text="Route"
+                        android:textColor="#fff"
+                        android:textSize="18dp" />
 
-                <TextView
-                    android:id="@+id/review_txtView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="30dp"
-                    android:text="Review"
-                    android:textColor="#fff"
-                    android:textSize="18dp" />
-            </RelativeLayout>
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/review_txtView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30dp"
+                        android:text="Review"
+                        android:textColor="#fff"
+                        android:textSize="18dp" />
+                </RelativeLayout>-->
+            </LinearLayout>
             <!--About layout-->
             <LinearLayout
                 android:id="@+id/about_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp">
 
-                    <RelativeLayout
+                   <!-- <RelativeLayout
                         android:id="@+id/event_info_layout"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -140,61 +148,75 @@
 
 
 
-                        <RatingBar
-                            android:id="@+id/stars"
-                            style="?android:attr/ratingBarStyleIndicator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="8dp"
-                            android:isIndicator="true"
-                            android:layout_centerVertical="true"
-                            android:layout_centerInParent="true"
-                            android:numStars="5"
-                            android:clickable="false"
-                            android:focusableInTouchMode="false"
-                            android:progressTint="@android:color/holo_orange_light"
-                            android:stepSize="1.0" />
 
                         <TextView
                             android:id="@+id/counter"
-                            android:layout_width="25dp"
+                            android:layout_width="30dp"
                             android:layout_height="25dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="12dp"
                             android:layout_marginTop="8dp"
-                            android:layout_gravity= "end"
-                            android:layout_alignParentRight="true"
                             android:background="@drawable/level_txt_back"
                             android:gravity="center"
                             android:padding="3dp"
                             android:text=""
                             android:textColor="#fff" />
-                    </RelativeLayout>
+                    </RelativeLayout>-->
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/orginiser_img"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:layout_below="@+id/event_info_layout"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="20dp"
+
+
+
                         android:src="@mipmap/app_icon" />
 
                     <TextView
                         android:id="@+id/event_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/event_info_layout"
-                        android:layout_centerVertical="true"
+
+
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="27dp"
+                        android:layout_marginTop="10dp"
                         android:layout_toRightOf="@+id/orginiser_img"
                         android:text="Orginizer Name"
-                        android:textStyle="bold"
                         android:textColor="#000"
+
                         android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/about_planner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+
+                        android:layout_marginRight="10dp"
+                       android:layout_marginTop="10dp"
+                        android:layout_alignParentRight="true"
+                        android:text="About planner"
+                        android:textColor="@color/textcolor"
+
+                        android:textSize="14sp" />
+                    <RatingBar
+                        android:id="@+id/stars"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginLeft="20dp"
+
+                        android:layout_marginTop="10dp"
+                        android:clickable="false"
+                        android:focusableInTouchMode="false"
+                        android:isIndicator="true"
+                        android:numStars="5"
+                        android:layout_below="@+id/event_name"
+                        android:layout_toRightOf="@+id/orginiser_img"
+                        android:progressTint="@android:color/holo_orange_light"
+                        android:stepSize="1.0" />
 
                 </RelativeLayout>
 
@@ -205,23 +227,24 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="1.5dp"
                     android:textColor="#000"
                     android:textSize="14sp" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/Gray" />
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/appcolor"
-                    android:orientation="horizontal">
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
 
-                    <ImageView
-                        android:id="@+id/calnder_img"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
-                        android:src="@drawable/calender_detail" />
+
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/date_details"
@@ -242,10 +265,28 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="80dp"
                         android:layout_marginRight="15dp"
-                        android:text="days goes here"
-                        android:textColor="#000" />
+                        android:text="Select a date"
+                        android:textColor="@color/textcolor" />
+
+                    <ImageView
+                        android:id="@+id/calnder_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:src="@drawable/clock"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="16dp" />
 
                 </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/Gray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -257,22 +298,22 @@
                         android:id="@+id/location_txt"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="15dp"
                         android:gravity="start"
-                        android:layout_gravity="center_vertical"
                         android:text="Location"
-                        android:textStyle="bold"
-                        android:textColor="#000" />
+                        android:textColor="#000"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/location_name"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
                         android:layout_gravity="center_vertical"
+                        android:gravity="start"
                         android:singleLine="true"
-                        android:textColor="#000"
                         android:text="Name Goes here"
+                        android:textColor="#000"
                         android:textSize="12sp" />
 
 
@@ -288,74 +329,85 @@
                         android:id="@+id/levl_txt"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="15dp"
                         android:gravity="start"
-                        android:text="Level"
-                        android:textStyle="bold"
-                        android:textColor="#000" />
+                        android:text="Difficulty"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/line2"
-                        android:layout_gravity="center_vertical">
-
-
+                        android:layout_gravity="center_vertical"
+                       >
                         <TextView
-                            android:id="@+id/level1"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/level_txt_back"
-                            android:gravity="center"
-                            android:padding="3dp"
-                            android:text="1"
-                            android:textColor="#fff"
-                            android:visibility="invisible" />
+                            android:id="@+id/beginner_txt"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
 
-                        <TextView
-                            android:id="@+id/level2"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_toRightOf="@+id/level1"
-                            android:background="@drawable/level_txt_back"
-                            android:gravity="center"
-                            android:padding="3dp"
-                            android:text="2"
-                            android:textColor="#fff"
-
-                            android:visibility="invisible" />
-
-                        <TextView
-                            android:id="@+id/level3"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_toRightOf="@+id/level2"
-                            android:background="@drawable/level_txt_back"
-                            android:gravity="center"
-                            android:padding="3dp"
-                            android:text="3"
-                            android:textColor="#fff"
-
-                            android:visibility="invisible" />
+                            android:gravity="start"
+                            android:text="Beginner"
+                            android:textColor="#000"
+                             />
 
 
-                        <TextView
-                            android:id="@+id/level4"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_toRightOf="@+id/level3"
-                            android:background="@drawable/level_txt_back"
-                            android:gravity="center"
-                            android:padding="3dp"
-                            android:text="4"
-                            android:textColor="#fff"
-                            android:visibility="invisible" />
 
-                    </RelativeLayout>
+                        <!-- <TextView
+                             android:id="@+id/level1"
+                             android:layout_width="20dp"
+                             android:layout_height="20dp"
+                             android:background="@drawable/level_txt_back"
+                             android:gravity="center"
+                             android:padding="3dp"
+                             android:text="1"
+                             android:textColor="#fff"
+                             android:visibility="invisible" />
+
+                         <TextView
+                             android:id="@+id/level2"
+                             android:layout_width="20dp"
+                             android:layout_height="20dp"
+                             android:layout_marginLeft="20dp"
+                             android:layout_toRightOf="@+id/level1"
+                             android:background="@drawable/level_txt_back"
+                             android:gravity="center"
+                             android:padding="3dp"
+                             android:text="2"
+                             android:textColor="#fff"
+
+                             android:visibility="invisible" />
+
+                         <TextView
+                             android:id="@+id/level3"
+                             android:layout_width="20dp"
+                             android:layout_height="20dp"
+                             android:layout_marginLeft="20dp"
+                             android:layout_toRightOf="@+id/level2"
+                             android:background="@drawable/level_txt_back"
+                             android:gravity="center"
+                             android:padding="3dp"
+                             android:text="3"
+                             android:textColor="#fff"
+
+                             android:visibility="invisible" />
+
+
+                         <TextView
+                             android:id="@+id/level4"
+                             android:layout_width="20dp"
+                             android:layout_height="20dp"
+                             android:layout_marginLeft="20dp"
+                             android:layout_toRightOf="@+id/level3"
+                             android:background="@drawable/level_txt_back"
+                             android:gravity="center"
+                             android:padding="3dp"
+                             android:text="4"
+                             android:textColor="#fff"
+                             android:visibility="invisible" />
+
+ -->                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -369,78 +421,82 @@
                         android:id="@+id/meeting_text"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="15dp"
                         android:gravity="start"
-                        android:layout_gravity="center_vertical"
                         android:text="Meeting"
-                        android:textStyle="bold"
-                        android:textColor="#000" />
+                        android:textColor="#000"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/meeting_desc"
-                        android:layout_width="150dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
                         android:layout_gravity="center_vertical"
+                        android:gravity="start"
                         android:singleLine="true"
-                        android:textColor="#000"
                         android:text="Name Goes here"
+                        android:textColor="#000"
                         android:textSize="12sp" />
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="25dp"
-                        android:background="#d1d1d1"/>
 
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_marginLeft="7dp"
-                        android:src="@drawable/clock"
-                        android:layout_gravity="center_vertical"/>
+
 
                     <TextView
                         android:id="@+id/time_txtView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"
-                        android:gravity="start"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+
+                        android:gravity="start"
                         android:singleLine="true"
-                        android:text="3:00"
+                        android:text=""
                         android:textColor="#000"
                         android:textSize="12sp" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.7dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/Gray" />
+                <TextView
+                    android:id="@+id/desclaimer_txt_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp"
-                    android:background="#d1d1d1" />
+                    android:layout_marginTop="10dp"
+                    android:text="Disclaimer"
+                    android:textColor="#000"
+
+                    android:textSize="14dp" />
 
                 <TextView
-                    android:id="@+id/lower_description"
+                    android:id="@+id/Disclaimer_txtView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
+                    android:textColor="#000"
+                    android:lineSpacingExtra="1.5dp"
                     android:textSize="12sp" />
-
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.7dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="25dp"
-                    android:background="#d1d1d1" />
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/Gray" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:weightSum="5">
 
@@ -480,57 +536,40 @@
                         android:src="@drawable/food_gray" />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.7dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp"
-                    android:background="#d1d1d1" />
 
-                <TextView
-                    android:id="@+id/desclaimer_txt_show"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp"
-                    android:text="Disclaimer"
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:textSize="14dp" />
+                //-------------------------------Map layout------------
 
-                <TextView
-                    android:id="@+id/Disclaimer_txtView"
+                <LinearLayout
+                    android:id="@+id/map_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:textColor="#000"
-                    android:layout_marginTop="15dp"
-                    android:textSize="12sp" />
+                    android:layout_height="300dp"
+                    android:layout_marginTop="10dp"
+                   >
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.7dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp"
-                    android:background="#d1d1d1" />
+                    <fragment
+                        android:id="@+id/map"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:text="Who's going"
-                        android:textColor="#000"
                         android:textStyle="bold"
+                        android:textColor="#000"
                         android:textSize="14sp" />
 
                     <ImageView
@@ -553,11 +592,11 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.7dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp"
-                    android:background="#d1d1d1" />
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/Gray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -566,17 +605,53 @@
                     android:layout_marginRight="15dp"
                     android:orientation="horizontal">
 
-                  <!--  <de.hdodenhof.circleimageview.CircleImageView
+                    <!--  <de.hdodenhof.circleimageview.CircleImageView
 
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_below="@+id/event_info_layout"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="20dp"
-                        android:src="@mipmap/app_icon" />
--->
+                          android:layout_width="60dp"
+                          android:layout_height="60dp"
+                          android:layout_below="@+id/event_info_layout"
+                          android:layout_marginLeft="20dp"
+                          android:layout_marginTop="20dp"
+                          android:src="@mipmap/app_icon" />
+  -->
 
                 </LinearLayout>
+                //------------------------Review-layout---------------------
+
+                <LinearLayout
+                    android:id="@+id/review_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    >
+
+                    <ListView
+                        android:id="@+id/review_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </ListView>
+
+
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/lower_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:lineSpacingExtra="1.5dp"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/Gray" />
 
 
                 <Button
@@ -587,10 +662,11 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/red_border_button"
+                    android:background="@drawable/red_button_back"
                     android:text=""
-                    android:textColor="@color/textcolor" />
-                <Button
+                    android:textColor="@color/White" />
+
+               <!-- <Button
                     android:id="@+id/signup_btn"
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
@@ -600,49 +676,17 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/red_button_back"
                     android:text="sign up"
-                    android:textColor="#fff" />
+                    android:textColor="#fff" />-->
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
 
 
-
                     />
             </LinearLayout>
-            //-------------------------------Map layout------------
-            <LinearLayout
-                android:id="@+id/map_layout"
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:visibility="gone">
-                <fragment
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"/>
-
-            </LinearLayout>
-
-            //------------------------Review-layout---------------------
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:visibility="gone"
-                android:id="@+id/review_layout">
-
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/review_list"
-                    >
-
-                </ListView>
 
 
-
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -659,10 +703,10 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center_horizontal"
-            android:text="ENVAGO"
-            android:paddingRight="20dp"
             android:paddingLeft="35dp"
+            android:paddingRight="20dp"
             android:singleLine="true"
+            android:text="ENVAGO"
             android:textColor="#fff"
             android:textSize="17sp"
             android:textStyle="bold" />

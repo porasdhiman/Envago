@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -40,81 +41,45 @@ import java.util.Map;
 public class Adventure_list extends Activity {
 
     ListView ad_items;
-  //  public int[] images = {R.drawable.air, R.drawable.earth, R.drawable.water, R.drawable.rockice, R.drawable.volunteer, R.drawable.all};
+    //  public int[] images = {R.drawable.air, R.drawable.earth, R.drawable.water, R.drawable.rockice, R.drawable.volunteer, R.drawable.all};
     TextView headtext;
-    ArrayList<HashMap<String,String>> event_list = new ArrayList<>();
-    String main_id, sub_id;
+    ArrayList<HashMap<String, String>> event_list = new ArrayList<>();
+    String main_id, cat_id;
     Global global;
     Dialog dialog2;
 
-ImageView back_img;
+    ImageView back_img;
+    ShimmerFrameLayout  shimmer_view_container;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
-        setContentView(R.layout.adventure_list);
+        setContentView(R.layout.new_advanture_list);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
 
-        global =(Global) getApplicationContext();
+        global = (Global) getApplicationContext();
         headtext = (TextView) findViewById(R.id.header_text_adv);
-        back_img=(ImageView)findViewById(R.id.back_img);
+        shimmer_view_container=(ShimmerFrameLayout) findViewById(R.id.shimmer_view_container);
+        shimmer_view_container.startShimmerAnimation();
         ad_items = (ListView) findViewById(R.id.ad_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
-        Log.e("Status",getIntent().getExtras().getString("status"));
+       // Log.e("Status", getIntent().getExtras().getString("status"));
 
-        String category_name = getIntent().getExtras().getString("cat");
+        String category_name = getIntent().getExtras().getString(GlobalConstants.EVENT_CAT_NAME);
 
-        if (category_name.equalsIgnoreCase("0"))
-        {
-            headtext.setText("Air");
-            back_img.setImageResource(R.drawable.air_back);
 
-        }
-        else if (category_name.equalsIgnoreCase("1"))
-        {
-            headtext.setText("Earth");
-            back_img.setImageResource(R.drawable.earth_back);
+            headtext.setText(category_name);
 
-        }
-        else if (category_name.equalsIgnoreCase("2"))
-        {
-            headtext.setText("Water");
-            back_img.setImageResource(R.drawable.watering_back);
-
-        }
-        else if (category_name.equalsIgnoreCase("3"))
-        {
-            headtext.setText("Rock & Ice");
-            back_img.setImageResource(R.drawable.rock_back);
-
-        }
-        else if (category_name.equalsIgnoreCase("4"))
-        {
-            headtext.setText("Go Volunteer");
-            back_img.setImageResource(R.drawable.air_back);
-
-        }
-        else
-        {
-            headtext.setText("All");
-            back_img.setImageResource(R.drawable.all_back);
-
-        }
+        cat_id=getIntent().getExtras().getString(GlobalConstants.CAT_ID);
 
 
 
-        if (getIntent().getExtras().getString("status").equalsIgnoreCase("single"))
 
-        {
-            main_id = getIntent().getExtras().getString("main_id");
-            sub_id = getIntent().getExtras().getString("sub_id");
-
-        }
-        dialogWindow();
         get_list();
         ad_items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -142,37 +107,39 @@ ImageView back_img;
 
                     if (res.equalsIgnoreCase("1")) {
 
-                       // JSONObject data = obj.getJSONObject("data");
+                        // JSONObject data = obj.getJSONObject("data");
 
                         JSONArray events = obj.getJSONArray("data");
-                        for (int i =0; i<events.length(); i++) {
+                        for (int i = 0; i < events.length(); i++) {
                             JSONObject arrobj = events.getJSONObject(i);
 
                             HashMap<String, String> details = new HashMap<>();
 
-                            details.put(GlobalConstants.EVENT_ID,arrobj.getString(GlobalConstants.EVENT_ID));
-                            details.put(GlobalConstants.EVENT_NAME,arrobj.getString(GlobalConstants.EVENT_NAME));
-                            details.put(GlobalConstants.EVENT_LOC,arrobj.getString(GlobalConstants.EVENT_LOC));
-                            details.put(GlobalConstants.EVENT_PRICE,arrobj.getString(GlobalConstants.EVENT_PRICE));
-                            details.put(GlobalConstants.LATITUDE,arrobj.getString(GlobalConstants.LONGITUDE));
-                            details.put(GlobalConstants.EVENT_FAV,arrobj.getString(GlobalConstants.EVENT_FAV));
-                            details.put(GlobalConstants.EVENT_IMAGES,arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            details.put(GlobalConstants.EVENT_START_DATE,arrobj.getString(GlobalConstants.EVENT_START_DATE));
-                            details.put(GlobalConstants.LONGITUDE,arrobj.getString(GlobalConstants.LONGITUDE));
-
+                            details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.EVENT_ID));
+                            details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
+                            details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
+                            details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
+                            details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                            details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
+                            details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
+                            details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
+                            details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
 
                             event_list.add(details);
 
 
                         }
+                        Log.e("event list",event_list.toString());
 
-                        if(event_list.size()>0) {
+                        if (event_list.size() > 0) {
+                            ad_items.setVisibility(View.VISIBLE);
+
                             ad_items.setAdapter(new Adventure_list_adapter(getApplicationContext(), event_list));
-                            back_img.setVisibility(View.GONE);
+                            shimmer_view_container.setVisibility(View.GONE);
 
                         }
-                        dialog2.dismiss();
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -183,7 +150,7 @@ ImageView back_img;
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                dialog2.dismiss();
+
             }
         }) {
             @Override
@@ -193,13 +160,12 @@ ImageView back_img;
 
                 params.put(GlobalConstants.USERID, CommonUtils.UserID(Adventure_list.this));
 
-                if (getIntent().getExtras().getString("status").equalsIgnoreCase("single"))
-                {
-                    params.put(GlobalConstants.MAIN_CAT_ID, main_id);
-                    params.put(GlobalConstants.EVENT_CAT_ID, sub_id);
-                }
 
-                params.put(GlobalConstants.LATITUDE,global.getLat() );
+                    params.put(GlobalConstants.MAIN_CAT_ID, "1");
+                    params.put(GlobalConstants.EVENT_CAT_ID, cat_id);
+
+
+                params.put(GlobalConstants.LATITUDE, global.getLat());
                 params.put(GlobalConstants.LONGITUDE, global.getLong());
                 params.put(GlobalConstants.RESPONSE_TYPE, "list");
                 params.put("page", "1");
@@ -211,11 +177,12 @@ ImageView back_img;
             }
         };
 
-        cat_request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        cat_request.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         RequestQueue requestQueue = Volley.newRequestQueue(Adventure_list.this);
         requestQueue.add(cat_request);
     }
+
     //---------------------------Progrees Dialog-----------------------
     public void dialogWindow() {
         dialog2 = new Dialog(this);

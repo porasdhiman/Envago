@@ -56,7 +56,7 @@ public class Tab_Activity extends TabActivity {
         tabHost = getTabHost();
 
         setTabs();
-        tabHost.setCurrentTab(1);
+        tabHost.setCurrentTab(0);
         for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
             // tabhost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.action_back);
 
@@ -113,11 +113,13 @@ public class Tab_Activity extends TabActivity {
 
     private void setTabs() {
 
-        addTab(R.drawable.tab_add, AddActivity.class);
 
         addTab(R.drawable.tab_home, HomeActivity.class);
-
         addTab(R.drawable.tab_favorite, FavoriteActivity.class);
+        addTab(R.drawable.tab_chat, MyChatActivity.class);
+
+        addTab(R.drawable.tab_search, SearchActivity.class);
+
 
         addTab(R.drawable.tab_user, UserActivity.class);
 

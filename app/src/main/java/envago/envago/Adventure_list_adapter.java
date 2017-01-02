@@ -97,14 +97,14 @@ public class Adventure_list_adapter extends BaseAdapter {
         if (view == null) {
 
 
-            view = inflater.inflate(R.layout.adventure_list_item, null);
+            view = inflater.inflate(R.layout.advanture_feature_pager_item, null);
 
 
-            holder.backimg = (ImageView) view.findViewById(R.id.adv_img);
-            holder.ad_name = (TextView) view.findViewById(R.id.adname);
-            holder.price = (TextView) view.findViewById(R.id.price);
-            holder.date = (TextView) view.findViewById(R.id.start_date);
-            holder.location = (TextView) view.findViewById(R.id.location_adv);
+            holder.backimg = (ImageView) view.findViewById(R.id.view_img);
+            holder.ad_name = (TextView) view.findViewById(R.id.view_txt);
+            holder.price = (TextView) view.findViewById(R.id.view_price_txt);
+            holder.advanture_date = (TextView) view.findViewById(R.id.view_advanture_date_txt);
+            holder.advanture_location = (TextView) view.findViewById(R.id.view_advanture_location_txt);
             holder.heart_img = (ImageView) view.findViewById(R.id.heart_img);
             holder.start_event_txtView = (TextView) view.findViewById(R.id.start_event_txtView);
             view.setTag(holder);
@@ -125,8 +125,10 @@ public class Adventure_list_adapter extends BaseAdapter {
         String date=split[2];
         int mm = Integer.parseInt(minth);
 
-        holder.date.setText(date+" "+months[mm]+" "+split[0]);
-        holder.location.setText(images.get(i).get(GlobalConstants.EVENT_LOC));
+        holder.advanture_date.setText(date+" "+months[mm]+" "+split[0]);
+        Log.e("location",images.get(i).get(GlobalConstants.EVENT_LOC));
+
+        holder.advanture_location.setText(images.get(i).get(GlobalConstants.EVENT_LOC));
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
             imageLoader.displayImage(url, holder.backimg, options,
@@ -194,8 +196,8 @@ public class Adventure_list_adapter extends BaseAdapter {
         ImageView backimg, heart_img;
         TextView price;
         TextView ad_name;
-        TextView date, start_event_txtView;
-        TextView location;
+        TextView advanture_date, start_event_txtView;
+        TextView advanture_location;
 
     }
 
