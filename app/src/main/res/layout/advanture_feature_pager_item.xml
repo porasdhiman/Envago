@@ -124,6 +124,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/view_location_img"
                 android:text="Bosnia and Herzegovina"
+                android:singleLine="true"
                 android:textSize="13dp" />
         </RelativeLayout>
 

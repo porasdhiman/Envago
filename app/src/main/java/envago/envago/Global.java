@@ -2,6 +2,10 @@ package envago.envago;
 
 import android.app.Application;
 
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -137,12 +141,158 @@ public class Global extends Application {
     }
 
     String event_id;
+
+    public String getStartingPoint() {
+        return startingPoint;
+    }
+
+    public void setStartingPoint(String startingPoint) {
+        this.startingPoint = startingPoint;
+    }
+
+    public String getStarting_lat() {
+        return starting_lat;
+    }
+
+    public void setStarting_lat(String starting_lat) {
+        this.starting_lat = starting_lat;
+    }
+
+    public String getStarting_lng() {
+        return starting_lng;
+    }
+
+    public void setStarting_lng(String starting_lng) {
+        this.starting_lng = starting_lng;
+    }
+
+    String startingPoint,starting_lat,starting_lng;
+
+    public String getaPoint() {
+        return aPoint;
+    }
+
+    public void setaPoint(String aPoint) {
+        this.aPoint = aPoint;
+    }
+
+    public String getA_lat() {
+        return a_lat;
+    }
+
+    public void setA_lat(String a_lat) {
+        this.a_lat = a_lat;
+    }
+
+    public String getA_lng() {
+        return a_lng;
+    }
+
+    public void setA_lng(String a_lng) {
+        this.a_lng = a_lng;
+    }
+    String wPoint,w_lat,w_lng;
+    String aPoint,a_lat,a_lng;
+
+    public String getwPoint() {
+        return wPoint;
+    }
+
+    public void setwPoint(String wPoint) {
+        this.wPoint = wPoint;
+    }
+
+    public String getW_lat() {
+        return w_lat;
+    }
+
+    public void setW_lat(String w_lat) {
+        this.w_lat = w_lat;
+    }
+
+    public String getW_lng() {
+        return w_lng;
+    }
+
+    public void setW_lng(String w_lng) {
+        this.w_lng = w_lng;
+    }
+
+    public String getbPoint() {
+        return bPoint;
+    }
+
+    public void setbPoint(String bPoint) {
+        this.bPoint = bPoint;
+    }
+
+    public String getB_lat() {
+        return b_lat;
+    }
+
+    public void setB_lat(String b_lat) {
+        this.b_lat = b_lat;
+    }
+
+    public String getB_lng() {
+        return b_lng;
+    }
+
+    public void setB_lng(String b_lng) {
+        this.b_lng = b_lng;
+    }
+
+    public String getcPoint() {
+        return cPoint;
+    }
+
+    public void setcPoint(String cPoint) {
+        this.cPoint = cPoint;
+    }
+
+    public String getC_lat() {
+        return c_lat;
+    }
+
+    public void setC_lat(String c_lat) {
+        this.c_lat = c_lat;
+    }
+
+    public String getC_lng() {
+        return c_lng;
+    }
+
+    public void setC_lng(String c_lng) {
+        this.c_lng = c_lng;
+    }
+
+    String bPoint,b_lat,b_lng;
+    String cPoint,c_lat,c_lng;
+
+    public ArrayList<String> getListImg() {
+        return listImg;
+    }
+
+    public void setListImg(ArrayList<String> listImg) {
+        this.listImg = listImg;
+    }
+
+    ArrayList<String> listImg=new ArrayList<>();
     @Override
     public void onCreate() {
         super.onCreate();
 
         Font.overrideFont(getApplicationContext(), "SERIF", "fonts/avenir_book.ttf");
-
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+                .threadPoolSize(3)
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .memoryCacheSize(1500000) // 1.5 Mb
+                .denyCacheImageMultipleSizesInMemory()
+                .discCacheFileNameGenerator(new Md5FileNameGenerator())
+                .enableLogging() // Not necessary in common
+                .build();
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config);
     }
 
 }

@@ -43,7 +43,7 @@ import java.util.Map;
  */
 public class FavoriteFragment extends Fragment {
     ListView ad_items;
-    LinearLayout ging_to_linear_layout, planning_linear_layout, wish_linear_layout;
+    LinearLayout ging_to_linear_layout, planning_linear_layout, wish_linear_layout,main_layout;
     public int[] images = {R.drawable.air, R.drawable.earth, R.drawable.water, R.drawable.rockice, R.drawable.volunteer, R.drawable.all};
     TextView headtext;
     ArrayList<HashMap<String, String>> event_list = new ArrayList<>();
@@ -59,7 +59,8 @@ public class FavoriteFragment extends Fragment {
         // TODO Auto-generated method stub
 
         View v = inflater.inflate(R.layout.adventure_list, container, false);
-
+        main_layout= (LinearLayout) v.findViewById(R.id.main_layout);
+        Fonts.overrideFonts(getActivity(),main_layout);
         headtext = (TextView) v.findViewById(R.id.header_text_adv);
 
         headtext.setText("WISHLIST");
@@ -103,7 +104,7 @@ public class FavoriteFragment extends Fragment {
             @Override
             public void onResponse(String s) {
 
-                Log.e("Categoryyyy", s);
+                Log.e("wish list", s);
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
@@ -215,7 +216,7 @@ public class FavoriteFragment extends Fragment {
             @Override
             public void onResponse(String s) {
 
-                Log.e("Categoryyyy", s);
+                Log.e("planning list", s);
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
@@ -246,7 +247,7 @@ public class FavoriteFragment extends Fragment {
                         }
                         if (planning_event_list.size() > 0) {
                             // view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(),event_list));
-
+                            planning_linear_layout.setVisibility(View.VISIBLE);
                             cat_pager.setAdapter(new AdvantureFeatureAdapter(getActivity(), planning_event_list));
                             cat_pager.setClipToPadding(false);
                             cat_pager.setPadding(0, 0, 40, 0);
@@ -309,7 +310,7 @@ public class FavoriteFragment extends Fragment {
             @Override
             public void onResponse(String s) {
 
-                Log.e("Categoryyyy", s);
+                Log.e("list going to", s);
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
@@ -339,6 +340,7 @@ public class FavoriteFragment extends Fragment {
 
                         }
                         if (goint_to_event_list.size() > 0) {
+                            ging_to_linear_layout.setVisibility(View.VISIBLE);
                             view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(), event_list));
 
 

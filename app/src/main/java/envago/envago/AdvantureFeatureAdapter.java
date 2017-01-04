@@ -125,7 +125,7 @@ public class AdvantureFeatureAdapter extends PagerAdapter {
         String date = split[2];
         int mm = Integer.parseInt(minth);
 
-        view_date_text.setText(date + " " + months[mm] + " " + split[0]);
+        view_date_text.setText(date + " " + months[mm]/* + " " + split[0]*/);
         view_location_txt.setText(mResources.get(i).get(GlobalConstants.EVENT_LOC));
 
         if (mResources.get(i).get(GlobalConstants.EVENT_FAV).equals("0")) {

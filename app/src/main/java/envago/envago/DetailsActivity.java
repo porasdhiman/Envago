@@ -105,7 +105,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     TextView status_text, lower_description_txtView, admin_name, places_txtView, level_no1, level_no2,
             level_no3, admin_description, level_no4, date_details, meeting_desc, time_txtVIew,
             location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview, header_textview,Disclaimer_txtView;
-    LinearLayout about_layout, map_layout, review_layout;
+    LinearLayout about_layout, map_layout, review_layout,desclaimer_layout;
     ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView;
     CircleImageView orginiser_img;
     ArrayList<String> list = new ArrayList<>();
@@ -157,6 +157,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
     TextView days_details,desclaimer_txt_show;
 ImageView dumy_imageview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,11 +167,12 @@ ImageView dumy_imageview;
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
+        desclaimer_layout=(LinearLayout)findViewById(R.id.desclaimer_layout) ;
         intro_images = (ViewPager) findViewById(R.id.pager_introduction);
         dumy_imageview=(ImageView)findViewById(R.id.dumy_imageview);
        // review_txtview = (TextView) findViewById(R.id.review_txtView);
         review_layout = (LinearLayout) findViewById(R.id.review_layout);
-        review_list = (ListView) findViewById(R.id.review_list);
+       // review_list = (ListView) findViewById(R.id.review_list);
         pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         stars = (RatingBar) findViewById(R.id.stars);
         stars.setOnTouchListener(null);
@@ -194,7 +196,7 @@ ImageView dumy_imageview;
         heart_img.setOnClickListener(this);
         orginiser_img = (CircleImageView) findViewById(R.id.orginiser_img);
         //rating = (TextView) findViewById(R.id.counter);
-        lower_description_txtView = (TextView) findViewById(R.id.lower_description);
+        //lower_description_txtView = (TextView) findViewById(R.id.lower_description);
         Disclaimer_txtView=(TextView)findViewById(R.id.Disclaimer_txtView);
         desclaimer_txt_show=(TextView)findViewById(R.id.desclaimer_txt_show);
         accomodation_txtView = (ImageView) findViewById(R.id.accomodation);
@@ -515,7 +517,7 @@ ImageView dumy_imageview;
                                     } else {
                                         heart_img.setImageResource(R.drawable.heart);
                                     }
-                                    lower_description_txtView.setText(objArry.getString("description"));
+                                 //   lower_description_txtView.setText(objArry.getString("description"));
 
                                     if (objArry.getString("transport").equalsIgnoreCase("0")) {
                                         transport_txtView.setImageResource(R.drawable.tansport_gray);
@@ -543,9 +545,9 @@ ImageView dumy_imageview;
                                         tent_txtView.setImageResource(R.drawable.tent);
                                     }
                                     if (objArry.getString("disclaimer").equalsIgnoreCase(null)||objArry.getString("disclaimer").equalsIgnoreCase("")) {
-                                        desclaimer_txt_show.setVisibility(view.GONE);
+                                        desclaimer_layout.setVisibility(view.GONE);
                                     } else {
-                                        desclaimer_txt_show.setVisibility(view.VISIBLE);
+                                        desclaimer_layout.setVisibility(view.VISIBLE);
                                         Disclaimer_txtView.setText(objArry.getString("disclaimer"));
                                     }
 

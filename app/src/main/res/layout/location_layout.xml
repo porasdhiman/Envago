@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/main_heading"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/textcolor">
+
+        <ImageView
+            android:id="@+id/back_button_create"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="14dp"
+            android:src="@drawable/back_button" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Route"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/button_dark"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="16dp">
+        <ImageView
+            android:id="@+id/search_icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/search_grey"
+            android:layout_centerVertical="true"/>
+        <AutoCompleteTextView
+            android:id="@+id/starting_txt"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="location"
+            android:textSize="16sp"
+            android:singleLine="true"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/clear_icon"
+            android:layout_toRightOf="@+id/search_icon"
+            android:background="@null"
+            android:layout_centerVertical="true"/>
+        <ImageView
+            android:id="@+id/clear_icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_launcher"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+</LinearLayout>

@@ -43,6 +43,7 @@
                 android:alpha=".6"
                 android:background="@drawable/count_back"
                 android:gravity="center"
+                android:layout_centerHorizontal="true"
                 android:text="32"
                 android:textColor="@color/White"
                 android:textSize="13sp" />

@@ -416,12 +416,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
                 .build();
     }
 
-    public void
-
-
-
-
-    get_list() {
+    public void get_list() {
         StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {

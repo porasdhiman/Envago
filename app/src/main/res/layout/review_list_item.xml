@@ -2,32 +2,60 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp">
-
-    <RatingBar
-        android:id="@+id/stars_review_list"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="8dp"
-        android:isIndicator="true"
-        android:numStars="5"
-        android:clickable="false"
-        android:focusableInTouchMode="false"
-        android:progressTint="@android:color/holo_orange_light"
-        android:stepSize="1.0" />
+        android:layout_marginTop="10dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/review_user_img"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="username"
+            android:layout_marginTop="10dp"
+            android:id="@+id/review_list_username"
+            android:layout_toRightOf="@+id/review_user_img"
+            android:layout_marginLeft="10dp"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:layout_marginTop="10dp"
+            android:id="@+id/review_date"
+            android:layout_toRightOf="@+id/review_user_img"
+            android:layout_below="@+id/review_list_username"
+            android:layout_marginLeft="10dp"
+            android:textSize="16sp"
+            />
+        <RatingBar
+            android:id="@+id/stars_review_list"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="username"
-        android:layout_marginTop="10dp"
-        android:id="@+id/review_list_username"
-        android:textSize="16sp"
-        />
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:clickable="false"
+            android:layout_alignParentRight="true"
+            android:focusableInTouchMode="false"
+            android:progressTint="@android:color/holo_orange_light"
+            android:stepSize="1.0" />
+
+    </RelativeLayout>
+
+
+
+
 
     <TextView
         android:layout_width="wrap_content"

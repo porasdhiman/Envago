@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/main_layout"
+    >
 
     <RelativeLayout
         android:id="@+id/main_heading"
@@ -12,7 +14,7 @@
         android:background="@color/textcolor">
 
         <ImageView
-            android:id="@+id/search_button"
+            android:id="@+id/plus_button"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_margin="14dp"

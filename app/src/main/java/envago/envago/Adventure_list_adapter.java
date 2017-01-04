@@ -125,7 +125,7 @@ public class Adventure_list_adapter extends BaseAdapter {
         String date=split[2];
         int mm = Integer.parseInt(minth);
 
-        holder.advanture_date.setText(date+" "+months[mm]+" "+split[0]);
+        holder.advanture_date.setText(date+" "+months[mm]/*+" "+split[0]*/);
         Log.e("location",images.get(i).get(GlobalConstants.EVENT_LOC));
 
         holder.advanture_location.setText(images.get(i).get(GlobalConstants.EVENT_LOC));

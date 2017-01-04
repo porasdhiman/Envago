@@ -77,14 +77,14 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        setContentView(R.layout.createadventures_activity);
+        setContentView(R.layout.new_create_advanture_activity);
         global=(Global)getApplicationContext();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
 
-        message_dialog();
+       // message_dialog();
         name = (EditText) findViewById(R.id.name_create);
         address = (EditText) findViewById(R.id.address_create);
         about = (EditText) findViewById(R.id.about_create);

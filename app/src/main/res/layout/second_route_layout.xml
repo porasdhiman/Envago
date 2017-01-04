@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/main_heading"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/textcolor">
+
+        <ImageView
+            android:id="@+id/back_button_create"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="14dp"
+            android:src="@drawable/back_button" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Route"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_view_layout"
+        android:layout_below="@+id/main_heading"
+
+        />
+
+    <LinearLayout
+        android:id="@+id/bottom_view_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/tab_back"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Starting point"
+            android:textSize="13sp"
+
+            />
+
+        <TextView
+            android:id="@+id/starting_point_txtView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Wendellside, Comoros"
+            android:textColor="@color/Black"
+            android:textSize="16sp"
+
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/Gray"
+            android:layout_marginTop="10dp"/>
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/a_letter_layout"
+            android:visibility="gone">
+            <ImageView
+                android:id="@+id/a_letter_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_launcher"/>
+            <TextView
+                android:id="@+id/a_letter_txtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/a_letter_img"
+                android:layout_centerVertical="true"
+                android:text="where"
+                android:layout_marginLeft="10dp"
+                android:singleLine="true"
+                android:textSize="16sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_toRightOf="@+id/a_letter_img"
+                android:background="@color/Gray"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/a_letter_txtView"
+                android:layout_marginTop="10dp"/>
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/b_letter_layout"
+            android:visibility="gone">
+            <ImageView
+                android:id="@+id/b_letter_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_launcher"/>
+            <TextView
+                android:id="@+id/b_letter_txtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/b_letter_img"
+                android:layout_centerVertical="true"
+                android:text="where"
+                android:singleLine="true"
+                android:layout_marginLeft="10dp"
+                android:textSize="16sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_toRightOf="@+id/b_letter_img"
+                android:background="@color/Gray"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/b_letter_txtView"
+                android:layout_marginTop="10dp"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/c_letter_layout"
+            android:visibility="gone">
+            <ImageView
+                android:id="@+id/c_letter_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_launcher"/>
+            <TextView
+                android:id="@+id/c_letter_txtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/c_letter_img"
+                android:layout_centerVertical="true"
+                android:text="where"
+                android:singleLine="true"
+                android:layout_marginLeft="10dp"
+                android:textSize="16sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_toRightOf="@+id/c_letter_img"
+                android:background="@color/Gray"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/c_letter_txtView"
+                android:layout_marginTop="10dp"/>
+
+
+        </RelativeLayout>
+
+
+
+        <TextView
+            android:id="@+id/add_next_point_txtView"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/blue_button_back"
+            android:gravity="center"
+            android:text="Add next ponit"
+            android:textColor="@color/White"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/end_point_txtView"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/red_button_back"
+            android:gravity="center"
+            android:text="End"
+            android:textColor="@color/White"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+    </LinearLayout>
+</RelativeLayout>

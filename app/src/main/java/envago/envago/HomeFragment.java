@@ -37,10 +37,10 @@ import java.util.Map;
  * Created by vikas on 21-09-2016.
  */
 public class HomeFragment extends Fragment {
-    LinearLayout featured_planners_linear_layout, suggested_linear_layout, all_linear_layout, featured_linear_layout;
+    LinearLayout featured_planners_linear_layout, suggested_linear_layout, all_linear_layout, featured_linear_layout,main_layout;
     ListView planner_list_cat;
     public int[] images = {R.drawable.air, R.drawable.earth, R.drawable.water, R.drawable.rockice, R.drawable.volunteer};
-    ImageView map_button;
+    ImageView map_button, plus_button;
     Global global;
     ArrayList<HashMap<String, String>> event_list = new ArrayList<>();
     ArrayList<HashMap<String, String>> suggested_event_list = new ArrayList<>();
@@ -59,8 +59,9 @@ public class HomeFragment extends Fragment {
         planner_list_cat = (ListView) v.findViewById(R.id.main_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
 
-
-
+        main_layout= (LinearLayout) v.findViewById(R.id.main_layout);
+        Fonts.overrideFonts(getActivity(),main_layout);
+        plus_button = (ImageView) v.findViewById(R.id.plus_button);
         featured_planners_linear_layout = (LinearLayout) v.findViewById(R.id.featured_planners_linear_layout);
         suggested_linear_layout = (LinearLayout) v.findViewById(R.id.suggested_linear_layout);
         featured_linear_layout = (LinearLayout) v.findViewById(R.id.featured_linear_layout);
@@ -68,7 +69,18 @@ public class HomeFragment extends Fragment {
         view_item_pager1 = (ViewPager) v.findViewById(R.id.view_item_pager1);
         view_item_pager2 = (ViewPager) v.findViewById(R.id.view_item_pager2);
         cat_pager = (ViewPager) v.findViewById(R.id.cat_pager);
-
+        plus_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (global.getIsVerified().equalsIgnoreCase("Approved")) {
+                    Intent intent = new Intent(getActivity(), NewAdvantureForm.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getActivity(), CreateAdventuresActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
 
         get_list();
         all_list();
@@ -271,7 +283,7 @@ public class HomeFragment extends Fragment {
                             suggested_event_list.add(details);
 
                         }
-                        Log.e("suggested_event_list",suggested_event_list.toString());
+                        Log.e("suggested_event_list", suggested_event_list.toString());
 
                         JSONArray featured_users = data.getJSONArray("featured_users");
                         for (int i = 0; i < featured_users.length(); i++) {
@@ -288,7 +300,7 @@ public class HomeFragment extends Fragment {
                             featured_planner_list.add(details);
 
                         }
-                        Log.e("featured_planner_list",featured_planner_list.toString());
+                        Log.e("featured_planner_list", featured_planner_list.toString());
                         JSONArray categories = data.getJSONArray("categories");
                         for (int i = 0; i < categories.length(); i++) {
                             JSONObject arrobj = categories.getJSONObject(i);
@@ -305,7 +317,7 @@ public class HomeFragment extends Fragment {
                             catgory_list.add(details);
 
                         }
-                        Log.e("catgory_list",catgory_list.toString());
+                        Log.e("catgory_list", catgory_list.toString());
                         cat_pager.setAdapter(new CatPagerAdapter(getActivity(), catgory_list));
                         cat_pager.setClipToPadding(false);
                         cat_pager.setPadding(0, 0, 40, 0);
