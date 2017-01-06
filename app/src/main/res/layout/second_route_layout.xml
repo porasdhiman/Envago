@@ -78,12 +78,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/a_letter_layout"
+            android:layout_marginTop="10dp"
             android:visibility="gone">
             <ImageView
                 android:id="@+id/a_letter_img"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_launcher"/>
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/a"/>
             <TextView
                 android:id="@+id/a_letter_txtView"
                 android:layout_width="match_parent"
@@ -109,12 +110,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/b_letter_layout"
+            android:layout_marginTop="10dp"
             android:visibility="gone">
             <ImageView
                 android:id="@+id/b_letter_img"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_launcher"/>
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/b"/>
             <TextView
                 android:id="@+id/b_letter_txtView"
                 android:layout_width="match_parent"
@@ -141,12 +143,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/c_letter_layout"
+            android:layout_marginTop="10dp"
             android:visibility="gone">
             <ImageView
                 android:id="@+id/c_letter_img"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_launcher"/>
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/c"/>
             <TextView
                 android:id="@+id/c_letter_txtView"
                 android:layout_width="match_parent"

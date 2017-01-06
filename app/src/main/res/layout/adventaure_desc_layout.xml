@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/main_heading"
@@ -22,53 +20,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="One Time Advanture"
+            android:text="Adventure Description"
             android:textColor="#fff"
             android:textSize="16sp"
             android:textStyle="bold" />
 
 
+
     </RelativeLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-    <TextView
-        android:id="@+id/select_date_txtView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/Gray"
-        android:textSize="22sp"
-        android:text="Select a date"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/Gray"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
-
-    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-        android:id="@+id/calendarView"
+    <EditText
+        android:id="@+id/desc_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:mcv_selectionColor="@color/textcolor"
         android:layout_marginTop="20dp"
-        />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="17sp"
+        android:background="@null"
+
+        android:hint="Describe the adventure including activities and daily itinerary if applicable."/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="16dp">
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
 
         <Button
             android:id="@+id/submit_button"
@@ -76,15 +51,12 @@
             android:layout_height="43dp"
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/id_text"
-            android:layout_marginBottom="10dp"
-
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/red_button_back"
             android:text="Submit"
             android:textAllCaps="false"
             android:textColor="#fff"
             android:textSize="14sp" />
     </RelativeLayout>
-        </LinearLayout>
-    </ScrollView>
-
 </LinearLayout>

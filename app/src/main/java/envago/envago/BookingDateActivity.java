@@ -38,14 +38,17 @@ public class BookingDateActivity extends Activity implements View.OnClickListene
             case R.id.one_time_advanture_layout:
                 Intent i=new Intent(this,OneTimeAdvantureActivity.class);
                 startActivity(i);
+                finish();
                 break;
             case R.id.full_season_layout:
                 Intent j=new Intent(this,FullSessionActivity.class);
                 startActivity(j);
+                finish();
                 break;
             case R.id.repeated_dates_adventure_layout:
                 Intent k=new Intent(this,RequestedActivity.class);
                 startActivity(k);
+                finish();
                 break;
         }
     }

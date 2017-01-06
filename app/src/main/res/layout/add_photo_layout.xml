@@ -33,7 +33,7 @@
             android:textColor="#fff"
             android:layout_alignParentRight="true"
             android:layout_marginRight="5dp"
-            android:onClick="btnChoosePhotosClick"
+           android:visibility="gone"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -41,15 +41,25 @@
     <RelativeLayout
         android:id="@+id/view_photo_layout"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="260dp"
         android:background="@color/Gray">
 
         <ImageView
             android:id="@+id/img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/add_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/add_photo"
             android:layout_centerInParent="true"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/cancel_icon_img"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/error"
+            android:visibility="gone"/>
+
     </RelativeLayout>
 
     <GridView
@@ -59,6 +69,7 @@
         android:numColumns="3"
         android:gravity="center"
         android:horizontalSpacing="5dp"
+        android:layout_marginTop="10dp"
         android:verticalSpacing="5dp"
         ></GridView>
 

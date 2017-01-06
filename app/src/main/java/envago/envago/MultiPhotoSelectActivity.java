@@ -146,6 +146,11 @@ Global global;
         startActivity(intent);
     }*/
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
     public class ImageAdapter extends BaseAdapter {
 
         ArrayList<String> mList;

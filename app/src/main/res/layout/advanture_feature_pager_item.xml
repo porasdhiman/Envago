@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-
+android:paddingRight="8dp"
     >
 
     <RelativeLayout
@@ -57,7 +57,7 @@
             android:layout_alignParentRight="true"
             android:text="$30"
             android:textColor="@color/textcolor"
-            android:textSize="22sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/view_txt"
@@ -68,8 +68,9 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/view_price_txt"
             android:text="A Time Travel Postcard"
+            android:singleLine="true"
             android:textColor="@color/Black"
-            android:textSize="22sp" />
+            android:textSize="20sp" />
 
 
     </RelativeLayout>

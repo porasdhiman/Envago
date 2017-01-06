@@ -13,7 +13,7 @@
 
     </string-array>
     <string-array name="event_cat">
-        <item>Category</item>
+        <item>Please Select</item>
         <item>Air</item>
         <item>Earth</item>
         <item>Water</item>

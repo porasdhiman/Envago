@@ -14,6 +14,14 @@
         android:src="@drawable/ic_launcher"
         android:scaleType="fitXY"
         />
+        <ImageView
+            android:id="@+id/cancel_img"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignRight="@+id/imageView1"
+            android:src="@drawable/error"
+            android:visibility="gone"
+            />
 
     <CheckBox
         android:id="@+id/checkBox1"

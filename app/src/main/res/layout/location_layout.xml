@@ -60,7 +60,7 @@
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginRight="5dp"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/error"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
 

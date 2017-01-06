@@ -98,8 +98,8 @@ public class Global extends Application {
         this.event_loc = event_loc;
     }
 
-    String event_start_date;
-    String event_end_date;
+    String event_start_date="";
+    String event_end_date="";
     String event_loc;
 
     public String getEvent_time() {
@@ -166,7 +166,7 @@ public class Global extends Application {
         this.starting_lng = starting_lng;
     }
 
-    String startingPoint,starting_lat,starting_lng;
+    String startingPoint="",starting_lat="",starting_lng="";
 
     public String getaPoint() {
         return aPoint;
@@ -192,7 +192,7 @@ public class Global extends Application {
         this.a_lng = a_lng;
     }
     String wPoint,w_lat,w_lng;
-    String aPoint,a_lat,a_lng;
+    String aPoint="",a_lat="",a_lng="";
 
     public String getwPoint() {
         return wPoint;
@@ -266,8 +266,8 @@ public class Global extends Application {
         this.c_lng = c_lng;
     }
 
-    String bPoint,b_lat,b_lng;
-    String cPoint,c_lat,c_lng;
+    String bPoint="",b_lat="",b_lng="";
+    String cPoint="",c_lat="",c_lng="";
 
     public ArrayList<String> getListImg() {
         return listImg;
@@ -278,6 +278,164 @@ public class Global extends Application {
     }
 
     ArrayList<String> listImg=new ArrayList<>();
+    String descriptionString;
+
+    public String getWhtsicludedString() {
+        return whtsicludedString;
+    }
+
+    public void setWhtsicludedString(String whtsicludedString) {
+        this.whtsicludedString = whtsicludedString;
+    }
+
+    public String getDescriptionString() {
+        return descriptionString;
+    }
+
+    public void setDescriptionString(String descriptionString) {
+        this.descriptionString = descriptionString;
+    }
+
+    String whtsicludedString;
+
+    public String getEvent_level() {
+        return event_level;
+    }
+
+    public void setEvent_level(String event_level) {
+        this.event_level = event_level;
+    }
+
+    String event_level;
+
+    public String getEvent_cat_id() {
+        return event_cat_id;
+    }
+
+    public void setEvent_cat_id(String event_cat_id) {
+        this.event_cat_id = event_cat_id;
+    }
+
+    String event_cat_id;
+
+    public String getEvent_meetin_point() {
+        return event_meetin_point;
+    }
+
+    public void setEvent_meetin_point(String event_meetin_point) {
+        this.event_meetin_point = event_meetin_point;
+    }
+
+    String event_meetin_point;
+
+    public String getEvent_meeting_lat() {
+        return event_meeting_lat;
+    }
+
+    public void setEvent_meeting_lat(String event_meeting_lat) {
+        this.event_meeting_lat = event_meeting_lat;
+    }
+
+    public String getEvent_meeting_lng() {
+        return event_meeting_lng;
+    }
+
+    public void setEvent_meeting_lng(String event_meeting_lng) {
+        this.event_meeting_lng = event_meeting_lng;
+    }
+
+    String event_meeting_lat;
+    String event_meeting_lng;
+
+    public String getEvent_description() {
+        return event_description;
+    }
+
+    public void setEvent_description(String event_description) {
+        this.event_description = event_description;
+    }
+
+    String event_description="false";
+
+    public String getEvent_place() {
+        return event_place;
+    }
+
+    public void setEvent_place(String event_place) {
+        this.event_place = event_place;
+    }
+
+    String event_place;
+
+    public String getEvent_criteria() {
+        return event_criteria;
+    }
+
+    public void setEvent_criteria(String event_criteria) {
+        this.event_criteria = event_criteria;
+    }
+
+    String event_criteria;
+
+    public String getEvent_disclaimer() {
+        return event_disclaimer;
+    }
+
+    public void setEvent_disclaimer(String event_disclaimer) {
+        this.event_disclaimer = event_disclaimer;
+    }
+
+    String event_disclaimer;
+
+    public int getTransportataion() {
+        return transportataion;
+    }
+
+    public void setTransportataion(int transportataion) {
+        this.transportataion = transportataion;
+    }
+
+    public int getFlight() {
+        return flight;
+    }
+
+    public void setFlight(int flight) {
+        this.flight = flight;
+    }
+
+    public int getAccomodation() {
+        return accomodation;
+    }
+
+    public void setAccomodation(int accomodation) {
+        this.accomodation = accomodation;
+    }
+
+    public int getTent() {
+        return tent;
+    }
+
+    public void setTent(int tent) {
+        this.tent = tent;
+    }
+
+    public int getGear() {
+        return gear;
+    }
+
+    public void setGear(int gear) {
+        this.gear = gear;
+    }
+
+    public int getMeal() {
+        return meal;
+    }
+
+    public void setMeal(int meal) {
+        this.meal = meal;
+    }
+
+    int transportataion=0,flight=0,accomodation=0,tent=0,gear=0,meal=0;
     @Override
     public void onCreate() {
         super.onCreate();

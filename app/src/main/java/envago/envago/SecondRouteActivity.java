@@ -3,12 +3,15 @@ package envago.envago;
 import android.*;
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +20,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -40,9 +44,13 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.wang.avi.AVLoadingIndicatorView;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by vikas on 04-01-2017.
@@ -61,6 +69,7 @@ public class SecondRouteActivity extends FragmentActivity implements GoogleApiCl
 
     Marker mark;
     Marker marker;
+    Dialog dialog2;
     int k = 0;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -103,6 +112,7 @@ public class SecondRouteActivity extends FragmentActivity implements GoogleApiCl
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();*/
         mapFragment.getMapAsync(this);
+
         starting_ponit_txtView.setText(global.getStartingPoint());
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -158,19 +168,66 @@ public class SecondRouteActivity extends FragmentActivity implements GoogleApiCl
             global.setA_lng(global.getW_lng());
             global.setaPoint(global.getwPoint());
             a_letter_txtView.setText(global.getaPoint());
-            eventLocOnMap(lat, lng, global.getA_lat(), global.getA_lng());
+           // mMap.clear();
+            String url = getMapsApiDirectionsUrl1();
+            dialogWindow();
+            ReadTask downloadTask = new ReadTask();
+            downloadTask.execute(url);
+            MarkerOptions options = new MarkerOptions();
+            options.position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng))).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)).title("starting Point");
+
+            options.position(new LatLng(Double.parseDouble(global.getA_lat()), Double.parseDouble(global.getA_lng())));
+            options.icon(BitmapDescriptorFactory.fromResource(R.drawable.a)).title("First Point");
+
+
+            mMap.addMarker(options);
+            LatLng postion = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 10));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
         } else if (requestCode == 2) {
             global.setB_lat(global.getW_lat());
             global.setB_lng(global.getW_lng());
             global.setbPoint(global.getwPoint());
             b_letter_txtView.setText(global.getbPoint());
-            eventLocOnMap(global.getA_lat(), global.getA_lng(), global.getB_lat(), global.getB_lng());
+          //  mMap.clear();
+            String url = getMapsApiDirectionsUrl2();
+            dialogWindow();
+            ReadTask downloadTask = new ReadTask();
+            downloadTask.execute(url);
+            MarkerOptions options = new MarkerOptions();
+            options.position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng))).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)).title("starting Point");
+
+            options.position(new LatLng(Double.parseDouble(global.getA_lat()), Double.parseDouble(global.getA_lng()))).icon(BitmapDescriptorFactory.fromResource(R.drawable.a)).title("first Point");
+            options.position(new LatLng(Double.parseDouble(global.getB_lat()), Double.parseDouble(global.getB_lng())));
+            options .icon(BitmapDescriptorFactory.fromResource(R.drawable.b)).title("second Point");
+
+            mMap.addMarker(options);
+            LatLng postion = new LatLng(Double.parseDouble(global.getB_lat()), Double.parseDouble(global.getB_lng()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 10));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
         } else {
             global.setC_lat(global.getW_lat());
             global.setC_lng(global.getW_lng());
             global.setcPoint(global.getwPoint());
             c_letter_txtView.setText(global.getcPoint());
-            eventLocOnMap(global.getB_lat(), global.getB_lng(), global.getC_lat(), global.getC_lng());
+          //  mMap.clear();
+            String url = getMapsApiDirectionsUrl3();
+            dialogWindow();
+            ReadTask downloadTask = new ReadTask();
+            downloadTask.execute(url);
+            MarkerOptions options = new MarkerOptions();
+            options.position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng))).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)).title("starting Point");
+            options.position(new LatLng(Double.parseDouble(global.getA_lat()), Double.parseDouble(global.getA_lng()))).icon(BitmapDescriptorFactory.fromResource(R.drawable.a)).title("first Point");
+            options.position(new LatLng(Double.parseDouble(global.getB_lat()), Double.parseDouble(global.getB_lng()))).icon(BitmapDescriptorFactory.fromResource(R.drawable.b)).title("second Point");
+            options.position(new LatLng(Double.parseDouble(global.getC_lat()), Double.parseDouble(global.getC_lng())));
+            options .icon(BitmapDescriptorFactory.fromResource(R.drawable.c)).title("third Point");
+            mMap.addMarker(options);
+            LatLng postion = new LatLng(Double.parseDouble(global.getB_lat()), Double.parseDouble(global.getB_lng()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 10));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
         }
 
     }
@@ -217,11 +274,17 @@ public class SecondRouteActivity extends FragmentActivity implements GoogleApiCl
             return;
         }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        mMap.setMyLocationEnabled(true);
+
         if (mLastLocation != null) {
             lat = global.getStarting_lat();
             lng = global.getStarting_lng();
-            eventLocOnMap(lat, lng, lat, lng);
+            MarkerOptions options = new MarkerOptions();
+            options.position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng)));
+            options.icon(BitmapDescriptorFactory.fromResource(R.drawable.oval));
+            mMap.addMarker(options);
+            LatLng postion = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 10));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 
         } else {
             // Toast.makeText(this, "Please check GPS and restart App", Toast.LENGTH_LONG).show();
@@ -252,69 +315,178 @@ public class SecondRouteActivity extends FragmentActivity implements GoogleApiCl
                 .build();
     }
 
-    public void eventLocOnMap(String startLat, String startLng, String endLat, String endLng) {
-        if (mMap != null) {
-            mMap.clear();
-        }
-        {
-
-
-            listing.add(new LatLng(Double.parseDouble(endLat),Double.parseDouble(endLng)));
-
-            drawPrimaryLinePath(listing);
-            LatLng postion = new LatLng(Double.parseDouble(endLat), Double.parseDouble(endLng));
-            if (k == 0) {
-                k = 1;
-            } else {
-
-
-                // mMap.addMarker(new MarkerOptions().position(postion));
-                MarkerOptions markerOptions = new MarkerOptions();
-
-                // Setting position for the marker
-                markerOptions.position(postion);
-
-                // Setting custom icon for the marker
-                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher));
-
-                // Setting title for the infowindow
-
-
-                // Adding the marker to the map
-                mMap.addMarker(markerOptions);
-            }
-
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 10));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-        }
-    }
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    //---------------------------route--------------------------------------
-    private void drawPrimaryLinePath(ArrayList<LatLng> listLocsToDraw) {
-        if (mMap == null) {
-            return;
+
+
+    //---------------------------------------Draw path--------------------
+    private String getMapsApiDirectionsUrl1() {
+        String waypoints = "waypoints=optimize:true|"
+                + lat + "," + lng
+                + "|" + "|" + global.getA_lat() + ","
+                + global.getA_lng();
+
+        String sensor = "sensor=false";
+        String params = waypoints + "&" + sensor;
+        String output = "json";
+        String url = "https://maps.googleapis.com/maps/api/directions/"
+                + output + "?" + params + "&key=AIzaSyBON_2IQQca_cYPhAH5Ij632akLmp9Jh9Q";
+        String url1 = "https://maps.googleapis.com/maps/api/directions/json?origin=" + lat + "," + lng + "&waypoints=" + global.getA_lat() + "," + global.getA_lng() + "&destination=" + global.getA_lat() + "," + global.getA_lng() + "&sensor=true&mode=walking";
+
+        return url1;
+    }
+
+    private String getMapsApiDirectionsUrl2() {
+        String waypoints = "waypoints=optimize:true|"
+                + lat + "," + lng
+                + "|" + "|" + global.getA_lat() + ","
+                + global.getA_lng() + "|" + global.getB_lat() + ","
+                + global.getB_lng();
+
+        String sensor = "sensor=false";
+        String params = waypoints + "&" + sensor;
+        String output = "json";
+        String url = "https://maps.googleapis.com/maps/api/directions/"
+                + output + "?" + params + "&key=AIzaSyBON_2IQQca_cYPhAH5Ij632akLmp9Jh9Q";
+        String url1 = "https://maps.googleapis.com/maps/api/directions/json?origin=" + lat + "," + lng + "&waypoints=" + global.getA_lat() + "," + global.getA_lng() + "%7C" + global.getB_lat() + "," + global.getB_lng() + "&destination=" + global.getB_lat() + "," + global.getB_lng() + "&sensor=true&mode=walking";
+
+        return url1;
+    }
+
+    private String getMapsApiDirectionsUrl3() {
+        String waypoints = "waypoints=optimize:true|"
+                + lat + "," + lng
+                + "|" + "|" + global.getA_lat() + ","
+                + global.getA_lng() + "|" + global.getB_lat() + ","
+                + global.getB_lng() + "|" + global.getC_lat() + ","
+                + global.getC_lng();
+        String sensor = "sensor=false";
+        String params = waypoints + "&" + sensor;
+        String output = "json";
+        String url = "https://maps.googleapis.com/maps/api/directions/"
+                + output + "?" + params + "&key=AIzaSyBON_2IQQca_cYPhAH5Ij632akLmp9Jh9Q";
+        String url1 = "https://maps.googleapis.com/maps/api/directions/json?origin=" + lat + "," + lng + "&waypoints=" + global.getA_lat() + "," + global.getA_lng() + "%7C" + global.getB_lat() + "," + global.getB_lng() + "%7C" + global.getC_lat() + "," + global.getC_lng() + "&destination=" + global.getC_lat() + "," + global.getC_lng() + "&sensor=true&mode=walking";
+
+        return url1;
+    }
+
+
+    private void addMarkers1() {
+        if (mMap != null) {
+            mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(global.getA_lat()), Double.parseDouble(global.getA_lng())))
+                    .title("First Point"));
+
+        }
+    }
+
+    private void addMarkers2() {
+        if (mMap != null) {
+            mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(global.getA_lat()), Double.parseDouble(global.getA_lng())))
+                    .title("First Point"));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(global.getB_lat()), Double.parseDouble(global.getB_lng())))
+                    .title("Second Point"));
+
+        }
+    }
+
+    private void addMarkers3() {
+        if (mMap != null) {
+            mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(global.getA_lat()), Double.parseDouble(global.getA_lng())))
+                    .title("First Point"));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(global.getB_lat()), Double.parseDouble(global.getB_lng())))
+                    .title("Second Point"));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(global.getC_lat()), Double.parseDouble(global.getC_lng())))
+                    .title("Third Point"));
+        }
+    }
+
+    private class ReadTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... url) {
+            String data = "";
+            try {
+                HttpConnection http = new HttpConnection();
+                data = http.readUrl(url[0]);
+            } catch (Exception e) {
+                Log.d("Background Task", e.toString());
+            }
+            return data;
         }
 
-        if (listLocsToDraw.size() < 2) {
-            return;
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            new ParserTask().execute(result);
+        }
+    }
+
+    private class ParserTask extends
+            AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
+
+        @Override
+        protected List<List<HashMap<String, String>>> doInBackground(
+                String... jsonData) {
+
+            JSONObject jObject;
+            List<List<HashMap<String, String>>> routes = null;
+
+            try {
+                jObject = new JSONObject(jsonData[0]);
+                PathJSONParser parser = new PathJSONParser();
+                routes = parser.parse(jObject);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return routes;
         }
 
-        PolylineOptions options = new PolylineOptions();
-        options.addAll(listLocsToDraw);
-        options.color(Color.parseColor("#CC0000FF"));
-        options.width(8);
-        options.visible(true);
-/*
-        for (Location locRecorded : listLocsToDraw) {
-            options.add(new LatLng(locRecorded.getLatitude(),
-                    locRecorded.getLongitude()));
-        }*/
+        @Override
+        protected void onPostExecute(List<List<HashMap<String, String>>> routes) {
+            ArrayList<LatLng> points = null;
+            PolylineOptions polyLineOptions = null;
 
-        mMap.addPolyline(options);
+            // traversing through routes
+            for (int i = 0; i < routes.size(); i++) {
+                points = new ArrayList<LatLng>();
+                polyLineOptions = new PolylineOptions();
+                List<HashMap<String, String>> path = routes.get(i);
 
+                for (int j = 0; j < path.size(); j++) {
+                    HashMap<String, String> point = path.get(j);
+
+                    double lat = Double.parseDouble(point.get("lat"));
+                    double lng = Double.parseDouble(point.get("lng"));
+                    LatLng position = new LatLng(lat, lng);
+
+                    points.add(position);
+                }
+
+                polyLineOptions.addAll(points);
+                polyLineOptions.width(5);
+                polyLineOptions.color(Color.BLUE);
+            }
+
+            mMap.addPolyline(polyLineOptions);
+            dialog2.dismiss();
+        }
+
+    }
+
+    //---------------------------Progrees Dialog-----------------------
+    public void dialogWindow() {
+        dialog2 = new Dialog(SecondRouteActivity.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog2.setCanceledOnTouchOutside(false);
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.progrees_dialog);
+        AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
+        loaderView.show();
+
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        dialog2.show();
     }
 }

@@ -9,5 +9,9 @@
         <item name="android:typeface">serif</item>
 
     </style>
-
+    <style name="AppTheme.SeekBar">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/textcolor</item>
+    </style>
 </resources>

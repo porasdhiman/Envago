@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/main_heading"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/textcolor">
+
+        <ImageView
+            android:id="@+id/back_button_create"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="14dp"
+            android:src="@drawable/back_button"  />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="What's Included"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="Transportation"
+                android:textColor="@color/Black"
+                android:layout_toLeftOf="@+id/booking_checkBox"
+                android:layout_centerVertical="true"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/trans_checkBox"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/unselected"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/Gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="Flight"
+                android:textColor="@color/Black"
+                android:layout_toLeftOf="@+id/route_checkbox"
+                android:layout_centerVertical="true"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/flight_checkbox"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/unselected"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/Gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="Accomodation"
+                android:textColor="@color/Black"
+                android:layout_toLeftOf="@+id/add_photo_checkBox"
+                android:layout_centerVertical="true"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/acc_checkBox"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/unselected"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/Gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="Tent"
+                android:textColor="@color/Black"
+                android:layout_toLeftOf="@+id/detail_checkBox"
+                android:layout_centerVertical="true"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/tent_checkBox"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/unselected"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/Gray" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="Gear"
+                android:textColor="@color/Black"
+                android:layout_toLeftOf="@+id/detail_checkBox"
+                android:layout_centerVertical="true"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/gear_checkBox"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/unselected"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/Gray" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="Meal"
+                android:textColor="@color/Black"
+                android:layout_toLeftOf="@+id/detail_checkBox"
+                android:layout_centerVertical="true"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/meals_checkBox"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/unselected"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/Gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/submit_button"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/id_text"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/red_button_back"
+                android:text="Submit"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
