@@ -3,17 +3,27 @@ package envago.envago;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -21,11 +31,15 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import static envago.envago.R.id.view;
 
@@ -50,7 +64,8 @@ public class AllAdapter extends PagerAdapter {
     String months[] = {" ", "Jan", "Feb", "Mar", "Apr", "May",
             "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
             "Dec",};
-
+    SharedPreferences sp;
+    SharedPreferences.Editor ed;
     public AllAdapter(Context mContext, ArrayList<HashMap<String, String>> mResources) {
         this.mContext = mContext;
         this.mResources = mResources;
@@ -62,6 +77,8 @@ public class AllAdapter extends PagerAdapter {
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
+        sp=mContext.getSharedPreferences("message",Context.MODE_PRIVATE);
+        ed=sp.edit();
     }
 
     @Override
@@ -82,7 +99,7 @@ public class AllAdapter extends PagerAdapter {
         TextView view_date_text = (TextView) itemView.findViewById(R.id.view_advanture_date_txt);
         TextView view_location_txt = (TextView) itemView.findViewById(R.id.view_advanture_location_txt);
         ImageView view_img = (ImageView) itemView.findViewById(R.id.view_img);
-        ImageView heart_img = (ImageView) itemView.findViewById(R.id.heart_img);
+        final ImageView heart_img = (ImageView) itemView.findViewById(R.id.heart_img);
         TextView start_event_txtView = (TextView) itemView.findViewById(R.id.start_event_txtView);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,10 +112,8 @@ public class AllAdapter extends PagerAdapter {
             }
         });
 
-       /* if (mResources.get(i).get(GlobalConstants.EVENT_IMAGES).equalsIgnoreCase("")) {
 
-        } else {
-            url = "http://worksdelight.com/envago/uploads/" + mResources.get(i).get(GlobalConstants.EVENT_IMAGES);
+            url = "http://worksdelight.com/envago/uploads/" + mResources.get(i).get(GlobalConstants.IMAGE);
             if (url != null && !url.equalsIgnoreCase("null")
                     && !url.equalsIgnoreCase("")) {
                 imageLoader.displayImage(url, view_img, options,
@@ -114,7 +129,7 @@ public class AllAdapter extends PagerAdapter {
             } else {
                 view_img.setImageResource(R.drawable.placeholder_image1);
             }
-        }*/
+
 
 
         view_text.setText(mResources.get(i).get(GlobalConstants.EVENT_NAME));
@@ -134,6 +149,25 @@ public class AllAdapter extends PagerAdapter {
             heart_img.setImageResource(R.drawable.heart_field);
 
         }
+        heart_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mResources.get(i).get(GlobalConstants.EVENT_FAV).equals("0")) {
+                    mResources.get(i).put(GlobalConstants.EVENT_FAV, "1");
+                    heart_img.setImageResource(R.drawable.heart_field);
+                    favoriteMethod(mResources.get(i).get(GlobalConstants.EVENT_ID), "1");
+                    ed.putString("message","wish");
+                    ed.commit();
+                } else {
+                    heart_img.setImageResource(R.drawable.heart);
+                    mResources.get(i).put(GlobalConstants.EVENT_FAV, "0");
+                    favoriteMethod(mResources.get(i).get(GlobalConstants.EVENT_ID), "0");
+                    ed.putString("message","not wish");
+                    ed.commit();
+                }
+
+            }
+        });
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy/MM/dd");
@@ -187,5 +221,60 @@ public class AllAdapter extends PagerAdapter {
 
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
     }
+    private void favoriteMethod(final String event_id, final String like_status) {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GlobalConstants.URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.e("response", response);
+                        try {
+                            JSONObject obj = new JSONObject(response);
+
+                            String status = obj.getString("success");
+                            if (status.equalsIgnoreCase("1")) {
+
+
+                            } else {
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(mContext, error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(GlobalConstants.USERID, CommonUtils.UserID(mContext));
+                params.put(GlobalConstants.EVENT_ID, event_id);
+                params.put(GlobalConstants.LIKE_STATUS, like_status);
+
+                params.put("action", GlobalConstants.ACTION_LIKE_EVENT);
+                Log.e("favorite param", params.toString());
+                return params;
+            }
+
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
+        requestQueue.add(stringRequest);
+    }
+
+
 }
 

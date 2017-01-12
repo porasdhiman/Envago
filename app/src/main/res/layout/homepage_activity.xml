@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/main_layout"
-    >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/main_heading"
@@ -32,8 +32,8 @@
 
         <ImageView
             android:id="@+id/map_button"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
             android:src="@drawable/map" />
@@ -42,14 +42,175 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:duration="3000"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:orientation="vertical"
+
+
+                    >
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:background="@color/Gray"
+                        android:text="Wish list"
+                        android:textColor="@color/Gray"
+                        android:textSize="18sp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/view_img"
+                            android:layout_width="match_parent"
+                            android:layout_height="220dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/Gray"
+                            android:scaleType="fitXY" />
+
+                        <TextView
+                            android:id="@+id/start_event_txtView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/start_event_back"
+                            android:gravity="center"
+                            android:paddingBottom="3dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingTop="3dp"
+                            android:text="Started"
+                            android:textColor="#fff"
+                            android:textSize="12sp"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/heart_img"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_margin="12dp"
+                            android:src="@drawable/heart"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:id="@+id/view_price_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/Gray"
+                            android:text="$30"
+                            android:textColor="@color/Gray"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:id="@+id/view_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="10dp"
+                            android:layout_toLeftOf="@+id/view_price_txt"
+                            android:background="@color/Gray"
+                            android:text="A Time Travel Postcard"
+                            android:textColor="@color/Gray"
+                            android:textSize="22sp" />
+
+
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/Gray">
+
+                            <ImageView
+                                android:id="@+id/view_date_img"
+                                android:layout_width="17dp"
+                                android:layout_height="17dp"
+
+                                android:layout_alignParentLeft="true" />
+
+                            <TextView
+                                android:id="@+id/view_date_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="5dp"
+                                android:layout_toRightOf="@+id/view_date_img"
+                                android:text="22 jun"
+                                android:textColor="@color/Gray"
+                                android:textSize="13dp" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:background="@color/Gray">
+
+                            <ImageView
+                                android:id="@+id/view_location_img"
+                                android:layout_width="17dp"
+                                android:layout_height="17dp"
+
+                                android:layout_alignParentLeft="true" />
+
+                            <TextView
+                                android:id="@+id/view_location_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="5dp"
+                                android:layout_toRightOf="@+id/view_location_img"
+                                android:text="Bosnia and Herzegovina"
+                                android:textColor="@color/Gray"
+                                android:textSize="13dp" />
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <LinearLayout
                 android:id="@+id/featured_linear_layout"
@@ -75,6 +236,10 @@
                     android:layout_height="300dp"
                     android:layout_marginTop="10dp"></android.support.v4.view.ViewPager>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/Gray" />
             </LinearLayout>
 
             <LinearLayout
@@ -82,7 +247,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:orientation="vertical">
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -104,6 +271,10 @@
 
                 </android.support.v4.view.ViewPager>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/Gray" />
             </LinearLayout>
 
             <LinearLayout
@@ -111,14 +282,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical"
+
                 android:visibility="gone">
 
                 <TextView
                     android:id="@+id/view_top_txtView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:text=" Suggested Adventures"
                     android:textColor="@color/textcolor"
                     android:textSize="18sp" />
@@ -129,6 +301,10 @@
                     android:layout_height="300dp"
                     android:layout_marginTop="10dp"></android.support.v4.view.ViewPager>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/Gray" />
             </LinearLayout>
 
             <LinearLayout
@@ -136,17 +312,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical"
-                android:visibility="gone"
-               >
+                android:visibility="gone">
 
                 <TextView
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:text="Featured Planners"
                     android:textColor="@color/textcolor"
+
                     android:textSize="18sp" />
 
                 <ListView
@@ -154,8 +330,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/main_heading"
-
+                    android:layout_marginTop="10dp"
+                    android:divider="@color/Gray"
+                    android:dividerHeight="1dp"
                     android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
                     android:scrollbars="none">
 
                 </ListView>

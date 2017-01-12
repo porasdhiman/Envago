@@ -2,7 +2,9 @@ package envago.envago;
 
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -43,7 +46,7 @@ import java.util.Map;
  */
 public class FavoriteFragment extends Fragment {
     ListView ad_items;
-    LinearLayout ging_to_linear_layout, planning_linear_layout, wish_linear_layout,main_layout;
+    LinearLayout ging_to_linear_layout, planning_linear_layout, wish_linear_layout,main_layout,message_linear_layout;
     public int[] images = {R.drawable.air, R.drawable.earth, R.drawable.water, R.drawable.rockice, R.drawable.volunteer, R.drawable.all};
     TextView headtext;
     ArrayList<HashMap<String, String>> event_list = new ArrayList<>();
@@ -54,7 +57,9 @@ public class FavoriteFragment extends Fragment {
     ViewPager view_item_pager1, view_item_pager2, cat_pager;
 
     ShimmerFrameLayout shimmer_container;
-
+    ScrollView scroll_view;
+TextView start_btn;
+SharedPreferences sp;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
 
@@ -63,7 +68,15 @@ public class FavoriteFragment extends Fragment {
         Fonts.overrideFonts(getActivity(),main_layout);
         headtext = (TextView) v.findViewById(R.id.header_text_adv);
 
-        headtext.setText("WISHLIST");
+        headtext.setText("Wish");
+        sp=getActivity().getSharedPreferences("message", Context.MODE_PRIVATE);
+        message_linear_layout = (LinearLayout) v.findViewById(R.id.message_linear_layout);
+        scroll_view=(ScrollView)v.findViewById(R.id.scroll_view);
+       if(!sp.getString("message","not wish").equalsIgnoreCase("not wish")){
+           message_linear_layout.setVisibility(View.GONE);
+           scroll_view.setVisibility(View.VISIBLE);
+       }
+        start_btn=(TextView)v.findViewById(R.id.start_btn);
         ging_to_linear_layout = (LinearLayout) v.findViewById(R.id.goingto_layout);
         planning_linear_layout = (LinearLayout) v.findViewById(R.id.planning_linear_layout);
         wish_linear_layout = (LinearLayout) v.findViewById(R.id.wish_linear_layout);
@@ -72,6 +85,16 @@ public class FavoriteFragment extends Fragment {
         cat_pager = (ViewPager) v.findViewById(R.id.cat_pager);
         shimmer_container = (ShimmerFrameLayout) v.findViewById(R.id.shimmer_view_container);
         shimmer_container.startShimmerAnimation();
+
+        start_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent tab=new Intent(getActivity(),Tab_Activity.class);
+                startActivity(tab);
+                getActivity().finish();
+
+            }
+        });
         // back_img=(ImageView)v.findViewById(R.id.back_img);
         // ad_items = (ListView)v.findViewById(R.id.ad_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);

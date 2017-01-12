@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,10 +36,11 @@ public class FeaturedPlannerAdapter extends BaseAdapter {
     DisplayImageOptions options;
     String url;
     Holder holder;
-    ArrayList<HashMap<String,String>> list=new ArrayList<>();
-    FeaturedPlannerAdapter(Context context,ArrayList<HashMap<String,String>> list) {
+    ArrayList<HashMap<String, String>> list = new ArrayList<>();
+
+    FeaturedPlannerAdapter(Context context, ArrayList<HashMap<String, String>> list) {
         this.context = context;
-        this.list=list;
+        this.list = list;
         inflater = LayoutInflater.from(context);
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
@@ -67,7 +69,7 @@ public class FeaturedPlannerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-holder=new Holder();
+        holder = new Holder();
         if (convertView == null) {
 
 
@@ -81,11 +83,11 @@ holder=new Holder();
             convertView.setTag(holder);
 
 
-
         } else {
             holder = (Holder) convertView.getTag();
         }
         url = "http://worksdelight.com/envago/uploads/" + list.get(position).get(GlobalConstants.IMAGE);
+        Log.e("urle",url);
         holder.Planner_name.setText(list.get(position).get(GlobalConstants.USERNAME));
         holder.planner_address.setText(list.get(position).get(GlobalConstants.ADDRESS));
         if (url != null && !url.equalsIgnoreCase("null")
@@ -106,9 +108,9 @@ holder=new Holder();
         return convertView;
     }
 
-    class Holder{
+    class Holder {
         ImageView planner_img;
-        TextView Planner_name,planner_address;
+        TextView Planner_name, planner_address;
     }
 
     private void initImageLoader() {

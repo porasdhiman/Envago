@@ -3,16 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
-    android:paddingRight="8dp"
-  >
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp">
 
     <RelativeLayout
         android:id="@+id/cat_relative_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:background="@drawable/ic_launcher">
+        >
 
         <ImageView
             android:id="@+id/cat_pager_img"
@@ -31,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="dadad"
+                android:text=""
                 android:textColor="@color/White" />
 
 
@@ -40,10 +39,10 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_below="@+id/cat_name_txtView"
+                android:layout_centerHorizontal="true"
                 android:alpha=".6"
                 android:background="@drawable/count_back"
                 android:gravity="center"
-                android:layout_centerHorizontal="true"
                 android:text="32"
                 android:textColor="@color/White"
                 android:textSize="13sp" />

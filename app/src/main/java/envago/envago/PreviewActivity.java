@@ -51,6 +51,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -90,7 +91,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by vikas on 15-10-2016.
  */
-public class DetailsActivity extends FragmentActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, GoogleApiClient.OnConnectionFailedListener,
+public class PreviewActivity extends FragmentActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback, View.OnTouchListener {
     protected View view;
     private ImageButton btnNext, btnFinish;
@@ -158,7 +159,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     Date startDate,endDate;
 
     TextView days_details,desclaimer_txt_show;
-ImageView dumy_imageview;
+    ImageView dumy_imageview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,9 +173,9 @@ ImageView dumy_imageview;
         desclaimer_layout=(LinearLayout)findViewById(R.id.desclaimer_layout) ;
         intro_images = (ViewPager) findViewById(R.id.pager_introduction);
         dumy_imageview=(ImageView)findViewById(R.id.dumy_imageview);
-       // review_txtview = (TextView) findViewById(R.id.review_txtView);
+        // review_txtview = (TextView) findViewById(R.id.review_txtView);
         review_layout = (LinearLayout) findViewById(R.id.review_layout);
-       // review_list = (ListView) findViewById(R.id.review_list);
+        // review_list = (ListView) findViewById(R.id.review_list);
         pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         stars = (RatingBar) findViewById(R.id.stars);
         stars.setOnTouchListener(null);
@@ -182,7 +183,7 @@ ImageView dumy_imageview;
         map_layout = (LinearLayout) findViewById(R.id.map_layout);
         status_text = (TextView) findViewById(R.id.status_text);
         admin_name = (TextView) findViewById(R.id.event_name);
-       // about_txtView = (TextView) findViewById(R.id.about_txtView);
+        // about_txtView = (TextView) findViewById(R.id.about_txtView);
         //route_txtView = (TextView) findViewById(R.id.route_txtView);
         date_details = (TextView) findViewById(R.id.date_details);
         meeting_desc = (TextView) findViewById(R.id.meeting_desc);
@@ -211,13 +212,13 @@ ImageView dumy_imageview;
         //event_info_layout = (RelativeLayout) findViewById(R.id.event_info_layout);
         //event_info_layout.setOnClickListener(this);
         purchase_btn = (Button) findViewById(R.id.purchase_btn);
-       // signup_btn = (Button) findViewById(R.id.signup_btn);
+        // signup_btn = (Button) findViewById(R.id.signup_btn);
         days_details = (TextView)findViewById(R.id.days_details);
         //signup_btn.setOnClickListener(this);
-       purchase_btn.setOnClickListener(this);
-       // about_txtView.setOnClickListener(this);
+      //  purchase_btn.setOnClickListener(this);
+        // about_txtView.setOnClickListener(this);
         //route_txtView.setOnClickListener(this);
-       // review_txtview.setOnClickListener(this);
+        // review_txtview.setOnClickListener(this);
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -231,9 +232,10 @@ ImageView dumy_imageview;
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
-        dialogWindow();
+        allValueShow();
+       /* dialogWindow();
         singleEventMethod();
-
+*/
       /*  if (getIntent().getExtras().getString("user").equalsIgnoreCase("user")) {
             signup_btn.setVisibility(View.GONE);
         } else {
@@ -272,7 +274,7 @@ ImageView dumy_imageview;
             pager_indicator.addView(dots[i], params);
         }
 
-       dots[0].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
+        dots[0].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
     }
 
     @Override
@@ -319,7 +321,7 @@ ImageView dumy_imageview;
                 about_txtView.setTextColor(getResources().getColor(R.color.White));
                 break;*/
             case R.id.purchase_btn:
-                Intent i = new Intent(DetailsActivity.this, ConfirmDetailsActivity.class);
+                Intent i = new Intent(PreviewActivity.this, ConfirmDetailsActivity.class);
                 i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
                 startActivity(i);
                /* thingToBuy = new PayPalPayment(new BigDecimal("10"), "USD",
@@ -358,140 +360,80 @@ ImageView dumy_imageview;
     public void onPageScrollStateChanged(int state) {
 
     }
+public void allValueShow(){
+    meeting_loc = global.getStartingPoint();
+    meeting_lat = global.getStarting_lat();
+    meeting_long =global.getStarting_lng();
 
-    public void pagerAdapterMethod(ArrayList<String> list) {
-        this.list = list;
-        if(list.size()!=0) {
-            dumy_imageview.setVisibility(View.GONE);
-            intro_images.setVisibility(View.VISIBLE);
-            mAdapter = new ViewPagerAdapter(DetailsActivity.this, list);
-            intro_images.setAdapter(mAdapter);
-            intro_images.setCurrentItem(0);
-            intro_images.setOnPageChangeListener(this);
-            setUiPageViewController();
-        }
+
+
+//    mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+    // Add a marker in Sydney and move the camera
+   /* MarkerOptions options = new MarkerOptions();
+
+    options.position(new LatLng(Double.parseDouble(meeting_lat), Double.parseDouble(meeting_long))).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)).title("starting Point");
+
+
+
+    ReadTask downloadTask = new ReadTask();
+    downloadTask.execute(getMapsApiDirectionsUrl2(global.getStarting_lat(),global.getStarting_lng(),global.getW_lat(),global.getW_lng()));
+
+
+
+
+    options.position(new LatLng(Double.parseDouble(global.getW_lat()), Double.parseDouble(global.getW_lng()))).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)).title("ending Point");
+
+    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(global.getW_lat()), Double.parseDouble(global.getW_lng())), 12));
+    mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
+*/
+
+    //--------------------------------end-map-location-variable---------------------------------------------
+
+
+    //admin_name.setText(adminobj.getString(GlobalConstants.ADMIN_NAME));
+    header_textview.setText(global.getEvent_name());
+
+
+
+        orginiser_img.setImageResource(R.mipmap.ic_launcher);
+
+
+    admin_description.setText(global.getDescriptionString());
+
+
+
+    if (dateMatchMethod(global.getEvent_start_date())) {
+        status_text.setVisibility(View.VISIBLE);
+    } else {
+        status_text.setVisibility(View.GONE);
     }
+    global.setEvent_time(global.getEvent_time());
+    String date_data=global.getEvent_start_date();
+    /*SimpleDateFormat dateFormat = new SimpleDateFormat(
+            "yyyy-MM-dd");
+    date_data=dateFormat.format(date_data);
+    String split[] = date_data.split("-");
+    String minth = split[1];
+    String date=split[2];
+    int mm = Integer.parseInt(minth);
+    Calendar c = Calendar.getInstance();
 
-    private void singleEventMethod() {
+    String dateafter = dateFormat.format(c.getTime());
+    startDate=new Date();
+    endDate=new Date();
+    try {
+        startDate=dateFormat.parse(date_data);
+        endDate=dateFormat.parse(dateafter);
 
+    } catch (java.text.ParseException e) {
+        e.printStackTrace();
+    }*/
+    date_details.setText(date_data);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, GlobalConstants.URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+    //days_details.setText(String.valueOf(getDaysDifference(startDate,endDate))+" Days");
 
-                        Log.e("response", response);
-                        try {
-                            JSONObject obj = new JSONObject(response);
-
-                            String status = obj.getString("success");
-                            if (status.equalsIgnoreCase("1")) {
-
-                                JSONArray data = obj.getJSONArray("data");
-                                for (int j = 0; j < data.length(); j++) {
-                                    JSONObject objArry = data.getJSONObject(j);
-                                    JSONObject adminobj = objArry.getJSONObject("event_admin");
-
-                                    JSONArray images = objArry.getJSONArray(GlobalConstants.EVENT_IMAGES);
-                                    for (int i = 0; i < images.length(); i++) {
-                                        JSONObject imagObj = images.getJSONObject(i);
-                                        list.add("http://worksdelight.com/envago/uploads/" + imagObj.getString(GlobalConstants.IMAGE));
-                                    }
-
-//----------------------------------Map-Loaction-variable-----------------------------
-                                    meeting_loc = objArry.getString(GlobalConstants.EVENT_METTING_POINT);
-                                    meeting_lat = objArry.getString("meeting_point_latitude");
-                                    meeting_long = objArry.getString("meeting_point_longitude");
-
-
-
-                                    mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
-                                    // Add a marker in Sydney and move the camera
-                                    LatLng postion = new LatLng(Double.parseDouble(meeting_lat), Double.parseDouble(meeting_long));
-                                    Marker mark = mMap.addMarker(new MarkerOptions().position(postion).title("Meeting Point").snippet(meeting_loc));
-                                    markers.put(mark.getId(), list.get(0));
-
-
-                                    ReadTask downloadTask = new ReadTask();
-                                    downloadTask.execute(getMapsApiDirectionsUrl2(objArry.getString("latitude"),objArry.getString("longitude"),meeting_lat,meeting_long));
-
-
-
-
-                                    LatLng postion_start = new LatLng(Double.parseDouble(objArry.getString("latitude")), Double.parseDouble(objArry.getString("longitude")));
-                                    Marker mark_start = mMap.addMarker(new MarkerOptions().position(postion_start).title("Starting Point").snippet(objArry.getString("location")));
-                                    markers.put(mark_start.getId(), list.get(0));
-                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion_start, 12));
-                                    mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-
-
-
-                                    //--------------------------------end-map-location-variable---------------------------------------------
-
-
-                                    admin_name.setText(adminobj.getString(GlobalConstants.ADMIN_NAME));
-                                    header_textview.setText(objArry.getString(GlobalConstants.EVENT_NAME));
-                                    global.setEvent_name(objArry.getString(GlobalConstants.EVENT_NAME));
-
-
-                                    String url = "http://worksdelight.com/envago/uploads/" + adminobj.getString(GlobalConstants.ADMIN_IMAGE);
-                                    if (url != null && !url.equalsIgnoreCase("null")
-                                            && !url.equalsIgnoreCase("")) {
-                                        imageLoader.displayImage(url, orginiser_img, options,
-                                                new SimpleImageLoadingListener() {
-                                                    @Override
-                                                    public void onLoadingComplete(String imageUri,
-                                                                                  View view, Bitmap loadedImage) {
-                                                        super.onLoadingComplete(imageUri, view,
-                                                                loadedImage);
-
-                                                    }
-                                                });
-                                    } else {
-                                        orginiser_img.setImageResource(R.mipmap.ic_launcher);
-                                    }
-
-                                    admin_description.setText(adminobj.getString(GlobalConstants.ADMIN_ABOUT));
-                                    if (objArry.getString(GlobalConstants.ADMIN_RATING).contains(".")) {
-                                       // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
-                                        stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", "")));
-                                    } else {
-                                       // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
-                                        stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING)));
-                                    }
-
-
-                                    if (dateMatchMethod(objArry.getString(GlobalConstants.EVENT_START_DATE))) {
-                                        status_text.setVisibility(View.VISIBLE);
-                                    } else {
-                                        status_text.setVisibility(View.GONE);
-                                    }
-                                    global.setEvent_time(objArry.getString("time"));
-                                    String date_data=objArry.getString(GlobalConstants.EVENT_START_DATE);
-                                    String split[] = date_data.split("-");
-                                    String minth = split[1];
-                                    String date=split[2];
-                                    int mm = Integer.parseInt(minth);
-                                    Calendar c = Calendar.getInstance();
-                                    SimpleDateFormat dateFormat = new SimpleDateFormat(
-                                            "yyyy-MM-dd");
-                                    String dateafter = dateFormat.format(c.getTime());
-                                    startDate=new Date();
-                                    endDate=new Date();
-                                    try {
-                                        startDate=dateFormat.parse(date_data);
-                                        endDate=dateFormat.parse(dateafter);
-
-                                    } catch (java.text.ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                    date_details.setText(date+" "+months[mm]+" "+split[0]);
-
-                                    //days_details.setText(String.valueOf(getDaysDifference(startDate,endDate))+" Days");
-                                    global.setEvent_start_date(objArry.getString(GlobalConstants.EVENT_START_DATE));
-                                    global.setEvent_end_date(objArry.getString(GlobalConstants.EVENT_END_DATE));
-                                    location_name_txtView.setText(objArry.getString(GlobalConstants.LOCATION));
-                                    global.setEvent_loc(objArry.getString(GlobalConstants.LOCATION));
+    location_name_txtView.setText(global.getStartingPoint());
                                    /* if (objArry.getString(GlobalConstants.EVENT_LEVEL).equalsIgnoreCase("1")) {
                                         level_no1.setVisibility(View.VISIBLE);
                                     } else if (objArry.getString(GlobalConstants.EVENT_LEVEL).equalsIgnoreCase("2")) {
@@ -501,95 +443,65 @@ ImageView dumy_imageview;
                                     } else {
                                         level_no4.setVisibility(View.VISIBLE);
                                     }*/
-                                    meeting_desc.setText(objArry.getString(GlobalConstants.EVENT_METTING_POINT));
-                                    global.setEvent_meetin_point(objArry.getString(GlobalConstants.EVENT_METTING_POINT));
-                                    time_txtVIew.setText(objArry.getString("time"));
-                                    i = Integer.parseInt(objArry.getString("is_liked"));
-                                    if (i == 1) {
-                                        heart_img.setImageResource(R.drawable.heart_field);
-                                    } else {
-                                        heart_img.setImageResource(R.drawable.heart);
-                                    }
-                                 //   lower_description_txtView.setText(objArry.getString("description"));
-
-                                    if (objArry.getString("transport").equalsIgnoreCase("0")) {
-                                        transport_txtView.setImageResource(R.drawable.tansport_gray);
-                                    } else {
-                                        transport_txtView.setImageResource(R.drawable.transportation);
-                                    }
-                                    if (objArry.getString("meals").equalsIgnoreCase("0")) {
-                                        meal_txtView.setImageResource(R.drawable.food_gray);
-                                    } else {
-                                        meal_txtView.setImageResource(R.drawable.meal);
-                                    }
-                                    if (objArry.getString("accomodation").equalsIgnoreCase("0")) {
-                                        accomodation_txtView.setImageResource(R.drawable.accomodation_gray);
-                                    } else {
-                                        accomodation_txtView.setImageResource(R.drawable.accomodation);
-                                    }
-                                    if (objArry.getString("gear").equalsIgnoreCase("0")) {
-                                        gear_txtView.setImageResource(R.drawable.gear_gray);
-                                    } else {
-                                        gear_txtView.setImageResource(R.drawable.gear);
-                                    }
-                                    if (objArry.getString("tent").equalsIgnoreCase("0")) {
-                                        tent_txtView.setImageResource(R.drawable.tent_gray);
-                                    } else {
-                                        tent_txtView.setImageResource(R.drawable.tent);
-                                    }
-                                    if (objArry.getString("disclaimer").equalsIgnoreCase(null)||objArry.getString("disclaimer").equalsIgnoreCase("")) {
-                                        desclaimer_layout.setVisibility(view.GONE);
-                                    } else {
-                                        desclaimer_layout.setVisibility(view.VISIBLE);
-                                        Disclaimer_txtView.setText(objArry.getString("disclaimer"));
-                                    }
-
-                                    places_txtView.setText(objArry.getString("total_no_of_places") + "Places");
-                                    purchase_btn.setText("$" + objArry.getString(GlobalConstants.EVENT_PRICE));
-                                    global.setEvent_price(objArry.getString(GlobalConstants.EVENT_PRICE));
-                                }
-                                pagerAdapterMethod(list);
-
-
-                            } else {
-                                Toast.makeText(DetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
-                            }
-                            dialog2.dismiss();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        dialog2.dismiss();
-                        Toast.makeText(DetailsActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put(GlobalConstants.USERID, CommonUtils.UserID(DetailsActivity.this));
-
-                params.put(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
-
-
-                params.put("action", GlobalConstants.DETAILS_EVENT_ACTION);
-
-                Log.e("Single Event Param", params.toString());
-                return params;
-            }
-
-        };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+    meeting_desc.setText(global.getDescriptionString());
+    global.setEvent_meetin_point(global.getEvent_meetin_point());
+    time_txtVIew.setText(global.getEvent_time());
+    i=0;
+    if (i == 1) {
+        heart_img.setImageResource(R.drawable.heart_field);
+    } else {
+        heart_img.setImageResource(R.drawable.heart);
     }
+    //   lower_description_txtView.setText(objArry.getString("description"));
+
+    if (global.getTransportataion()==0) {
+        transport_txtView.setImageResource(R.drawable.tansport_gray);
+    } else {
+        transport_txtView.setImageResource(R.drawable.transportation);
+    }
+    if (global.getMeal()==0) {
+        meal_txtView.setImageResource(R.drawable.food_gray);
+    } else {
+        meal_txtView.setImageResource(R.drawable.meal);
+    }
+    if (global.getAccomodation()==0) {
+        accomodation_txtView.setImageResource(R.drawable.accomodation_gray);
+    } else {
+        accomodation_txtView.setImageResource(R.drawable.accomodation);
+    }
+    if (global.getGear()==0) {
+        gear_txtView.setImageResource(R.drawable.gear_gray);
+    } else {
+        gear_txtView.setImageResource(R.drawable.gear);
+    }
+    if (global.getTent()==0) {
+        tent_txtView.setImageResource(R.drawable.tent_gray);
+    } else {
+        tent_txtView.setImageResource(R.drawable.tent);
+    }
+
+        Disclaimer_txtView.setText(global.getEvent_disclaimer());
+
+
+    places_txtView.setText(global.getEvent_place() + "Places");
+    purchase_btn.setText("$" + global.getEvent_price());
+
+    pagerAdapterMethod(global.getListImg());
+
+}
+    public void pagerAdapterMethod(ArrayList<String> list) {
+        this.list = list;
+        if(list.size()!=0) {
+            dumy_imageview.setVisibility(View.GONE);
+            intro_images.setVisibility(View.VISIBLE);
+            mAdapter = new ViewPagerAdapter(PreviewActivity.this, list);
+            intro_images.setAdapter(mAdapter);
+            intro_images.setCurrentItem(0);
+            intro_images.setOnPageChangeListener(this);
+            setUiPageViewController();
+        }
+    }
+
 
     private String getMapsApiDirectionsUrl2(String startLat,String startlng,String meetingLat,String meetingLng) {
 
@@ -668,68 +580,6 @@ ImageView dumy_imageview;
 
     }
 
-    //------------------------------------------------GET-Review-List-API--------------------------------------
-
-
-    public void getreviewlist() {
-        StringRequest listReq = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                Log.e("rating data", s);
-                try {
-                    JSONObject obj = new JSONObject(s);
-
-                    String response = obj.getString("success");
-
-                    if (response.equalsIgnoreCase("1")) {
-                        JSONArray array = obj.getJSONArray("reviews");
-
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject obj1 = array.getJSONObject(i);
-
-                            JSONObject mainobj = obj1.getJSONObject("user");
-
-                            HashMap<String, String> data = new HashMap<>();
-
-                            data.put(GlobalConstants.USERNAME, mainobj.getString(GlobalConstants.USERNAME));
-                            data.put("text", obj1.getString("text"));
-                            data.put("rating", obj1.getString("rating"));
-
-                            review_list_array.add(data);
-
-
-                        }
-                        review_list.setAdapter(new ReviewList_Adapter(review_list_array, DetailsActivity.this));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                HashMap<String, String> params = new HashMap<>();
-
-                params.put(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
-
-                params.put("action", "get_reviews_list");
-                Log.e("rating param", params.toString());
-                return params;
-            }
-        };
-
-        listReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 4, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(listReq);
-    }
 
     //---------------------------Progrees Dialog-----------------------
     public void dialogWindow() {
@@ -786,7 +636,7 @@ ImageView dumy_imageview;
         }
 
         final ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                DetailsActivity.this).threadPoolSize(5)
+                PreviewActivity.this).threadPoolSize(5)
                 .threadPriority(Thread.NORM_PRIORITY - 2)
                 .memoryCacheSize(memoryCacheSize)
                 .memoryCache(new FIFOLimitedMemoryCache(memoryCacheSize - 1000000))
@@ -971,7 +821,7 @@ ImageView dumy_imageview;
                 if (rating_cmnt.getText().toString().length() == 0) {
                     rating_cmnt.setError("Please enter comment");
                 } else if (String.valueOf(stars_dailog.getRating()).equalsIgnoreCase("0")) {
-                    Toast.makeText(DetailsActivity.this, "Please select rating star", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PreviewActivity.this, "Please select rating star", Toast.LENGTH_SHORT).show();
                 } else {
                     dialogWindow();
                     ratingApiMethod(rating_cmnt.getText().toString(), String.valueOf(stars_dailog.getRating()).split(".")[0]);
@@ -1002,9 +852,9 @@ ImageView dumy_imageview;
                             String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
                                 rating_dialog.dismiss();
-                                Toast.makeText(DetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PreviewActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(DetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PreviewActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             }
 
 
@@ -1024,7 +874,7 @@ ImageView dumy_imageview;
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put(GlobalConstants.USERID, CommonUtils.UserID(DetailsActivity.this));
+                params.put(GlobalConstants.USERID, CommonUtils.UserID(PreviewActivity.this));
                 params.put(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
                 params.put("text", text);
                 params.put("rating", rate);
@@ -1044,7 +894,7 @@ ImageView dumy_imageview;
 
     //---------------------------------------------Payment method----------------------------------
     public void onFuturePaymentPressed(View pressed) {
-        Intent intent = new Intent(DetailsActivity.this,
+        Intent intent = new Intent(PreviewActivity.this,
                 PayPalFuturePaymentActivity.class);
 
         startActivityForResult(intent, REQUEST_CODE_FUTURE_PAYMENT);
@@ -1086,7 +936,7 @@ ImageView dumy_imageview;
                         Log.e("FuturePaymentExample", authorization_code);
 
                         sendAuthorizationToServer(auth);
-                        Toast.makeText(DetailsActivity.this,
+                        Toast.makeText(PreviewActivity.this,
                                 "Future Payment code received from PayPal",
                                 Toast.LENGTH_LONG).show();
 
@@ -1111,7 +961,7 @@ ImageView dumy_imageview;
     public void onFuturePaymentPurchasePressed(View pressed) {
         // Get the Application Correlation ID from the SDK
         String correlationId = PayPalConfiguration
-                .getApplicationCorrelationId(DetailsActivity.this);
+                .getApplicationCorrelationId(PreviewActivity.this);
 
         Log.i("FuturePaymentExample", "Application Correlation ID: "
                 + correlationId);
@@ -1119,7 +969,7 @@ ImageView dumy_imageview;
         // TODO: Send correlationId and transaction details to your server for
         // processing with
         // PayPal...
-        Toast.makeText(DetailsActivity.this,
+        Toast.makeText(PreviewActivity.this,
                 "App Correlation ID received from SDK", Toast.LENGTH_LONG)
                 .show();
     }
@@ -1127,7 +977,7 @@ ImageView dumy_imageview;
     @Override
     public void onDestroy() {
         // Stop service when done
-        stopService(new Intent(DetailsActivity.this, PayPalService.class));
+        stopService(new Intent(PreviewActivity.this, PayPalService.class));
         super.onDestroy();
     }
 

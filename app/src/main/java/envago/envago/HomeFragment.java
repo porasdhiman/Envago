@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,8 +47,9 @@ public class HomeFragment extends Fragment {
     ArrayList<HashMap<String, String>> suggested_event_list = new ArrayList<>();
     ArrayList<HashMap<String, String>> catgory_list = new ArrayList<>();
     ArrayList<HashMap<String, String>> featured_planner_list = new ArrayList<>();
+    ArrayList<HashMap<String, String>> featured_event_list = new ArrayList<>();
     ViewPager view_item_pager1, view_item_pager2, cat_pager;
-
+ShimmerFrameLayout shimmer_view_container;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         View v = inflater.inflate(R.layout.homepage_activity, container, false);
@@ -58,14 +60,15 @@ public class HomeFragment extends Fragment {
 
         planner_list_cat = (ListView) v.findViewById(R.id.main_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
-
+        shimmer_view_container=(ShimmerFrameLayout)v.findViewById(R.id.shimmer_view_container);
+        shimmer_view_container.startShimmerAnimation();
         main_layout= (LinearLayout) v.findViewById(R.id.main_layout);
         Fonts.overrideFonts(getActivity(),main_layout);
         plus_button = (ImageView) v.findViewById(R.id.plus_button);
         featured_planners_linear_layout = (LinearLayout) v.findViewById(R.id.featured_planners_linear_layout);
         suggested_linear_layout = (LinearLayout) v.findViewById(R.id.suggested_linear_layout);
         featured_linear_layout = (LinearLayout) v.findViewById(R.id.featured_linear_layout);
-
+        all_linear_layout=(LinearLayout) v.findViewById(R.id.all_linear_layout);
         view_item_pager1 = (ViewPager) v.findViewById(R.id.view_item_pager1);
         view_item_pager2 = (ViewPager) v.findViewById(R.id.view_item_pager2);
         cat_pager = (ViewPager) v.findViewById(R.id.cat_pager);
@@ -262,66 +265,99 @@ public class HomeFragment extends Fragment {
 
                         // JSONObject data = obj.getJSONObject("data");
                         JSONObject data = obj.getJSONObject("data");
-                        JSONArray events = data.getJSONArray("suggested_events");
-                        for (int i = 0; i < events.length(); i++) {
-                            JSONObject arrobj = events.getJSONObject(i);
+                        if(data.has("suggested_events")) {
+                            JSONArray events = data.getJSONArray("suggested_events");
 
-                            HashMap<String, String> details = new HashMap<>();
+                            for (int i = 0; i < events.length(); i++) {
+                                JSONObject arrobj = events.getJSONObject(i);
 
-                            details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.ID));
-                            details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
-                            details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
-                            details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
-                            //details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
-                            details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
-                            details.put(GlobalConstants.IMAGE, arrobj.getString(GlobalConstants.IMAGE));
-                            details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
-                            details.put(GlobalConstants.Is_SUGGESTED, arrobj.getString(GlobalConstants.Is_SUGGESTED));
-                            //  details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                                HashMap<String, String> details = new HashMap<>();
+
+                                details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.ID));
+                                details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
+                                details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
+                                details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
+                                //details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                                details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
+                                details.put(GlobalConstants.IMAGE, arrobj.getString(GlobalConstants.IMAGE));
+                                details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
+                                details.put(GlobalConstants.Is_SUGGESTED, arrobj.getString(GlobalConstants.Is_SUGGESTED));
+                                //  details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
 
-                            suggested_event_list.add(details);
+                                suggested_event_list.add(details);
 
+                            }
                         }
                         Log.e("suggested_event_list", suggested_event_list.toString());
+                        if(data.has("featured_events")) {
+                            JSONArray fet_events = data.getJSONArray("featured_events");
+                            for (int i = 0; i < fet_events.length(); i++) {
+                                JSONObject arrobj = fet_events.getJSONObject(i);
 
-                        JSONArray featured_users = data.getJSONArray("featured_users");
-                        for (int i = 0; i < featured_users.length(); i++) {
-                            JSONObject arrobj = featured_users.getJSONObject(i);
+                                HashMap<String, String> details = new HashMap<>();
 
-                            HashMap<String, String> details = new HashMap<>();
+                                details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.ID));
+                                details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
+                                details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
+                                details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
+                                //details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                                details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
+                                details.put(GlobalConstants.IMAGE, arrobj.getString(GlobalConstants.IMAGE));
+                                details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
+                               // details.put(GlobalConstants.Is_SUGGESTED, arrobj.getString(GlobalConstants.Is_SUGGESTED));
+                                //  details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
-                            details.put(GlobalConstants.ID, arrobj.getString(GlobalConstants.ID));
-                            details.put(GlobalConstants.USERNAME, arrobj.getString(GlobalConstants.USERNAME));
-                            details.put(GlobalConstants.ADDRESS, arrobj.getString(GlobalConstants.ADDRESS));
-                            details.put(GlobalConstants.IMAGE, arrobj.getString(GlobalConstants.IMAGE));
+
+                                featured_event_list.add(details);
+
+                            }
+                        }
+                        if(data.has("featured_users")) {
+                            JSONArray featured_users = data.getJSONArray("featured_users");
+                            for (int i = 0; i < featured_users.length(); i++) {
+                                JSONObject arrobj = featured_users.getJSONObject(i);
+
+                                HashMap<String, String> details = new HashMap<>();
+
+                                details.put(GlobalConstants.ID, arrobj.getString(GlobalConstants.ID));
+                                details.put(GlobalConstants.USERNAME, arrobj.getString(GlobalConstants.USERNAME));
+                                details.put(GlobalConstants.ADDRESS, arrobj.getString(GlobalConstants.ADDRESS));
+                                details.put(GlobalConstants.IMAGE, arrobj.getString(GlobalConstants.IMAGE));
 
 
-                            featured_planner_list.add(details);
+                                featured_planner_list.add(details);
 
+                            }
                         }
                         Log.e("featured_planner_list", featured_planner_list.toString());
-                        JSONArray categories = data.getJSONArray("categories");
-                        for (int i = 0; i < categories.length(); i++) {
-                            JSONObject arrobj = categories.getJSONObject(i);
+                        if(data.has("categories")) {
+                            JSONArray categories = data.getJSONArray("categories");
+                            for (int i = 0; i < categories.length(); i++) {
+                                JSONObject arrobj = categories.getJSONObject(i);
 
-                            HashMap<String, String> details = new HashMap<>();
+                                HashMap<String, String> details = new HashMap<>();
 
-                            details.put(GlobalConstants.CAT_ID, arrobj.getString(GlobalConstants.CAT_ID));
-                            details.put(GlobalConstants.EVENT_CAT_NAME, arrobj.getString(GlobalConstants.EVENT_CAT_NAME));
-                            JSONObject count = arrobj.getJSONObject(GlobalConstants.EVENT_CAT_COUNT);
-
-                            details.put(GlobalConstants.EVENT_CAT_COUNT, count.getString(GlobalConstants.EVENT_CAT_COUNT));
+                                details.put(GlobalConstants.CAT_ID, arrobj.getString(GlobalConstants.CAT_ID));
+                                details.put(GlobalConstants.EVENT_CAT_NAME, arrobj.getString(GlobalConstants.EVENT_CAT_NAME));
+                                details.put(GlobalConstants.EVENT_CAT_COUNT, arrobj.getString(GlobalConstants.EVENT_CAT_COUNT));
 
 
-                            catgory_list.add(details);
 
+
+
+                                catgory_list.add(details);
+
+                            }
                         }
                         Log.e("catgory_list", catgory_list.toString());
-                        cat_pager.setAdapter(new CatPagerAdapter(getActivity(), catgory_list));
-                        cat_pager.setClipToPadding(false);
-                        cat_pager.setPadding(0, 0, 40, 0);
-
+                        if(catgory_list.size()!=0) {
+                            all_linear_layout.setVisibility(View.VISIBLE);
+                            shimmer_view_container.setVisibility(View.GONE);
+                            cat_pager.setAdapter(new CatPagerAdapter(getActivity(), catgory_list));
+                            cat_pager.setClipToPadding(false);
+                            cat_pager.setPadding(0, 0, 40, 0);
+                        }
                         if (suggested_event_list.size() != 0) {
                             suggested_linear_layout.setVisibility(View.VISIBLE);
                             view_item_pager2.setAdapter(new AllAdapter(getActivity(), suggested_event_list));
@@ -335,6 +371,15 @@ public class HomeFragment extends Fragment {
                             featured_planners_linear_layout.setVisibility(View.VISIBLE);
                             planner_list_cat.setAdapter(new FeaturedPlannerAdapter(getActivity(), featured_planner_list));
                             CommonUtils.getListViewSize(planner_list_cat);
+                        }
+                        if(featured_event_list.size()!=0){
+                            featured_linear_layout.setVisibility(View.VISIBLE);
+                            view_item_pager1.setAdapter(new AllAdapter(getActivity(), suggested_event_list));
+                            //view_item_pager2.setAdapter(asvantureAdapter);
+                /*   view_item_pager2.setClipToPadding(false);
+        view_item_pager2.setPadding(0,0,40,0);*/
+                            view_item_pager1.setClipToPadding(false);
+                            view_item_pager1.setPadding(0, 0, 40, 0);
                         }
 
 

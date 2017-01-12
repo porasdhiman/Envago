@@ -1,8 +1,11 @@
 package envago.envago;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -12,7 +15,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -43,7 +48,9 @@ public class MyChatActivity extends Activity {
     Dialog dialog2;
     Global global;
     ShimmerFrameLayout container;
-
+LinearLayout message_linear_layout;
+    TextView start_btn;
+    SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +62,26 @@ public class MyChatActivity extends Activity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
-        chat_list = (ListView) findViewById(R.id.chat_list);
-       // dialogWindow();
+        sp=getSharedPreferences("chat", Context.MODE_PRIVATE);
+        message_linear_layout=(LinearLayout)findViewById(R.id.message_linear_layout);
         container=(ShimmerFrameLayout)findViewById(R.id.shimmer_view_container) ;
+
+        if(!sp.getString("chat","no chat").equalsIgnoreCase("no chat")){
+            container.setVisibility(View.VISIBLE);
+            message_linear_layout.setVisibility(View.GONE);
+        }
+        chat_list = (ListView) findViewById(R.id.chat_list);
+        start_btn=(TextView)findViewById(R.id.start_btn);
+        start_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(MyChatActivity.this, Tab_Activity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+       // dialogWindow();
+
         container.startShimmerAnimation();
         get_list();
         chat_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

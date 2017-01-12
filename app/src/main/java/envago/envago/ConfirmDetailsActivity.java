@@ -2,7 +2,9 @@ package envago.envago;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -72,6 +74,10 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
     int i = 1,total,Change_total;
     Date startDate,endDate;
     Dialog dialog2;
+    TextView count_txtView;
+    String months[] = { " ", "Jan", "Feb", "Mar", "Apr", "May",
+            "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
+            "Dec", };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,11 +105,17 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         person_name = (TextView) findViewById(R.id.person_name);
         person_name.setText(global.getEvent_name());
         date_details = (TextView) findViewById(R.id.date_details);
-        date_details.setText(global.getEvent_start_date() + " to " + global.getEvent_end_date());
+        String data = global.getEvent_end_date();
+        String split[] = data.split("-");
+        String minth = split[1];
+        String date = split[2];
+        int mm = Integer.parseInt(minth);
+
+        date_details.setText(global.getEvent_start_date().split("-")[2] + " to " + date + " " + months[mm] + " " + split[0]);
         Time_details = (TextView) findViewById(R.id.Time_details);
-        Time_details.setText(global.getEvent_time());
+        Time_details.setText(global.getEvent_meetin_point()+" ,"+global.getEvent_time());
         person_count = (TextView) findViewById(R.id.person_count);
-        person_count.setText(String.valueOf(i) + "Person");
+        person_count.setText(String.valueOf(i));
         total_money = (TextView) findViewById(R.id.total_money);
         total_money.setText("$" + global.getEvent_price());
         total=Integer.parseInt(global.getEvent_price());
@@ -218,14 +230,14 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         switch (v.getId()) {
             case R.id.plus:
                 i++;
-                person_count.setText(String.valueOf(i) + "Person");
+                person_count.setText(String.valueOf(i));
                 Change_total=Change_total+total;
                 total_money.setText("$" + String.valueOf(Change_total));
                 break;
             case R.id.minus:
                 if (i != 1) {
                     i--;
-                    person_count.setText(String.valueOf(i) + "Person");
+                    person_count.setText(String.valueOf(i));
                     if(total!=Change_total){
                         Change_total=Change_total-total;
                         total_money.setText("$" + String.valueOf(Change_total));
@@ -233,7 +245,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                 }
                 break;
             case R.id.procced_btn:
-                thingToBuy = new PayPalPayment(new BigDecimal("10"), "USD",
+                thingToBuy = new PayPalPayment(new BigDecimal(String.valueOf(Change_total)), "USD",
                         "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
                 Intent intent = new Intent(ConfirmDetailsActivity.this, PaymentActivity.class);
                 intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
@@ -265,6 +277,10 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
 
                             String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
+                                SharedPreferences sp=getSharedPreferences("chat", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor ed=sp.edit();
+                                ed.putString("chat","chat");
+                                ed.commit();
                                 Toast.makeText(ConfirmDetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(ConfirmDetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();

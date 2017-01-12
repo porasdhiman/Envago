@@ -56,44 +56,50 @@ import java.net.URISyntaxException;
 /**
  * Created by jhang on 9/29/2016.
  */
-public class CreateAdventuresActivity extends Activity implements View.OnTouchListener, View.OnFocusChangeListener, View.OnClickListener {
+public class CreateAdventuresActivity extends Activity implements View.OnTouchListener, View.OnClickListener {
 
     EditText name, address, about, paypal;
-    CheckBox individual, group, licensed, nlicensed;
+    ImageView individual, group, licensed, nlicensed;
     ImageView back_button, document_pic;
     Button submit;
     RelativeLayout upload_id;
     String selectedImagePath = "";
     Dialog camgllry;
-    String usertype="", license="";
+    String usertype = "", license = "";
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     HttpEntity resEntity;
     String message;
-    Dialog dialog2,message_dialog;
+    Dialog dialog2, message_dialog;
     Global global;
+    LinearLayout individual_layout, group_layout, licence_layout, not_liscence_layout;
+    TextView paypal_error_txtView, name_error_txtView, address_error_txtView, about_error_txtView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         setContentView(R.layout.new_create_advanture_activity);
-        global=(Global)getApplicationContext();
+        global = (Global) getApplicationContext();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
 
-       // message_dialog();
+        // message_dialog();
         name = (EditText) findViewById(R.id.name_create);
         address = (EditText) findViewById(R.id.address_create);
         about = (EditText) findViewById(R.id.about_create);
         paypal = (EditText) findViewById(R.id.paypal_create);
+        paypal_error_txtView = (TextView) findViewById(R.id.paypal_error_txtView);
+        address_error_txtView = (TextView) findViewById(R.id.address_error_txtView);
+        name_error_txtView = (TextView) findViewById(R.id.name_error_txtView);
+        about_error_txtView = (TextView) findViewById(R.id.about_error_txtView);
 
-        individual = (CheckBox) findViewById(R.id.chk_individual_create);
-        group = (CheckBox) findViewById(R.id.chk_group_create);
-        licensed = (CheckBox) findViewById(R.id.chk_licensed_create);
-        nlicensed = (CheckBox) findViewById(R.id.chk_notlicensed_create);
+        individual = (ImageView) findViewById(R.id.chk_individual_create);
+        group = (ImageView) findViewById(R.id.chk_group_create);
+        licensed = (ImageView) findViewById(R.id.chk_licensed_create);
+        nlicensed = (ImageView) findViewById(R.id.chk_notlicensed_create);
 
 
         back_button = (ImageView) findViewById(R.id.back_button_create);
@@ -101,6 +107,15 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
 
         upload_id = (RelativeLayout) findViewById(R.id.upload_id_button_create);
         submit = (Button) findViewById(R.id.submit_button_create);
+        individual_layout = (LinearLayout) findViewById(R.id.individual_layout);
+        group_layout = (LinearLayout) findViewById(R.id.group_layout);
+        licence_layout = (LinearLayout) findViewById(R.id.license_layout);
+        not_liscence_layout = (LinearLayout) findViewById(R.id.not_license_layout);
+
+        individual_layout.setOnClickListener(this);
+        group_layout.setOnClickListener(this);
+        licence_layout.setOnClickListener(this);
+        not_liscence_layout.setOnClickListener(this);
 
         individual.setOnClickListener(this);
         group.setOnClickListener(this);
@@ -111,9 +126,9 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
 
 
         name.setOnTouchListener(this);
-        address.setOnFocusChangeListener(this);
-        about.setOnFocusChangeListener(this);
-        paypal.setOnFocusChangeListener(this);
+        address.setOnTouchListener(this);
+        about.setOnTouchListener(this);
+        paypal.setOnTouchListener(this);
 
     }
 
@@ -124,37 +139,20 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
 
 
         if (id == R.id.name_create) {
-            name.setBackground(getResources().getDrawable(R.drawable.stroke));
-            address.setBackground(getResources().getDrawable(R.drawable.rectangle));
-            about.setBackground(getResources().getDrawable(R.drawable.rectangle));
-            paypal.setBackground(getResources().getDrawable(R.drawable.rectangle));
-
+            name_error_txtView.setVisibility(View.GONE);
+        }
+        if (id == R.id.address_create) {
+            address_error_txtView.setVisibility(View.GONE);
+        }
+        if (id == R.id.paypal_create) {
+            paypal_error_txtView.setVisibility(View.GONE);
+        }
+        if (id == R.id.about_create) {
+            about_error_txtView.setVisibility(View.GONE);
         }
         return false;
     }
 
-    @Override
-    public void onFocusChange(View view, boolean hasfocus) {
-        int id = view.getId();
-
-
-        if (id == R.id.address_create && hasfocus) {
-            name.setBackground(getResources().getDrawable(R.drawable.rectangle));
-            address.setBackground(getResources().getDrawable(R.drawable.stroke));
-            about.setBackground(getResources().getDrawable(R.drawable.rectangle));
-            paypal.setBackground(getResources().getDrawable(R.drawable.rectangle));
-        } else if (id == R.id.about_create && hasfocus) {
-            name.setBackground(getResources().getDrawable(R.drawable.rectangle));
-            address.setBackground(getResources().getDrawable(R.drawable.rectangle));
-            about.setBackground(getResources().getDrawable(R.drawable.stroke));
-            paypal.setBackground(getResources().getDrawable(R.drawable.rectangle));
-        } else if (id == R.id.paypal_create && hasfocus) {
-            name.setBackground(getResources().getDrawable(R.drawable.rectangle));
-            address.setBackground(getResources().getDrawable(R.drawable.rectangle));
-            about.setBackground(getResources().getDrawable(R.drawable.rectangle));
-            paypal.setBackground(getResources().getDrawable(R.drawable.stroke));
-        }
-    }
 
     public void message_dialog() {
         message_dialog = new Dialog(this);
@@ -168,10 +166,10 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
         message_dialog.show();
 
-         TextView message_txt = (TextView) message_dialog.findViewById(R.id.message_txt);
+        TextView message_txt = (TextView) message_dialog.findViewById(R.id.message_txt);
         message_txt.setText(global.getIsVerified());
 
-         LinearLayout ok_layout = (LinearLayout) message_dialog.findViewById(R.id.ok_layout);
+        LinearLayout ok_layout = (LinearLayout) message_dialog.findViewById(R.id.ok_layout);
 
 
         ok_layout.setOnClickListener(new View.OnClickListener() {
@@ -189,30 +187,31 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
 
         int id = view.getId();
 
-        if (id == R.id.chk_individual_create) {
-            individual.setChecked(true);
-            group.setChecked(false);
-            usertype = individual.getText().toString();
+        if (id == R.id.individual_layout) {
+            individual.setImageResource(R.drawable.unselected);
+            group.setImageResource(R.drawable.selected);
+            usertype = "Individual";
 
         }
 
-        if (id == R.id.chk_group_create) {
-            individual.setChecked(false);
-            group.setChecked(true);
-            usertype = group.getText().toString();
+        if (id == R.id.group_layout) {
+            individual.setImageResource(R.drawable.selected);
+            group.setImageResource(R.drawable.unselected);
+            usertype = "Group";
+
 
         }
 
-        if (id == R.id.chk_licensed_create) {
-            licensed.setChecked(true);
-            nlicensed.setChecked(false);
-            license = licensed.getText().toString();
+        if (id == R.id.license_layout) {
+            licensed.setImageResource(R.drawable.selected);
+            nlicensed.setImageResource(R.drawable.unselected);
+            license = "Licensed";
 
         }
-        if (id == R.id.chk_notlicensed_create) {
-            licensed.setChecked(false);
-            nlicensed.setChecked(true);
-            license = nlicensed.getText().toString();
+        if (id == R.id.not_license_layout) {
+            licensed.setImageResource(R.drawable.unselected);
+            nlicensed.setImageResource(R.drawable.selected);
+            license = "Not Licensed";
 
         }
         if (id == R.id.back_button_create) {
@@ -227,18 +226,24 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
 
         if (id == R.id.submit_button_create) {
             if (address.getText().toString().length() == 0) {
-                address.setError("Please enter Address");
+                address_error_txtView.setVisibility(View.VISIBLE);
+                address_error_txtView.setText("Please enter Address");
             } else if (paypal.getText().toString().length() == 0) {
-                paypal.setError("Please enter paypal");
+                paypal_error_txtView.setVisibility(View.VISIBLE);
+
+                paypal_error_txtView.setText("Please enter paypal");
             } else if (about.getText().toString().length() == 0) {
-                about.setError("Please enter about");
+                about_error_txtView.setVisibility(View.VISIBLE);
+
+                about_error_txtView.setText("Please enter about");
             } else if (license.equalsIgnoreCase("")) {
                 Toast.makeText(CreateAdventuresActivity.this, "Please select license or not licensed", Toast.LENGTH_SHORT).show();
             } else if (usertype.equalsIgnoreCase("")) {
                 Toast.makeText(CreateAdventuresActivity.this, "Please select group or individual", Toast.LENGTH_SHORT).show();
             } else if (name.getText().toString().length() == 0) {
-                name.setError("Please enter name");
+                name_error_txtView.setVisibility(View.VISIBLE);
 
+                name_error_txtView.setText("Please enter name");
             } else {
                 dialogWindow();
                 new Thread(null, address_request, "")
@@ -308,7 +313,7 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
             }
         } else if (requestCode == 1) {
 
-           // onCaptureImageResult(data);
+            // onCaptureImageResult(data);
             //camgllry.dismiss();
             //  document_pic.setVisibility(View.VISIBLE);
 
@@ -387,7 +392,7 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
 
             post.setEntity(reqEntity);
 
-            Log.e("params", CommonUtils.UserID(this)+" "+selectedImagePath + " " + usertype + " " + license + " " + GlobalConstants.UPLOAD_DOCUMENT_ACTION + " " + name.getText() + " " + address.getText());
+            Log.e("params", CommonUtils.UserID(this) + " " + selectedImagePath + " " + usertype + " " + license + " " + GlobalConstants.UPLOAD_DOCUMENT_ACTION + " " + name.getText() + " " + address.getText());
             HttpResponse response = client.execute(post);
             resEntity = response.getEntity();
 
@@ -453,7 +458,7 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
         // Uri uri=data.getData();
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-       // thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        // thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
         FileOutputStream fo;

@@ -45,7 +45,7 @@ public class Tab_Activity extends TabActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         setContentView(R.layout.tab_activity);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -110,6 +110,9 @@ public class Tab_Activity extends TabActivity {
         });
 
     }
+    public void callHome(){
+        tabHost.setCurrentTab(0);
+    }
 
     private void setTabs() {
 
@@ -118,7 +121,7 @@ public class Tab_Activity extends TabActivity {
         addTab(R.drawable.tab_favorite, FavoriteActivity.class);
         addTab(R.drawable.tab_chat, MyChatActivity.class);
 
-        addTab(R.drawable.tab_search, SearchActivity.class);
+        addTab(R.drawable.tab_search, SearchByLocationActivity.class);
 
 
         addTab(R.drawable.tab_user, UserActivity.class);

@@ -2,7 +2,9 @@ package envago.envago;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,7 +44,7 @@ import java.util.Map;
  */
 public class Adventure_list_adapter extends BaseAdapter {
 
-    ArrayList<HashMap<String, String>> images;
+    ArrayList<HashMap<String, String>> images=new ArrayList<>();
     LayoutInflater inflater;
     Context applicationContext;
     Adventure_holder holder = null;
@@ -52,6 +54,8 @@ public class Adventure_list_adapter extends BaseAdapter {
     String months[] = { " ", "Jan", "Feb", "Mar", "Apr", "May",
             "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
             "Dec", };
+    SharedPreferences sp;
+    SharedPreferences.Editor ed;
     public Adventure_list_adapter(Context applicationContext, ArrayList<HashMap<String, String>> images) {
         this.images = images;
         this.applicationContext = applicationContext;
@@ -63,6 +67,8 @@ public class Adventure_list_adapter extends BaseAdapter {
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
+        sp=applicationContext.getSharedPreferences("message",Context.MODE_PRIVATE);
+        ed=sp.edit();
     }
 
     @Override
@@ -116,19 +122,21 @@ public class Adventure_list_adapter extends BaseAdapter {
         }
 
         url = "http://worksdelight.com/envago/uploads/" + images.get(i).get(GlobalConstants.EVENT_IMAGES);
-
         holder.ad_name.setText(images.get(i).get(GlobalConstants.EVENT_NAME));
-        holder.price.setText("$"+images.get(i).get(GlobalConstants.EVENT_PRICE));
-        String data=images.get(i).get(GlobalConstants.EVENT_START_DATE);
+        holder.price .setText("$" + images.get(i).get(GlobalConstants.EVENT_PRICE));
+        String data = images.get(i).get(GlobalConstants.EVENT_START_DATE);
         String split[] = data.split("-");
         String minth = split[1];
-        String date=split[2];
+        String date = split[2];
         int mm = Integer.parseInt(minth);
 
-        holder.advanture_date.setText(date+" "+months[mm]/*+" "+split[0]*/);
-        Log.e("location",images.get(i).get(GlobalConstants.EVENT_LOC));
+        holder.advanture_date.setText(date + " " + months[mm]/* + " " + split[0]*/);
+        holder.advanture_date.setTextColor(Color.GRAY);
 
         holder.advanture_location.setText(images.get(i).get(GlobalConstants.EVENT_LOC));
+        holder.advanture_location.setTextColor(Color.GRAY);
+        Log.e("location text ",holder.advanture_location.getText().toString());
+
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
             imageLoader.displayImage(url, holder.backimg, options,
@@ -159,10 +167,14 @@ public class Adventure_list_adapter extends BaseAdapter {
                     images.get(i).put(GlobalConstants.EVENT_FAV, "1");
                     holder.heart_img.setImageResource(R.drawable.heart_field);
                     favoriteMethod(images.get(i).get(GlobalConstants.EVENT_ID), "1");
+                    ed.putString("message","wish");
+                    ed.commit();
                 } else {
                     holder.heart_img.setImageResource(R.drawable.heart);
                     images.get(i).put(GlobalConstants.EVENT_FAV, "0");
                     favoriteMethod(images.get(i).get(GlobalConstants.EVENT_ID), "0");
+                    ed.putString("message","not wish");
+                    ed.commit();
                 }
 
             }

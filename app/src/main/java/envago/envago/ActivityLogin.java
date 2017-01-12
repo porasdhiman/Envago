@@ -152,13 +152,13 @@ public class ActivityLogin extends Activity implements View.OnTouchListener,View
                         Log.e("response", response);
                         try {
                             JSONObject obj = new JSONObject(response);
-                            JSONObject data = obj.getJSONObject("data");
 
-                            ed.putString(GlobalConstants.USERID, data.getString(GlobalConstants.USERID));
-                            ed.commit();
                             String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
+                                JSONObject data = obj.getJSONObject("data");
 
+                                ed.putString(GlobalConstants.USERID, data.getString(GlobalConstants.USERID));
+                                ed.commit();
                                 Intent i=new Intent(ActivityLogin.this,Tab_Activity.class);
                                 startActivity(i);
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

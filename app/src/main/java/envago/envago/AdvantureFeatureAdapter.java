@@ -95,7 +95,7 @@ public class AdvantureFeatureAdapter extends PagerAdapter {
             }
         });
 
-        if (mResources.get(i).get(GlobalConstants.EVENT_IMAGES).equalsIgnoreCase("")) {
+        if (mResources.get(i).get(GlobalConstants.EVENT_IMAGES).equalsIgnoreCase("")||mResources.get(i).get(GlobalConstants.EVENT_IMAGES).equalsIgnoreCase(null)) {
 
         } else {
             url = "http://worksdelight.com/envago/uploads/" + mResources.get(i).get(GlobalConstants.EVENT_IMAGES);
@@ -134,6 +134,7 @@ public class AdvantureFeatureAdapter extends PagerAdapter {
             heart_img.setImageResource(R.drawable.heart_field);
 
         }
+
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy/MM/dd");

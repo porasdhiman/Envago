@@ -2,6 +2,7 @@ package envago.envago;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +19,7 @@ public class NewAdvantureForm extends Activity {
     ImageView booking_checkBox, route_checkbox, photo_checkBox, detail_checkBox;
     boolean is_booking, is_route, is_addPhoto, is_detail;
     Global global;
-    Button submit_button;
+    Button submit_button, preview_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +32,8 @@ public class NewAdvantureForm extends Activity {
         }
         global = (Global) getApplicationContext();
         booking_checkBox = (ImageView) findViewById(R.id.booking_checkBox);
-        submit_button=(Button)findViewById(R.id.submit_button_create_advanture) ;
-
+        submit_button = (Button) findViewById(R.id.submit_button_create_advanture);
+        preview_button = (Button) findViewById(R.id.preview_button);
         booking_checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,13 +95,22 @@ public class NewAdvantureForm extends Activity {
             }
 
         }
-        if(!global.getEvent_start_date().equalsIgnoreCase("")&&!global.getStartingPoint().equalsIgnoreCase("")
-                &&global.getListImg().size() != 0&&global.getEvent_description().equalsIgnoreCase("true")){
+        if (!global.getEvent_start_date().equalsIgnoreCase("") && !global.getStartingPoint().equalsIgnoreCase("")
+                && global.getListImg().size() != 0 && global.getEvent_description().equalsIgnoreCase("true")) {
             submit_button.setBackgroundResource(R.drawable.red_button_back);
             submit_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
+                }
+            });
+            preview_button.setTextColor(Color.BLACK);
+            preview_button.setBackgroundResource(R.drawable.red_border_button);
+            preview_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(NewAdvantureForm.this, PreviewActivity.class);
+                    startActivity(i);
                 }
             });
         }
