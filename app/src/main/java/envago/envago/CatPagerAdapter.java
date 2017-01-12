@@ -3,25 +3,19 @@ package envago.envago;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,7 +76,7 @@ public class CatPagerAdapter extends PagerAdapter {
         TextView count_value = (TextView) itemView.findViewById(R.id.count_value);
         ImageView cat_pager_img = (ImageView) itemView.findViewById(R.id.cat_pager_img);
 
-        cat_pager_img.setImageResource(images[position]);
+        cat_pager_img.setBackgroundResource(images[position]);
         cat_name_txtView.setText(list.get(position).get(GlobalConstants.EVENT_CAT_NAME));
         count_value.setText(list.get(position).get(GlobalConstants.EVENT_CAT_COUNT));
 

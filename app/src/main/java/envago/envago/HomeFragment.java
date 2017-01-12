@@ -4,8 +4,6 @@ package envago.envago;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -313,6 +311,7 @@ ShimmerFrameLayout shimmer_view_container;
 
                             }
                         }
+                        Log.e("featured event",featured_event_list.toString());
                         if(data.has("featured_users")) {
                             JSONArray featured_users = data.getJSONArray("featured_users");
                             for (int i = 0; i < featured_users.length(); i++) {

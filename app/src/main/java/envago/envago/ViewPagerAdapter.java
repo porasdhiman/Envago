@@ -3,7 +3,6 @@ package envago.envago;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -63,8 +61,8 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.img_pager_item);
 
-imageView.setImageURI(Uri.fromFile(new File(mResources.get(position))));
-       /* url = mResources.get(position);
+//imageView.setImageURI(Uri.fromFile(new File(mResources.get(position))));
+        url = mResources.get(position);
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
             imageLoader.displayImage(url, imageView, options,
@@ -80,7 +78,6 @@ imageView.setImageURI(Uri.fromFile(new File(mResources.get(position))));
         } else {
             imageView.setImageResource(R.mipmap.ic_launcher);
         }
-*/
         container.addView(itemView);
 
         return itemView;

@@ -3,7 +3,6 @@ package envago.envago;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -74,7 +73,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -108,7 +106,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
             level_no3, admin_description, level_no4, date_details, meeting_desc, time_txtVIew,
             location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview, header_textview,Disclaimer_txtView;
     LinearLayout about_layout, map_layout, review_layout,desclaimer_layout;
-    ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView;
+    ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView,flight;
     CircleImageView orginiser_img;
     ArrayList<String> list = new ArrayList<>();
     Button purchase_btn;
@@ -204,6 +202,7 @@ ImageView dumy_imageview;
         accomodation_txtView = (ImageView) findViewById(R.id.accomodation);
         transport_txtView = (ImageView) findViewById(R.id.transport);
         meal_txtView = (ImageView) findViewById(R.id.meals);
+        flight = (ImageView) findViewById(R.id.flight);
         gear_txtView = (ImageView) findViewById(R.id.gear);
         tent_txtView = (ImageView) findViewById(R.id.tent);
         back_button = (ImageView) findViewById(R.id.detail_back_button);
@@ -411,9 +410,10 @@ ImageView dumy_imageview;
                                     Marker mark = mMap.addMarker(new MarkerOptions().position(postion).title("Meeting Point").snippet(meeting_loc));
                                     markers.put(mark.getId(), list.get(0));
 
-
+                                    String locationUrl=getMapsApiDirectionsUrl2(objArry.getString("latitude"),objArry.getString("longitude"),meeting_lat,meeting_long);
                                     ReadTask downloadTask = new ReadTask();
-                                    downloadTask.execute(getMapsApiDirectionsUrl2(objArry.getString("latitude"),objArry.getString("longitude"),meeting_lat,meeting_long));
+                                    Log.e("locationUrl",locationUrl);
+                                    downloadTask.execute(locationUrl);
 
 
 
@@ -536,6 +536,11 @@ ImageView dumy_imageview;
                                         tent_txtView.setImageResource(R.drawable.tent_gray);
                                     } else {
                                         tent_txtView.setImageResource(R.drawable.tent);
+                                    }
+                                    if (objArry.getString("flight").equalsIgnoreCase("0")) {
+                                        flight.setImageResource(R.drawable.flight_gray);
+                                    } else {
+                                        flight.setImageResource(R.drawable.flight);
                                     }
                                     if (objArry.getString("disclaimer").equalsIgnoreCase(null)||objArry.getString("disclaimer").equalsIgnoreCase("")) {
                                         desclaimer_layout.setVisibility(view.GONE);
@@ -662,8 +667,9 @@ ImageView dumy_imageview;
                 polyLineOptions.width(5);
                 polyLineOptions.color(Color.BLUE);
             }
-
-            mMap.addPolyline(polyLineOptions);
+if(polyLineOptions!=null) {
+    mMap.addPolyline(polyLineOptions);
+}
         }
 
     }

@@ -535,40 +535,46 @@ android:layout_marginRight="10dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    android:weightSum="5">
+                    android:weightSum="6">
 
                     <ImageView
                         android:id="@+id/transport"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_weight="1"
                         android:src="@drawable/tansport_gray" />
+                    <ImageView
+                        android:id="@+id/flight"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/flight_gray" />
 
                     <ImageView
                         android:id="@+id/accomodation"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_weight="1"
                         android:src="@drawable/accomodation_gray" />
 
                     <ImageView
                         android:id="@+id/tent"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_weight="1"
                         android:src="@drawable/tent_gray" />
 
                     <ImageView
                         android:id="@+id/gear"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_weight="1"
                         android:src="@drawable/gear_gray" />
 
                     <ImageView
                         android:id="@+id/meals"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_weight="1"
                         android:src="@drawable/food_gray" />
                 </LinearLayout>
