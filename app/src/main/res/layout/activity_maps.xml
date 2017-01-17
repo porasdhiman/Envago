@@ -4,7 +4,8 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="envago.envago.MapsActivity">
+    tools:context="envago.envago.MapsActivity"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/main_heading"
@@ -74,6 +75,52 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/main_heading" />
+        android:layout_below="@+id/main_heading"
+        android:layout_above="@+id/show_info_layout"
+        android:layout_marginBottom="10dp"/>
+    <LinearLayout
+        android:id="@+id/show_info_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        >
+        <ImageView
+            android:id="@+id/event_img"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/air"/>
+        <TextView
+            android:id="@+id/event_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hkhkl"
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/Gray"/>
+        <TextView
+            android:id="@+id/event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hkhkl"
+            android:layout_marginLeft="10dp"
+            android:textSize="14sp"
+            android:textColor="@color/Gray"/>
+        <TextView
+            android:id="@+id/event_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$30"
+            android:layout_marginLeft="10dp"
+            android:textSize="14sp"
+            android:textColor="@color/textcolor"
+            />
+
+
+    </LinearLayout>
+
 
 </RelativeLayout>

@@ -1,10 +1,10 @@
 package envago.envago;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,16 +12,16 @@ import android.support.v4.app.FragmentActivity;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -50,10 +50,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by vikas on 11-01-2017.
+ * Created by worksdelight on 17/01/17.
  */
 
-public class SearchByLocationActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener,
+public class SearchByGoogleApiLocation  extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks {
     protected GoogleApiClient mGoogleApiClient;
     private GoogleMap mMap;
@@ -64,28 +64,41 @@ public class SearchByLocationActivity extends FragmentActivity implements Google
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
     ListView search_listView;
-    ArrayList<HashMap<String,String>> countryList=new ArrayList<>();
+    ArrayList<HashMap<String, String>> event_list = new ArrayList<>();
     Global global;
+    TextView trending_txt;
+    String lat, lng;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
+        }
         setContentView(R.layout.search_by_location_layout);
-        global=(Global)getApplicationContext();
-        search_listView=(ListView)findViewById(R.id.search_list);
-        searchMethod();
+        global = (Global) getApplicationContext();
+        search_listView = (ListView) findViewById(R.id.search_list);
+        trending_txt = (TextView) findViewById(R.id.trending_txt);
+        trending_txt.setVisibility(View.GONE);
+
         search_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i=new Intent(SearchByLocationActivity.this,AccordingToCountry.class);
-                i.putExtra(GlobalConstants.ID,countryList.get(position).get(GlobalConstants.ID));
-                i.putExtra(GlobalConstants.EVENT_NAME,countryList.get(position).get(GlobalConstants.EVENT_NAME));
+                Intent i = new Intent(SearchByGoogleApiLocation.this, DetailsActivity.class);
+                i.putExtra(GlobalConstants.EVENT_ID, event_list.get(position).get(GlobalConstants.EVENT_ID));
+                i.putExtra("user", "non user");
                 startActivity(i);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         //-------------------------------Call AutocompleteTxtView-----------------
         buildGoogleApiClient();
         mAutocompleteView = (AutoCompleteTextView) findViewById(R.id.mAutocompleteView);
-
+        mAutocompleteView.setText(getIntent().getExtras().getString("loc"));
+        lat = getIntent().getExtras().getString("lat");
+        lng = getIntent().getExtras().getString("lng");
+        searchMethod();
         mAutocompleteView.setOnItemClickListener(mAutocompleteClickListener);
         mAdapter = new PlaceAutocompleteAdapter(this, android.R.layout.simple_list_item_1,
                 BOUNDS_MOUNTAIN_VIEW, null) {
@@ -108,63 +121,82 @@ public class SearchByLocationActivity extends FragmentActivity implements Google
     private void searchMethod() {
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, GlobalConstants.URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-
-                        Log.e("response", response);
-                        try {
-                            JSONObject obj = new JSONObject(response);
-
-                            String status = obj.getString("success");
-                            if (status.equalsIgnoreCase("1")) {
-                                JSONArray data = obj.getJSONArray("data");
-                                for(int i=0;i<data.length();i++){
-                                    JSONObject objData=data.getJSONObject(i);
-                                    HashMap<String,String> map=new HashMap<>();
-                                    map.put(GlobalConstants.ID,objData.getString(GlobalConstants.ID));
-                                    map.put(GlobalConstants.EVENT_NAME,objData.getString(GlobalConstants.EVENT_NAME));
-                                    map.put(GlobalConstants.CODE,objData.getString(GlobalConstants.CODE));
-                                    map.put(GlobalConstants.TREANDING_COUNT,objData.getString(GlobalConstants.TREANDING_COUNT));
-                                    countryList.add(map);
-                                }
-global.setCountryList(countryList);
-
-                                search_listView.setAdapter(new CountryAdapter(SearchByLocationActivity.this,countryList));
-                            } else {
-                                Toast.makeText(SearchByLocationActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
-                            }
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
+        StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+            public void onResponse(String s) {
 
-                params.put("action", "get_trending_countries");
-                Log.e("Parameter for Login", params.toString());
+                Log.e("Categoryyyy", s);
+                try {
+                    JSONObject obj = new JSONObject(s);
+                    String res = obj.getString("success");
+
+                    if (res.equalsIgnoreCase("1")) {
+
+                        // JSONObject data = obj.getJSONObject("data");
+
+                        JSONArray events = obj.getJSONArray("data");
+                        for (int i = 0; i < events.length(); i++) {
+                            JSONObject arrobj = events.getJSONObject(i);
+
+                            HashMap<String, String> details = new HashMap<>();
+
+                            details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.EVENT_ID));
+                            details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
+                            details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
+                            details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
+                            details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                            details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
+                            details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
+                            details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
+                            details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+
+
+                            event_list.add(details);
+
+                        }
+                        global.getEvent_list().clear();
+                        global.setEvent_list(event_list);
+                        search_listView.setAdapter(new Adventure_list_adapter(SearchByGoogleApiLocation.this, global.getEvent_list()));
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+
+                params.put(GlobalConstants.USERID, CommonUtils.UserID(SearchByGoogleApiLocation.this));
+
+
+                params.put(GlobalConstants.LATITUDE, lat);
+                params.put(GlobalConstants.LONGITUDE, lng);
+                params.put(GlobalConstants.RESPONSE_TYPE, "list");
+                params.put("page", "1");
+                params.put("perpage", "20");
+                params.put("action", GlobalConstants.GET_EVENT_FILTER);
+
+                Log.e("paramsssssssss", params.toString());
                 return params;
             }
-
         };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+
+        cat_request.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(SearchByGoogleApiLocation.this);
+        requestQueue.add(cat_request);
     }
+
     //-------------------------------Autolocation Method------------------------
     private AdapterView.OnItemClickListener mAutocompleteClickListener = new AdapterView.OnItemClickListener() {
         @Override
@@ -221,11 +253,7 @@ global.setCountryList(countryList);
             String lat = completeLatLng.split(",")[0];
             lat = lat.substring(1, lat.length());
             String lng = completeLatLng.split(",")[1];
-Intent i=new Intent(SearchByLocationActivity.this,SearchByGoogleApiLocation.class);
-            i.putExtra("lat",lat);
-            i.putExtra("lng",lng);
-            i.putExtra("loc",mAutocompleteView.getText().toString());
-            startActivity(i);
+
             places.release();
         }
     };
@@ -283,40 +311,6 @@ Intent i=new Intent(SearchByLocationActivity.this,SearchByGoogleApiLocation.clas
                 .enableAutoManage(this, GOOGLE_API_CLIENT_ID, this)
                 .build();
     }
-
-    public class CountryAdapter extends BaseAdapter{
-        Context mContext;
-        ArrayList<HashMap<String,String>> list =new ArrayList<>();
-        LayoutInflater inflatore;
-        CountryAdapter(Context mContext,ArrayList<HashMap<String,String>> list ){
-            this.mContext=mContext;
-            this.list=list;
-            inflatore=LayoutInflater.from(mContext);
-
-        }
-
-
-        @Override
-        public int getCount() {
-            return list.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            convertView=inflatore.inflate(R.layout.search_list_item,null);
-            TextView product_name=(TextView)convertView.findViewById(R.id.product_name);
-            product_name.setText(list.get(position).get(GlobalConstants.EVENT_NAME));
-            return convertView;
-        }
-    }
 }
+
+

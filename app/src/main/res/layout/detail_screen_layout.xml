@@ -267,12 +267,12 @@
                     android:layout_marginTop="10dp"
                     android:background="@color/Gray" />
 
-                <RelativeLayout
+               <!-- <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
-android:layout_marginLeft="10dp"
-android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -315,12 +315,13 @@ android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/Gray" />
+                    android:background="@color/Gray" />-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -328,7 +329,7 @@ android:layout_marginRight="10dp"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="15dp"
+
                         android:gravity="start"
                         android:text="Location"
                         android:textColor="#000"
@@ -352,6 +353,7 @@ android:layout_marginRight="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -359,7 +361,7 @@ android:layout_marginRight="10dp"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="15dp"
+
                         android:gravity="start"
                         android:text="Difficulty"
                         android:textColor="#000"
@@ -443,6 +445,7 @@ android:layout_marginRight="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -450,7 +453,7 @@ android:layout_marginRight="10dp"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="15dp"
+
                         android:gravity="start"
                         android:text="Meeting"
                         android:textColor="#000"
@@ -508,7 +511,7 @@ android:layout_marginRight="10dp"
 
                         android:text="Disclaimer"
                         android:textColor="#000"
-
+android:textStyle="bold"
                         android:textSize="14dp" />
 
                     <TextView
@@ -641,51 +644,25 @@ android:layout_marginRight="10dp"
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:weightSum="4">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <GridView
+                        android:id="@+id/user_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:numColumns="4"
+                        android:gravity="center"
+                        android:verticalSpacing="5dp"
+                        android:horizontalSpacing="5dp">
 
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_below="@+id/event_info_layout"
-                        android:layout_gravity="center"
+                    </GridView>
 
-                        android:layout_weight="1"
-                        android:src="@mipmap/app_name" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_below="@+id/event_info_layout"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-
-                        android:src="@mipmap/app_name" />
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_below="@+id/event_info_layout"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-
-                        android:src="@mipmap/app_name" />
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_below="@+id/event_info_layout"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-
-                        android:src="@mipmap/app_name" />
 
                 </LinearLayout>
 

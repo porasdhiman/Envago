@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * Created by vikas on 03-01-2017.
@@ -19,7 +19,8 @@ public class NewAdvantureForm extends Activity {
     ImageView booking_checkBox, route_checkbox, photo_checkBox, detail_checkBox;
     boolean is_booking, is_route, is_addPhoto, is_detail;
     Global global;
-    Button submit_button, preview_button;
+    Button submit_button;
+    TextView preview_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class NewAdvantureForm extends Activity {
         global = (Global) getApplicationContext();
         booking_checkBox = (ImageView) findViewById(R.id.booking_checkBox);
         submit_button = (Button) findViewById(R.id.submit_button_create_advanture);
-        preview_button = (Button) findViewById(R.id.preview_button);
+        preview_button = (TextView) findViewById(R.id.preview_button);
         booking_checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

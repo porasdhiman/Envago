@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Advantures"
+            android:text="Adventures"
             android:textColor="#fff"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -217,7 +217,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -227,6 +227,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Featured Adventures"
+                    android:layout_marginLeft="8dp"
                     android:textColor="@color/textcolor"
                     android:textSize="18sp" />
 
@@ -246,7 +247,7 @@
                 android:id="@+id/all_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+
                 android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 android:visibility="gone">
@@ -256,7 +257,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="All Categories"
-
+                    android:layout_marginLeft="8dp"
                     android:textColor="@color/textcolor"
                     android:textSize="18sp" />
 
@@ -282,7 +283,6 @@
                 android:id="@+id/suggested_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical"
 
@@ -294,6 +294,7 @@
                     android:layout_height="wrap_content"
                     android:text=" Suggested Adventures"
                     android:textColor="@color/textcolor"
+                    android:layout_marginLeft="8dp"
                     android:textSize="18sp" />
 
                 <android.support.v4.view.ViewPager
@@ -312,9 +313,9 @@
                 android:id="@+id/featured_planners_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
+
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -324,7 +325,7 @@
                     android:layout_height="wrap_content"
                     android:text="Featured Planners"
                     android:textColor="@color/textcolor"
-
+android:layout_marginLeft="8dp"
                     android:textSize="18sp" />
 
                 <ListView

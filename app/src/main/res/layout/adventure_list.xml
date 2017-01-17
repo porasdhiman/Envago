@@ -93,7 +93,6 @@
                 android:id="@+id/goint_to_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -102,6 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginLeft="8dp"
                     android:text="Goning to"
                     android:textColor="@color/textcolor"
                     android:textSize="18sp" />
@@ -118,7 +118,6 @@
                 android:id="@+id/planning_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -127,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Planning"
-
+                    android:layout_marginLeft="8dp"
                     android:textColor="@color/textcolor"
                     android:textSize="18sp" />
 
@@ -308,7 +307,6 @@
                 android:id="@+id/wish_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -318,6 +316,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Wish list"
+                    android:layout_marginLeft="8dp"
                     android:textColor="@color/textcolor"
                     android:textSize="18sp" />
 

@@ -11,6 +11,8 @@ import android.net.NetworkInfo;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -195,7 +197,31 @@ public class CommonUtils {
 	}
 
 
+	public static void setGridViewHeightBasedOnChildren(GridView gridView, int columns) {
+		ListAdapter listAdapter = gridView.getAdapter();
+		if (listAdapter == null)
+			return;
+		int desiredWidth = View.MeasureSpec.makeMeasureSpec(gridView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+		int totalHeight = 0;
+		View view = null;
+		int rows = listAdapter.getCount() / columns;
+		if(listAdapter.getCount() % columns> 0){
+			rows++;
+		}
+		for (int i = 0; i < rows; i++) {
+			view = listAdapter.getView(i, view, gridView);
+			if (i == 0)
+				view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, LinearLayout.LayoutParams.WRAP_CONTENT));
 
+			view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+			totalHeight += view.getMeasuredHeight();
+		}
+		ViewGroup.LayoutParams params = gridView.getLayoutParams();
+		params.height = totalHeight + (gridView.getHorizontalSpacing() * rows);
+		gridView.setLayoutParams(params);
+		gridView.requestLayout();
+
+	}
 
 		
 }

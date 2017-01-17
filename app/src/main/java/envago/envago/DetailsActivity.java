@@ -19,13 +19,20 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -157,7 +164,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
     TextView days_details,desclaimer_txt_show;
 ImageView dumy_imageview;
-
+GridView user_grid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,9 +174,7 @@ ImageView dumy_imageview;
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
-        desclaimer_layout=(LinearLayout)findViewById(R.id.desclaimer_layout) ;
-        intro_images = (ViewPager) findViewById(R.id.pager_introduction);
-        dumy_imageview=(ImageView)findViewById(R.id.dumy_imageview);
+
        // review_txtview = (TextView) findViewById(R.id.review_txtView);
         review_layout = (LinearLayout) findViewById(R.id.review_layout);
        // review_list = (ListView) findViewById(R.id.review_list);
@@ -182,9 +187,12 @@ ImageView dumy_imageview;
         admin_name = (TextView) findViewById(R.id.event_name);
        // about_txtView = (TextView) findViewById(R.id.about_txtView);
         //route_txtView = (TextView) findViewById(R.id.route_txtView);
-        date_details = (TextView) findViewById(R.id.date_details);
+       // date_details = (TextView) findViewById(R.id.date_details);
         meeting_desc = (TextView) findViewById(R.id.meeting_desc);
         time_txtVIew = (TextView) findViewById(R.id.time_txtView);
+        desclaimer_layout=(LinearLayout)findViewById(R.id.desclaimer_layout) ;
+        intro_images = (ViewPager) findViewById(R.id.pager_introduction);
+        dumy_imageview=(ImageView)findViewById(R.id.dumy_imageview);
       /*  level_no1 = (TextView) findViewById(R.id.level1);
         level_no2 = (TextView) findViewById(R.id.level2);
         level_no3 = (TextView) findViewById(R.id.level3);
@@ -207,11 +215,12 @@ ImageView dumy_imageview;
         tent_txtView = (ImageView) findViewById(R.id.tent);
         back_button = (ImageView) findViewById(R.id.detail_back_button);
         places_txtView = (TextView) findViewById(R.id.places_count_txtView);
+        user_grid=(GridView)findViewById(R.id.user_view);
         //event_info_layout = (RelativeLayout) findViewById(R.id.event_info_layout);
         //event_info_layout.setOnClickListener(this);
         purchase_btn = (Button) findViewById(R.id.purchase_btn);
        // signup_btn = (Button) findViewById(R.id.signup_btn);
-        days_details = (TextView)findViewById(R.id.days_details);
+       // days_details = (TextView)findViewById(R.id.days_details);
         //signup_btn.setOnClickListener(this);
        purchase_btn.setOnClickListener(this);
        // about_txtView.setOnClickListener(this);
@@ -452,6 +461,7 @@ ImageView dumy_imageview;
                                     }
 
                                     admin_description.setText(adminobj.getString(GlobalConstants.ADMIN_ABOUT));
+                                    makeTextViewResizable(admin_description, 4, "Read More", true);
                                     if (objArry.getString(GlobalConstants.ADMIN_RATING).contains(".")) {
                                        // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
                                         stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", "")));
@@ -485,7 +495,7 @@ ImageView dumy_imageview;
                                     } catch (java.text.ParseException e) {
                                         e.printStackTrace();
                                     }
-                                    date_details.setText(date+" "+months[mm]+" "+split[0]);
+                                   // date_details.setText(date+" "+months[mm]+" "+split[0]);
 
                                     //days_details.setText(String.valueOf(getDaysDifference(startDate,endDate))+" Days");
                                     global.setEvent_start_date(objArry.getString(GlobalConstants.EVENT_START_DATE));
@@ -550,12 +560,13 @@ ImageView dumy_imageview;
                                     }
 
                                     places_txtView.setText(objArry.getString("total_no_of_places") + "Places");
-                                    purchase_btn.setText("$" + objArry.getString(GlobalConstants.EVENT_PRICE));
+                                    purchase_btn.setText("Book it for $" + objArry.getString(GlobalConstants.EVENT_PRICE));
                                     global.setEvent_price(objArry.getString(GlobalConstants.EVENT_PRICE));
                                 }
                                 pagerAdapterMethod(list);
 
-
+                                user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this));
+                                CommonUtils.setGridViewHeightBasedOnChildren(user_grid,4);
                             } else {
                                 Toast.makeText(DetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             }
@@ -1171,5 +1182,88 @@ if(polyLineOptions!=null) {
 
         return (int)( (toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
     }
+
+    //-------------------------------------More textView method-----------------
+    public static void makeTextViewResizable(final TextView tv, final int maxLine, final String expandText, final boolean viewMore) {
+
+    if (tv.getTag() == null) {
+        tv.setTag(tv.getText());
+    }
+    ViewTreeObserver vto = tv.getViewTreeObserver();
+    vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onGlobalLayout() {
+
+            ViewTreeObserver obs = tv.getViewTreeObserver();
+            obs.removeGlobalOnLayoutListener(this);
+            if (maxLine == 0) {
+                int lineEndIndex = tv.getLayout().getLineEnd(0);
+                String text = tv.getText().subSequence(0, lineEndIndex - expandText.length() + 1) + " " + expandText;
+                tv.setText(text);
+                tv.setMovementMethod(LinkMovementMethod.getInstance());
+                tv.setText(
+                        addClickablePartTextViewResizable(Html.fromHtml(tv.getText().toString()), tv, maxLine, expandText,
+                                viewMore), TextView.BufferType.SPANNABLE);
+            } else if (maxLine > 0 && tv.getLineCount() >= maxLine) {
+                int lineEndIndex = tv.getLayout().getLineEnd(maxLine - 1);
+                String text = tv.getText().subSequence(0, lineEndIndex - expandText.length() + 1) + " " + expandText;
+                tv.setText(text);
+                tv.setMovementMethod(LinkMovementMethod.getInstance());
+                tv.setText(
+                        addClickablePartTextViewResizable(Html.fromHtml(tv.getText().toString()), tv, maxLine, expandText,
+                                viewMore), TextView.BufferType.SPANNABLE);
+            } else {
+                int lineEndIndex = tv.getLayout().getLineEnd(tv.getLayout().getLineCount() - 1);
+                String text = tv.getText().subSequence(0, lineEndIndex) + " " + expandText;
+                tv.setText(text);
+                tv.setMovementMethod(LinkMovementMethod.getInstance());
+                tv.setText(
+                        addClickablePartTextViewResizable(Html.fromHtml(tv.getText().toString()), tv, lineEndIndex, expandText,
+                                viewMore), TextView.BufferType.SPANNABLE);
+            }
+        }
+    });
+}
+
+
+
+    private static SpannableStringBuilder addClickablePartTextViewResizable(final Spanned strSpanned, final TextView tv,
+                                                                            final int maxLine, final String spanableText, final boolean viewMore) {
+
+        String str = strSpanned.toString();
+        SpannableStringBuilder ssb = new SpannableStringBuilder(strSpanned);
+
+
+
+
+            if (str.contains(spanableText)) {
+                ssb.setSpan(new ClickableSpan() {
+
+                    @Override
+                    public void onClick(View widget) {
+
+                        if (viewMore) {
+                            tv.setLayoutParams(tv.getLayoutParams());
+                            tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
+                            tv.invalidate();
+                            makeTextViewResizable(tv, -1, "Read Less", false);
+                        } else {
+                            tv.setLayoutParams(tv.getLayoutParams());
+                            tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
+                            tv.invalidate();
+                            makeTextViewResizable(tv, 3, "Read More", true);
+                        }
+
+                    }
+                }, str.indexOf(spanableText), str.indexOf(spanableText) + spanableText.length(), 0);
+
+            }
+        
+        return ssb;
+
+    }
+
 
 }

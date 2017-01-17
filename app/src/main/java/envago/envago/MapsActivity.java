@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -28,6 +27,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +51,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -74,7 +75,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback {
+        GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback{
     Marker marker;
     private GoogleMap mMap;
     private Hashtable<String, String> markers;
@@ -97,7 +98,10 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
     int i;
     Marker mark;
     Dialog dialog2;
-
+    final HashMap<String,Integer> map=new HashMap<>();
+    LinearLayout show_info_layout;
+    TextView event_name,event_date,event_price;
+    ImageView event_image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -116,6 +120,12 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
+        show_info_layout=(LinearLayout)findViewById(R.id.show_info_layout);
+        event_name=(TextView)findViewById(R.id.event_name) ;
+        event_date=(TextView)findViewById(R.id.event_date) ;
+        event_price=(TextView)findViewById(R.id.event_price) ;
+        event_image=(ImageView) findViewById(R.id.event_img) ;
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -156,6 +166,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
                 finish();
             }
         });
+
     }
 
 
@@ -171,6 +182,34 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                int pos = map.get(marker.getId());
+
+                show_info_layout.setVisibility(View.VISIBLE);
+                event_name.setText(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_NAME));
+                event_date.setText(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_START_DATE));
+                event_price.setText(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_PRICE));
+                String url="http://worksdelight.com/envago/uploads/" + global.getEvent_list().get(pos).get(GlobalConstants.EVENT_IMAGES);
+                if (url != null && !url.equalsIgnoreCase("null")
+                        && !url.equalsIgnoreCase("")) {
+                    imageLoader.displayImage(url, event_image, options,
+                            new SimpleImageLoadingListener() {
+                                @Override
+                                public void onLoadingComplete(String imageUri,
+                                                              View view, Bitmap loadedImage) {
+                                    super.onLoadingComplete(imageUri, view,
+                                            loadedImage);
+
+                                }
+                            });
+                } else {
+                    event_image.setImageResource(R.mipmap.ic_launcher);
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -428,9 +467,9 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
 
                     if (res.equalsIgnoreCase("1")) {
 
-                        // JSONObject data = obj.getJSONObject("data");
+                         JSONObject data = obj.getJSONObject("data");
 
-                        JSONArray events = obj.getJSONArray("data");
+                        JSONArray events = data.getJSONArray("events");
                         for (int i = 0; i < events.length(); i++) {
                             JSONObject arrobj = events.getJSONObject(i);
 
@@ -497,24 +536,29 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             mMap.clear();
         }
         {
-            mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+
+            //mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
             // Add a marker in Sydney and move the camera
             for (i = 0; i < global.getEvent_list().size(); i++) {
                 LatLng postion = new LatLng(Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LATITUDE)), Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LONGITUDE)));
-                mark = mMap.addMarker(new MarkerOptions().position(postion).title(global.getEvent_list().get(i).get(GlobalConstants.EVENT_NAME)).snippet(global.getEvent_list().get(i).get(GlobalConstants.EVENT_NAME)));
+                mark = mMap.addMarker(new MarkerOptions().position(postion).title(global.getEvent_list().get(i).get(GlobalConstants.EVENT_NAME)).icon(BitmapDescriptorFactory.fromResource(R.mipmap.app_name)));
 
-                markers.put(mark.getId(), "http://envagoapp.com/uploads/" + global.getEvent_list().get(i).get(GlobalConstants.EVENT_IMAGES));
-
+               // markers.put(mark.getId(), "http://envagoapp.com/uploads/" + global.getEvent_list().get(i).get(GlobalConstants.EVENT_IMAGES));
+                map.put(mark.getId(),i);
                 //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
             }
 
             LatLng postion=new LatLng(Double.parseDouble(lat),Double.parseDouble(lng));
+            mark = mMap.addMarker(new MarkerOptions().position(postion).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)));
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 15));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 10));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
+
         }
     }
+
 
     //---------------------------Progrees Dialog-----------------------
     public void dialogWindow() {

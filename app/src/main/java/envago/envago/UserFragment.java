@@ -18,8 +18,6 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +68,7 @@ public class UserFragment extends Fragment {
     TextView username;
     Dialog dialog2;
     String selectedImagePath = "";
-TextView View_and_edit_profile_txtView;
+TextView logout_txtView;
 
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -96,20 +94,26 @@ TextView View_and_edit_profile_txtView;
         privacy = (TextView) v.findViewById(R.id.privacy_policy_txtView);
         username = (TextView) v.findViewById(R.id.username);
         terms = (TextView) v.findViewById(R.id.terms_txtView);
-        View_and_edit_profile_txtView=(TextView)v.findViewById(R.id.View_and_edit_profile_txtView);
-       /* profilepic.setOnClickListener(new View.OnClickListener() {
+        logout_txtView= (TextView) v.findViewById(R.id.logout_txtView);
+
+        logout_txtView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                dailog();
+                editor.clear();
+                editor.commit();
+                Intent intent = new Intent(getActivity(), ActivityLogin.class);
+                startActivity(intent);
+                getActivity().finish();
+
             }
-        });*/
+        });
 
 
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+               /* FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
                 FragmentTransaction anim_frag = fragmentManager.beginTransaction();
 
@@ -117,11 +121,10 @@ TextView View_and_edit_profile_txtView;
                 anim_frag.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
 
 
-                anim_frag.replace(R.id.contentintab, new EditProfileActivity()).addToBackStack(null).commit();
-             /*   Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                anim_frag.replace(R.id.contentintab, new EditProfileActivity()).addToBackStack(null).commit();*/
+                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
                 startActivityForResult(intent,2);
 
-*/
             }
         });
         pricing_layout.setOnClickListener(new View.OnClickListener() {
@@ -153,12 +156,7 @@ TextView View_and_edit_profile_txtView;
 
             }
         });
-        View_and_edit_profile_txtView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
         if (preferences.getString(GlobalConstants.USERNAME, "").equalsIgnoreCase("")) {
             dialogWindow();
             profile_api();
@@ -234,15 +232,17 @@ TextView View_and_edit_profile_txtView;
         } else if (requestCode == 1) {
             onCaptureImageResult(data);
             camgllry.dismiss();
-        }else if (requestCode == 2) {
+        }else  {
             if (preferences.getString(GlobalConstants.IMAGE, "").length() == 0) {
 
             } else {
 
                 if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
-                    Picasso.with(getActivity()).load(preferences.getString(GlobalConstants.IMAGE, ""));
+                    Picasso.with(getActivity()).load(preferences.getString(GlobalConstants.IMAGE, "")).into(profilepic);
                 } else {
-                    profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
+                    if(!preferences.getString(GlobalConstants.IMAGE, "").equalsIgnoreCase("")) {
+                        profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
+                    }
                 }
             }
             username.setText(preferences.getString(GlobalConstants.USERNAME, ""));
@@ -274,18 +274,23 @@ TextView View_and_edit_profile_txtView;
                         editor.putString(GlobalConstants.ADDRESS, json_data.getString(GlobalConstants.ADDRESS));
                         editor.putString(GlobalConstants.PAYPAL, json_data.getString(GlobalConstants.PAYPAL));
                         editor.putString(GlobalConstants.ABOUT, json_data.getString(GlobalConstants.ABOUT));
-                        editor.putString(GlobalConstants.DOCUMENT, json_data.getString(GlobalConstants.DOCUMENT));
-                        editor.putString(GlobalConstants.IMAGE, "http://envagoapp.com/uploads/"+json_data.getString(GlobalConstants.IMAGE));
+                        //editor.putString(GlobalConstants.DOCUMENT, json_data.getString(GlobalConstants.DOCUMENT));
+                        editor.putString(GlobalConstants.IMAGE, "http://worksdelight.com/envago/uploads/"+json_data.getString(GlobalConstants.IMAGE));
 
+                        String img_url="";
+                        if(!json_data.getString(GlobalConstants.IMAGE).equalsIgnoreCase("")){
+                            img_url = json_data.getString(GlobalConstants.IMAGE);
+                        }
+
+                        if (img_url.length() == 0) {
+                            profilepic.setImageResource(R.mipmap.app_name);
+                        } else {
+                            Picasso.with(getActivity()).load("http://worksdelight.com/envago/uploads/"+img_url).into(profilepic);
+                        }
                         editor.commit();
 
                         username.setText(preferences.getString(GlobalConstants.USERNAME, ""));
-                        String img_url = preferences.getString(GlobalConstants.IMAGE, "");
-                        if (img_url.length() == 0) {
 
-                        } else {
-                            Picasso.with(getActivity()).load(img_url).into(profilepic);
-                        }
 
 
                     } else {

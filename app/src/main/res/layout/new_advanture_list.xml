@@ -35,7 +35,8 @@
             android:layout_height="35dp"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
-            android:src="@drawable/map" />
+            android:src="@drawable/map"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
@@ -204,8 +205,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+
+            android:divider="@color/Gray"
+
+            android:dividerHeight="1dp"
             android:scrollbars="none"
             android:visibility="gone">
 

@@ -29,8 +29,17 @@
             android:textSize="17sp"
             android:textStyle="bold" />
 
-
-
+        <TextView
+            android:id="@+id/done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:text="Done"
+            android:textColor="#fff"
+            android:layout_marginRight="10dp"
+            android:textSize="17sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <ScrollView
@@ -55,7 +64,8 @@
                 android:layout_gravity="center"
 
                 android:scaleType="fitXY"
-                android:src="@mipmap/ic_launcher"
+                android:background="@color/Gray"
+
                />
                 <ImageView
                     android:id="@+id/camera_icon_img"
@@ -66,7 +76,7 @@
                     android:layout_marginTop="300dp"
 
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/camera"/>
             </RelativeLayout>
 
 
@@ -90,7 +100,7 @@
                     android:textStyle="bold"
                     android:textColor="#000" />
 
-                <TextView
+                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -99,7 +109,9 @@
                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:textSize="15sp"
+                    android:gravity="right"
                     android:background="@null"
+android:textCursorDrawable="@drawable/cursore_color"
                     android:hint="username"
                     android:id="@+id/username_edit"
                     android:textColor="#000"
@@ -140,7 +152,7 @@
                     android:textStyle="bold"
                     android:textColor="#000" />
 
-                <TextView
+                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -150,6 +162,8 @@
                     android:hint="name"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="10dp"
+                    android:gravity="right"
+                    android:textCursorDrawable="@drawable/cursore_color"
                     android:id="@+id/name_edit"
                     android:textColor="#000"
                     android:textSize="15sp"
@@ -190,7 +204,7 @@
 
                     />
 
-                <TextView
+                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
@@ -202,6 +216,9 @@
                     android:id="@+id/email_edit"
                     android:textSize="15sp"
                     android:textColor="#000"
+                    android:gravity="right"
+                    android:textCursorDrawable="@drawable/cursore_color"
+                    android:inputType="textEmailAddress"
                     />
 
 
@@ -239,7 +256,7 @@
                     android:textStyle="bold"
                     />
 
-                <TextView
+                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
@@ -247,10 +264,14 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:background="@null"
-                    android:hint="phone"
+                    android:hint="your phone number"
+                    android:textCursorDrawable="@drawable/cursore_color"
                     android:id="@+id/phone_edit"
                     android:textColor="#000"
                     android:textSize="15sp"
+                    android:maxLength="10"
+                    android:gravity="right"
+                    android:inputType="number"
                     />
 
             </RelativeLayout>
@@ -342,16 +363,19 @@
                     android:textStyle="bold"
                     />
 
-                <TextView
+                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="10dp"
                     android:layout_alignParentRight="true"
-
+android:hint="Your Paypal Address"
                     android:background="@null"
+                    android:layout_centerVertical="true"
+                    android:textCursorDrawable="@drawable/cursore_color"
                     android:textColor="#000"
                     android:id="@+id/paypal_edit"
+                    android:gravity="right"
                     android:textSize="15sp" />
 
 
@@ -399,6 +423,7 @@
                     android:background="@null"
                     android:textColor="#000"
                     android:id="@+id/document_edit"
+                    android:layout_centerVertical="true"
                     android:textSize="15sp" />
 
 

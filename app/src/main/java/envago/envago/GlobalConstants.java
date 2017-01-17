@@ -73,4 +73,6 @@ public class GlobalConstants {
     public static String EVENT_CAT_NAME="event_cat_name";
     public static String EVENT_CAT_COUNT="event_count";
 
+    public static String CODE="code";
+    public static String TREANDING_COUNT="trending_count";
 }

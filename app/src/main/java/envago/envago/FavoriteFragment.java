@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -159,16 +158,11 @@ SharedPreferences sp;
                         if (event_list.size() > 0) {
                             wish_linear_layout.setVisibility(View.VISIBLE);
                             shimmer_container.setVisibility(View.GONE);
-                            // view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(),event_list));
                             view_item_pager2.setAdapter(new AdvantureFeatureAdapter(getActivity(), event_list));
-                            //cat_pager.setAdapter(new AdvantureFeatureAdapter(getActivity(),event_list));
-                            // cat_pager.setClipToPadding(false);
-                            // cat_pager.setPadding(0,0,40,0);
 
-                            view_item_pager2.setClipToPadding(false);
-                            view_item_pager2.setPadding(0, 0, 40, 0);
-                            //view_item_pager1.setClipToPadding(false);
-                            // view_item_pager1.setPadding(0,0,40,0);
+
+                            /*view_item_pager2.setClipToPadding(false);
+                            view_item_pager2.setPadding(0, 0, 40, 0);*/
 
                         }
 
@@ -272,9 +266,9 @@ SharedPreferences sp;
                             // view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(),event_list));
                             planning_linear_layout.setVisibility(View.VISIBLE);
                             cat_pager.setAdapter(new AdvantureFeatureAdapter(getActivity(), planning_event_list));
-                            cat_pager.setClipToPadding(false);
+                            /*cat_pager.setClipToPadding(false);
                             cat_pager.setPadding(0, 0, 40, 0);
-
+*/
 
                             //view_item_pager1.setClipToPadding(false);
                             // view_item_pager1.setPadding(0,0,40,0);
@@ -367,8 +361,8 @@ SharedPreferences sp;
                             view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(), event_list));
 
 
-                            view_item_pager1.setClipToPadding(false);
-                            view_item_pager1.setPadding(0, 0, 40, 0);
+                          /*  view_item_pager1.setClipToPadding(false);
+                            view_item_pager1.setPadding(0, 0, 40, 0);*/
                         }
 
                     }

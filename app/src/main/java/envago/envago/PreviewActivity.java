@@ -3,7 +3,6 @@ package envago.envago;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -36,7 +35,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -47,14 +45,11 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
@@ -71,11 +66,9 @@ import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -185,7 +178,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         admin_name = (TextView) findViewById(R.id.event_name);
         // about_txtView = (TextView) findViewById(R.id.about_txtView);
         //route_txtView = (TextView) findViewById(R.id.route_txtView);
-        date_details = (TextView) findViewById(R.id.date_details);
+        //date_details = (TextView) findViewById(R.id.date_details);
         meeting_desc = (TextView) findViewById(R.id.meeting_desc);
         time_txtVIew = (TextView) findViewById(R.id.time_txtView);
       /*  level_no1 = (TextView) findViewById(R.id.level1);
@@ -213,7 +206,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         //event_info_layout.setOnClickListener(this);
         purchase_btn = (Button) findViewById(R.id.purchase_btn);
         // signup_btn = (Button) findViewById(R.id.signup_btn);
-        days_details = (TextView)findViewById(R.id.days_details);
+        //days_details = (TextView)findViewById(R.id.days_details);
         //signup_btn.setOnClickListener(this);
       //  purchase_btn.setOnClickListener(this);
         // about_txtView.setOnClickListener(this);
@@ -429,7 +422,7 @@ public void allValueShow(){
     } catch (java.text.ParseException e) {
         e.printStackTrace();
     }*/
-    date_details.setText(date_data);
+    //date_details.setText(date_data);
 
     //days_details.setText(String.valueOf(getDaysDifference(startDate,endDate))+" Days");
 
