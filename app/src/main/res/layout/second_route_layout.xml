@@ -85,7 +85,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/a"/>
-            <TextView
+            <AutoCompleteTextView
                 android:id="@+id/a_letter_txtView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/b"/>
-            <TextView
+            <AutoCompleteTextView
                 android:id="@+id/b_letter_txtView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -150,7 +150,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/c"/>
-            <TextView
+            <AutoCompleteTextView
                 android:id="@+id/c_letter_txtView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

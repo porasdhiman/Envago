@@ -13,14 +13,16 @@ import android.widget.BaseAdapter;
 public class UserViewAdapter extends BaseAdapter {
 Context c;
     LayoutInflater inflator;
+    int size;
 
     UserViewAdapter(Context c){
         this.c=c;
+
         inflator=LayoutInflater.from(c);
     }
     @Override
     public int getCount() {
-        return 8;
+        return 10;
     }
 
     @Override

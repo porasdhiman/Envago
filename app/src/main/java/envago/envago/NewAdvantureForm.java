@@ -32,6 +32,7 @@ public class NewAdvantureForm extends Activity {
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
+        global.setEvent_start_date("");
         booking_checkBox = (ImageView) findViewById(R.id.booking_checkBox);
         submit_button = (Button) findViewById(R.id.submit_button_create_advanture);
         preview_button = (TextView) findViewById(R.id.preview_button);

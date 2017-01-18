@@ -1,6 +1,5 @@
 package envago.envago;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -41,7 +40,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by vikas on 05-01-2017.
@@ -153,7 +155,7 @@ SeekBar seekBar;
         desc_editText = (TextView) findViewById(R.id.desc_editText);
         place_editText = (EditText) findViewById(R.id.place_editText);
         pricing_editText = (EditText) findViewById(R.id.pricing_editText);
-        crtieria_editText = (EditText) findViewById(R.id.crtieria_editText);
+        //crtieria_editText = (EditText) findViewById(R.id.crtieria_editText);
         disclaimer_editText = (EditText) findViewById(R.id.disclaimer_editText);
         whts_editText = (TextView) findViewById(R.id.whts_editText);
         name_error_txtView = (TextView) findViewById(R.id.name_error_txtView);
@@ -162,7 +164,7 @@ SeekBar seekBar;
         desc_error_txtView = (TextView) findViewById(R.id.desc_error_txtView);
         place_error_txtView = (TextView) findViewById(R.id.place_error_txtView);
         pricing_error_txtView = (TextView) findViewById(R.id.pricing_error_txtView);
-        crtieria_error_txtView = (TextView) findViewById(R.id.crtieria_error_txtView);
+       // crtieria_error_txtView = (TextView) findViewById(R.id.crtieria_error_txtView);
         disclaimer_error_txtView = (TextView) findViewById(R.id.disclaimer_error_txtView);
         whts_error_txtView = (TextView) findViewById(R.id.whts_error_txtView);
         cat_error_txtView = (TextView) findViewById(R.id.cat_error_txtView);
@@ -170,7 +172,7 @@ SeekBar seekBar;
         submit_button = (Button) findViewById(R.id.submit_button);
         meeting_time_editText.setOnClickListener(this);
         desc_editText.setOnClickListener(this);
-        crtieria_editText.setOnClickListener(this);
+       // crtieria_editText.setOnClickListener(this);
         disclaimer_editText.setOnClickListener(this);
         whts_editText.setOnClickListener(this);
         submit_button.setOnClickListener(this);
@@ -179,7 +181,7 @@ SeekBar seekBar;
         desc_editText.setOnTouchListener(this);
         place_editText.setOnTouchListener(this);
         pricing_editText.setOnTouchListener(this);
-        crtieria_editText.setOnTouchListener(this);
+       // crtieria_editText.setOnTouchListener(this);
         disclaimer_editText.setOnTouchListener(this);
         whts_editText.setOnTouchListener(this);
         cat_editText.setOnTouchListener(this);
@@ -204,9 +206,9 @@ SeekBar seekBar;
             case R.id.pricing_editText:
                 pricing_error_txtView.setVisibility(View.GONE);
                 break;
-            case R.id.crtieria_editText:
+            /*case R.id.crtieria_editText:
                 crtieria_error_txtView.setVisibility(View.GONE);
-                break;
+                break;*/
             case R.id.disclaimer_editText:
                 disclaimer_error_txtView.setVisibility(View.GONE);
                 break;
@@ -235,9 +237,9 @@ SeekBar seekBar;
                 Intent i = new Intent(CreateDetailActivity.this, AdvantureDescriptionActivity.class);
                 startActivityForResult(i, 1);
                 break;
-            case R.id.crtieria_editText:
+           /* case R.id.crtieria_editText:
 
-                break;
+                break;*/
             case R.id.disclaimer_editText:
 
                 break;
@@ -261,10 +263,10 @@ SeekBar seekBar;
                 } else if (pricing_editText.getText().toString().length() == 0) {
                     pricing_error_txtView.setText("Please enter price");
                     pricing_error_txtView.setVisibility(View.VISIBLE);
-                } else if (crtieria_editText.getText().toString().length() == 0) {
+                } /*else if (crtieria_editText.getText().toString().length() == 0) {
                     crtieria_error_txtView.setText("Please enter Criteria/eligibility");
                     crtieria_error_txtView.setVisibility(View.VISIBLE);
-                } else if (disclaimer_editText.getText().toString().length() == 0) {
+                }*/ else if (disclaimer_editText.getText().toString().length() == 0) {
                     disclaimer_error_txtView.setText("Please enter disclaimer");
                     disclaimer_error_txtView.setVisibility(View.VISIBLE);
                 } else if (whts_editText.getText().toString().equalsIgnoreCase("Write something")) {
@@ -281,7 +283,7 @@ SeekBar seekBar;
                     global.setEvent_time(meeting_time_editText.getText().toString());
                     global.setEvent_place(place_editText.getText().toString());
                     global.setEvent_price(pricing_editText.getText().toString());
-                    global.setEvent_criteria(crtieria_editText.getText().toString());
+                    //global.setEvent_criteria(crtieria_editText.getText().toString());
                     global.setEvent_disclaimer(disclaimer_editText.getText().toString());
                     global.setEvent_meetin_point(mAutocompleteView.getText().toString());
                     global.setEvent_description("true");
@@ -432,8 +434,18 @@ SeekBar seekBar;
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
+                        String time=hourOfDay + ":" + minute;
+                        try {
+                            SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+                            Date dateObj = sdf.parse(time);
+                            Log.e("metting time",dateObj.toString());
+                            
+                            meeting_time_editText.setText(dateObj.toString());
 
-                        meeting_time_editText.setText(hourOfDay + ":" + minute);
+                        } catch (final ParseException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();

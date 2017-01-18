@@ -127,7 +127,7 @@
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
-                    android:text="Beginner"
+                    android:text="Easy"
 
 
                     android:textSize="14sp" />
@@ -137,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
 
-                    android:text="Beginner"
+                    android:text="Moderate"
 
                     android:textSize="14sp" />
 
@@ -147,13 +147,13 @@
                     android:layout_marginRight="20dp"
 
 
-                    android:text="Beginner"
+                    android:text="Difficult"
                     android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:text="Beginner"
+                    android:text="Extreme"
 
 
                     android:textSize="14sp" />
@@ -356,7 +356,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
-                android:text="PLACES AVAILABLE"
+                android:text="PLACES/EVENTS"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -401,7 +401,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
-                android:text="PRICING"
+                android:text="ADD(USD$)"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -441,7 +441,7 @@
 
                 android:background="@android:color/darker_gray" />
 
-            <TextView
+           <!-- <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -484,7 +484,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
 
-                android:background="@android:color/darker_gray" />
+                android:background="@android:color/darker_gray" />-->
 
             <TextView
                 android:layout_width="wrap_content"

@@ -446,6 +446,16 @@ public class Global extends Application {
     }
 
     ArrayList<HashMap<String,String>> countryList=new ArrayList<>();
+
+    public ArrayList<String> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<String> list) {
+        this.list = list;
+    }
+
+    ArrayList<String> list = new ArrayList<>();
     @Override
     public void onCreate() {
         super.onCreate();

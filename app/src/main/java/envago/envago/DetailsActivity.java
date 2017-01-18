@@ -23,7 +23,6 @@ import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -95,7 +94,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by vikas on 15-10-2016.
  */
-public class DetailsActivity extends FragmentActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, GoogleApiClient.OnConnectionFailedListener,
+public class DetailsActivity extends FragmentActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback, View.OnTouchListener {
     protected View view;
     private ImageButton btnNext, btnFinish;
@@ -162,7 +161,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     Global global;
     Date startDate,endDate;
 
-    TextView days_details,desclaimer_txt_show;
+    TextView days_details,desclaimer_txt_show,about_planner;
 ImageView dumy_imageview;
 GridView user_grid;
     @Override
@@ -176,22 +175,22 @@ GridView user_grid;
         global = (Global) getApplicationContext();
 
        // review_txtview = (TextView) findViewById(R.id.review_txtView);
-        review_layout = (LinearLayout) findViewById(R.id.review_layout);
+      //  review_layout = (LinearLayout) findViewById(R.id.review_layout);
        // review_list = (ListView) findViewById(R.id.review_list);
-        pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
+       // pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         stars = (RatingBar) findViewById(R.id.stars);
         stars.setOnTouchListener(null);
         about_layout = (LinearLayout) findViewById(R.id.about_layout);
         map_layout = (LinearLayout) findViewById(R.id.map_layout);
         status_text = (TextView) findViewById(R.id.status_text);
         admin_name = (TextView) findViewById(R.id.event_name);
-       // about_txtView = (TextView) findViewById(R.id.about_txtView);
+        about_planner = (TextView) findViewById(R.id.about_planner);
         //route_txtView = (TextView) findViewById(R.id.route_txtView);
        // date_details = (TextView) findViewById(R.id.date_details);
         meeting_desc = (TextView) findViewById(R.id.meeting_desc);
         time_txtVIew = (TextView) findViewById(R.id.time_txtView);
         desclaimer_layout=(LinearLayout)findViewById(R.id.desclaimer_layout) ;
-        intro_images = (ViewPager) findViewById(R.id.pager_introduction);
+        //intro_images = (ViewPager) findViewById(R.id.pager_introduction);
         dumy_imageview=(ImageView)findViewById(R.id.dumy_imageview);
       /*  level_no1 = (TextView) findViewById(R.id.level1);
         level_no2 = (TextView) findViewById(R.id.level2);
@@ -223,7 +222,7 @@ GridView user_grid;
        // days_details = (TextView)findViewById(R.id.days_details);
         //signup_btn.setOnClickListener(this);
        purchase_btn.setOnClickListener(this);
-       // about_txtView.setOnClickListener(this);
+        about_planner.setOnClickListener(this);
         //route_txtView.setOnClickListener(this);
        // review_txtview.setOnClickListener(this);
         back_button.setOnClickListener(new View.OnClickListener() {
@@ -258,10 +257,17 @@ GridView user_grid;
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);
+        dumy_imageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(DetailsActivity.this,FullViewImage.class);
+                startActivity(i);
+            }
+        });
 
     }
 
-    private void setUiPageViewController() {
+ /*   private void setUiPageViewController() {
 
         dotsCount = mAdapter.getCount();
         dots = new ImageView[dotsCount];
@@ -282,50 +288,14 @@ GridView user_grid;
 
        dots[0].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
     }
-
+*/
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-           /* case R.id.about_txtView:
-                about_layout.setVisibility(View.VISIBLE);
-                map_layout.setVisibility(View.GONE);
-                review_layout.setVisibility(View.GONE);
-                about_txtView.setTextColor(getResources().getColor(R.color.textcolor));
-                route_txtView.setTextColor(getResources().getColor(R.color.White));
-                review_txtview.setTextColor(getResources().getColor(R.color.White));
+            case R.id.about_planner:
 
 
                 break;
-            case R.id.route_txtView:
-                about_layout.setVisibility(View.GONE);
-                map_layout.setVisibility(View.VISIBLE);
-                review_layout.setVisibility(View.GONE);
-
-                route_txtView.setTextColor(getResources().getColor(R.color.textcolor));
-                about_txtView.setTextColor(getResources().getColor(R.color.White));
-                review_txtview.setTextColor(getResources().getColor(R.color.White));
-
-                break;*/
-
-           /* case R.id.event_info_layout:
-
-                rating_dialog();
-                break;
-*/
-         /*   case R.id.review_txtView:
-                about_layout.setVisibility(View.GONE);
-                map_layout.setVisibility(View.GONE);
-                review_layout.setVisibility(View.VISIBLE);
-                if (review_list_array.size() == 0) {
-                    getreviewlist();
-                } else {
-                    review_list.setAdapter(new ReviewList_Adapter(review_list_array, DetailsActivity.this));
-                }
-
-                review_txtview.setTextColor(getResources().getColor(R.color.textcolor));
-                route_txtView.setTextColor(getResources().getColor(R.color.White));
-                about_txtView.setTextColor(getResources().getColor(R.color.White));
-                break;*/
             case R.id.purchase_btn:
                 Intent i = new Intent(DetailsActivity.this, ConfirmDetailsActivity.class);
                 i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
@@ -346,28 +316,9 @@ GridView user_grid;
 
     }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        for (int i = 0; i < dotsCount; i++) {
-            dots[i].setImageDrawable(getResources().getDrawable(R.drawable.nonselecteditem_dot));
-        }
-
-        dots[position].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
 
 
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
-
-    public void pagerAdapterMethod(ArrayList<String> list) {
+    /*public void pagerAdapterMethod(ArrayList<String> list) {
         this.list = list;
         if(list.size()!=0) {
             dumy_imageview.setVisibility(View.GONE);
@@ -378,7 +329,7 @@ GridView user_grid;
             intro_images.setOnPageChangeListener(this);
             setUiPageViewController();
         }
-    }
+    }*/
 
     private void singleEventMethod() {
 
@@ -405,6 +356,7 @@ GridView user_grid;
                                         JSONObject imagObj = images.getJSONObject(i);
                                         list.add("http://worksdelight.com/envago/uploads/" + imagObj.getString(GlobalConstants.IMAGE));
                                     }
+                                    global.setList(list);
 
 //----------------------------------Map-Loaction-variable-----------------------------
                                     meeting_loc = objArry.getString(GlobalConstants.EVENT_METTING_POINT);
@@ -460,8 +412,26 @@ GridView user_grid;
                                         orginiser_img.setImageResource(R.mipmap.ic_launcher);
                                     }
 
+                                    if (global.getList().get(0) != null && !global.getList().get(0).equalsIgnoreCase("null")
+                                            && !url.equalsIgnoreCase("")) {
+                                        imageLoader.displayImage(global.getList().get(0), dumy_imageview, options,
+                                                new SimpleImageLoadingListener() {
+                                                    @Override
+                                                    public void onLoadingComplete(String imageUri,
+                                                                                  View view, Bitmap loadedImage) {
+                                                        super.onLoadingComplete(imageUri, view,
+                                                                loadedImage);
+
+                                                    }
+                                                });
+                                    } else {
+                                        dumy_imageview.setImageResource(R.mipmap.ic_launcher);
+                                    }
                                     admin_description.setText(adminobj.getString(GlobalConstants.ADMIN_ABOUT));
-                                    makeTextViewResizable(admin_description, 4, "Read More", true);
+                                    if(adminobj.getString(GlobalConstants.ADMIN_ABOUT).length()>150) {
+
+                                        makeTextViewResizable(admin_description, 150, "Read More", true);
+                                    }
                                     if (objArry.getString(GlobalConstants.ADMIN_RATING).contains(".")) {
                                        // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
                                         stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", "")));
@@ -556,17 +526,24 @@ GridView user_grid;
                                         desclaimer_layout.setVisibility(view.GONE);
                                     } else {
                                         desclaimer_layout.setVisibility(view.VISIBLE);
+
                                         Disclaimer_txtView.setText(objArry.getString("disclaimer"));
+                                        if(objArry.getString("disclaimer").length()>150) {
+
+                                            makeTextViewResizable(Disclaimer_txtView, 2, "Read More", true);
+                                        }
                                     }
 
-                                    places_txtView.setText(objArry.getString("total_no_of_places") + "Places");
-                                    purchase_btn.setText("Book it for $" + objArry.getString(GlobalConstants.EVENT_PRICE));
-                                    global.setEvent_price(objArry.getString(GlobalConstants.EVENT_PRICE));
-                                }
-                                pagerAdapterMethod(list);
 
-                                user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this));
-                                CommonUtils.setGridViewHeightBasedOnChildren(user_grid,4);
+                                    places_txtView.setText(objArry.getString("total_no_of_places") + "Places");
+                                    purchase_btn.setText("Submit");
+                                    global.setEvent_price(objArry.getString(GlobalConstants.EVENT_PRICE));
+                                    user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this));
+                                    CommonUtils.setGridViewHeightBasedOnChildren(user_grid,5);
+                                }
+
+
+
                             } else {
                                 Toast.makeText(DetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             }
@@ -969,7 +946,7 @@ if(polyLineOptions!=null) {
         rating_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //  rating_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.w));
         rating_dialog.setCanceledOnTouchOutside(true);
-        rating_dialog.setContentView(R.layout.review_layout);
+       // rating_dialog.setContentView(R.layout.review_layout);
        /* AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
         loaderView.show();*/
 
@@ -1239,7 +1216,7 @@ if(polyLineOptions!=null) {
 
 
             if (str.contains(spanableText)) {
-                ssb.setSpan(new ClickableSpan() {
+                ssb.setSpan(new MySpannable(false) {
 
                     @Override
                     public void onClick(View widget) {
@@ -1249,11 +1226,13 @@ if(polyLineOptions!=null) {
                             tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
                             tv.invalidate();
                             makeTextViewResizable(tv, -1, "Read Less", false);
+
                         } else {
                             tv.setLayoutParams(tv.getLayoutParams());
                             tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
                             tv.invalidate();
                             makeTextViewResizable(tv, 3, "Read More", true);
+
                         }
 
                     }

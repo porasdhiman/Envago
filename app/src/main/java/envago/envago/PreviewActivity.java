@@ -69,6 +69,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -84,7 +85,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by vikas on 15-10-2016.
  */
-public class PreviewActivity extends FragmentActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, GoogleApiClient.OnConnectionFailedListener,
+public class PreviewActivity extends FragmentActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback, View.OnTouchListener {
     protected View view;
     private ImageButton btnNext, btnFinish;
@@ -164,12 +165,12 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         }
         global = (Global) getApplicationContext();
         desclaimer_layout=(LinearLayout)findViewById(R.id.desclaimer_layout) ;
-        intro_images = (ViewPager) findViewById(R.id.pager_introduction);
+        //intro_images = (ViewPager) findViewById(R.id.pager_introduction);
         dumy_imageview=(ImageView)findViewById(R.id.dumy_imageview);
         // review_txtview = (TextView) findViewById(R.id.review_txtView);
-        review_layout = (LinearLayout) findViewById(R.id.review_layout);
+       // review_layout = (LinearLayout) findViewById(R.id.review_layout);
         // review_list = (ListView) findViewById(R.id.review_list);
-        pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
+        //pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         stars = (RatingBar) findViewById(R.id.stars);
         stars.setOnTouchListener(null);
         about_layout = (LinearLayout) findViewById(R.id.about_layout);
@@ -245,83 +246,27 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);
+       dumy_imageview.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent i=new Intent(PreviewActivity.this,FullViewImage.class);
+               startActivity(i);
+           }
+       });
 
     }
 
-    private void setUiPageViewController() {
 
-        dotsCount = mAdapter.getCount();
-        dots = new ImageView[dotsCount];
-
-        for (int i = 0; i < dotsCount; i++) {
-            dots[i] = new ImageView(this);
-            dots[i].setImageDrawable(getResources().getDrawable(R.drawable.nonselecteditem_dot));
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
-
-            params.setMargins(4, 0, 4, 0);
-
-            pager_indicator.addView(dots[i], params);
-        }
-
-        dots[0].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-           /* case R.id.about_txtView:
-                about_layout.setVisibility(View.VISIBLE);
-                map_layout.setVisibility(View.GONE);
-                review_layout.setVisibility(View.GONE);
-                about_txtView.setTextColor(getResources().getColor(R.color.textcolor));
-                route_txtView.setTextColor(getResources().getColor(R.color.White));
-                review_txtview.setTextColor(getResources().getColor(R.color.White));
 
-
-                break;
-            case R.id.route_txtView:
-                about_layout.setVisibility(View.GONE);
-                map_layout.setVisibility(View.VISIBLE);
-                review_layout.setVisibility(View.GONE);
-
-                route_txtView.setTextColor(getResources().getColor(R.color.textcolor));
-                about_txtView.setTextColor(getResources().getColor(R.color.White));
-                review_txtview.setTextColor(getResources().getColor(R.color.White));
-
-                break;*/
-
-           /* case R.id.event_info_layout:
-
-                rating_dialog();
-                break;
-*/
-         /*   case R.id.review_txtView:
-                about_layout.setVisibility(View.GONE);
-                map_layout.setVisibility(View.GONE);
-                review_layout.setVisibility(View.VISIBLE);
-                if (review_list_array.size() == 0) {
-                    getreviewlist();
-                } else {
-                    review_list.setAdapter(new ReviewList_Adapter(review_list_array, DetailsActivity.this));
-                }
-
-                review_txtview.setTextColor(getResources().getColor(R.color.textcolor));
-                route_txtView.setTextColor(getResources().getColor(R.color.White));
-                about_txtView.setTextColor(getResources().getColor(R.color.White));
-                break;*/
             case R.id.purchase_btn:
                 Intent i = new Intent(PreviewActivity.this, ConfirmDetailsActivity.class);
                 i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
                 startActivity(i);
-               /* thingToBuy = new PayPalPayment(new BigDecimal("10"), "USD",
-                        "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
-                Intent intent = new Intent(DetailsActivity.this, PaymentActivity.class);
-                intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
-                startActivityForResult(intent, REQUEST_CODE_PAYMENT);*/
+
                 break;
           /*  case R.id.signup_btn:
                 Intent i = new Intent(DetailsActivity.this, ConfirmDetailsActivity.class);
@@ -333,26 +278,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
 
     }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        for (int i = 0; i < dotsCount; i++) {
-            dots[i].setImageDrawable(getResources().getDrawable(R.drawable.nonselecteditem_dot));
-        }
-
-        dots[position].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
-
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
 public void allValueShow(){
     meeting_loc = global.getStartingPoint();
     meeting_lat = global.getStarting_lat();
@@ -479,21 +405,12 @@ public void allValueShow(){
     places_txtView.setText(global.getEvent_place() + "Places");
     purchase_btn.setText("$" + global.getEvent_price());
 
-    pagerAdapterMethod(global.getListImg());
+
+    dumy_imageview.setImageURI(Uri.fromFile(new File(global.getListImg().get(0))));
+
 
 }
-    public void pagerAdapterMethod(ArrayList<String> list) {
-        this.list = list;
-        if(list.size()!=0) {
-            dumy_imageview.setVisibility(View.GONE);
-            intro_images.setVisibility(View.VISIBLE);
-            mAdapter = new ViewPagerAdapter(PreviewActivity.this, list);
-            intro_images.setAdapter(mAdapter);
-            intro_images.setCurrentItem(0);
-            intro_images.setOnPageChangeListener(this);
-            setUiPageViewController();
-        }
-    }
+
 
 
     private String getMapsApiDirectionsUrl2(String startLat,String startlng,String meetingLat,String meetingLng) {
@@ -795,7 +712,7 @@ public void allValueShow(){
         rating_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //  rating_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.w));
         rating_dialog.setCanceledOnTouchOutside(true);
-        rating_dialog.setContentView(R.layout.review_layout);
+        //rating_dialog.setContentView(R.layout.review_layout);
        /* AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
         loaderView.show();*/
 

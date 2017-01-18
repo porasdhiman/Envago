@@ -8,7 +8,6 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -19,6 +18,9 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
+
+import it.sephiroth.android.library.imagezoom.ImageViewTouch;
+import it.sephiroth.android.library.imagezoom.ImageViewTouchBase;
 
 /**
  * Created by vikas on 15-10-2016.
@@ -59,8 +61,8 @@ public class ViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View itemView = LayoutInflater.from(mContext).inflate(R.layout.pager_item, container, false);
 
-        ImageView imageView = (ImageView) itemView.findViewById(R.id.img_pager_item);
-
+        ImageViewTouch imageView = (ImageViewTouch) itemView.findViewById(R.id.img_pager_item);
+        imageView.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
 //imageView.setImageURI(Uri.fromFile(new File(mResources.get(position))));
         url = mResources.get(position);
         if (url != null && !url.equalsIgnoreCase("null")
@@ -78,6 +80,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         } else {
             imageView.setImageResource(R.mipmap.ic_launcher);
         }
+
         container.addView(itemView);
 
         return itemView;
