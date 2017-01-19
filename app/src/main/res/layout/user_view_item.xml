@@ -11,7 +11,8 @@
     android:id="@+id/user_img"
     android:layout_width="60dp"
     android:layout_height="60dp"
-    android:src="@mipmap/app_name"/>
+    android:layout_marginTop="5dp"
+    android:src="@drawable/user_back"/>
 
     <TextView
         android:id="@+id/user_name"

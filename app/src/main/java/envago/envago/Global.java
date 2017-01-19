@@ -456,6 +456,35 @@ public class Global extends Application {
     }
 
     ArrayList<String> list = new ArrayList<>();
+    String adminName;
+
+    public String getAdminRating() {
+        return adminRating;
+    }
+
+    public void setAdminRating(String adminRating) {
+        this.adminRating = adminRating;
+    }
+
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
+    }
+
+    String adminRating;
+
+    public String getAdminUrl() {
+        return adminUrl;
+    }
+
+    public void setAdminUrl(String adminUrl) {
+        this.adminUrl = adminUrl;
+    }
+
+    String adminUrl;
     @Override
     public void onCreate() {
         super.onCreate();

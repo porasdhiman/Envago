@@ -247,7 +247,10 @@
             android:name=".FullViewImage"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
+        <activity
+            android:name=".AboutPlannerActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->

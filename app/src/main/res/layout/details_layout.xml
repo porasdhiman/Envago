@@ -77,12 +77,12 @@
             <View
                 android:id="@+id/view1"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_below="@+id/mail_error_txtView"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/LightGrey" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -128,25 +128,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:text="Easy"
-
-
+android:layout_weight="1"
+android:gravity="center"
                     android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
-
+                    android:gravity="center"
                     android:text="Moderate"
-
+                    android:layout_weight="1"
                     android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
-
-
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="Difficult"
                     android:textSize="14sp" />
 
@@ -154,20 +154,20 @@
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
                     android:text="Extreme"
-
-
+                    android:gravity="center"
+                    android:layout_weight="1"
                     android:textSize="14sp" />
             </LinearLayout>
 
             <View
 
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
 
-                android:background="@android:color/darker_gray" />
+                android:background="@color/LightGrey" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -206,12 +206,12 @@
             <View
 
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
 
-                android:background="@android:color/darker_gray" />
+                android:background="@color/LightGrey" />
 
 
             <TextView
@@ -252,12 +252,12 @@
             <View
 
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
 
-                android:background="@android:color/darker_gray" />
+                android:background="@color/LightGrey" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -297,12 +297,12 @@
             <View
 
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
 
-                android:background="@android:color/darker_gray" />
+                android:background="@color/LightGrey" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -344,12 +344,12 @@
             <View
 
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
 
-                android:background="@android:color/darker_gray" />
+                android:background="@color/LightGrey" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -389,12 +389,12 @@
             <View
 
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
 
-                android:background="@android:color/darker_gray" />
+                android:background="@color/LightGrey" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -434,12 +434,12 @@
             <View
 
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
 
-                android:background="@android:color/darker_gray" />
+                android:background="@color/LightGrey" />
 
            <!-- <TextView
                 android:layout_width="wrap_content"
@@ -524,12 +524,12 @@
             <View
 
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
 
-                android:background="@android:color/darker_gray" />
+                android:background="@color/LightGrey" />
 
             <TextView
                 android:layout_width="wrap_content"

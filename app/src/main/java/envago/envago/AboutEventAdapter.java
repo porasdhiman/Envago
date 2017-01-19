@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -24,20 +23,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by vikas on 28-12-2016.
+ * Created by worksdelight on 19/01/17.
  */
 
-public class FeaturedPlannerAdapter extends BaseAdapter {
+public class AboutEventAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
 
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
     String url;
-    Holder holder;
+    AboutEventAdapter.Holder holder;
     ArrayList<HashMap<String, String>> list = new ArrayList<>();
+    String months[] = { " ", "Jan", "Feb", "Mar", "Apr", "May",
+            "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
+            "Dec", };
 
-    FeaturedPlannerAdapter(Context context, ArrayList<HashMap<String, String>> list) {
+    AboutEventAdapter(Context context, ArrayList<HashMap<String, String>> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
@@ -68,43 +70,41 @@ public class FeaturedPlannerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        holder = new Holder();
+        holder = new AboutEventAdapter.Holder();
         if (convertView == null) {
 
 
-            convertView = inflater.inflate(R.layout.advanture_view_item, null);
+            convertView = inflater.inflate(R.layout.about_event_item, null);
 
 
-            holder.planner_img = (ImageView) convertView.findViewById(R.id.planer_img);
-            holder.Planner_name = (TextView) convertView.findViewById(R.id.planner_txt);
-            holder.planner_address = (TextView) convertView.findViewById(R.id.planner_address_txt);
-holder.planer_stars=(RatingBar)convertView.findViewById(R.id.planer_stars) ;
-            holder.review_txt=(TextView)convertView.findViewById(R.id.review_txt);
+            holder.event_img = (ImageView) convertView.findViewById(R.id.event_img);
+            holder.event_name_txt = (TextView) convertView.findViewById(R.id.event_name_txt);
+            holder.event_start_txt = (TextView) convertView.findViewById(R.id.event_date_txt);
+
+            holder.event_price_txt=(TextView)convertView.findViewById(R.id.event_price_txt);
             convertView.setTag(holder);
 
 
         } else {
-            holder = (Holder) convertView.getTag();
+            holder = (AboutEventAdapter.Holder) convertView.getTag();
         }
 
-        if(!list.get(position).get("rating").equals("0")){
-            holder.planer_stars.setVisibility(View.VISIBLE);
-            holder.review_txt.setVisibility(View.GONE);
-            if (list.get(position).get("rating").contains(".")) {
-                // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
-                holder.planer_stars.setRating(Float.parseFloat(list.get(position).get("rating").split("0")[0].replace(".", "")));
-            } else {
-                // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
-                holder.planer_stars.setRating(Float.parseFloat(list.get(position).get("rating")));
-            }
-        }
+
         url = "http://worksdelight.com/envago/uploads/" + list.get(position).get(GlobalConstants.IMAGE);
         Log.e("urle",url);
-        holder.Planner_name.setText(list.get(position).get(GlobalConstants.USERNAME));
-        holder.planner_address.setText(list.get(position).get(GlobalConstants.ADDRESS));
+        holder.event_price_txt.setText(list.get(position).get(GlobalConstants.EVENT_PRICE));
+        holder.event_name_txt.setText(list.get(position).get(GlobalConstants.EVENT_NAME));
+
+        String data = list.get(position).get(GlobalConstants.EVENT_START_DATE);
+        String split[] = data.split("-");
+        String minth = split[1];
+        String date = split[2];
+        int mm = Integer.parseInt(minth);
+
+        holder.event_start_txt.setText(date + " " + months[mm] + " " + split[0]);
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
-            imageLoader.displayImage(url, holder.planner_img, options,
+            imageLoader.displayImage(url, holder.event_img, options,
                     new SimpleImageLoadingListener() {
                         @Override
                         public void onLoadingComplete(String imageUri,
@@ -115,15 +115,15 @@ holder.planer_stars=(RatingBar)convertView.findViewById(R.id.planer_stars) ;
                         }
                     });
         } else {
-            holder.planner_img.setImageResource(R.mipmap.ic_launcher);
+            holder.event_img.setImageResource(R.mipmap.ic_launcher);
         }
         return convertView;
     }
 
     class Holder {
-        ImageView planner_img;
-        TextView Planner_name, planner_address,review_txt;
-        RatingBar planer_stars;
+        ImageView event_img;
+        TextView event_name_txt, event_start_txt,event_price_txt;
+
     }
 
     private void initImageLoader() {

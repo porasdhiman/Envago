@@ -15,14 +15,14 @@ Context c;
     LayoutInflater inflator;
     int size;
 
-    UserViewAdapter(Context c){
+    UserViewAdapter(Context c,int size){
         this.c=c;
-
+this.size=size;
         inflator=LayoutInflater.from(c);
     }
     @Override
     public int getCount() {
-        return 10;
+        return size;
     }
 
     @Override

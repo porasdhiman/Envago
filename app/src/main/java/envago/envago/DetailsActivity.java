@@ -31,7 +31,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -60,6 +59,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.jess.ui.TwoWayGridView;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -161,9 +161,10 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     Global global;
     Date startDate,endDate;
 
-    TextView days_details,desclaimer_txt_show,about_planner;
+    TextView days_details,desclaimer_txt_show,about_planner,review_txt;
 ImageView dumy_imageview;
-GridView user_grid;
+TwoWayGridView user_grid;
+    String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -196,7 +197,8 @@ GridView user_grid;
         level_no2 = (TextView) findViewById(R.id.level2);
         level_no3 = (TextView) findViewById(R.id.level3);
         level_no4 = (TextView) findViewById(R.id.level4);*/
-        header_textview = (TextView) findViewById(R.id.header_text);
+        header_textview = (TextView) findViewById(R.id.title);
+        review_txt=(TextView)findViewById(R.id.review_txt);
         admin_description = (TextView) findViewById(R.id.upper_description);
         location_name_txtView = (TextView) findViewById(R.id.location_name);
         heart_img = (ImageView) findViewById(R.id.heart_img);
@@ -214,7 +216,7 @@ GridView user_grid;
         tent_txtView = (ImageView) findViewById(R.id.tent);
         back_button = (ImageView) findViewById(R.id.detail_back_button);
         places_txtView = (TextView) findViewById(R.id.places_count_txtView);
-        user_grid=(GridView)findViewById(R.id.user_view);
+        user_grid=(TwoWayGridView)findViewById(R.id.user_view);
         //event_info_layout = (RelativeLayout) findViewById(R.id.event_info_layout);
         //event_info_layout.setOnClickListener(this);
         purchase_btn = (Button) findViewById(R.id.purchase_btn);
@@ -293,7 +295,9 @@ GridView user_grid;
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.about_planner:
-
+                Intent about= new Intent(DetailsActivity.this, AboutPlannerActivity.class);
+                about.putExtra(GlobalConstants.USERID, id);
+                startActivity(about);
 
                 break;
             case R.id.purchase_btn:
@@ -364,19 +368,16 @@ GridView user_grid;
                                     meeting_long = objArry.getString("meeting_point_longitude");
 
 
-
                                     mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
                                     // Add a marker in Sydney and move the camera
                                     LatLng postion = new LatLng(Double.parseDouble(meeting_lat), Double.parseDouble(meeting_long));
                                     Marker mark = mMap.addMarker(new MarkerOptions().position(postion).title("Meeting Point").snippet(meeting_loc));
                                     markers.put(mark.getId(), list.get(0));
 
-                                    String locationUrl=getMapsApiDirectionsUrl2(objArry.getString("latitude"),objArry.getString("longitude"),meeting_lat,meeting_long);
+                                    String locationUrl = getMapsApiDirectionsUrl2(objArry.getString("latitude"), objArry.getString("longitude"), meeting_lat, meeting_long);
                                     ReadTask downloadTask = new ReadTask();
-                                    Log.e("locationUrl",locationUrl);
+                                    Log.e("locationUrl", locationUrl);
                                     downloadTask.execute(locationUrl);
-
-
 
 
                                     LatLng postion_start = new LatLng(Double.parseDouble(objArry.getString("latitude")), Double.parseDouble(objArry.getString("longitude")));
@@ -386,16 +387,24 @@ GridView user_grid;
                                     mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 
 
-
                                     //--------------------------------end-map-location-variable---------------------------------------------
 
 
                                     admin_name.setText(adminobj.getString(GlobalConstants.ADMIN_NAME));
+                                    global.setAdminName(adminobj.getString(GlobalConstants.ADMIN_NAME));
                                     header_textview.setText(objArry.getString(GlobalConstants.EVENT_NAME));
                                     global.setEvent_name(objArry.getString(GlobalConstants.EVENT_NAME));
+                                    id=objArry.getString(GlobalConstants.USERID);
+
+                                    admin_description.setText(objArry.getString("description"));
+                                    if (objArry.getString("description").length() > 150) {
+
+                                        makeTextViewResizable(admin_description, 3, "Read More", true);
+                                    }
 
 
                                     String url = "http://worksdelight.com/envago/uploads/" + adminobj.getString(GlobalConstants.ADMIN_IMAGE);
+                                    global.setAdminUrl(url);
                                     if (url != null && !url.equalsIgnoreCase("null")
                                             && !url.equalsIgnoreCase("")) {
                                         imageLoader.displayImage(url, orginiser_img, options,
@@ -427,18 +436,19 @@ GridView user_grid;
                                     } else {
                                         dumy_imageview.setImageResource(R.mipmap.ic_launcher);
                                     }
-                                    admin_description.setText(adminobj.getString(GlobalConstants.ADMIN_ABOUT));
-                                    if(adminobj.getString(GlobalConstants.ADMIN_ABOUT).length()>150) {
-
-                                        makeTextViewResizable(admin_description, 150, "Read More", true);
-                                    }
-                                    if (objArry.getString(GlobalConstants.ADMIN_RATING).contains(".")) {
-                                       // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
-                                        stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", "")));
-                                    } else {
-                                       // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
-                                        stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING)));
-                                    }
+                                    global.setAdminRating(objArry.getString(GlobalConstants.ADMIN_RATING));
+                                    if (!objArry.getString(GlobalConstants.ADMIN_RATING).equals("0"))
+                                    {
+                                        stars.setVisibility(View.VISIBLE);
+                                        review_txt.setVisibility(View.GONE);
+                                        if (objArry.getString(GlobalConstants.ADMIN_RATING).contains(".")) {
+                                            // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
+                                            stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", "")));
+                                        } else {
+                                            // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
+                                            stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING)));
+                                        }
+                                }
 
 
                                     if (dateMatchMethod(objArry.getString(GlobalConstants.EVENT_START_DATE))) {
@@ -530,16 +540,16 @@ GridView user_grid;
                                         Disclaimer_txtView.setText(objArry.getString("disclaimer"));
                                         if(objArry.getString("disclaimer").length()>150) {
 
-                                            makeTextViewResizable(Disclaimer_txtView, 2, "Read More", true);
+                                            makeTextViewResizable(Disclaimer_txtView, 3, "Read More", true);
                                         }
                                     }
 
 
-                                    places_txtView.setText(objArry.getString("total_no_of_places") + "Places");
+                                    places_txtView.setText("5/"+objArry.getString("total_no_of_places"));
                                     purchase_btn.setText("Submit");
                                     global.setEvent_price(objArry.getString(GlobalConstants.EVENT_PRICE));
-                                    user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this));
-                                    CommonUtils.setGridViewHeightBasedOnChildren(user_grid,5);
+                                    user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this,Integer.parseInt(objArry.getString("total_no_of_places"))));
+
                                 }
 
 

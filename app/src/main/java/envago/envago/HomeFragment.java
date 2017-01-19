@@ -323,6 +323,7 @@ ShimmerFrameLayout shimmer_view_container;
                                 details.put(GlobalConstants.USERNAME, arrobj.getString(GlobalConstants.USERNAME));
                                 details.put(GlobalConstants.ADDRESS, arrobj.getString(GlobalConstants.ADDRESS));
                                 details.put(GlobalConstants.IMAGE, arrobj.getString(GlobalConstants.IMAGE));
+                                details.put("rating", arrobj.getString("rating"));
 
 
                                 featured_planner_list.add(details);

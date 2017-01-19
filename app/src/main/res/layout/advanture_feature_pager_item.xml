@@ -16,6 +16,7 @@ android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:scaleType="fitXY"
+            android:adjustViewBounds="true"
             android:src="@drawable/placeholder_image1" />
 
         <TextView
@@ -70,7 +71,8 @@ android:padding="8dp"
             android:text="A Time Travel Postcard"
             android:singleLine="true"
             android:textColor="@color/Black"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textAllCaps="true"/>
 
 
     </RelativeLayout>

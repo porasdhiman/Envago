@@ -57,11 +57,11 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/Gray" />
+                android:background="@color/LightGrey" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -118,11 +118,11 @@ android:layout_centerVertical="true"
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/Gray" />
+                android:background="@color/LightGrey" />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
@@ -158,11 +158,11 @@ android:singleLine="true"
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/Gray" />
+                android:background="@color/LightGrey" />
 
 
             <RelativeLayout
@@ -200,11 +200,11 @@ android:singleLine="true"
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/Gray" />
+                android:background="@color/LightGrey" />
 
 
 
@@ -253,7 +253,7 @@ android:singleLine="true"
                         android:layout_height="match_parent"
                         android:layout_marginRight="10dp"
                         android:layout_toLeftOf="@+id/minus"
-                        android:background="#000" />
+                        android:background="@color/LightGrey" />
 
                     <TextView
                         android:id="@+id/person_count"
@@ -273,7 +273,7 @@ android:singleLine="true"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/plus"
-                        android:background="@color/Gray" />
+                        android:background="@color/LightGrey" />
 
 
                     <ImageView
@@ -291,11 +291,11 @@ android:singleLine="true"
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/Gray" />
+                android:background="@color/LightGrey" />
 
 
             <RelativeLayout
@@ -330,11 +330,11 @@ android:singleLine="true"
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/Gray" />
+                android:background="@color/LightGrey" />
 
 
             <RelativeLayout
