@@ -73,7 +73,7 @@ public class AboutPlannerActivity extends Activity {
         review_layout=(RelativeLayout)findViewById(R.id.review_layout);
         cancel_button=(ImageView)findViewById(R.id.cancel_button);
         admin_name=(TextView)findViewById(R.id.admin_name);
-        review_txt=(TextView)findViewById(R.id.review_txt);
+
         textWithUserName=(TextView)findViewById(R.id.textWithUserName);
         star=(RatingBar)findViewById(stars);
         admin_image=(CircleImageView)findViewById(R.id.admin_img);
@@ -126,10 +126,7 @@ public void getValueFromGlobal(){
 
 
 
-    if (!global.getAdminRating().equals("0"))
-    {
-        star.setVisibility(View.VISIBLE);
-        review_txt.setVisibility(View.GONE);
+
         if (global.getAdminRating().contains(".")) {
             // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
             star.setRating(Float.parseFloat(global.getAdminRating().split("0")[0].replace(".", "")));
@@ -137,7 +134,7 @@ public void getValueFromGlobal(){
             // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
             star.setRating(Float.parseFloat(global.getAdminRating()));
         }
-    }
+
     dialogWindow();
     getEventMethod();
 }

@@ -278,7 +278,7 @@ public class Global extends Application {
     }
 
     ArrayList<String> listImg=new ArrayList<>();
-    String descriptionString;
+    String descriptionString="";
 
     public String getWhtsicludedString() {
         return whtsicludedString;
@@ -296,7 +296,7 @@ public class Global extends Application {
         this.descriptionString = descriptionString;
     }
 
-    String whtsicludedString;
+    String whtsicludedString="";
 
     public String getEvent_level() {
         return event_level;
@@ -385,7 +385,7 @@ public class Global extends Application {
         this.event_disclaimer = event_disclaimer;
     }
 
-    String event_disclaimer;
+    String event_disclaimer="";
 
     public int getTransportataion() {
         return transportataion;

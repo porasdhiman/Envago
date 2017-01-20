@@ -73,13 +73,13 @@ ShimmerFrameLayout shimmer_view_container;
         plus_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (global.getIsVerified().equalsIgnoreCase("Approved")) {
-                    Intent intent = new Intent(getActivity(), NewAdvantureForm.class);
+                //if (global.getIsVerified().equalsIgnoreCase("Approved")) {
+                    Intent intent = new Intent(getActivity(), NewCreateAdvantureVideoForm.class);
                     startActivity(intent);
-                } else {
+                /*} else {
                     Intent intent = new Intent(getActivity(), CreateAdventuresActivity.class);
                     startActivity(intent);
-                }
+                }*/
             }
         });
 

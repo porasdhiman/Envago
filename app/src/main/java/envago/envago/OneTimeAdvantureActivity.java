@@ -1,7 +1,6 @@
 package envago.envago;
 
 import android.app.Activity;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,8 +8,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -21,8 +18,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import static envago.envago.R.drawable.calendar;
 
 /**
  * Created by vikas on 03-01-2017.
@@ -54,6 +49,7 @@ public class OneTimeAdvantureActivity extends Activity implements OnDateSelected
             public void onClick(View v) {
                 if (!select_date_txtView.getText().toString().equalsIgnoreCase("Select a date")) {
                     global.setEvent_start_date(select_date_txtView.getText().toString());
+                    global.setEvent_end_date(select_date_txtView.getText().toString());
                     finish();
 
                 }
@@ -78,10 +74,19 @@ public class OneTimeAdvantureActivity extends Activity implements OnDateSelected
 
     private String getSelectedDatesString() {
         CalendarDay date = calendarView.getSelectedDate();
+        //calendarView.setSelectedDate(incrementDateByOne(new Date(FORMATTER.format(date.getDate()).toString())));
+
         if (date == null) {
             return "No Selection";
         }
         return FORMATTER.format(date.getDate());
+    }
+    public Date incrementDateByOne(Date date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, 1);
+        Date nextDate = c.getTime();
+        return nextDate;
     }
 }
 

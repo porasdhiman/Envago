@@ -59,7 +59,8 @@
                 android:background="@null"
                 android:hint="The Best Way Around The Island"
                 android:inputType="text"
-                android:textSize="16sp" />
+
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/name_error_txtView"
@@ -188,7 +189,7 @@ android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@null"
                 android:entries="@array/event_cat"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/cat_error_txtView"
@@ -234,7 +235,7 @@ android:gravity="center"
                 android:background="@null"
                 android:hint="Please Select"
                 android:inputType="textEmailAddress"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/meeting_error_txtView"
@@ -279,7 +280,7 @@ android:gravity="center"
              android:gravity="center_vertical"
                 android:background="@null"
                 android:text="Please Select"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/meeting_time_error_txtView"
@@ -326,7 +327,7 @@ android:gravity="center"
                 android:inputType="textEmailAddress"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/desc_error_txtView"
@@ -371,7 +372,7 @@ android:gravity="center"
                 android:background="@null"
                 android:hint="Please Select"
                 android:inputType="number"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/place_error_txtView"
@@ -401,7 +402,7 @@ android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
-                android:text="ADD(USD$)"
+                android:text="PRICE"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -414,9 +415,10 @@ android:gravity="center"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
                 android:background="@null"
-                android:hint="Please Select"
+
+                android:hint="$"
                 android:inputType="textEmailAddress"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/pricing_error_txtView"
@@ -491,11 +493,11 @@ android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
-                android:text="DISCLAIMER"
+                android:text="NOTE"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <EditText
+            <TextView
                 android:id="@+id/disclaimer_editText"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -506,7 +508,7 @@ android:gravity="center"
                 android:background="@null"
                 android:hint="Write something"
                 android:inputType="textEmailAddress"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/disclaimer_error_txtView"
@@ -551,7 +553,7 @@ android:gravity="center"
                 android:background="@null"
                 android:text="Write something"
                 android:inputType="textEmailAddress"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/whts_error_txtView"

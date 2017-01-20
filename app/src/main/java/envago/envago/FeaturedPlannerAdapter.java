@@ -79,7 +79,7 @@ public class FeaturedPlannerAdapter extends BaseAdapter {
             holder.Planner_name = (TextView) convertView.findViewById(R.id.planner_txt);
             holder.planner_address = (TextView) convertView.findViewById(R.id.planner_address_txt);
 holder.planer_stars=(RatingBar)convertView.findViewById(R.id.planer_stars) ;
-            holder.review_txt=(TextView)convertView.findViewById(R.id.review_txt);
+
             convertView.setTag(holder);
 
 
@@ -87,9 +87,7 @@ holder.planer_stars=(RatingBar)convertView.findViewById(R.id.planer_stars) ;
             holder = (Holder) convertView.getTag();
         }
 
-        if(!list.get(position).get("rating").equals("0")){
-            holder.planer_stars.setVisibility(View.VISIBLE);
-            holder.review_txt.setVisibility(View.GONE);
+
             if (list.get(position).get("rating").contains(".")) {
                 // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
                 holder.planer_stars.setRating(Float.parseFloat(list.get(position).get("rating").split("0")[0].replace(".", "")));
@@ -97,7 +95,7 @@ holder.planer_stars=(RatingBar)convertView.findViewById(R.id.planer_stars) ;
                 // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
                 holder.planer_stars.setRating(Float.parseFloat(list.get(position).get("rating")));
             }
-        }
+
         url = "http://worksdelight.com/envago/uploads/" + list.get(position).get(GlobalConstants.IMAGE);
         Log.e("urle",url);
         holder.Planner_name.setText(list.get(position).get(GlobalConstants.USERNAME));
@@ -122,7 +120,7 @@ holder.planer_stars=(RatingBar)convertView.findViewById(R.id.planer_stars) ;
 
     class Holder {
         ImageView planner_img;
-        TextView Planner_name, planner_address,review_txt;
+        TextView Planner_name, planner_address;
         RatingBar planer_stars;
     }
 

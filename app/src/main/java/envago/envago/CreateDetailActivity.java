@@ -51,9 +51,9 @@ import java.util.Date;
 
 public class CreateDetailActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks, View.OnClickListener, View.OnTouchListener {
-    EditText name_editText, place_editText, pricing_editText, crtieria_editText, disclaimer_editText;
+    EditText name_editText, place_editText, pricing_editText, crtieria_editText;
     TextView name_error_txtView,meeting_time_error_txtView, meeting_error_txtView, desc_error_txtView, place_error_txtView, pricing_error_txtView,
-            crtieria_error_txtView, disclaimer_error_txtView, whts_error_txtView, whts_editText, desc_editText, meeting_time_editText, cat_error_txtView;
+            crtieria_error_txtView, disclaimer_error_txtView, whts_error_txtView, whts_editText, desc_editText, meeting_time_editText, cat_error_txtView, disclaimer_editText;
     Spinner cat_editText;
     private Calendar calendar;
     private int hour;
@@ -73,6 +73,7 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
     Button submit_button;
     String catgory = "";
 SeekBar seekBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,7 +157,7 @@ SeekBar seekBar;
         place_editText = (EditText) findViewById(R.id.place_editText);
         pricing_editText = (EditText) findViewById(R.id.pricing_editText);
         //crtieria_editText = (EditText) findViewById(R.id.crtieria_editText);
-        disclaimer_editText = (EditText) findViewById(R.id.disclaimer_editText);
+        disclaimer_editText = (TextView) findViewById(R.id.disclaimer_editText);
         whts_editText = (TextView) findViewById(R.id.whts_editText);
         name_error_txtView = (TextView) findViewById(R.id.name_error_txtView);
         meeting_time_error_txtView=(TextView)findViewById(R.id.meeting_time_error_txtView);
@@ -186,6 +187,10 @@ SeekBar seekBar;
         whts_editText.setOnTouchListener(this);
         cat_editText.setOnTouchListener(this);
         mAutocompleteView.setOnTouchListener(this);
+pricing_editText.setText("$");
+        pricing_editText.setSelection(1);
+
+
     }
 
     @Override
@@ -205,6 +210,7 @@ SeekBar seekBar;
                 break;
             case R.id.pricing_editText:
                 pricing_error_txtView.setVisibility(View.GONE);
+
                 break;
             /*case R.id.crtieria_editText:
                 crtieria_error_txtView.setVisibility(View.GONE);
@@ -241,7 +247,8 @@ SeekBar seekBar;
 
                 break;*/
             case R.id.disclaimer_editText:
-
+                Intent k = new Intent(CreateDetailActivity.this, AdaventureDisclamierActivity.class);
+                startActivityForResult(k, 3);
                 break;
             case R.id.whts_editText:
                 Intent j = new Intent(CreateDetailActivity.this, WhatsIncludedActivity.class);
@@ -266,7 +273,7 @@ SeekBar seekBar;
                 } /*else if (crtieria_editText.getText().toString().length() == 0) {
                     crtieria_error_txtView.setText("Please enter Criteria/eligibility");
                     crtieria_error_txtView.setVisibility(View.VISIBLE);
-                }*/ else if (disclaimer_editText.getText().toString().length() == 0) {
+                }*/ else if (disclaimer_editText.getText().toString().equalsIgnoreCase("Write something")) {
                     disclaimer_error_txtView.setText("Please enter disclaimer");
                     disclaimer_error_txtView.setVisibility(View.VISIBLE);
                 } else if (whts_editText.getText().toString().equalsIgnoreCase("Write something")) {
@@ -282,11 +289,12 @@ SeekBar seekBar;
                     global.setEvent_name(name_editText.getText().toString());
                     global.setEvent_time(meeting_time_editText.getText().toString());
                     global.setEvent_place(place_editText.getText().toString());
-                    global.setEvent_price(pricing_editText.getText().toString());
+                    global.setEvent_price(pricing_editText.getText().toString().replace("$","").trim());
                     //global.setEvent_criteria(crtieria_editText.getText().toString());
-                    global.setEvent_disclaimer(disclaimer_editText.getText().toString());
+
                     global.setEvent_meetin_point(mAutocompleteView.getText().toString());
                     global.setEvent_description("true");
+
                     finish();
                 }
                 break;
@@ -298,9 +306,17 @@ SeekBar seekBar;
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            desc_editText.setText(global.getDescriptionString());
+            if(!global.getDescriptionString().equalsIgnoreCase("")) {
+                desc_editText.setText(global.getDescriptionString());
+            }
         } else if (requestCode == 2) {
-            whts_editText.setText(global.getWhtsicludedString());
+            if(!global.getWhtsicludedString().equalsIgnoreCase("")) {
+                whts_editText.setText(global.getWhtsicludedString());
+            }
+        }else if (requestCode == 3) {
+            if(!global.getEvent_disclaimer().equalsIgnoreCase("")) {
+                disclaimer_editText.setText(global.getEvent_disclaimer());
+            }
         }
     }
 

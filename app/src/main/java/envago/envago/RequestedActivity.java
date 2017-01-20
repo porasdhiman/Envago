@@ -48,6 +48,7 @@ Button submit_button;
         calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
         calendarView.setOnDateChangedListener(this);
         calendarView.setOnMonthChangedListener(this);
+
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,11 +94,14 @@ Button submit_button;
     }
     private String getSelectedDatesString() {
         CalendarDay date = calendarView.getSelectedDate();
+
+
         if (date == null) {
             return "No Selection";
         }
         return FORMATTER.format(date.getDate());
     }
+
     //---------------MEthod for match date--------------
     boolean dateMatchMethod(String selectedDate) {
         Calendar c = Calendar.getInstance();

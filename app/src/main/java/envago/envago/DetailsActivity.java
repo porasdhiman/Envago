@@ -161,10 +161,11 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     Global global;
     Date startDate,endDate;
 
-    TextView days_details,desclaimer_txt_show,about_planner,review_txt;
+    TextView days_details,desclaimer_txt_show,about_planner,review_txt,beginner_txt,price_btn;
 ImageView dumy_imageview;
 TwoWayGridView user_grid;
     String id;
+    ArrayList<HashMap<String,String>> eventUserList=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -198,7 +199,7 @@ TwoWayGridView user_grid;
         level_no3 = (TextView) findViewById(R.id.level3);
         level_no4 = (TextView) findViewById(R.id.level4);*/
         header_textview = (TextView) findViewById(R.id.title);
-        review_txt=(TextView)findViewById(R.id.review_txt);
+
         admin_description = (TextView) findViewById(R.id.upper_description);
         location_name_txtView = (TextView) findViewById(R.id.location_name);
         heart_img = (ImageView) findViewById(R.id.heart_img);
@@ -206,6 +207,8 @@ TwoWayGridView user_grid;
         orginiser_img = (CircleImageView) findViewById(R.id.orginiser_img);
         //rating = (TextView) findViewById(R.id.counter);
         //lower_description_txtView = (TextView) findViewById(R.id.lower_description);
+        beginner_txt=(TextView) findViewById(R.id.beginner_txt);
+        price_btn=(TextView) findViewById(R.id.price_btn);
         Disclaimer_txtView=(TextView)findViewById(R.id.Disclaimer_txtView);
         desclaimer_txt_show=(TextView)findViewById(R.id.desclaimer_txt_show);
         accomodation_txtView = (ImageView) findViewById(R.id.accomodation);
@@ -401,8 +404,15 @@ TwoWayGridView user_grid;
 
                                         makeTextViewResizable(admin_description, 3, "Read More", true);
                                     }
-
-
+                                    JSONArray event_users=objArry.getJSONArray("event_users");
+                                    for (int i=0;i<event_users.length();i++){
+                                        JSONObject event_obj=event_users.getJSONObject(i);
+                                        HashMap<String,String> map=new HashMap<>();
+                                        map.put(GlobalConstants.USERNAME,event_obj.getString(GlobalConstants.USERNAME));
+                                        map.put(GlobalConstants.IMAGE,event_obj.getString(GlobalConstants.IMAGE));
+                                        eventUserList.add(map);
+                                    }
+Log.e("Event user",eventUserList.toString());
                                     String url = "http://worksdelight.com/envago/uploads/" + adminobj.getString(GlobalConstants.ADMIN_IMAGE);
                                     global.setAdminUrl(url);
                                     if (url != null && !url.equalsIgnoreCase("null")
@@ -437,10 +447,8 @@ TwoWayGridView user_grid;
                                         dumy_imageview.setImageResource(R.mipmap.ic_launcher);
                                     }
                                     global.setAdminRating(objArry.getString(GlobalConstants.ADMIN_RATING));
-                                    if (!objArry.getString(GlobalConstants.ADMIN_RATING).equals("0"))
-                                    {
-                                        stars.setVisibility(View.VISIBLE);
-                                        review_txt.setVisibility(View.GONE);
+
+
                                         if (objArry.getString(GlobalConstants.ADMIN_RATING).contains(".")) {
                                             // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
                                             stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", "")));
@@ -448,7 +456,7 @@ TwoWayGridView user_grid;
                                             // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
                                             stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING)));
                                         }
-                                }
+
 
 
                                     if (dateMatchMethod(objArry.getString(GlobalConstants.EVENT_START_DATE))) {
@@ -482,15 +490,15 @@ TwoWayGridView user_grid;
                                     global.setEvent_end_date(objArry.getString(GlobalConstants.EVENT_END_DATE));
                                     location_name_txtView.setText(objArry.getString(GlobalConstants.LOCATION));
                                     global.setEvent_loc(objArry.getString(GlobalConstants.LOCATION));
-                                   /* if (objArry.getString(GlobalConstants.EVENT_LEVEL).equalsIgnoreCase("1")) {
-                                        level_no1.setVisibility(View.VISIBLE);
+                                    if (objArry.getString(GlobalConstants.EVENT_LEVEL).equalsIgnoreCase("1")) {
+                                        beginner_txt.setText("Easy");
                                     } else if (objArry.getString(GlobalConstants.EVENT_LEVEL).equalsIgnoreCase("2")) {
-                                        level_no2.setVisibility(View.VISIBLE);
+                                        beginner_txt.setText("Moderate");
                                     } else if (objArry.getString(GlobalConstants.EVENT_LEVEL).equalsIgnoreCase("3")) {
-                                        level_no3.setVisibility(View.VISIBLE);
+                                        beginner_txt.setText("Difficult");
                                     } else {
-                                        level_no4.setVisibility(View.VISIBLE);
-                                    }*/
+                                        beginner_txt.setText("Extreme");
+                                    }
                                     meeting_desc.setText(objArry.getString(GlobalConstants.EVENT_METTING_POINT));
                                     global.setEvent_meetin_point(objArry.getString(GlobalConstants.EVENT_METTING_POINT));
                                     time_txtVIew.setText(objArry.getString("time"));
@@ -544,11 +552,16 @@ TwoWayGridView user_grid;
                                         }
                                     }
 
+if(eventUserList.size()>0){
+    places_txtView.setText(eventUserList.size()+"/"+objArry.getString("total_no_of_places")+" Places");
+}else{
+    places_txtView.setText(objArry.getString("total_no_of_places")+" Places");
+}
 
-                                    places_txtView.setText("5/"+objArry.getString("total_no_of_places"));
+                                    price_btn.setText("$"+objArry.getString("price"));
                                     purchase_btn.setText("Submit");
                                     global.setEvent_price(objArry.getString(GlobalConstants.EVENT_PRICE));
-                                    user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this,Integer.parseInt(objArry.getString("total_no_of_places"))));
+                                    user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this,Integer.parseInt(objArry.getString("total_no_of_places")),eventUserList));
 
                                 }
 
