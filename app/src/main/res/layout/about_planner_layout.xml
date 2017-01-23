@@ -181,7 +181,7 @@ android:id="@+id/no_review_txt"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/Black"
                 android:textSize="16sp"
-                android:text="Tour By"/>
+                android:text="Adventure By"/>
             <ListView
                 android:id="@+id/main_list"
                 android:layout_width="match_parent"

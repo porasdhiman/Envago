@@ -107,7 +107,7 @@ public class AboutPlannerActivity extends Activity {
     }
 public void getValueFromGlobal(){
     admin_name.setText(global.getAdminName());
-    textWithUserName.setText("Tour by "+global.getAdminName());
+    textWithUserName.setText("Adventure by "+global.getAdminName());
     if (global.getAdminUrl() != null && !global.getAdminUrl() .equalsIgnoreCase("null")
             && !global.getAdminUrl() .equalsIgnoreCase("")) {
         imageLoader.displayImage(global.getAdminUrl() , admin_image, options,

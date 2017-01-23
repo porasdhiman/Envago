@@ -230,14 +230,14 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         switch (v.getId()) {
             case R.id.plus:
                 i++;
-                person_count.setText(String.valueOf(i));
+                person_count.setText(String.valueOf(i)+" persone");
                 Change_total=Change_total+total;
                 total_money.setText("$" + String.valueOf(Change_total));
                 break;
             case R.id.minus:
                 if (i != 1) {
                     i--;
-                    person_count.setText(String.valueOf(i));
+                    person_count.setText(String.valueOf(i)+" persone");
                     if(total!=Change_total){
                         Change_total=Change_total-total;
                         total_money.setText("$" + String.valueOf(Change_total));
