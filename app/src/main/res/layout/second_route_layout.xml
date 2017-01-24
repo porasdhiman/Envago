@@ -82,8 +82,8 @@
             android:visibility="gone">
             <ImageView
                 android:id="@+id/a_letter_img"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:background="@drawable/a"/>
             <AutoCompleteTextView
                 android:id="@+id/a_letter_txtView"
@@ -91,8 +91,9 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/a_letter_img"
                 android:layout_centerVertical="true"
-                android:text="where"
+                android:hint="where"
                 android:layout_marginLeft="10dp"
+                android:background="@null"
                 android:singleLine="true"
                 android:textSize="16sp"/>
             <View
@@ -114,8 +115,8 @@
             android:visibility="gone">
             <ImageView
                 android:id="@+id/b_letter_img"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:background="@drawable/b"/>
             <AutoCompleteTextView
                 android:id="@+id/b_letter_txtView"
@@ -123,8 +124,9 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/b_letter_img"
                 android:layout_centerVertical="true"
-                android:text="where"
+                android:hint="where"
                 android:singleLine="true"
+                android:background="@null"
                 android:layout_marginLeft="10dp"
                 android:textSize="16sp"/>
             <View
@@ -156,7 +158,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/c_letter_img"
                 android:layout_centerVertical="true"
-                android:text="where"
+                android:hint="where"
+                android:background="@null"
                 android:singleLine="true"
                 android:layout_marginLeft="10dp"
                 android:textSize="16sp"/>

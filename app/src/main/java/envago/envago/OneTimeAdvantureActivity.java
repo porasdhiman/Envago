@@ -35,7 +35,7 @@ import java.util.List;
  * Created by vikas on 03-01-2017.
  */
 
-public class OneTimeAdvantureActivity extends Activity implements OnDateSelectedListener, OnMonthChangedListener,View.OnTouchListener {
+public class OneTimeAdvantureActivity extends Activity implements OnDateSelectedListener, OnMonthChangedListener, View.OnTouchListener {
     MaterialCalendarView calendarView;
 
     private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
@@ -44,6 +44,8 @@ public class OneTimeAdvantureActivity extends Activity implements OnDateSelected
     Global global;
     List<CalendarDay> list = new ArrayList<CalendarDay>();
     CalendarDay date1;
+    String start_date, end_date;
+
     private Collection<CalendarDay> calendarDays = new Collection<CalendarDay>() {
         @Override
         public boolean add(CalendarDay object) {
@@ -114,6 +116,7 @@ public class OneTimeAdvantureActivity extends Activity implements OnDateSelected
         }
     };
     EditText of_days_txtView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +127,7 @@ public class OneTimeAdvantureActivity extends Activity implements OnDateSelected
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
-        of_days_txtView=(EditText)findViewById(R.id.no_of_days_txtView);
+        of_days_txtView = (EditText) findViewById(R.id.no_of_days_txtView);
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         select_date_txtView = (TextView) findViewById(R.id.select_date_txtView);
         submit_button = (Button) findViewById(R.id.submit_button);
@@ -132,8 +135,8 @@ public class OneTimeAdvantureActivity extends Activity implements OnDateSelected
             @Override
             public void onClick(View v) {
                 if (!select_date_txtView.getText().toString().equalsIgnoreCase("Select a date")) {
-                    global.setEvent_start_date(select_date_txtView.getText().toString());
-                    global.setEvent_end_date(select_date_txtView.getText().toString());
+                    global.setDateType("one_time");
+                    global.setNumberOfDay(of_days_txtView.getText().toString());
                     finish();
 
                 }
@@ -148,12 +151,12 @@ public class OneTimeAdvantureActivity extends Activity implements OnDateSelected
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
         // Toast.makeText(OneTimeAdvantureActivity.this,getSelectedDatesString(),Toast.LENGTH_SHORT).show();
-        if(of_days_txtView.getText().length()>0) {
+        if (of_days_txtView.getText().length() > 0) {
             select_date_txtView.setText(getSelectedDatesString());
             calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_NONE);
             calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
-        }else{
-            Toast.makeText(OneTimeAdvantureActivity.this,"Please enter number of days",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(OneTimeAdvantureActivity.this, "Please enter number of days", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -164,23 +167,35 @@ public class OneTimeAdvantureActivity extends Activity implements OnDateSelected
     }
 
     private String getSelectedDatesString() {
-        if(list.size()==0){
-           date1 = calendarView.getSelectedDate();
-int valye=Integer.parseInt(of_days_txtView.getText().toString());
+        if (list.size() == 0) {
+            date1 = calendarView.getSelectedDate();
+            int valye = Integer.parseInt(of_days_txtView.getText().toString());
             //calendarView.setSelectedDate(incrementDateByOne(new Date(FORMATTER.format(date.getDate()).toString())));
-            for(int i=0;i<valye;i++){
-                CalendarDay date=new CalendarDay(incrementDateByOne(new Date(FORMATTER.format(date1.getDate()).toString()),i));
+            for (int i = 0; i < valye; i++) {
+                CalendarDay date = new CalendarDay(incrementDateByOne(new Date(FORMATTER.format(date1.getDate()).toString()), i));
                 list.add(date);
             }
-            calendarDays=list;
+            calendarDays = list;
             calendarView.addDecorators(new EventDecorator(getResources().getColor(R.color.textcolor), calendarDays));
-
+            start_date = list.get(0).toString().substring(12, list.get(0).toString().length() - 1);
+            String year = start_date.split("-")[0];
+            String months = String.valueOf(Integer.parseInt(start_date.split("-")[1]) + 1);
+            String date = start_date.split("-")[2];
+            start_date = year + "-" + months + "-" + date;
+            Log.e("start date", start_date);
+            global.setEvent_start_date(start_date);
+            end_date = list.get(valye - 1).toString().substring(12, list.get(valye - 1).toString().length() - 1);
+            String year_end = end_date.split("-")[0];
+            String months_end = String.valueOf(Integer.parseInt(end_date.split("-")[1]) + 1);
+            String date_end = end_date.split("-")[2];
+            end_date = year_end + "-" + months_end + "-" + date_end;
+            Log.e("end date", end_date);
+            global.setEvent_end_date(end_date);
             if (date1 == null) {
                 return "No Selection";
             }
-            Log.e("calender day value",calendarDays.toString());
-        }else{
-
+            Log.e("calender day value", calendarDays.toString());
+        } else {
 
 
             calendarView.removeDecorators();
@@ -188,22 +203,37 @@ int valye=Integer.parseInt(of_days_txtView.getText().toString());
             calendarDays.clear();
             date1 = calendarView.getSelectedDate();
             //calendarView.setSelectedDate(incrementDateByOne(new Date(FORMATTER.format(date.getDate()).toString())));
-            int valye=Integer.parseInt(of_days_txtView.getText().toString());
-            for(int i=0;i<valye;i++){
-                CalendarDay date=new CalendarDay(incrementDateByOne(new Date(FORMATTER.format(date1.getDate()).toString()),i));
+            int valye = Integer.parseInt(of_days_txtView.getText().toString());
+            for (int i = 0; i < valye; i++) {
+                CalendarDay date = new CalendarDay(incrementDateByOne(new Date(FORMATTER.format(date1.getDate()).toString()), i));
                 list.add(date);
             }
-            calendarDays=list;
+            calendarDays = list;
             calendarView.addDecorators(new EventDecorator(getResources().getColor(R.color.textcolor), calendarDays));
+            start_date = list.get(0).toString().substring(12, list.get(0).toString().length() - 1);
+            String year = start_date.split("-")[0];
+            String months = String.valueOf(Integer.parseInt(start_date.split("-")[1]) + 1);
+            String date = start_date.split("-")[2];
+            start_date = year + "-" + months + "-" + date;
+            Log.e("start date", start_date);
+            global.setEvent_start_date(start_date);
+            end_date = list.get(valye - 1).toString().substring(12, list.get(valye - 1).toString().length() - 1);
+            String year_end = end_date.split("-")[0];
+            String months_end = String.valueOf(Integer.parseInt(end_date.split("-")[1]) + 1);
+            String date_end = end_date.split("-")[2];
+            end_date = year_end + "-" + months_end + "-" + date_end;
+            Log.e("end date", end_date);
+            global.setEvent_end_date(end_date);
             if (date1 == null) {
                 return "No Selection";
             }
-            Log.e("calender day value1",calendarDays.toString());
+            Log.e("calender day value1", calendarDays.toString());
         }
 
         return FORMATTER.format(date1.getDate());
     }
-    public Date incrementDateByOne(Date date,int i) {
+
+    public Date incrementDateByOne(Date date, int i) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         c.add(Calendar.DATE, i);

@@ -29,6 +29,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -46,6 +47,7 @@ public class NewAdvantureForm extends Activity {
     HttpEntity resEntity;
     String message;
     Dialog dialog2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,7 +129,7 @@ public class NewAdvantureForm extends Activity {
             submit_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-dialogWindow();
+                    dialogWindow();
                     new Thread(null, address_request, "")
                             .start();
                 }
@@ -210,10 +212,52 @@ dialogWindow();
             Log.e("sub_cat_id", global.getEvent_cat_id());
             reqEntity.addPart(GlobalConstants.EVENT_NAME, new StringBody(global.getEvent_name()));
             Log.e("name", global.getEvent_name());
-            reqEntity.addPart(GlobalConstants.EVENT_START_DATE, new StringBody(global.getEvent_start_date()));
-            Log.e(GlobalConstants.EVENT_START_DATE, global.getEvent_start_date());
-            reqEntity.addPart(GlobalConstants.EVENT_END_DATE, new StringBody(global.getEvent_end_date()));
-            Log.e(GlobalConstants.EVENT_END_DATE, global.getEvent_end_date());
+            if (global.getDateType().equalsIgnoreCase("one_time")) {
+                reqEntity.addPart("event_type", new StringBody(global.getDateType()));
+                Log.e("event_type", global.getDateType());
+                reqEntity.addPart("event_no_of_days", new StringBody(global.getNumberOfDay()));
+                Log.e("event_no_of_days", global.getNumberOfDay());
+                reqEntity.addPart("event_dates[0][event_start_date]", new StringBody(global.getEvent_start_date()));
+                Log.e("event_dates[0][event_start_date]", global.getEvent_start_date());
+                reqEntity.addPart("event_dates[0][event_end_date]", new StringBody(global.getEvent_end_date()));
+                Log.e("event_dates[0][event_end_date]", global.getEvent_end_date());
+            } else if (global.getDateType().equalsIgnoreCase("full_season")) {
+                reqEntity.addPart("event_type", new StringBody(global.getDateType()));
+                Log.e("event_type", global.getDateType());
+                reqEntity.addPart("event_no_of_days", new StringBody(global.getNumberOfDay()));
+                Log.e("event_no_of_days", global.getNumberOfDay());
+
+                reqEntity.addPart("event_season", new StringBody(global.getSessionType()));
+                Log.e("event_season", global.getSessionType());
+                reqEntity.addPart("event_dates[1][event_start_date]", new StringBody(global.getEvent_start_date()));
+                Log.e("event_dates[1][event_start_date]", global.getEvent_start_date());
+                reqEntity.addPart("event_dates[1][event_end_date]", new StringBody(global.getEvent_end_date()));
+                Log.e("event_dates[1][event_end_date]", global.getEvent_end_date());
+            } else {
+                reqEntity.addPart("event_type", new StringBody(global.getDateType()));
+                Log.e("event_type", global.getDateType());
+                reqEntity.addPart("event_no_of_days", new StringBody(global.getNumberOfDay()));
+                Log.e("event_no_of_days", global.getNumberOfDay());
+
+                JSONArray installedList = new JSONArray(global.getDateArray());
+                JSONObject installedPackage = new JSONObject();
+
+               /* for (int i = 0; i < global.getDateArray().size(); i++)
+                {
+
+                        installedPackage.put(GlobalConstants.EVENT_START_DATE, global.getDateArray().get(i).get(GlobalConstants.EVENT_START_DATE));
+                        installedPackage.put(GlobalConstants.EVENT_END_DATE, global.getDateArray().get(i).get(GlobalConstants.EVENT_END_DATE));
+                        installedList.put(installedPackage);
+
+                }*/
+                String dataToSend = installedList.toString();
+                reqEntity.addPart("event_dates", new StringBody(dataToSend));
+                Log.e("event_datesjjjjjj", dataToSend);
+                reqEntity.addPart("event_dates[0][event_end_date]", new StringBody("2017-10-3"));
+                Log.e("event_dates[0][event_end_date]", "2017-10-3");
+            }
+
+
             reqEntity.addPart(GlobalConstants.EVENT_TIME, new StringBody(global.getEvent_time()));
             Log.e(GlobalConstants.EVENT_TIME, global.getEvent_time());
             reqEntity.addPart(GlobalConstants.EVENT_LEVEL, new StringBody(global.getEvent_level()));
@@ -226,8 +270,8 @@ dialogWindow();
             Log.e("meeting_point_longitude", global.getEvent_meeting_lng());
             /*reqEntity.addPart("crireria_eligibilty", new StringBody(global.getEvent_criteria()));
             Log.e("crireria_eligibilty", global.getEvent_criteria());*/
-            reqEntity.addPart(GlobalConstants.LOCATION, new StringBody(global.getStarting_lat()));
-            Log.e(GlobalConstants.LOCATION, global.getStarting_lat());
+            reqEntity.addPart(GlobalConstants.LOCATION, new StringBody(global.getStartingPoint()));
+            Log.e(GlobalConstants.LOCATION, global.getStartingPoint());
             reqEntity.addPart(GlobalConstants.LATITUDE, new StringBody(global.getStarting_lat()));
             Log.e(GlobalConstants.LATITUDE, global.getStarting_lat());
             reqEntity.addPart(GlobalConstants.LONGITUDE, new StringBody(global.getStarting_lng()));
@@ -292,6 +336,7 @@ dialogWindow();
             HttpResponse response = client.execute(post);
             resEntity = response.getEntity();
             final String response_str = EntityUtils.toString(resEntity);
+            Log.e("response_str",response_str);
             if (resEntity != null) {
                 JSONObject obj = new JSONObject(response_str);
                 String status = obj.getString("success");

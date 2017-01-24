@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,29 +23,39 @@ import java.util.Calendar;
 
 public class FullSessionActivity extends Activity {
     EditText no_of_days;
-    Spinner session_spinner,year_spinner;
+    Spinner session_spinner, year_spinner;
     String year;
     int j;
-    ArrayList<String> list=new ArrayList<>();
+    ArrayList<String> list = new ArrayList<>();
+    String startDate_arr[] = {" ", "01-01", "03-15", "06-15", "08-02", "10-02"};
+    String endDate_arr[] = {" ", "03-14", "06-14", "08-01", "10-01", "12-31"};
+    String catgory = "", yearType = "";
+    Global global;
+    int pos;
+    Button submit_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         setContentView(R.layout.full_layout);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
-        no_of_days=(EditText)findViewById(R.id.no_of_days_txtView);
-        year=String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-        session_spinner=(Spinner)findViewById(R.id.session_spinner);
-        year_spinner=(Spinner)findViewById(R.id.year_spinner);
-        j=Integer.parseInt(year);
+        global = (Global) getApplicationContext();
+        submit_button = (Button) findViewById(R.id.submit_button);
+        no_of_days = (EditText) findViewById(R.id.no_of_days_txtView);
+        year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        session_spinner = (Spinner) findViewById(R.id.session_spinner);
+        year_spinner = (Spinner) findViewById(R.id.year_spinner);
+        j = Integer.parseInt(year);
         list.add("year");
-        for (int i=0;i<17;i++){
+        for (int i = 0; i < 17; i++) {
 
             list.add(String.valueOf(j));
-            j=++j;
+            j = ++j;
 
         }
 
@@ -61,8 +73,9 @@ public class FullSessionActivity extends Activity {
 
                 } else {
 
+                    pos = position;
+                    catgory = session_spinner.getSelectedItem().toString();
 
-                    //catgory=cat_editText.getSelectedItem().toString();
                 }
 
             }
@@ -82,7 +95,7 @@ public class FullSessionActivity extends Activity {
                 } else {
 
 
-                    //catgory=cat_editText.getSelectedItem().toString();
+                    yearType = year_spinner.getSelectedItem().toString();
                 }
 
             }
@@ -90,6 +103,26 @@ public class FullSessionActivity extends Activity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        submit_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (no_of_days.getText().length() == 0) {
+                    Toast.makeText(FullSessionActivity.this, "Please enter number of days", Toast.LENGTH_SHORT).show();
+
+                } else if (yearType.equalsIgnoreCase("")) {
+                    Toast.makeText(FullSessionActivity.this, "Please enter year", Toast.LENGTH_SHORT).show();
+                } else if (catgory.equalsIgnoreCase("")) {
+                    Toast.makeText(FullSessionActivity.this, "Please enter season", Toast.LENGTH_SHORT).show();
+                } else {
+                    global.setEvent_start_date(yearType + "-" + startDate_arr[pos]);
+                    global.setEvent_end_date(yearType + "-" + endDate_arr[pos]);
+                    global.setSessionType(catgory);
+                    global.setDateType("full_season");
+                    global.setNumberOfDay(no_of_days.getText().toString());
+                    finish();
+                }
             }
         });
 

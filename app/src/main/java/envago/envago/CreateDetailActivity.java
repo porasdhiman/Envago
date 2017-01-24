@@ -451,8 +451,10 @@ pricing_editText.setText("$");
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
                         String time=hourOfDay + ":" + minute;
+
                         try {
-                            SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+
+                            SimpleDateFormat sdf = new SimpleDateFormat("h:mm");
                             Date dateObj = sdf.parse(time);
                             Log.e("metting time",dateObj.toString());
                             

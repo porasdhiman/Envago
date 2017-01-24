@@ -110,9 +110,9 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     ArrayList<HashMap<String, String>> review_list_array = new ArrayList<>();
     TextView status_text, lower_description_txtView, admin_name, places_txtView, level_no1, level_no2,
             level_no3, admin_description, level_no4, date_details, meeting_desc, time_txtVIew,
-            location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview, header_textview,Disclaimer_txtView;
-    LinearLayout about_layout, map_layout, review_layout,desclaimer_layout;
-    ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView,flight;
+            location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview, header_textview, Disclaimer_txtView;
+    LinearLayout about_layout, map_layout, review_layout, desclaimer_layout;
+    ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView, flight;
     CircleImageView orginiser_img;
     ArrayList<String> list = new ArrayList<>();
     Button purchase_btn;
@@ -134,9 +134,9 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     //--------------Google search api variable------------
     protected GoogleApiClient mGoogleApiClient;
 
-    String months[] = { " ", "Jan", "Feb", "Mar", "Apr", "May",
+    String months[] = {" ", "Jan", "Feb", "Mar", "Apr", "May",
             "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
-            "Dec", };
+            "Dec",};
 
     //-----------------------------------Paypal variable
 
@@ -159,13 +159,14 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     PayPalPayment thingToBuy;
 
     Global global;
-    Date startDate,endDate;
+    Date startDate, endDate;
 
-    TextView days_details,desclaimer_txt_show,about_planner,review_txt,beginner_txt,price_btn;
-ImageView dumy_imageview;
-TwoWayGridView user_grid;
+    TextView days_details, desclaimer_txt_show, about_planner, review_txt, beginner_txt, price_btn;
+    ImageView dumy_imageview;
+    TwoWayGridView user_grid;
     String id;
-    ArrayList<HashMap<String,String>> eventUserList=new ArrayList<>();
+    ArrayList<HashMap<String, String>> eventUserList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,10 +177,10 @@ TwoWayGridView user_grid;
         }
         global = (Global) getApplicationContext();
 
-       // review_txtview = (TextView) findViewById(R.id.review_txtView);
-      //  review_layout = (LinearLayout) findViewById(R.id.review_layout);
-       // review_list = (ListView) findViewById(R.id.review_list);
-       // pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
+        // review_txtview = (TextView) findViewById(R.id.review_txtView);
+        //  review_layout = (LinearLayout) findViewById(R.id.review_layout);
+        // review_list = (ListView) findViewById(R.id.review_list);
+        // pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         stars = (RatingBar) findViewById(R.id.stars);
         stars.setOnTouchListener(null);
         about_layout = (LinearLayout) findViewById(R.id.about_layout);
@@ -188,12 +189,12 @@ TwoWayGridView user_grid;
         admin_name = (TextView) findViewById(R.id.event_name);
         about_planner = (TextView) findViewById(R.id.about_planner);
         //route_txtView = (TextView) findViewById(R.id.route_txtView);
-       // date_details = (TextView) findViewById(R.id.date_details);
+        // date_details = (TextView) findViewById(R.id.date_details);
         meeting_desc = (TextView) findViewById(R.id.meeting_desc);
         time_txtVIew = (TextView) findViewById(R.id.time_txtView);
-        desclaimer_layout=(LinearLayout)findViewById(R.id.desclaimer_layout) ;
+        desclaimer_layout = (LinearLayout) findViewById(R.id.desclaimer_layout);
         //intro_images = (ViewPager) findViewById(R.id.pager_introduction);
-        dumy_imageview=(ImageView)findViewById(R.id.dumy_imageview);
+        dumy_imageview = (ImageView) findViewById(R.id.dumy_imageview);
       /*  level_no1 = (TextView) findViewById(R.id.level1);
         level_no2 = (TextView) findViewById(R.id.level2);
         level_no3 = (TextView) findViewById(R.id.level3);
@@ -207,10 +208,10 @@ TwoWayGridView user_grid;
         orginiser_img = (CircleImageView) findViewById(R.id.orginiser_img);
         //rating = (TextView) findViewById(R.id.counter);
         //lower_description_txtView = (TextView) findViewById(R.id.lower_description);
-        beginner_txt=(TextView) findViewById(R.id.beginner_txt);
-        price_btn=(TextView) findViewById(R.id.price_btn);
-        Disclaimer_txtView=(TextView)findViewById(R.id.Disclaimer_txtView);
-        desclaimer_txt_show=(TextView)findViewById(R.id.desclaimer_txt_show);
+        beginner_txt = (TextView) findViewById(R.id.beginner_txt);
+        price_btn = (TextView) findViewById(R.id.price_btn);
+        Disclaimer_txtView = (TextView) findViewById(R.id.Disclaimer_txtView);
+        desclaimer_txt_show = (TextView) findViewById(R.id.desclaimer_txt_show);
         accomodation_txtView = (ImageView) findViewById(R.id.accomodation);
         transport_txtView = (ImageView) findViewById(R.id.transport);
         meal_txtView = (ImageView) findViewById(R.id.meals);
@@ -219,17 +220,17 @@ TwoWayGridView user_grid;
         tent_txtView = (ImageView) findViewById(R.id.tent);
         back_button = (ImageView) findViewById(R.id.detail_back_button);
         places_txtView = (TextView) findViewById(R.id.places_count_txtView);
-        user_grid=(TwoWayGridView)findViewById(R.id.user_view);
+        user_grid = (TwoWayGridView) findViewById(R.id.user_view);
         //event_info_layout = (RelativeLayout) findViewById(R.id.event_info_layout);
         //event_info_layout.setOnClickListener(this);
         purchase_btn = (Button) findViewById(R.id.purchase_btn);
-       // signup_btn = (Button) findViewById(R.id.signup_btn);
-       // days_details = (TextView)findViewById(R.id.days_details);
+        // signup_btn = (Button) findViewById(R.id.signup_btn);
+        // days_details = (TextView)findViewById(R.id.days_details);
         //signup_btn.setOnClickListener(this);
-       purchase_btn.setOnClickListener(this);
+        purchase_btn.setOnClickListener(this);
         about_planner.setOnClickListener(this);
         //route_txtView.setOnClickListener(this);
-       // review_txtview.setOnClickListener(this);
+        // review_txtview.setOnClickListener(this);
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -265,40 +266,40 @@ TwoWayGridView user_grid;
         dumy_imageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(DetailsActivity.this,FullViewImage.class);
+                Intent i = new Intent(DetailsActivity.this, FullViewImage.class);
                 startActivity(i);
             }
         });
 
     }
 
- /*   private void setUiPageViewController() {
+    /*   private void setUiPageViewController() {
 
-        dotsCount = mAdapter.getCount();
-        dots = new ImageView[dotsCount];
+           dotsCount = mAdapter.getCount();
+           dots = new ImageView[dotsCount];
 
-        for (int i = 0; i < dotsCount; i++) {
-            dots[i] = new ImageView(this);
-            dots[i].setImageDrawable(getResources().getDrawable(R.drawable.nonselecteditem_dot));
+           for (int i = 0; i < dotsCount; i++) {
+               dots[i] = new ImageView(this);
+               dots[i].setImageDrawable(getResources().getDrawable(R.drawable.nonselecteditem_dot));
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
+               LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                       LinearLayout.LayoutParams.WRAP_CONTENT,
+                       LinearLayout.LayoutParams.WRAP_CONTENT
+               );
 
-            params.setMargins(4, 0, 4, 0);
+               params.setMargins(4, 0, 4, 0);
 
-            pager_indicator.addView(dots[i], params);
-        }
+               pager_indicator.addView(dots[i], params);
+           }
 
-       dots[0].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
-    }
-*/
+          dots[0].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
+       }
+   */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.about_planner:
-                Intent about= new Intent(DetailsActivity.this, AboutPlannerActivity.class);
+                Intent about = new Intent(DetailsActivity.this, AboutPlannerActivity.class);
                 about.putExtra(GlobalConstants.USERID, id);
                 startActivity(about);
 
@@ -375,7 +376,7 @@ TwoWayGridView user_grid;
                                     // Add a marker in Sydney and move the camera
                                     LatLng postion = new LatLng(Double.parseDouble(meeting_lat), Double.parseDouble(meeting_long));
                                     Marker mark = mMap.addMarker(new MarkerOptions().position(postion).title("Meeting Point").snippet(meeting_loc));
-                                    markers.put(mark.getId(), list.get(0));
+
 
                                     String locationUrl = getMapsApiDirectionsUrl2(objArry.getString("latitude"), objArry.getString("longitude"), meeting_lat, meeting_long);
                                     ReadTask downloadTask = new ReadTask();
@@ -385,7 +386,7 @@ TwoWayGridView user_grid;
 
                                     LatLng postion_start = new LatLng(Double.parseDouble(objArry.getString("latitude")), Double.parseDouble(objArry.getString("longitude")));
                                     Marker mark_start = mMap.addMarker(new MarkerOptions().position(postion_start).title("Starting Point").snippet(objArry.getString("location")));
-                                    markers.put(mark_start.getId(), list.get(0));
+
                                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion_start, 12));
                                     mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 
@@ -397,22 +398,22 @@ TwoWayGridView user_grid;
                                     global.setAdminName(adminobj.getString(GlobalConstants.ADMIN_NAME));
                                     header_textview.setText(objArry.getString(GlobalConstants.EVENT_NAME));
                                     global.setEvent_name(objArry.getString(GlobalConstants.EVENT_NAME));
-                                    id=objArry.getString(GlobalConstants.USERID);
+                                    id = objArry.getString(GlobalConstants.USERID);
 
                                     admin_description.setText(objArry.getString("description"));
                                     if (objArry.getString("description").length() > 150) {
 
                                         makeTextViewResizable(admin_description, 3, "Read More", true);
                                     }
-                                    JSONArray event_users=objArry.getJSONArray("event_users");
-                                    for (int i=0;i<event_users.length();i++){
-                                        JSONObject event_obj=event_users.getJSONObject(i);
-                                        HashMap<String,String> map=new HashMap<>();
-                                        map.put(GlobalConstants.USERNAME,event_obj.getString(GlobalConstants.USERNAME));
-                                        map.put(GlobalConstants.IMAGE,event_obj.getString(GlobalConstants.IMAGE));
+                                    JSONArray event_users = objArry.getJSONArray("event_users");
+                                    for (int i = 0; i < event_users.length(); i++) {
+                                        JSONObject event_obj = event_users.getJSONObject(i);
+                                        HashMap<String, String> map = new HashMap<>();
+                                        map.put(GlobalConstants.USERNAME, event_obj.getString(GlobalConstants.USERNAME));
+                                        map.put(GlobalConstants.IMAGE, event_obj.getString(GlobalConstants.IMAGE));
                                         eventUserList.add(map);
                                     }
-Log.e("Event user",eventUserList.toString());
+                                    Log.e("Event user", eventUserList.toString());
                                     String url = "http://worksdelight.com/envago/uploads/" + adminobj.getString(GlobalConstants.ADMIN_IMAGE);
                                     global.setAdminUrl(url);
                                     if (url != null && !url.equalsIgnoreCase("null")
@@ -449,14 +450,13 @@ Log.e("Event user",eventUserList.toString());
                                     global.setAdminRating(objArry.getString(GlobalConstants.ADMIN_RATING));
 
 
-                                        if (objArry.getString(GlobalConstants.ADMIN_RATING).contains(".")) {
-                                            // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
-                                            stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", "")));
-                                        } else {
-                                            // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
-                                            stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING)));
-                                        }
-
+                                    if (objArry.getString(GlobalConstants.ADMIN_RATING).contains(".")) {
+                                        // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
+                                        stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", "")));
+                                    } else {
+                                        // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
+                                        stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING)));
+                                    }
 
 
                                     if (dateMatchMethod(objArry.getString(GlobalConstants.EVENT_START_DATE))) {
@@ -465,25 +465,25 @@ Log.e("Event user",eventUserList.toString());
                                         status_text.setVisibility(View.GONE);
                                     }
                                     global.setEvent_time(objArry.getString("time"));
-                                    String date_data=objArry.getString(GlobalConstants.EVENT_START_DATE);
+                                    String date_data = objArry.getString(GlobalConstants.EVENT_START_DATE);
                                     String split[] = date_data.split("-");
                                     String minth = split[1];
-                                    String date=split[2];
+                                    String date = split[2];
                                     int mm = Integer.parseInt(minth);
                                     Calendar c = Calendar.getInstance();
                                     SimpleDateFormat dateFormat = new SimpleDateFormat(
                                             "yyyy-MM-dd");
                                     String dateafter = dateFormat.format(c.getTime());
-                                    startDate=new Date();
-                                    endDate=new Date();
+                                    startDate = new Date();
+                                    endDate = new Date();
                                     try {
-                                        startDate=dateFormat.parse(date_data);
-                                        endDate=dateFormat.parse(dateafter);
+                                        startDate = dateFormat.parse(date_data);
+                                        endDate = dateFormat.parse(dateafter);
 
                                     } catch (java.text.ParseException e) {
                                         e.printStackTrace();
                                     }
-                                   // date_details.setText(date+" "+months[mm]+" "+split[0]);
+                                    // date_details.setText(date+" "+months[mm]+" "+split[0]);
 
                                     //days_details.setText(String.valueOf(getDaysDifference(startDate,endDate))+" Days");
                                     global.setEvent_start_date(objArry.getString(GlobalConstants.EVENT_START_DATE));
@@ -508,7 +508,7 @@ Log.e("Event user",eventUserList.toString());
                                     } else {
                                         heart_img.setImageResource(R.drawable.heart);
                                     }
-                                 //   lower_description_txtView.setText(objArry.getString("description"));
+                                    //   lower_description_txtView.setText(objArry.getString("description"));
 
                                     if (objArry.getString("transport").equalsIgnoreCase("0")) {
                                         transport_txtView.setImageResource(R.drawable.tansport_gray);
@@ -540,31 +540,30 @@ Log.e("Event user",eventUserList.toString());
                                     } else {
                                         flight.setImageResource(R.drawable.flight);
                                     }
-                                    if (objArry.getString("disclaimer").equalsIgnoreCase(null)||objArry.getString("disclaimer").equalsIgnoreCase("")) {
+                                    if (objArry.getString("disclaimer").equalsIgnoreCase(null) || objArry.getString("disclaimer").equalsIgnoreCase("")) {
                                         desclaimer_layout.setVisibility(view.GONE);
                                     } else {
                                         desclaimer_layout.setVisibility(view.VISIBLE);
 
                                         Disclaimer_txtView.setText(objArry.getString("disclaimer"));
-                                        if(objArry.getString("disclaimer").length()>150) {
+                                        if (objArry.getString("disclaimer").length() > 150) {
 
                                             makeTextViewResizable(Disclaimer_txtView, 3, "Read More", true);
                                         }
                                     }
 
-if(eventUserList.size()>0){
-    places_txtView.setText(eventUserList.size()+"/"+objArry.getString("total_no_of_places")+" Places");
-}else{
-    places_txtView.setText(objArry.getString("total_no_of_places")+" Places");
-}
+                                    if (eventUserList.size() > 0) {
+                                        places_txtView.setText(eventUserList.size() + "/" + objArry.getString("total_no_of_places") + " Places");
+                                    } else {
+                                        places_txtView.setText(objArry.getString("total_no_of_places") + " Places");
+                                    }
 
-                                    price_btn.setText("$"+objArry.getString("price"));
+                                    price_btn.setText("$" + objArry.getString("price"));
                                     purchase_btn.setText("Submit");
                                     global.setEvent_price(objArry.getString(GlobalConstants.EVENT_PRICE));
-                                    user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this,Integer.parseInt(objArry.getString("total_no_of_places")),eventUserList));
+                                    user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, Integer.parseInt(objArry.getString("total_no_of_places")), eventUserList));
 
                                 }
-
 
 
                             } else {
@@ -607,12 +606,13 @@ if(eventUserList.size()>0){
         requestQueue.add(stringRequest);
     }
 
-    private String getMapsApiDirectionsUrl2(String startLat,String startlng,String meetingLat,String meetingLng) {
+    private String getMapsApiDirectionsUrl2(String startLat, String startlng, String meetingLat, String meetingLng) {
 
-        String url1 = "https://maps.googleapis.com/maps/api/directions/json?origin=" + startLat + "," + startlng + "&waypoints=" + meetingLat + "," + meetingLng  + "&destination=" + meetingLat + "," + meetingLng + "&sensor=true&mode=walking";
+        String url1 = "https://maps.googleapis.com/maps/api/directions/json?origin=" + startLat + "," + startlng + "&waypoints=" + meetingLat + "," + meetingLng + "&destination=" + meetingLat + "," + meetingLng + "&sensor=true&mode=walking";
 
         return url1;
     }
+
     private class ReadTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... url) {
@@ -678,9 +678,9 @@ if(eventUserList.size()>0){
                 polyLineOptions.width(5);
                 polyLineOptions.color(Color.BLUE);
             }
-if(polyLineOptions!=null) {
-    mMap.addPolyline(polyLineOptions);
-}
+            if (polyLineOptions != null) {
+                mMap.addPolyline(polyLineOptions);
+            }
         }
 
     }
@@ -969,7 +969,7 @@ if(polyLineOptions!=null) {
         rating_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //  rating_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.w));
         rating_dialog.setCanceledOnTouchOutside(true);
-       // rating_dialog.setContentView(R.layout.review_layout);
+        // rating_dialog.setContentView(R.layout.review_layout);
        /* AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
         loaderView.show();*/
 
@@ -1175,58 +1175,56 @@ if(polyLineOptions!=null) {
 
     //------------------date-method-----------
 
-    public static int getDaysDifference(Date fromDate, Date toDate)
-    {
-        if(fromDate==null||toDate==null)
+    public static int getDaysDifference(Date fromDate, Date toDate) {
+        if (fromDate == null || toDate == null)
             return 0;
 
-        return (int)( (toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
+        return (int) ((toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
     }
 
     //-------------------------------------More textView method-----------------
     public static void makeTextViewResizable(final TextView tv, final int maxLine, final String expandText, final boolean viewMore) {
 
-    if (tv.getTag() == null) {
-        tv.setTag(tv.getText());
-    }
-    ViewTreeObserver vto = tv.getViewTreeObserver();
-    vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
-        @SuppressWarnings("deprecation")
-        @Override
-        public void onGlobalLayout() {
-
-            ViewTreeObserver obs = tv.getViewTreeObserver();
-            obs.removeGlobalOnLayoutListener(this);
-            if (maxLine == 0) {
-                int lineEndIndex = tv.getLayout().getLineEnd(0);
-                String text = tv.getText().subSequence(0, lineEndIndex - expandText.length() + 1) + " " + expandText;
-                tv.setText(text);
-                tv.setMovementMethod(LinkMovementMethod.getInstance());
-                tv.setText(
-                        addClickablePartTextViewResizable(Html.fromHtml(tv.getText().toString()), tv, maxLine, expandText,
-                                viewMore), TextView.BufferType.SPANNABLE);
-            } else if (maxLine > 0 && tv.getLineCount() >= maxLine) {
-                int lineEndIndex = tv.getLayout().getLineEnd(maxLine - 1);
-                String text = tv.getText().subSequence(0, lineEndIndex - expandText.length() + 1) + " " + expandText;
-                tv.setText(text);
-                tv.setMovementMethod(LinkMovementMethod.getInstance());
-                tv.setText(
-                        addClickablePartTextViewResizable(Html.fromHtml(tv.getText().toString()), tv, maxLine, expandText,
-                                viewMore), TextView.BufferType.SPANNABLE);
-            } else {
-                int lineEndIndex = tv.getLayout().getLineEnd(tv.getLayout().getLineCount() - 1);
-                String text = tv.getText().subSequence(0, lineEndIndex) + " " + expandText;
-                tv.setText(text);
-                tv.setMovementMethod(LinkMovementMethod.getInstance());
-                tv.setText(
-                        addClickablePartTextViewResizable(Html.fromHtml(tv.getText().toString()), tv, lineEndIndex, expandText,
-                                viewMore), TextView.BufferType.SPANNABLE);
-            }
+        if (tv.getTag() == null) {
+            tv.setTag(tv.getText());
         }
-    });
-}
+        ViewTreeObserver vto = tv.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onGlobalLayout() {
+
+                ViewTreeObserver obs = tv.getViewTreeObserver();
+                obs.removeGlobalOnLayoutListener(this);
+                if (maxLine == 0) {
+                    int lineEndIndex = tv.getLayout().getLineEnd(0);
+                    String text = tv.getText().subSequence(0, lineEndIndex - expandText.length() + 1) + " " + expandText;
+                    tv.setText(text);
+                    tv.setMovementMethod(LinkMovementMethod.getInstance());
+                    tv.setText(
+                            addClickablePartTextViewResizable(Html.fromHtml(tv.getText().toString()), tv, maxLine, expandText,
+                                    viewMore), TextView.BufferType.SPANNABLE);
+                } else if (maxLine > 0 && tv.getLineCount() >= maxLine) {
+                    int lineEndIndex = tv.getLayout().getLineEnd(maxLine - 1);
+                    String text = tv.getText().subSequence(0, lineEndIndex - expandText.length() + 1) + " " + expandText;
+                    tv.setText(text);
+                    tv.setMovementMethod(LinkMovementMethod.getInstance());
+                    tv.setText(
+                            addClickablePartTextViewResizable(Html.fromHtml(tv.getText().toString()), tv, maxLine, expandText,
+                                    viewMore), TextView.BufferType.SPANNABLE);
+                } else {
+                    int lineEndIndex = tv.getLayout().getLineEnd(tv.getLayout().getLineCount() - 1);
+                    String text = tv.getText().subSequence(0, lineEndIndex) + " " + expandText;
+                    tv.setText(text);
+                    tv.setMovementMethod(LinkMovementMethod.getInstance());
+                    tv.setText(
+                            addClickablePartTextViewResizable(Html.fromHtml(tv.getText().toString()), tv, lineEndIndex, expandText,
+                                    viewMore), TextView.BufferType.SPANNABLE);
+                }
+            }
+        });
+    }
 
 
     private static SpannableStringBuilder addClickablePartTextViewResizable(final Spanned strSpanned, final TextView tv,
@@ -1236,33 +1234,31 @@ if(polyLineOptions!=null) {
         SpannableStringBuilder ssb = new SpannableStringBuilder(strSpanned);
 
 
+        if (str.contains(spanableText)) {
+            ssb.setSpan(new MySpannable(false) {
 
+                @Override
+                public void onClick(View widget) {
 
-            if (str.contains(spanableText)) {
-                ssb.setSpan(new MySpannable(false) {
+                    if (viewMore) {
+                        tv.setLayoutParams(tv.getLayoutParams());
+                        tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
+                        tv.invalidate();
+                        makeTextViewResizable(tv, -1, "Read Less", false);
 
-                    @Override
-                    public void onClick(View widget) {
-
-                        if (viewMore) {
-                            tv.setLayoutParams(tv.getLayoutParams());
-                            tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
-                            tv.invalidate();
-                            makeTextViewResizable(tv, -1, "Read Less", false);
-
-                        } else {
-                            tv.setLayoutParams(tv.getLayoutParams());
-                            tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
-                            tv.invalidate();
-                            makeTextViewResizable(tv, 3, "Read More", true);
-
-                        }
+                    } else {
+                        tv.setLayoutParams(tv.getLayoutParams());
+                        tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
+                        tv.invalidate();
+                        makeTextViewResizable(tv, 3, "Read More", true);
 
                     }
-                }, str.indexOf(spanableText), str.indexOf(spanableText) + spanableText.length(), 0);
 
-            }
-        
+                }
+            }, str.indexOf(spanableText), str.indexOf(spanableText) + spanableText.length(), 0);
+
+        }
+
         return ssb;
 
     }

@@ -485,6 +485,46 @@ public class Global extends Application {
     }
 
     String adminUrl;
+
+    public ArrayList<HashMap<String, String>> getDateArray() {
+        return dateArray;
+    }
+
+    public void setDateArray(ArrayList<HashMap<String, String>> dateArray) {
+        this.dateArray = dateArray;
+    }
+
+    ArrayList<HashMap<String,String>> dateArray=new ArrayList<>();
+
+    public String getSessionType() {
+        return sessionType;
+    }
+
+    public void setSessionType(String sessionType) {
+        this.sessionType = sessionType;
+    }
+
+    String sessionType;
+
+    public String getDateType() {
+        return dateType;
+    }
+
+    public void setDateType(String dateType) {
+        this.dateType = dateType;
+    }
+
+    String dateType;
+
+    public String getNumberOfDay() {
+        return numberOfDay;
+    }
+
+    public void setNumberOfDay(String numberOfDay) {
+        this.numberOfDay = numberOfDay;
+    }
+
+    String numberOfDay;
     @Override
     public void onCreate() {
         super.onCreate();
