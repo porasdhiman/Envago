@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 /**
@@ -15,10 +16,11 @@ import android.widget.RelativeLayout;
 public class BookingDateActivity extends Activity implements View.OnClickListener {
     RelativeLayout one_time_advanture_layout,full_session_layout,repeated_dates_adventure_layout;
     Global global;
+    ImageView back_button_create;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
         setContentView(R.layout.booking_date);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -32,6 +34,13 @@ public class BookingDateActivity extends Activity implements View.OnClickListene
         one_time_advanture_layout.setOnClickListener(this);
         full_session_layout.setOnClickListener(this);
         repeated_dates_adventure_layout.setOnClickListener(this);
+        back_button_create=(ImageView)findViewById(R.id.back_button_create);
+        back_button_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

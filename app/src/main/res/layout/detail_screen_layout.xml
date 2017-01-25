@@ -14,7 +14,7 @@
         android:background="@color/textcolor">
 
         <ImageView
-            android:id="@+id/search_button"
+            android:id="@+id/back_button_create"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_margin="14dp"
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/search_button"
+            android:layout_toRightOf="@+id/back_button_create"
             android:layout_toLeftOf="@+id/heart_img"
             android:gravity="center"
             android:text="Adventures"
@@ -686,6 +686,7 @@ android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="10dp"
+
                     android:background="@color/LightGrey" />
 
                 <LinearLayout
@@ -701,14 +702,15 @@ android:layout_centerVertical="true"
                     <com.jess.ui.TwoWayGridView
                         android:id="@+id/user_view"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="150dp"
                         android:background="#ffffff"
                         app:cacheColorHint="#E8E8E8"
-                        app:columnWidth="90dp"
-                        app:rowHeight="90dp"
+                        app:columnWidth="60dp"
+                        app:rowHeight="60dp"
                         app:numColumns="auto_fit"
                         app:numRows="2"
                         app:verticalSpacing="7dp"
+                        app:gravity="center"
                         app:horizontalSpacing="10dp"
                         app:stretchMode="spacingWidthUniform"
                         app:scrollDirectionPortrait="horizontal">

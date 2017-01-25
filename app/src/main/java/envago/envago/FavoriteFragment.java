@@ -148,7 +148,9 @@ SharedPreferences sp;
                             details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LATITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
+                            JSONArray arr=arrobj.getJSONArray("event_dates");
+                            JSONObject objArr=arr.getJSONObject(0);
+                            details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
 
@@ -255,7 +257,9 @@ SharedPreferences sp;
                             details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
+                            JSONArray arr=arrobj.getJSONArray("event_dates");
+                            JSONObject objArr=arr.getJSONObject(0);
+                            details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
 
@@ -265,6 +269,7 @@ SharedPreferences sp;
                         if (planning_event_list.size() > 0) {
                             // view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(),event_list));
                             planning_linear_layout.setVisibility(View.VISIBLE);
+                            shimmer_container.setVisibility(View.GONE);
                             cat_pager.setAdapter(new AdvantureFeatureAdapter(getActivity(), planning_event_list));
                             /*cat_pager.setClipToPadding(false);
                             cat_pager.setPadding(0, 0, 40, 0);
@@ -349,7 +354,9 @@ SharedPreferences sp;
                             details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
+                            JSONArray arr=arrobj.getJSONArray("event_dates");
+                            JSONObject objArr=arr.getJSONObject(0);
+                            details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
 
@@ -358,6 +365,7 @@ SharedPreferences sp;
                         }
                         if (goint_to_event_list.size() > 0) {
                             ging_to_linear_layout.setVisibility(View.VISIBLE);
+                            shimmer_container.setVisibility(View.GONE);
                             view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(), event_list));
 
 

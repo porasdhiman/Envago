@@ -181,6 +181,7 @@ return v;
         document_edit = (TextView)findViewById(R.id.document_edit);
         about_edit = (TextView)findViewById(R.id.about_edit);
         done=(TextView)findViewById(R.id.done);
+        back_button = (ImageView) findViewById(R.id.back_editprofile);
         // sumbit = (Button) findViewById(R.id.edit_sumbit_buttn);
 
       /*  user_tick = (ImageView) findViewById(R.id.right_img);
@@ -204,14 +205,13 @@ return v;
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         });
-*//*
+*/
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-*/
        /* sumbit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

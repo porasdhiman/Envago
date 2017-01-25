@@ -95,8 +95,8 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
          endDate=new Date();
         try {
 
-            startDate=dateFormat.parse(global.getEvent_start_date());
-            endDate=dateFormat.parse(global.getEvent_end_date());
+            startDate=dateFormat.parse(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_START_DATE));
+            endDate=dateFormat.parse(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_END_DATE));
         } catch (java.text.ParseException e) {
             e.printStackTrace();
         }
@@ -105,15 +105,15 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         person_name = (TextView) findViewById(R.id.person_name);
         person_name.setText(global.getEvent_name());
         date_details = (TextView) findViewById(R.id.date_details);
-        String data = global.getEvent_end_date();
+        String data = global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_END_DATE);
         String split[] = data.split("-");
         String minth = split[1];
         String date = split[2];
         int mm = Integer.parseInt(minth);
 
-        date_details.setText(global.getEvent_start_date().split("-")[2] + " to " + date + " " + months[mm] + " " + split[0]);
+        date_details.setText(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_START_DATE).split("-")[2] + " to " + date + " " + months[mm] + " " + split[0]);
         Time_details = (TextView) findViewById(R.id.Time_details);
-        Time_details.setText(global.getEvent_meetin_point()+" ,"+global.getEvent_time());
+        Time_details.setText(global.getEvent_meetin_point()+"\n"+global.getEvent_time());
         person_count = (TextView) findViewById(R.id.person_count);
         person_count.setText(String.valueOf(i));
         total_money = (TextView) findViewById(R.id.total_money);
@@ -307,6 +307,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                 params.put(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
                 params.put("no_of_tickets", String.valueOf(i));
                 params.put("total_price", total_money.getText().toString());
+                params.put("event_date_id", global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.ID));
 
 
                 params.put("action", "join_event");

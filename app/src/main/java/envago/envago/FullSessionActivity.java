@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class FullSessionActivity extends Activity {
     Global global;
     int pos;
     Button submit_button;
+    ImageView back_button_create;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +47,18 @@ public class FullSessionActivity extends Activity {
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
+        back_button_create=(ImageView)findViewById(R.id.back_button_create);
         submit_button = (Button) findViewById(R.id.submit_button);
         no_of_days = (EditText) findViewById(R.id.no_of_days_txtView);
         year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
         session_spinner = (Spinner) findViewById(R.id.session_spinner);
         year_spinner = (Spinner) findViewById(R.id.year_spinner);
+        back_button_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         j = Integer.parseInt(year);
         list.add("year");
         for (int i = 0; i < 17; i++) {

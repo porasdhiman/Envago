@@ -88,13 +88,13 @@ holder.planer_stars=(RatingBar)convertView.findViewById(R.id.planer_stars) ;
         }
 
 
-            if (list.get(position).get("rating").contains(".")) {
+            /*if (list.get(position).get("rating").contains(".")) {
                 // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
-                holder.planer_stars.setRating(Float.parseFloat(list.get(position).get("rating").split("0")[0].replace(".", "")));
-            } else {
+                holder.planer_stars.setRating(Float.parseFloat(list.get(position).get("rating").split("0")[1].replace(".", "")));
+            } else {*/
                 // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
                 holder.planer_stars.setRating(Float.parseFloat(list.get(position).get("rating")));
-            }
+            //}
 
         url = "http://worksdelight.com/envago/uploads/" + list.get(position).get(GlobalConstants.IMAGE);
         Log.e("urle",url);

@@ -55,6 +55,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -106,13 +107,13 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     Dialog dialog2, rating_dialog;
     ListView review_list;
     RelativeLayout event_info_layout;
-
+    ArrayList<HashMap<String, String>> event_date_array = new ArrayList<>();
     ArrayList<HashMap<String, String>> review_list_array = new ArrayList<>();
     TextView status_text, lower_description_txtView, admin_name, places_txtView, level_no1, level_no2,
             level_no3, admin_description, level_no4, date_details, meeting_desc, time_txtVIew,
             location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview, header_textview, Disclaimer_txtView;
     LinearLayout about_layout, map_layout, review_layout, desclaimer_layout;
-    ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView, flight;
+    ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView, flight,back_button_create;
     CircleImageView orginiser_img;
     ArrayList<String> list = new ArrayList<>();
     Button purchase_btn;
@@ -166,6 +167,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     TwoWayGridView user_grid;
     String id;
     ArrayList<HashMap<String, String>> eventUserList = new ArrayList<>();
+    ArrayList<HashMap<String, String>> locationList = new ArrayList<>();
+    String url1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +186,13 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         // pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         stars = (RatingBar) findViewById(R.id.stars);
         stars.setOnTouchListener(null);
+        back_button_create=(ImageView)findViewById(R.id.back_button_create);
+        back_button_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         about_layout = (LinearLayout) findViewById(R.id.about_layout);
         map_layout = (LinearLayout) findViewById(R.id.map_layout);
         status_text = (TextView) findViewById(R.id.status_text);
@@ -305,7 +315,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
                 break;
             case R.id.purchase_btn:
-                Intent i = new Intent(DetailsActivity.this, ConfirmDetailsActivity.class);
+                Intent i = new Intent(DetailsActivity.this, BookDateActivity.class);
                 i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
                 startActivity(i);
                /* thingToBuy = new PayPalPayment(new BigDecimal("10"), "USD",
@@ -372,23 +382,131 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     meeting_long = objArry.getString("meeting_point_longitude");
 
 
-                                    mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
-                                    // Add a marker in Sydney and move the camera
-                                    LatLng postion = new LatLng(Double.parseDouble(meeting_lat), Double.parseDouble(meeting_long));
-                                    Marker mark = mMap.addMarker(new MarkerOptions().position(postion).title("Meeting Point").snippet(meeting_loc));
+                                    JSONArray location = objArry.getJSONArray("locations");
+
+                                    if (location.length() == 0) {
 
 
-                                    String locationUrl = getMapsApiDirectionsUrl2(objArry.getString("latitude"), objArry.getString("longitude"), meeting_lat, meeting_long);
-                                    ReadTask downloadTask = new ReadTask();
-                                    Log.e("locationUrl", locationUrl);
-                                    downloadTask.execute(locationUrl);
+                                        MarkerOptions options = new MarkerOptions();
+                                        options.position(new LatLng(Double.parseDouble(objArry.getString("latitude")), Double.parseDouble(objArry.getString("longitude")))).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)).title("starting Point");
+
+                                        mMap.addMarker(options);
+                                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(objArry.getString("latitude")), Double.parseDouble(objArry.getString("longitude"))), 10));
+                                        mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
+                                    } else {
+                                        if (location.length() == 1) {
+                                            JSONObject locObj = location.getJSONObject(0);
+                                            HashMap<String, String> map = new HashMap<>();
+                                            map.put("location_1", locObj.getString("location_1"));
+                                            map.put("loc_1_latitude", locObj.getString("loc_1_latitude"));
+                                            map.put("loc_1_longitude", locObj.getString("loc_1_longitude"));
+                                            locationList.add(map);
+                                            Log.e("location_list", locationList.toString());
+                                            String locationUrl = getMapsApiDirectionsUrl2(objArry.getString("latitude"), objArry.getString("longitude"), locationList);
+                                            ReadTask downloadTask = new ReadTask();
+                                            Log.e("locationUrl", locationUrl);
+                                            downloadTask.execute(locationUrl);
+
+                                            MarkerOptions options = new MarkerOptions();
+                                            MarkerOptions options1 = new MarkerOptions();
+                                            options.position(new LatLng(Double.parseDouble(objArry.getString("latitude")), Double.parseDouble(objArry.getString("longitude")))).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)).title("starting Point");
+
+                                            options1.position(new LatLng(Double.parseDouble(locObj.getString("loc_1_latitude")), Double.parseDouble(locObj.getString("loc_1_longitude"))));
+                                            options1.icon(BitmapDescriptorFactory.fromResource(R.drawable.a)).title("First Point");
 
 
-                                    LatLng postion_start = new LatLng(Double.parseDouble(objArry.getString("latitude")), Double.parseDouble(objArry.getString("longitude")));
-                                    Marker mark_start = mMap.addMarker(new MarkerOptions().position(postion_start).title("Starting Point").snippet(objArry.getString("location")));
+                                            mMap.addMarker(options);
+                                            LatLng pos = new LatLng(Double.parseDouble(locObj.getString("loc_1_latitude")), Double.parseDouble(locObj.getString("loc_1_longitude")));
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 10));
+                                            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+                                        } else if (location.length() == 2) {
+                                            JSONObject locObj = location.getJSONObject(0);
+                                            HashMap<String, String> map = new HashMap<>();
+                                            map.put("location_1", locObj.getString("location_1"));
+                                            map.put("loc_1_latitude", locObj.getString("loc_1_latitude"));
+                                            map.put("loc_1_longitude", locObj.getString("loc_1_longitude"));
+                                            locationList.add(map);
+                                            JSONObject locObj1 = location.getJSONObject(1);
+                                            HashMap<String, String> map1 = new HashMap<>();
+                                            map1.put("location_2", locObj1.getString("location_2"));
+                                            map1.put("loc_2_latitude", locObj1.getString("loc_2_latitude"));
+                                            map1.put("loc_2_longitude", locObj1.getString("loc_2_longitude"));
+                                            locationList.add(map1);
 
-                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion_start, 12));
-                                    mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+                                            Log.e("location_list", locationList.toString());
+                                            String locationUrl = getMapsApiDirectionsUrl2(objArry.getString("latitude"), objArry.getString("longitude"), locationList);
+                                            ReadTask downloadTask = new ReadTask();
+                                            Log.e("locationUrl", locationUrl);
+                                            downloadTask.execute(locationUrl);
+
+                                            MarkerOptions options = new MarkerOptions();
+                                            MarkerOptions options1 = new MarkerOptions();
+                                            MarkerOptions options2 = new MarkerOptions();
+
+                                            options.position(new LatLng(Double.parseDouble(objArry.getString("latitude")), Double.parseDouble(objArry.getString("longitude")))).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)).title("starting Point");
+
+                                            options1.position(new LatLng(Double.parseDouble(locObj.getString("loc_1_latitude")), Double.parseDouble(locObj.getString("loc_1_longitude"))));
+                                            options1.icon(BitmapDescriptorFactory.fromResource(R.drawable.a)).title("First Point");
+                                            options2.position(new LatLng(Double.parseDouble(locObj1.getString("loc_2_latitude")), Double.parseDouble(locObj1.getString("loc_2_longitude"))));
+                                            options2.icon(BitmapDescriptorFactory.fromResource(R.drawable.b)).title("Second Point");
+
+
+                                            mMap.addMarker(options);
+                                            LatLng pos = new LatLng(Double.parseDouble(locObj1.getString("loc_2_latitude")), Double.parseDouble(locObj1.getString("loc_2_longitude")));
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 10));
+                                            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+                                        } else {
+                                            JSONObject locObj = location.getJSONObject(0);
+                                            HashMap<String, String> map = new HashMap<>();
+                                            map.put("location_1", locObj.getString("location_1"));
+                                            map.put("loc_1_latitude", locObj.getString("loc_1_latitude"));
+                                            map.put("loc_1_longitude", locObj.getString("loc_1_longitude"));
+                                            locationList.add(map);
+                                            JSONObject locObj1 = location.getJSONObject(1);
+                                            HashMap<String, String> map1 = new HashMap<>();
+                                            map1.put("location_2", locObj1.getString("location_2"));
+                                            map1.put("loc_2_latitude", locObj1.getString("loc_2_latitude"));
+                                            map1.put("loc_2_longitude", locObj1.getString("loc_2_longitude"));
+                                            locationList.add(map1);
+                                            JSONObject locObj2 = location.getJSONObject(2);
+                                            HashMap<String, String> map2 = new HashMap<>();
+                                            map2.put("location_3", locObj2.getString("location_3"));
+                                            map2.put("loc_3_latitude", locObj2.getString("loc_3_latitude"));
+                                            map2.put("loc_3_longitude", locObj2.getString("loc_3_longitude"));
+                                            locationList.add(map2);
+
+                                            Log.e("location_list", locationList.toString());
+                                            String locationUrl = getMapsApiDirectionsUrl2(objArry.getString("latitude"), objArry.getString("longitude"), locationList);
+                                            ReadTask downloadTask = new ReadTask();
+                                            Log.e("locationUrl", locationUrl);
+                                            downloadTask.execute(locationUrl);
+
+
+                                            MarkerOptions options = new MarkerOptions();
+                                            MarkerOptions options1 = new MarkerOptions();
+                                            MarkerOptions options2 = new MarkerOptions();
+                                            MarkerOptions options3 = new MarkerOptions();
+                                            options.position(new LatLng(Double.parseDouble(objArry.getString("latitude")), Double.parseDouble(objArry.getString("longitude")))).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)).title("starting Point");
+
+                                            options1.position(new LatLng(Double.parseDouble(locObj.getString("loc_1_latitude")), Double.parseDouble(locObj.getString("loc_1_longitude"))));
+                                            options1.icon(BitmapDescriptorFactory.fromResource(R.drawable.a)).title("First Point");
+                                            options2.position(new LatLng(Double.parseDouble(locObj1.getString("loc_2_latitude")), Double.parseDouble(locObj1.getString("loc_2_longitude"))));
+                                            options2.icon(BitmapDescriptorFactory.fromResource(R.drawable.b)).title("Second Point");
+
+                                            options3.position(new LatLng(Double.parseDouble(locObj2.getString("loc_3_latitude")), Double.parseDouble(locObj2.getString("loc_3_longitude"))));
+                                            options3.icon(BitmapDescriptorFactory.fromResource(R.drawable.c)).title("Third Point");
+
+                                            mMap.addMarker(options);
+                                            mMap.addMarker(options1);
+                                            mMap.addMarker(options2);
+                                            mMap.addMarker(options3);
+                                            LatLng pos = new LatLng(Double.parseDouble(locObj1.getString("loc_2_latitude")), Double.parseDouble(locObj1.getString("loc_2_longitude")));
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 10));
+                                            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+                                        }
+
+                                    }
 
 
                                     //--------------------------------end-map-location-variable---------------------------------------------
@@ -449,45 +567,17 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     }
                                     global.setAdminRating(objArry.getString(GlobalConstants.ADMIN_RATING));
 
-
+/*
                                     if (objArry.getString(GlobalConstants.ADMIN_RATING).contains(".")) {
                                         // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
                                         stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", "")));
-                                    } else {
+                                    } else {*/
                                         // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
                                         stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING)));
-                                    }
+                             //       }
 
 
-                                    if (dateMatchMethod(objArry.getString(GlobalConstants.EVENT_START_DATE))) {
-                                        status_text.setVisibility(View.VISIBLE);
-                                    } else {
-                                        status_text.setVisibility(View.GONE);
-                                    }
-                                    global.setEvent_time(objArry.getString("time"));
-                                    String date_data = objArry.getString(GlobalConstants.EVENT_START_DATE);
-                                    String split[] = date_data.split("-");
-                                    String minth = split[1];
-                                    String date = split[2];
-                                    int mm = Integer.parseInt(minth);
-                                    Calendar c = Calendar.getInstance();
-                                    SimpleDateFormat dateFormat = new SimpleDateFormat(
-                                            "yyyy-MM-dd");
-                                    String dateafter = dateFormat.format(c.getTime());
-                                    startDate = new Date();
-                                    endDate = new Date();
-                                    try {
-                                        startDate = dateFormat.parse(date_data);
-                                        endDate = dateFormat.parse(dateafter);
 
-                                    } catch (java.text.ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                    // date_details.setText(date+" "+months[mm]+" "+split[0]);
-
-                                    //days_details.setText(String.valueOf(getDaysDifference(startDate,endDate))+" Days");
-                                    global.setEvent_start_date(objArry.getString(GlobalConstants.EVENT_START_DATE));
-                                    global.setEvent_end_date(objArry.getString(GlobalConstants.EVENT_END_DATE));
                                     location_name_txtView.setText(objArry.getString(GlobalConstants.LOCATION));
                                     global.setEvent_loc(objArry.getString(GlobalConstants.LOCATION));
                                     if (objArry.getString(GlobalConstants.EVENT_LEVEL).equalsIgnoreCase("1")) {
@@ -563,6 +653,47 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     global.setEvent_price(objArry.getString(GlobalConstants.EVENT_PRICE));
                                     user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, Integer.parseInt(objArry.getString("total_no_of_places")), eventUserList));
 
+                                    JSONArray event_dates = objArry.getJSONArray("event_dates");
+                                    for(int i=0;i<event_dates.length();i++){
+                                        JSONObject event_datesObj=event_dates.getJSONObject(i);
+                                        HashMap<String,String> map=new HashMap<>();
+                                        map.put(GlobalConstants.ID,event_datesObj.getString(GlobalConstants.ID));
+                                        map.put(GlobalConstants.EVENT_START_DATE,event_datesObj.getString(GlobalConstants.EVENT_START_DATE));
+                                        map.put(GlobalConstants.EVENT_END_DATE,event_datesObj.getString(GlobalConstants.EVENT_END_DATE));
+                                        event_date_array.add(map);
+                                    }
+                                    Log.e("event_date_array",event_date_array.toString());
+                                    global.setBookdateArray(event_date_array);
+                                    if (dateMatchMethod(event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE))) {
+                                        status_text.setVisibility(View.VISIBLE);
+                                    } else {
+                                        status_text.setVisibility(View.GONE);
+                                    }
+                                    global.setEvent_time(objArry.getString("time"));
+                                    String date_data = event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE);
+                                    String split[] = date_data.split("-");
+                                    String minth = split[1];
+                                    String date = split[2];
+                                    int mm = Integer.parseInt(minth);
+                                    Calendar c = Calendar.getInstance();
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat(
+                                            "yyyy-MM-dd");
+                                    String dateafter = dateFormat.format(c.getTime());
+                                    startDate = new Date();
+                                    endDate = new Date();
+                                    try {
+                                        startDate = dateFormat.parse(date_data);
+                                        endDate = dateFormat.parse(dateafter);
+
+                                    } catch (java.text.ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    // date_details.setText(date+" "+months[mm]+" "+split[0]);
+
+                                    //days_details.setText(String.valueOf(getDaysDifference(startDate,endDate))+" Days");
+                                    global.setEvent_start_date(event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE));
+                                    global.setEvent_end_date(event_date_array.get(0).get(GlobalConstants.EVENT_END_DATE));
+
                                 }
 
 
@@ -606,10 +737,15 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         requestQueue.add(stringRequest);
     }
 
-    private String getMapsApiDirectionsUrl2(String startLat, String startlng, String meetingLat, String meetingLng) {
+    private String getMapsApiDirectionsUrl2(String startLat, String startlng, ArrayList<HashMap<String, String>> list) {
+        if (locationList.size() == 1) {
+            url1 = "https://maps.googleapis.com/maps/api/directions/json?origin=" + startLat + "," + startlng + "&waypoints=" + list.get(0).get("loc_1_latitude") + "," + list.get(0).get("loc_1_longitude") + "&destination=" + list.get(0).get("loc_1_latitude") + "," + list.get(0).get("loc_1_longitude") + "&sensor=true&mode=walking";
+        } else if (locationList.size() == 1) {
+            url1 = "https://maps.googleapis.com/maps/api/directions/json?origin=" + startLat + "," + startlng + "&waypoints=" + list.get(0).get("loc_1_latitude") + "," + list.get(0).get("loc_1_longitude") + "%7C" + list.get(1).get("loc_2_latitude") + "," + list.get(1).get("loc_2_longitude") + "&destination=" + list.get(1).get("loc_2_latitude") + "," + list.get(1).get("loc_2_longitude") + "&sensor=true&mode=walking";
+        } else {
+            url1 = "https://maps.googleapis.com/maps/api/directions/json?origin=" + startLat + "," + startlng + "&waypoints=" + list.get(0).get("loc_1_latitude") + "," + list.get(0).get("loc_1_longitude") + "%7C" + list.get(1).get("loc_2_latitude") + "," + list.get(1).get("loc_2_longitude") + "%7C" + list.get(2).get("loc_3_latitude") + "," + list.get(2).get("loc_3_longitude") + "&destination=" + list.get(2).get("loc_3_latitude") + "," + list.get(2).get("loc_3_longitude") + "&sensor=true&mode=walking";
 
-        String url1 = "https://maps.googleapis.com/maps/api/directions/json?origin=" + startLat + "," + startlng + "&waypoints=" + meetingLat + "," + meetingLng + "&destination=" + meetingLat + "," + meetingLng + "&sensor=true&mode=walking";
-
+        }
         return url1;
     }
 

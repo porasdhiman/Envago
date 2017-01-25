@@ -30,6 +30,7 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -39,7 +40,7 @@ import java.io.File;
  */
 
 public class NewAdvantureForm extends Activity {
-    ImageView booking_checkBox, route_checkbox, photo_checkBox, detail_checkBox;
+    ImageView booking_checkBox, route_checkbox, photo_checkBox, detail_checkBox,back_button_create;
     boolean is_booking, is_route, is_addPhoto, is_detail;
     Global global;
     Button submit_button;
@@ -59,9 +60,16 @@ public class NewAdvantureForm extends Activity {
         }
         global = (Global) getApplicationContext();
         global.setEvent_start_date("");
+        back_button_create=(ImageView) findViewById(R.id.back_button_create);
         booking_checkBox = (ImageView) findViewById(R.id.booking_checkBox);
-        submit_button = (Button) findViewById(R.id.submit_button_create_advanture);
+        //submit_button = (Button) findViewById(R.id.submit_button_create_advanture);
         preview_button = (TextView) findViewById(R.id.preview_button);
+        back_button_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         booking_checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +133,7 @@ public class NewAdvantureForm extends Activity {
         }
         if (!global.getEvent_start_date().equalsIgnoreCase("") && !global.getStartingPoint().equalsIgnoreCase("")
                 && global.getListImg().size() != 0 && global.getEvent_description().equalsIgnoreCase("true")) {
-            submit_button.setBackgroundResource(R.drawable.red_button_back);
+            /*submit_button.setBackgroundResource(R.drawable.red_button_back);
             submit_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -133,7 +141,7 @@ public class NewAdvantureForm extends Activity {
                     new Thread(null, address_request, "")
                             .start();
                 }
-            });
+            });*/
             preview_button.setTextColor(Color.BLACK);
             preview_button.setBackgroundResource(R.drawable.red_border_button);
             preview_button.setOnClickListener(new View.OnClickListener() {
@@ -217,10 +225,25 @@ public class NewAdvantureForm extends Activity {
                 Log.e("event_type", global.getDateType());
                 reqEntity.addPart("event_no_of_days", new StringBody(global.getNumberOfDay()));
                 Log.e("event_no_of_days", global.getNumberOfDay());
-                reqEntity.addPart("event_dates[0][event_start_date]", new StringBody(global.getEvent_start_date()));
-                Log.e("event_dates[0][event_start_date]", global.getEvent_start_date());
-                reqEntity.addPart("event_dates[0][event_end_date]", new StringBody(global.getEvent_end_date()));
-                Log.e("event_dates[0][event_end_date]", global.getEvent_end_date());
+                JSONArray installedList = new JSONArray();
+
+
+
+                    try {
+                        JSONObject installedPackage = new JSONObject();
+                        installedPackage.put(GlobalConstants.EVENT_START_DATE, global.getEvent_start_date());
+                        installedPackage.put(GlobalConstants.EVENT_END_DATE, global.getEvent_end_date());
+                        installedList.put(installedPackage);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+                String dataToSend = installedList.toString();
+                reqEntity.addPart("event_dates", new StringBody(dataToSend));
+                Log.e("event_datesjjjjjj", dataToSend);
             } else if (global.getDateType().equalsIgnoreCase("full_season")) {
                 reqEntity.addPart("event_type", new StringBody(global.getDateType()));
                 Log.e("event_type", global.getDateType());
@@ -229,32 +252,53 @@ public class NewAdvantureForm extends Activity {
 
                 reqEntity.addPart("event_season", new StringBody(global.getSessionType()));
                 Log.e("event_season", global.getSessionType());
-                reqEntity.addPart("event_dates[1][event_start_date]", new StringBody(global.getEvent_start_date()));
-                Log.e("event_dates[1][event_start_date]", global.getEvent_start_date());
-                reqEntity.addPart("event_dates[1][event_end_date]", new StringBody(global.getEvent_end_date()));
-                Log.e("event_dates[1][event_end_date]", global.getEvent_end_date());
+                JSONArray installedList = new JSONArray();
+
+
+
+                try {
+                    JSONObject installedPackage = new JSONObject();
+                    installedPackage.put(GlobalConstants.EVENT_START_DATE, global.getEvent_start_date());
+                    installedPackage.put(GlobalConstants.EVENT_END_DATE, global.getEvent_end_date());
+                    installedList.put(installedPackage);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                String dataToSend = installedList.toString();
+                reqEntity.addPart("event_dates", new StringBody(dataToSend));
+                Log.e("event_datesjjjjjj", dataToSend);
             } else {
                 reqEntity.addPart("event_type", new StringBody(global.getDateType()));
                 Log.e("event_type", global.getDateType());
                 reqEntity.addPart("event_no_of_days", new StringBody(global.getNumberOfDay()));
                 Log.e("event_no_of_days", global.getNumberOfDay());
 
-                JSONArray installedList = new JSONArray(global.getDateArray());
-                JSONObject installedPackage = new JSONObject();
+                JSONArray installedList = new JSONArray();
 
-               /* for (int i = 0; i < global.getDateArray().size(); i++)
+
+                for (int i = 0; i < global.getDateArray().size(); i++)
                 {
-
+                    try {
+                        JSONObject installedPackage = new JSONObject();
                         installedPackage.put(GlobalConstants.EVENT_START_DATE, global.getDateArray().get(i).get(GlobalConstants.EVENT_START_DATE));
                         installedPackage.put(GlobalConstants.EVENT_END_DATE, global.getDateArray().get(i).get(GlobalConstants.EVENT_END_DATE));
                         installedList.put(installedPackage);
 
-                }*/
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
                 String dataToSend = installedList.toString();
                 reqEntity.addPart("event_dates", new StringBody(dataToSend));
                 Log.e("event_datesjjjjjj", dataToSend);
-                reqEntity.addPart("event_dates[0][event_end_date]", new StringBody("2017-10-3"));
-                Log.e("event_dates[0][event_end_date]", "2017-10-3");
+               /* reqEntity.addPart("event_dates[0][event_end_date]", new StringBody("2017-10-3"));
+                Log.e("event_dates[0][event_end_date]", "2017-10-3");*/
             }
 
 

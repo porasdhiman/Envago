@@ -26,6 +26,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +76,7 @@ public class SecondRouteActivity extends FragmentActivity implements GoogleApiCl
     Marker marker;
     Dialog dialog2;
     int k = 0,requestCode;
+    ImageView back_button_create;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -102,6 +104,7 @@ public class SecondRouteActivity extends FragmentActivity implements GoogleApiCl
         }
         global = (Global) getApplicationContext();
         buildGoogleApiClient();
+        back_button_create=(ImageView)findViewById(R.id.back_button_create);
         a_letter_layout = (RelativeLayout) findViewById(R.id.a_letter_layout);
         b_letter_layout = (RelativeLayout) findViewById(R.id.b_letter_layout);
         c_letter_layout = (RelativeLayout) findViewById(R.id.c_letter_layout);
@@ -111,6 +114,12 @@ public class SecondRouteActivity extends FragmentActivity implements GoogleApiCl
         end_point_txtView = (TextView) findViewById(R.id.end_point_txtView);
         add_next_point_txtView.setOnClickListener(this);
         end_point_txtView.setOnClickListener(this);
+        back_button_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         /*options = new DisplayImageOptions.Builder()

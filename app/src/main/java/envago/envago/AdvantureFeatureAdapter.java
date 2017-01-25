@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +25,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-
-import static envago.envago.R.id.view;
 
 /**
  * Created by vikas on 28-12-2016.
@@ -127,13 +124,13 @@ public class AdvantureFeatureAdapter extends PagerAdapter {
 
         view_date_text.setText(date + " " + months[mm]/* + " " + split[0]*/);
         view_location_txt.setText(mResources.get(i).get(GlobalConstants.EVENT_LOC));
-
-        if (mResources.get(i).get(GlobalConstants.EVENT_FAV).equals("0")) {
+        heart_img.setVisibility(View.GONE);
+       /* if (mResources.get(i).get(GlobalConstants.EVENT_FAV).equals("0")) {
             heart_img.setImageResource(R.drawable.heart);
         } else {
             heart_img.setImageResource(R.drawable.heart_field);
 
-        }
+        }*/
 
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat(

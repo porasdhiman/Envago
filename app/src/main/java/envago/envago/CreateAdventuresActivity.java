@@ -24,11 +24,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -216,7 +214,7 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
         }
         if (id == R.id.back_button_create) {
             finish();
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+
         }
 
 

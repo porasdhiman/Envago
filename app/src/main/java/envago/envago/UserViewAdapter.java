@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
@@ -66,10 +65,10 @@ public class UserViewAdapter extends BaseAdapter {
 
         convertView=inflator.inflate(R.layout.user_view_item,null);
 
-        TextView user_name=(TextView)convertView.findViewById(R.id.user_name);
+       // TextView user_name=(TextView)convertView.findViewById(R.id.user_name);
         ImageView user_img=(ImageView)convertView.findViewById(R.id.user_img);
         if(list.size()>position) {
-            user_name.setText(list.get(position).get(GlobalConstants.USERNAME));
+           // user_name.setText(list.get(position).get(GlobalConstants.USERNAME));
             url = "http://worksdelight.com/envago/uploads/" + list.get(position).get(GlobalConstants.IMAGE);
             if (url != null && !url.equalsIgnoreCase("null")
                     && !url.equalsIgnoreCase("")) {

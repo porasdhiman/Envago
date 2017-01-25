@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
     CalendarDay date1;
     ArrayList<HashMap<String, String>> dateArray = new ArrayList<>();
     HashMap<String, String> map;
+    ImageView back_button_create;
     private Collection<CalendarDay> calendarDays = new Collection<CalendarDay>() {
         @Override
         public boolean add(CalendarDay object) {
@@ -129,6 +131,7 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
+        back_button_create=(ImageView)findViewById(R.id.back_button_create);
         start_txtView = (TextView) findViewById(R.id.start_date_txtView);
         no_of_days_txtView = (EditText) findViewById(R.id.no_of_days_txtView);
         end_txtView = (TextView) findViewById(R.id.end_date_txtView);
@@ -137,7 +140,12 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
         calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
         calendarView.setOnDateChangedListener(this);
         calendarView.setOnMonthChangedListener(this);
-
+        back_button_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

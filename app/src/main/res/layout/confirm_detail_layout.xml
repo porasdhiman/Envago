@@ -103,7 +103,7 @@ android:layout_centerVertical="true"
                     android:textColor="#000"
                     android:textSize="14sp" />
 
-                <TextView
+               <!-- <TextView
                     android:id="@+id/txtView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -112,7 +112,7 @@ android:layout_centerVertical="true"
                     android:layout_centerVertical="true"
                     android:text="Change a date"
                     android:textColor="@color/textcolor"
-                    android:textSize="14sp" />
+                    android:textSize="14sp" />-->
 
             </RelativeLayout>
 
@@ -167,7 +167,7 @@ android:singleLine="true"
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp">
@@ -191,7 +191,7 @@ android:singleLine="true"
                     android:layout_marginRight="10dp"
                     android:layout_toRightOf="@+id/time"
                     android:layout_centerVertical="true"
-                    android:singleLine="true"
+
                     android:text=""
                     android:textColor="#000"
                     android:textSize="14sp" />

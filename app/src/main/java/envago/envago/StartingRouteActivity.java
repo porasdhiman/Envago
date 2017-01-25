@@ -1,11 +1,8 @@
 package envago.envago;
 
-import android.*;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -39,7 +36,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 /**
  * Created by vikas on 04-01-2017.
@@ -56,6 +52,7 @@ public class StartingRouteActivity extends FragmentActivity implements GoogleApi
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
     Global global;
+ImageView back_button_create;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +74,13 @@ public class StartingRouteActivity extends FragmentActivity implements GoogleApi
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();*/
         mapFragment.getMapAsync(this);
-
+        back_button_create=(ImageView)findViewById(R.id.back_button_create);
+        back_button_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         //-------------------------------Call AutocompleteTxtView-----------------
         mAutocompleteView = (AutoCompleteTextView) findViewById(R.id.starting_txt);
 

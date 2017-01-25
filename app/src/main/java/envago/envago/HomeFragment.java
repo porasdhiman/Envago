@@ -190,7 +190,9 @@ ShimmerFrameLayout shimmer_view_container;
                             details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
+                            JSONArray arr=arrobj.getJSONArray("event_dates");
+                            JSONObject objArr=arr.getJSONObject(0);
+                            details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
 
@@ -278,7 +280,9 @@ ShimmerFrameLayout shimmer_view_container;
                                 //details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                                 details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                                 details.put(GlobalConstants.IMAGE, arrobj.getString(GlobalConstants.IMAGE));
-                                details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
+                                JSONArray arr=arrobj.getJSONArray("event_dates");
+                                JSONObject objArr=arr.getJSONObject(0);
+                                details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                                 details.put(GlobalConstants.Is_SUGGESTED, arrobj.getString(GlobalConstants.Is_SUGGESTED));
                                 //  details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
@@ -302,7 +306,9 @@ ShimmerFrameLayout shimmer_view_container;
                                 //details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                                 details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                                 details.put(GlobalConstants.IMAGE, arrobj.getString(GlobalConstants.IMAGE));
-                                details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
+                                JSONArray arr=arrobj.getJSONArray("event_dates");
+                                JSONObject objArr=arr.getJSONObject(0);
+                                details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                                // details.put(GlobalConstants.Is_SUGGESTED, arrobj.getString(GlobalConstants.Is_SUGGESTED));
                                 //  details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 

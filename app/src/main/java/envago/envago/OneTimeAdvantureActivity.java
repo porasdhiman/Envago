@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -116,7 +117,7 @@ public class OneTimeAdvantureActivity extends Activity implements OnDateSelected
         }
     };
     EditText of_days_txtView;
-
+ImageView back_button_create;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +128,7 @@ public class OneTimeAdvantureActivity extends Activity implements OnDateSelected
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
+        back_button_create=(ImageView)findViewById(R.id.back_button_create);
         of_days_txtView = (EditText) findViewById(R.id.no_of_days_txtView);
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         select_date_txtView = (TextView) findViewById(R.id.select_date_txtView);
@@ -140,6 +142,12 @@ public class OneTimeAdvantureActivity extends Activity implements OnDateSelected
                     finish();
 
                 }
+            }
+        });
+        back_button_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

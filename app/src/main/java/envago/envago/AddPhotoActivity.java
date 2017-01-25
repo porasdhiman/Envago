@@ -1,6 +1,5 @@
 package envago.envago;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.AppIndex;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
@@ -38,7 +36,7 @@ public class AddPhotoActivity extends BaseActivity {
     TextView button1;
     boolean iSEdit = false;
     int i=1,size;
-
+ImageView back_button_create;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,11 +46,18 @@ public class AddPhotoActivity extends BaseActivity {
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
+        back_button_create=(ImageView)findViewById(R.id.back_button_create);
         button1 = (TextView) findViewById(R.id.button1);
         view_photo_layout = (RelativeLayout) findViewById(R.id.view_photo_layout);
         img = (ImageView) findViewById(R.id.img);
         cancel_icon_img = (ImageView) findViewById(R.id.cancel_icon_img);
         selected_img_grid = (GridView) findViewById(R.id.selected_img_grid);
+        back_button_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         view_photo_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

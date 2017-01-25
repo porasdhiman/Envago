@@ -1,7 +1,5 @@
 package envago.envago;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -20,7 +18,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -31,6 +28,8 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+
+import java.util.ArrayList;
 
 /**
  * @author Paresh Mayani (@pareshmayani)
@@ -46,6 +45,7 @@ public class MultiPhotoSelectActivity extends BaseActivity {
      */
     private GoogleApiClient client;
 Global global;
+    ImageView back_button_create;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +55,13 @@ Global global;
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global=(Global)getApplicationContext();
+        back_button_create=(ImageView)findViewById(R.id.back_button_create);
+        back_button_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         final String[] columns = {MediaStore.Images.Media.DATA, MediaStore.Images.Media._ID};
         final String orderBy = MediaStore.Images.Media.DATE_TAKEN;
         Cursor imagecursor = managedQuery(

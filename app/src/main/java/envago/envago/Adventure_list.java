@@ -50,7 +50,7 @@ public class Adventure_list extends Activity {
 
     ImageView back_img;
     ShimmerFrameLayout  shimmer_view_container;
-
+ImageView search_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +63,13 @@ public class Adventure_list extends Activity {
         }
 
         global = (Global) getApplicationContext();
+        search_button=(ImageView)findViewById(R.id.search_button);
+        search_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         headtext = (TextView) findViewById(R.id.header_text_adv);
         shimmer_view_container=(ShimmerFrameLayout) findViewById(R.id.shimmer_view_container);
         shimmer_view_container.startShimmerAnimation();
@@ -122,7 +129,9 @@ public class Adventure_list extends Activity {
                             details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
+                            JSONArray arr=arrobj.getJSONArray("event_dates");
+                            JSONObject objArr=arr.getJSONObject(0);
+                            details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
 

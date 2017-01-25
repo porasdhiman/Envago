@@ -525,6 +525,16 @@ public class Global extends Application {
     }
 
     String numberOfDay;
+
+    public ArrayList<HashMap<String, String>> getBookdateArray() {
+        return BookdateArray;
+    }
+
+    public void setBookdateArray(ArrayList<HashMap<String, String>> bookdateArray) {
+        BookdateArray = bookdateArray;
+    }
+
+    ArrayList<HashMap<String,String>> BookdateArray=new ArrayList<>();
     @Override
     public void onCreate() {
         super.onCreate();

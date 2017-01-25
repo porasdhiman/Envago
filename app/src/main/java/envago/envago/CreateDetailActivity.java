@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -73,7 +74,7 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
     Button submit_button;
     String catgory = "";
 SeekBar seekBar;
-
+ImageView back_button_create;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +87,13 @@ SeekBar seekBar;
         global = (Global) getApplicationContext();
         //-------------------------------Call AutocompleteTxtView-----------------
         mAutocompleteView = (AutoCompleteTextView) findViewById(R.id.meeting_editText);
-
+        back_button_create=(ImageView)findViewById(R.id.back_button_create);
+        back_button_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mAutocompleteView.setOnItemClickListener(mAutocompleteClickListener);
         mAdapter = new PlaceAutocompleteAdapter(this, android.R.layout.simple_list_item_1,
                 BOUNDS_MOUNTAIN_VIEW, null) {

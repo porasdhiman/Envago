@@ -127,13 +127,13 @@ public void getValueFromGlobal(){
 
 
 
-        if (global.getAdminRating().contains(".")) {
+      /*  if (global.getAdminRating().contains(".")) {
             // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
             star.setRating(Float.parseFloat(global.getAdminRating().split("0")[0].replace(".", "")));
-        } else {
+        } else {*/
             // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
             star.setRating(Float.parseFloat(global.getAdminRating()));
-        }
+        //}
 
     dialogWindow();
     getEventMethod();
@@ -202,13 +202,13 @@ public void getValueFromGlobal(){
                                     comment.setText(reviewList.get(0).get("text"));
 
 
-                                        if (reviewList.get(0).get("rating").contains(".")) {
+                                     /*   if (reviewList.get(0).get("rating").contains(".")) {
                                             // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
                                             stars_review_list.setRating(Float.parseFloat(reviewList.get(0).get("rating").split("0")[0].replace(".", "")));
-                                        } else {
+                                        } else {*/
                                             // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
                                             stars_review_list.setRating(Float.parseFloat(reviewList.get(0).get("rating")));
-                                        }
+                                        //}
                                         String url = "http://worksdelight.com/envago/uploads/" + reviewList.get(0).get("image");
                                         if (url != null && !url .equalsIgnoreCase("null")
                                             && !url .equalsIgnoreCase("")) {
