@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,8 +39,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import static envago.envago.R.id.view;
 
 /**
  * Created by vikas on 28-12-2016.
@@ -113,7 +110,8 @@ public class AllAdapter extends PagerAdapter {
         });
 
 
-            url = "http://worksdelight.com/envago/uploads/" + mResources.get(i).get(GlobalConstants.IMAGE);
+            url = GlobalConstants.IMAGE_URL + mResources.get(i).get(GlobalConstants.IMAGE);
+
             if (url != null && !url.equalsIgnoreCase("null")
                     && !url.equalsIgnoreCase("")) {
                 imageLoader.displayImage(url, view_img, options,

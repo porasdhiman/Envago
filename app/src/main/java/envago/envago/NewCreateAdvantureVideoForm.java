@@ -129,6 +129,7 @@ slider_sign_up_btn=(TextView)findViewById(R.id.slider_sign_up_btn);
                 startActivity(j);
 
                 finish();
+                break;
             case R.id.slider_sign_up_btn:
                 Intent k = new Intent(NewCreateAdvantureVideoForm.this, NewAdvantureForm.class);
                 startActivity(k);

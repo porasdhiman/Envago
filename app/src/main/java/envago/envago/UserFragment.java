@@ -275,7 +275,7 @@ TextView logout_txtView;
                         editor.putString(GlobalConstants.PAYPAL, json_data.getString(GlobalConstants.PAYPAL));
                         editor.putString(GlobalConstants.ABOUT, json_data.getString(GlobalConstants.ABOUT));
                         //editor.putString(GlobalConstants.DOCUMENT, json_data.getString(GlobalConstants.DOCUMENT));
-                        editor.putString(GlobalConstants.IMAGE, "http://worksdelight.com/envago/uploads/"+json_data.getString(GlobalConstants.IMAGE));
+                        editor.putString(GlobalConstants.IMAGE, GlobalConstants.IMAGE_URL+json_data.getString(GlobalConstants.IMAGE));
 
                         String img_url="";
                         if(!json_data.getString(GlobalConstants.IMAGE).equalsIgnoreCase("")){
@@ -285,7 +285,7 @@ TextView logout_txtView;
                         if (img_url.length() == 0) {
                             profilepic.setImageResource(R.mipmap.app_name);
                         } else {
-                            Picasso.with(getActivity()).load("http://worksdelight.com/envago/uploads/"+img_url).into(profilepic);
+                            Picasso.with(getActivity()).load(GlobalConstants.IMAGE_URL+img_url).into(profilepic);
                         }
                         editor.commit();
 

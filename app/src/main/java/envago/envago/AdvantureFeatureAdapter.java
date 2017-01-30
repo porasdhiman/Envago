@@ -95,7 +95,7 @@ public class AdvantureFeatureAdapter extends PagerAdapter {
         if (mResources.get(i).get(GlobalConstants.EVENT_IMAGES).equalsIgnoreCase("")||mResources.get(i).get(GlobalConstants.EVENT_IMAGES).equalsIgnoreCase(null)) {
 
         } else {
-            url = "http://worksdelight.com/envago/uploads/" + mResources.get(i).get(GlobalConstants.EVENT_IMAGES);
+            url = GlobalConstants.IMAGE_URL + mResources.get(i).get(GlobalConstants.EVENT_IMAGES);
             if (url != null && !url.equalsIgnoreCase("null")
                     && !url.equalsIgnoreCase("")) {
                 imageLoader.displayImage(url, view_img, options,

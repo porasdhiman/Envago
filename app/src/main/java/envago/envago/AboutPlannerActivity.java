@@ -209,7 +209,7 @@ public void getValueFromGlobal(){
                                             // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
                                             stars_review_list.setRating(Float.parseFloat(reviewList.get(0).get("rating")));
                                         //}
-                                        String url = "http://worksdelight.com/envago/uploads/" + reviewList.get(0).get("image");
+                                        String url = GlobalConstants.IMAGE_URL + reviewList.get(0).get("image");
                                         if (url != null && !url .equalsIgnoreCase("null")
                                             && !url .equalsIgnoreCase("")) {
                                         imageLoader.displayImage(url , review_user_img, options,

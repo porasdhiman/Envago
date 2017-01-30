@@ -101,8 +101,8 @@ SharedPreferences sp;
 
 
         get_list();
-        get_list_goingto();
-        get_planning_list();
+        //get_list_goingto();
+        //get_planning_list();
         // back_img.setImageResource(R.drawable.favourites_back);
 
       /*  ad_items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -133,15 +133,15 @@ SharedPreferences sp;
 
                     if (res.equalsIgnoreCase("1")) {
 
-                        // JSONObject data = obj.getJSONObject("data");
+                         JSONObject data = obj.getJSONObject("data");
 
-                        JSONArray events = obj.getJSONArray("data");
-                        for (int i = 0; i < events.length(); i++) {
-                            JSONObject arrobj = events.getJSONObject(i);
+                        JSONArray liked_events = data.getJSONArray("liked_events");
+                        for (int i = 0; i < liked_events.length(); i++) {
+                            JSONObject arrobj = liked_events.getJSONObject(i);
 
                             HashMap<String, String> details = new HashMap<>();
 
-                            details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.EVENT_ID));
+                            details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.ID));
                             details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
                             details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
                             details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
@@ -169,6 +169,75 @@ SharedPreferences sp;
                         }
 
 
+
+                        JSONArray my_events = data.getJSONArray("my_events");
+                        for (int i = 0; i < my_events.length(); i++) {
+                            JSONObject arrobj = my_events.getJSONObject(i);
+
+                            HashMap<String, String> details = new HashMap<>();
+
+                            details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.ID));
+                            details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
+                            details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
+                            details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
+                            details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                            details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
+                            details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
+                            JSONArray arr=arrobj.getJSONArray("event_dates");
+                            JSONObject objArr=arr.getJSONObject(0);
+                            details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
+                            details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+
+
+                            planning_event_list.add(details);
+
+                        }
+                        if (planning_event_list.size() > 0) {
+                            // view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(),event_list));
+                            planning_linear_layout.setVisibility(View.VISIBLE);
+                            shimmer_container.setVisibility(View.GONE);
+                            cat_pager.setAdapter(new AdvantureFeatureAdapter(getActivity(), planning_event_list));
+                            /*cat_pager.setClipToPadding(false);
+                            cat_pager.setPadding(0, 0, 40, 0);
+*/
+
+                            //view_item_pager1.setClipToPadding(false);
+                            // view_item_pager1.setPadding(0,0,40,0);
+
+                        }
+                        JSONArray joined_events = data.getJSONArray("joined_events");
+                        for (int i = 0; i < joined_events.length(); i++) {
+                            JSONObject arrobj = joined_events.getJSONObject(i);
+
+                            HashMap<String, String> details = new HashMap<>();
+
+                            details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.ID));
+                            details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
+                            details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
+                            details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
+                            details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                            details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
+                            details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
+                            JSONArray arr=arrobj.getJSONArray("event_dates");
+                            JSONObject objArr=arr.getJSONObject(0);
+                            details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
+                            details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+
+
+                            goint_to_event_list.add(details);
+
+                        }
+                        if (goint_to_event_list.size() > 0) {
+                            ging_to_linear_layout.setVisibility(View.VISIBLE);
+                            shimmer_container.setVisibility(View.GONE);
+                            view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(), event_list));
+
+
+                          /*  view_item_pager1.setClipToPadding(false);
+                            view_item_pager1.setPadding(0, 0, 40, 0);*/
+                        }
+
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -189,25 +258,15 @@ SharedPreferences sp;
 
                 params.put(GlobalConstants.USERID, CommonUtils.UserID(getActivity()));
 
-               /* if (getActivity().getIntent().getExtras().getString("status").equalsIgnoreCase("single"))
-                {
-                    params.put(GlobalConstants.MAIN_CAT_ID, main_id);
-                    params.put(GlobalConstants.EVENT_CAT_ID, sub_id);
-                }*/
 
-                /*params.put(GlobalConstants.LATITUDE,global.getLat() );
-                params.put(GlobalConstants.LONGITUDE, global.getLong());
-                params.put(GlobalConstants.RESPONSE_TYPE, "list");*/
-                params.put("page", "1");
-                params.put("perpage", "20");
-                params.put("action", "get_liked_events");
+                params.put("action", "get_entities");
 
                 Log.e("paramsssssssss", params.toString());
                 return params;
             }
         };
 
-        cat_request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        cat_request.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(cat_request);

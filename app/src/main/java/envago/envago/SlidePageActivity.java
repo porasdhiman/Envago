@@ -1,7 +1,6 @@
 package envago.envago;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -157,18 +155,18 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.slider_sign_up_btn:
-                Intent i = new Intent(SlidePageActivity.this, RegisterActivity.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                finish();
-
-                break;
-            case R.id.slider_sign_in_layout:
                 Intent j = new Intent(SlidePageActivity.this, ActivityLogin.class);
                 startActivity(j);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
 
+                break;
+            case R.id.slider_sign_in_layout:
+
+                Intent i = new Intent(SlidePageActivity.this, RegisterActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
                 break;
             case R.id.slider_fb_btn:
                 Login_TV.performClick();

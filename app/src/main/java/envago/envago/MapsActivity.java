@@ -191,7 +191,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
                 event_name.setText(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_NAME));
                 event_date.setText(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_START_DATE));
                 event_price.setText(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_PRICE));
-                String url="http://worksdelight.com/envago/uploads/" + global.getEvent_list().get(pos).get(GlobalConstants.EVENT_IMAGES);
+                String url=GlobalConstants.IMAGE_URL + global.getEvent_list().get(pos).get(GlobalConstants.EVENT_IMAGES);
                 if (url != null && !url.equalsIgnoreCase("null")
                         && !url.equalsIgnoreCase("")) {
                     imageLoader.displayImage(url, event_image, options,

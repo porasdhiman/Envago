@@ -372,7 +372,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     JSONArray images = objArry.getJSONArray(GlobalConstants.EVENT_IMAGES);
                                     for (int i = 0; i < images.length(); i++) {
                                         JSONObject imagObj = images.getJSONObject(i);
-                                        list.add("http://worksdelight.com/envago/uploads/" + imagObj.getString(GlobalConstants.IMAGE));
+                                        list.add(GlobalConstants.IMAGE_URL + imagObj.getString(GlobalConstants.IMAGE));
                                     }
                                     global.setList(list);
 
@@ -417,6 +417,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
 
                                             mMap.addMarker(options);
+                                            mMap.addMarker(options1);
                                             LatLng pos = new LatLng(Double.parseDouble(locObj.getString("loc_1_latitude")), Double.parseDouble(locObj.getString("loc_1_longitude")));
                                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 10));
                                             mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
@@ -453,6 +454,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
 
                                             mMap.addMarker(options);
+                                            mMap.addMarker(options1);
+                                            mMap.addMarker(options2);
                                             LatLng pos = new LatLng(Double.parseDouble(locObj1.getString("loc_2_latitude")), Double.parseDouble(locObj1.getString("loc_2_longitude")));
                                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 10));
                                             mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
@@ -532,7 +535,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         eventUserList.add(map);
                                     }
                                     Log.e("Event user", eventUserList.toString());
-                                    String url = "http://worksdelight.com/envago/uploads/" + adminobj.getString(GlobalConstants.ADMIN_IMAGE);
+                                    String url = GlobalConstants.IMAGE_URL + adminobj.getString(GlobalConstants.ADMIN_IMAGE);
+
                                     global.setAdminUrl(url);
                                     if (url != null && !url.equalsIgnoreCase("null")
                                             && !url.equalsIgnoreCase("")) {
@@ -740,7 +744,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     private String getMapsApiDirectionsUrl2(String startLat, String startlng, ArrayList<HashMap<String, String>> list) {
         if (locationList.size() == 1) {
             url1 = "https://maps.googleapis.com/maps/api/directions/json?origin=" + startLat + "," + startlng + "&waypoints=" + list.get(0).get("loc_1_latitude") + "," + list.get(0).get("loc_1_longitude") + "&destination=" + list.get(0).get("loc_1_latitude") + "," + list.get(0).get("loc_1_longitude") + "&sensor=true&mode=walking";
-        } else if (locationList.size() == 1) {
+        } else if (locationList.size() == 2) {
             url1 = "https://maps.googleapis.com/maps/api/directions/json?origin=" + startLat + "," + startlng + "&waypoints=" + list.get(0).get("loc_1_latitude") + "," + list.get(0).get("loc_1_longitude") + "%7C" + list.get(1).get("loc_2_latitude") + "," + list.get(1).get("loc_2_longitude") + "&destination=" + list.get(1).get("loc_2_latitude") + "," + list.get(1).get("loc_2_longitude") + "&sensor=true&mode=walking";
         } else {
             url1 = "https://maps.googleapis.com/maps/api/directions/json?origin=" + startLat + "," + startlng + "&waypoints=" + list.get(0).get("loc_1_latitude") + "," + list.get(0).get("loc_1_longitude") + "%7C" + list.get(1).get("loc_2_latitude") + "," + list.get(1).get("loc_2_longitude") + "%7C" + list.get(2).get("loc_3_latitude") + "," + list.get(2).get("loc_3_longitude") + "&destination=" + list.get(2).get("loc_3_latitude") + "," + list.get(2).get("loc_3_longitude") + "&sensor=true&mode=walking";
@@ -878,7 +882,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
             }
         };
 
-        listReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 4, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        listReq.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(listReq);

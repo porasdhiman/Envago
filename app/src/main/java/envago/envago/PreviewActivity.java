@@ -44,14 +44,11 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.jess.ui.TwoWayGridView;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -164,7 +161,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
     Global global;
     Date startDate, endDate;
 
-    TextView days_details, desclaimer_txt_show;
+    TextView days_details, desclaimer_txt_show,price_btn;
     ImageView dumy_imageview;
     TwoWayGridView user_grid;
     ArrayList<HashMap<String, String>> eventUserList = new ArrayList<>();
@@ -189,6 +186,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         //pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         stars = (RatingBar) findViewById(R.id.stars);
         stars.setOnTouchListener(null);
+        price_btn = (TextView) findViewById(R.id.price_btn);
         about_layout = (LinearLayout) findViewById(R.id.about_layout);
         map_layout = (LinearLayout) findViewById(R.id.map_layout);
         status_text = (TextView) findViewById(R.id.status_text);
@@ -243,7 +241,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
-        allValueShow();
+
        /* dialogWindow();
         singleEventMethod();
 */
@@ -270,7 +268,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
                 startActivity(i);
             }
         });
-
+        allValueShow();
     }
 
 
@@ -303,20 +301,22 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
 
 //    mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
         // Add a marker in Sydney and move the camera
-        String url = getMapsApiDirectionsUrl(meeting_lat, meeting_long, global.getW_lat(), global.getW_lng());
+       /* String url = getMapsApiDirectionsUrl(meeting_lat, meeting_long, global.getW_lat(), global.getW_lng());
+        Log.e("locationUrl", url);
         dialogWindow();
         PreviewActivity.ReadTask downloadTask = new PreviewActivity.ReadTask();
         downloadTask.execute(url);
         MarkerOptions options = new MarkerOptions();
-
+        MarkerOptions options1 = new MarkerOptions();
         options.position(new LatLng(Double.parseDouble(meeting_lat), Double.parseDouble(meeting_long))).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)).title("starting Point");
 
 
-        options.position(new LatLng(Double.parseDouble(global.getW_lat()), Double.parseDouble(global.getW_lng()))).icon(BitmapDescriptorFactory.fromResource(R.drawable.c)).title("ending Point");
+        options1.position(new LatLng(Double.parseDouble(global.getW_lat()), Double.parseDouble(global.getW_lng()))).icon(BitmapDescriptorFactory.fromResource(R.drawable.c)).title("ending Point");
         mMap.addMarker(options);
+        mMap.addMarker(options1);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(global.getW_lat()), Double.parseDouble(global.getW_lng())), 10));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-
+*/
 
         //--------------------------------end-map-location-variable---------------------------------------------
 
@@ -423,7 +423,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
 
         user_grid.setAdapter(new UserViewAdapter(PreviewActivity.this, Integer.parseInt(global.getEvent_place()), eventUserList));
         dumy_imageview.setImageURI(Uri.fromFile(new File(global.getListImg().get(0))));
-
+        price_btn.setText("$"+global.getEvent_price());
 
     }
 

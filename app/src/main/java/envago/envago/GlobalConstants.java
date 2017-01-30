@@ -52,7 +52,7 @@ public class GlobalConstants {
 
     public static String LIKE_STATUS = "like_status";
 
-    public static String URL="http://worksdelight.com/envago/webservice.php";
+    public static String URL="http://envagoapp.com/envago/webservice.php";
     public static String DETAILS_EVENT_ACTION="get_single_event";
     public static String VERIFIED_ACTION="get_document_status";
     public static String CREATE_EVENT_ACTION="create_event";
@@ -75,4 +75,5 @@ public class GlobalConstants {
 
     public static String CODE="code";
     public static String TREANDING_COUNT="trending_count";
+    public static String IMAGE_URL="http://envagoapp.com/envago/uploads/";
 }

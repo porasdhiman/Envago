@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -48,6 +49,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Random;
 
 /**
  * Created by jhang on 9/27/2016.
@@ -605,7 +607,7 @@ Log.e("url value",preferences.getString(GlobalConstants.IMAGE, ""));
             }
         }
         profileimg.setImageBitmap(bm);
-        Uri uri = getImageUri(EditProfileActivity.this, bm);
+        Uri uri = bitmapToUriConverter(bm);
         try {
             selectedImagePath = getFilePath(EditProfileActivity.this, uri);
             editor.putString(GlobalConstants.IMAGE, selectedImagePath);
@@ -636,7 +638,7 @@ Log.e("url value",preferences.getString(GlobalConstants.IMAGE, ""));
             e.printStackTrace();
         }
         profileimg.setImageBitmap(thumbnail);
-        Uri uri = getImageUri(EditProfileActivity.this, thumbnail);
+        Uri uri = bitmapToUriConverter(thumbnail);
         try {
             selectedImagePath = getFilePath(EditProfileActivity.this, uri);
             editor.putString(GlobalConstants.IMAGE, selectedImagePath);
@@ -645,7 +647,34 @@ Log.e("url value",preferences.getString(GlobalConstants.IMAGE, ""));
             e.printStackTrace();
         }
     }
+    public Uri bitmapToUriConverter(Bitmap mBitmap) {
+        Uri uri = null;
+        try {
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            // Calculate inSampleSize
+            options.inSampleSize = 2;
 
+            // Decode bitmap with inSampleSize set
+            options.inJustDecodeBounds = false;
+            Bitmap newBitmap = Bitmap.createScaledBitmap(mBitmap, 200, 200,
+                    true);
+            File file = new File(getFilesDir(), "Image"
+                    + new Random().nextInt() + ".jpeg");
+            FileOutputStream out = openFileOutput(file.getName(),
+                    Context.MODE_WORLD_READABLE);
+            newBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+            //get absolute path
+            String realPath = file.getAbsolutePath();
+            File f = new File(realPath);
+            uri = Uri.fromFile(f);
+
+        } catch (Exception e) {
+            Log.e("Your Error Message", e.getMessage());
+        }
+        return uri;
+    }
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);

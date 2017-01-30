@@ -96,7 +96,7 @@ holder.planer_stars=(RatingBar)convertView.findViewById(R.id.planer_stars) ;
                 holder.planer_stars.setRating(Float.parseFloat(list.get(position).get("rating")));
             //}
 
-        url = "http://worksdelight.com/envago/uploads/" + list.get(position).get(GlobalConstants.IMAGE);
+        url = GlobalConstants.IMAGE_URL + list.get(position).get(GlobalConstants.IMAGE);
         Log.e("urle",url);
         holder.Planner_name.setText(list.get(position).get(GlobalConstants.USERNAME));
         holder.planner_address.setText(list.get(position).get(GlobalConstants.ADDRESS));

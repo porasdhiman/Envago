@@ -30,10 +30,7 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -108,7 +105,7 @@ public class ChatListAdapter extends BaseAdapter {
             holder = (Holder) view.getTag();
         }
 
-        url = "http://worksdelight.com/envago/uploads/" + images.get(i).get("image");
+        url = GlobalConstants.IMAGE_URL + images.get(i).get("image");
 
         holder.chat_name.setText(images.get(i).get(GlobalConstants.EVENT_NAME));
 
