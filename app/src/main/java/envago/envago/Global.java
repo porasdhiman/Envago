@@ -535,6 +535,25 @@ public class Global extends Application {
     }
 
     ArrayList<HashMap<String,String>> BookdateArray=new ArrayList<>();
+    String event_no_of_days;
+
+    public String getEvent_no_of_days() {
+        return event_no_of_days;
+    }
+
+    public void setEvent_no_of_days(String event_no_of_days) {
+        this.event_no_of_days = event_no_of_days;
+    }
+
+    public String getEventSession() {
+        return eventSession;
+    }
+
+    public void setEventSession(String eventSession) {
+        this.eventSession = eventSession;
+    }
+
+    String eventSession;
     @Override
     public void onCreate() {
         super.onCreate();

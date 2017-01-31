@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -37,6 +38,7 @@ public class AddPhotoActivity extends BaseActivity {
     boolean iSEdit = false;
     int i=1,size;
 ImageView back_button_create;
+    Button submit_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,7 @@ ImageView back_button_create;
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
+        submit_button=(Button)findViewById(R.id.submit_button);
         back_button_create=(ImageView)findViewById(R.id.back_button_create);
         button1 = (TextView) findViewById(R.id.button1);
         view_photo_layout = (RelativeLayout) findViewById(R.id.view_photo_layout);
@@ -113,6 +116,12 @@ ImageView back_button_create;
                    iSEdit = false;
                    cancel_icon_img.setVisibility(View.GONE);
                }
+            }
+        });
+        submit_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

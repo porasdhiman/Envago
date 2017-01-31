@@ -98,7 +98,7 @@ holder.planer_stars=(RatingBar)convertView.findViewById(R.id.planer_stars) ;
 
         url = GlobalConstants.IMAGE_URL + list.get(position).get(GlobalConstants.IMAGE);
         Log.e("urle",url);
-        holder.Planner_name.setText(list.get(position).get(GlobalConstants.USERNAME));
+        holder.Planner_name.setText(cap(list.get(position).get(GlobalConstants.USERNAME)));
         holder.planner_address.setText(list.get(position).get(GlobalConstants.ADDRESS));
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
@@ -146,5 +146,10 @@ holder.planer_stars=(RatingBar)convertView.findViewById(R.id.planer_stars) ;
                 .build();
 
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
+    }
+    public String cap(String name){
+        StringBuilder sb = new StringBuilder(name);
+        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+        return sb.toString();
     }
 }

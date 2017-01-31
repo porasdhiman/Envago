@@ -28,9 +28,9 @@ public class AdaventureDisclamierActivity extends Activity {
         }
         global=(Global)getApplicationContext();
         title=(TextView)findViewById(R.id.title) ;
-        title.setText("Adventure Note");
+        title.setText("Adventure disclaimer");
         desc_editText=(EditText)findViewById(R.id.desc_editText);
-        desc_editText.setHint("Please enter Note");
+        desc_editText.setHint("Please enter disclaimer");
         submit_button=(Button)findViewById(R.id.submit_button);
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override

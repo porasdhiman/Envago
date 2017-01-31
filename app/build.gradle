@@ -51,4 +51,5 @@ dependencies {
     compile 'com.prolificinteractive:material-calendarview:1.4.2'
     compile 'it.sephiroth.android.library.imagezoom:imagezoom:+'
     compile project(':two_grid_view')
+    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 }

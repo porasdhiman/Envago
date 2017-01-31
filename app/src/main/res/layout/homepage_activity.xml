@@ -252,7 +252,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -289,7 +289,7 @@
                 android:id="@+id/suggested_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:orientation="vertical"
 
                 android:visibility="gone">
@@ -307,6 +307,7 @@
                     android:id="@+id/view_item_pager2"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
+
                     android:layout_marginTop="5dp"></android.support.v4.view.ViewPager>
 
                 <View
@@ -322,7 +323,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
 
                 android:orientation="vertical"
                 android:visibility="gone">
@@ -341,7 +342,7 @@ android:layout_marginLeft="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/main_heading"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     android:divider="@color/LightGrey"
                     android:dividerHeight="1dp"
 

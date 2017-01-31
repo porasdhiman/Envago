@@ -130,7 +130,24 @@ ImageView back_button_create;
         global = (Global) getApplicationContext();
         back_button_create=(ImageView)findViewById(R.id.back_button_create);
         of_days_txtView = (EditText) findViewById(R.id.no_of_days_txtView);
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time => " + c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = df.format(c.getTime());
+
+        String date=formattedDate.split("-")[0];
+        String month=formattedDate.split("-")[1];
+        String year=formattedDate.split("-")[2];
+       // Toast.makeText(this,date+"-"+month+"-"+year,Toast.LENGTH_SHORT).show();
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+        calendarView.state().edit()
+
+                .setMinimumDate(CalendarDay.from(Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(date)))
+                .setMaximumDate(CalendarDay.from(2023, 12, 31))
+
+                .commit();
+
         select_date_txtView = (TextView) findViewById(R.id.select_date_txtView);
         submit_button = (Button) findViewById(R.id.submit_button);
         submit_button.setOnClickListener(new View.OnClickListener() {

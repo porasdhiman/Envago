@@ -493,7 +493,7 @@ android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
-                android:text="NOTE"
+                android:text="Disclaimer"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 

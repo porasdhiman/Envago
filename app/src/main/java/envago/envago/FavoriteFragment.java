@@ -76,7 +76,7 @@ SharedPreferences sp;
            scroll_view.setVisibility(View.VISIBLE);
        }
         start_btn=(TextView)v.findViewById(R.id.start_btn);
-        ging_to_linear_layout = (LinearLayout) v.findViewById(R.id.goingto_layout);
+        ging_to_linear_layout = (LinearLayout) v.findViewById(R.id.goint_to_linear_layout);
         planning_linear_layout = (LinearLayout) v.findViewById(R.id.planning_linear_layout);
         wish_linear_layout = (LinearLayout) v.findViewById(R.id.wish_linear_layout);
         view_item_pager1 = (ViewPager) v.findViewById(R.id.view_item_pager1);

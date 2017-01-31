@@ -1,16 +1,17 @@
 package envago.envago;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,18 +34,29 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import static envago.envago.R.id.no_of_days_txtView;
+
 /**
- * Created by vikas on 03-01-2017.
+ * Created by worksdelight on 31/01/17.
  */
 
-public class RequestedActivity extends Activity implements OnDateSelectedListener, OnMonthChangedListener, View.OnTouchListener {
-    MaterialCalendarView calendarView;
+public class OpenFullsessionActivity extends Activity implements OnDateSelectedListener, OnMonthChangedListener{
     private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
-    int i = 0;
-    TextView start_txtView, end_txtView, clear;
-    Button submit_button;
+
+    EditText no_of_days;
+    TextView session_spinner, year_spinner;
+    String year;
+    int j;
+    ArrayList<String> list_date = new ArrayList<>();
+    String startDate_arr[] = {" ", "01-01", "03-15", "06-15", "08-02", "10-02"};
+    String endDate_arr[] = {" ", "03-14", "06-14", "08-01", "10-01", "12-31"};
+    String catgory = "", yearType = "";
     Global global;
-    EditText no_of_days_txtView;
+    int pos;
+    Button submit_button;
+
+    TextView clear;
+MaterialCalendarView calendarView;
     List<CalendarDay> list = new ArrayList<CalendarDay>();
     CalendarDay date1;
     ArrayList<HashMap<String, String>> dateArray = new ArrayList<>();
@@ -120,94 +132,107 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
         }
     };
     String start_date, end_date;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        setContentView(R.layout.requested_layout);
+        setContentView(R.layout.open_session_layout);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
-        back_button_create=(ImageView)findViewById(R.id.back_button_create);
-        start_txtView = (TextView) findViewById(R.id.start_date_txtView);
-        no_of_days_txtView = (EditText) findViewById(R.id.no_of_days_txtView);
-        end_txtView = (TextView) findViewById(R.id.end_date_txtView);
-        clear = (TextView) findViewById(R.id.clear);
-        calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
-        Calendar c = Calendar.getInstance();
-        System.out.println("Current time => " + c.getTime());
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        String formattedDate = df.format(c.getTime());
+        back_button_create = (ImageView) findViewById(R.id.back_button_create);
+        calendarView=(MaterialCalendarView)findViewById(R.id.calendarView);
 
-        String date=formattedDate.split("-")[0];
+        String formattedDate = global.getEvent_start_date();
+        String formattedDate1 = global.getEvent_end_date();
+
+        String date=formattedDate.split("-")[2];
         String month=formattedDate.split("-")[1];
-        String year=formattedDate.split("-")[2];
+        String year=formattedDate.split("-")[0];
+        String date1=formattedDate1.split("-")[2];
+        String month1=formattedDate1.split("-")[1];
+        String year1=formattedDate1.split("-")[0];
         // Toast.makeText(this,date+"-"+month+"-"+year,Toast.LENGTH_SHORT).show();
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         calendarView.state().edit()
 
                 .setMinimumDate(CalendarDay.from(Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(date)))
-                .setMaximumDate(CalendarDay.from(2023, 12, 31))
+                .setMaximumDate(CalendarDay.from(Integer.parseInt(year1), Integer.parseInt(month1)-1, Integer.parseInt(date1)))
 
                 .commit();
         calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
         calendarView.setOnDateChangedListener(this);
         calendarView.setOnMonthChangedListener(this);
+      //  clear = (TextView) findViewById(R.id.clear);
+        submit_button = (Button) findViewById(R.id.submit_button);
+        no_of_days = (EditText) findViewById(no_of_days_txtView);
+        no_of_days.setEnabled(false);
+        year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        session_spinner = (TextView) findViewById(R.id.session_spinner);
+        year_spinner = (TextView) findViewById(R.id.year_spinner);
+        session_spinner.setText(global.getEventSession());
+        year_spinner.setText(year1);
         back_button_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        clear.setOnClickListener(new View.OnClickListener() {
+        j = Integer.parseInt(year);
+        list_date.add("year");
+        for (int i = 0; i < 17; i++) {
+
+            list_date.add(String.valueOf(j));
+            j = ++j;
+
+        }
+       /* clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                start_txtView.setText("Start");
-                end_txtView.setText("End");
-                i = 0;
+
                 calendarView.removeDecorators();
                 list.clear();
                 calendarDays.clear();
                 calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_NONE);
                 calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
             }
-        });
-        submit_button = (Button) findViewById(R.id.submit_button);
+        });*/
+
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (start_txtView.getText().toString().equalsIgnoreCase("Start")) {
-                    Toast.makeText(RequestedActivity.this, "please select start date", Toast.LENGTH_SHORT).show();
-
-                } else if (start_txtView.getText().toString().equalsIgnoreCase("End")) {
-                    Toast.makeText(RequestedActivity.this, "please select end date", Toast.LENGTH_SHORT).show();
-                } else {
-                    global.setNumberOfDay(no_of_days_txtView.getText().toString());
-                    global.setDateType("repeated");
-                    finish();
-                }
+                Intent i = new Intent(OpenFullsessionActivity.this, ConfirmDetailsActivity.class);
+                i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
+                i.putExtra("pos", String.valueOf(0));
+                startActivity(i);
             }
         });
-        no_of_days_txtView.setOnTouchListener(this);
-    }
+        no_of_days.setText(global.getEvent_no_of_days());
 
+    }
+    private int getIndex(Spinner spinner, String myString)
+    {
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-        if (no_of_days_txtView.getText().length() > 0) {
-            if (i == 0) {
-                start_txtView.setText(getSelectedDatesString());
-                i = i + 1;
-            } else {
-                end_txtView.setText(getSelectedDatesString());
-            }
+        if (no_of_days.getText().length() > 0) {
+            session_spinner.setText(getSelectedDatesString());
             calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_NONE);
             calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
-
         } else {
-            Toast.makeText(RequestedActivity.this, "Please enter number of days", Toast.LENGTH_SHORT).show();
+            Toast.makeText(OpenFullsessionActivity.this, "Please enter number of days", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -215,19 +240,17 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
     public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
 
     }
-
     private String getSelectedDatesString() {
         if (list.size() == 0) {
             date1 = calendarView.getSelectedDate();
-            int valye = Integer.parseInt(no_of_days_txtView.getText().toString());
+            int valye = Integer.parseInt(no_of_days.getText().toString());
             //calendarView.setSelectedDate(incrementDateByOne(new Date(FORMATTER.format(date.getDate()).toString())));
             for (int i = 0; i < valye; i++) {
                 CalendarDay date = new CalendarDay(incrementDateByOne(new Date(FORMATTER.format(date1.getDate()).toString()), i));
                 list.add(date);
             }
             calendarDays = list;
-            calendarView.addDecorators(new RequestedActivity.EventDecorator(getResources().getColor(R.color.textcolor), calendarDays));
-
+            calendarView.addDecorators(new OpenFullsessionActivity.EventDecorator(getResources().getColor(R.color.textcolor), calendarDays));
             start_date = list.get(0).toString().substring(12, list.get(0).toString().length() - 1);
             String year = start_date.split("-")[0];
             String months = String.valueOf(Integer.parseInt(start_date.split("-")[1]) + 1);
@@ -241,56 +264,44 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
             String date_end = end_date.split("-")[2];
             end_date = year_end + "-" + months_end + "-" + date_end;
             Log.e("end date", end_date);
-
-
-            map = new HashMap<>();
-            map.put(GlobalConstants.EVENT_START_DATE, start_date);
-            map.put(GlobalConstants.EVENT_END_DATE, end_date);
-            dateArray.add(map);
-            Log.e("value array", dateArray.toString());
+            global.setEvent_end_date(end_date);
             if (date1 == null) {
                 return "No Selection";
             }
             Log.e("calender day value", calendarDays.toString());
-            global.setDateArray(dateArray);
         } else {
 
 
+            calendarView.removeDecorators();
             list.clear();
             calendarDays.clear();
             date1 = calendarView.getSelectedDate();
             //calendarView.setSelectedDate(incrementDateByOne(new Date(FORMATTER.format(date.getDate()).toString())));
-            int valye = Integer.parseInt(no_of_days_txtView.getText().toString());
+            int valye = Integer.parseInt(no_of_days.getText().toString());
             for (int i = 0; i < valye; i++) {
                 CalendarDay date = new CalendarDay(incrementDateByOne(new Date(FORMATTER.format(date1.getDate()).toString()), i));
                 list.add(date);
             }
             calendarDays = list;
-            calendarView.addDecorators(new RequestedActivity.EventDecorator(getResources().getColor(R.color.textcolor), calendarDays));
-
+            calendarView.addDecorators(new OpenFullsessionActivity.EventDecorator(getResources().getColor(R.color.textcolor), calendarDays));
             start_date = list.get(0).toString().substring(12, list.get(0).toString().length() - 1);
             String year = start_date.split("-")[0];
             String months = String.valueOf(Integer.parseInt(start_date.split("-")[1]) + 1);
             String date = start_date.split("-")[2];
             start_date = year + "-" + months + "-" + date;
             Log.e("start date", start_date);
-
+            global.setEvent_start_date(start_date);
             end_date = list.get(valye - 1).toString().substring(12, list.get(valye - 1).toString().length() - 1);
             String year_end = end_date.split("-")[0];
             String months_end = String.valueOf(Integer.parseInt(end_date.split("-")[1]) + 1);
             String date_end = end_date.split("-")[2];
             end_date = year_end + "-" + months_end + "-" + date_end;
             Log.e("end date", end_date);
-            map = new HashMap<>();
-            map.put(GlobalConstants.EVENT_START_DATE, start_date);
-            map.put(GlobalConstants.EVENT_END_DATE, end_date);
-            dateArray.add(map);
-            Log.e("value array", dateArray.toString());
+            global.setEvent_end_date(end_date);
             if (date1 == null) {
                 return "No Selection";
             }
             Log.e("calender day value1", calendarDays.toString());
-            global.setDateArray(dateArray);
         }
 
         return FORMATTER.format(date1.getDate());
@@ -304,37 +315,9 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
         return nextDate;
     }
 
-    //---------------MEthod for match date--------------
-    boolean dateMatchMethod(String selectedDate) {
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd");
 
 
-        Date currentDate = new Date();
-        Date eventDate = new Date();
 
-        try {
-            currentDate = dateFormat.parse(start_txtView.getText().toString());
-            eventDate = dateFormat.parse(selectedDate);
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
-        }
-        if (eventDate.equals(currentDate) || eventDate.before(currentDate)) {
-            return true;
-        } else {
-            return false;
-        }
-
-
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_NONE);
-        calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
-        return false;
-    }
 
     class EventDecorator implements DayViewDecorator {
 

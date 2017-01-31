@@ -40,6 +40,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -74,6 +75,7 @@ import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
+import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -96,7 +98,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by vikas on 15-10-2016.
  */
 public class DetailsActivity extends FragmentActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback, View.OnTouchListener {
+        GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback , View.OnTouchListener{
     protected View view;
     private ImageButton btnNext, btnFinish;
     private ViewPager intro_images;
@@ -113,7 +115,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
             level_no3, admin_description, level_no4, date_details, meeting_desc, time_txtVIew,
             location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview, header_textview, Disclaimer_txtView;
     LinearLayout about_layout, map_layout, review_layout, desclaimer_layout;
-    ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView, flight,back_button_create;
+    ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView, flight, back_button_create;
     CircleImageView orginiser_img;
     ArrayList<String> list = new ArrayList<>();
     Button purchase_btn;
@@ -168,8 +170,9 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     String id;
     ArrayList<HashMap<String, String>> eventUserList = new ArrayList<>();
     ArrayList<HashMap<String, String>> locationList = new ArrayList<>();
-    String url1;
-
+    String url1, dateType;
+float ratingValue;
+    TextDrawable drawable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,8 +188,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         // review_list = (ListView) findViewById(R.id.review_list);
         // pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         stars = (RatingBar) findViewById(R.id.stars);
-        stars.setOnTouchListener(null);
-        back_button_create=(ImageView)findViewById(R.id.back_button_create);
+        stars.setOnTouchListener(this);
+        back_button_create = (ImageView) findViewById(R.id.back_button_create);
         back_button_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -241,12 +244,14 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         about_planner.setOnClickListener(this);
         //route_txtView.setOnClickListener(this);
         // review_txtview.setOnClickListener(this);
+
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
                 .showStubImage(R.drawable.placeholder_image1)        //	Display Stub Image
@@ -280,6 +285,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                 startActivity(i);
             }
         });
+
 
     }
 
@@ -315,14 +321,24 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
                 break;
             case R.id.purchase_btn:
-                Intent i = new Intent(DetailsActivity.this, BookDateActivity.class);
-                i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
-                startActivity(i);
-               /* thingToBuy = new PayPalPayment(new BigDecimal("10"), "USD",
-                        "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
-                Intent intent = new Intent(DetailsActivity.this, PaymentActivity.class);
-                intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
-                startActivityForResult(intent, REQUEST_CODE_PAYMENT);*/
+
+                if (dateType.equalsIgnoreCase("one_time")) {
+                    Intent i = new Intent(DetailsActivity.this, ConfirmDetailsActivity.class);
+                    i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
+                    i.putExtra("pos", String.valueOf(0));
+                    startActivity(i);
+
+                } else if (dateType.equalsIgnoreCase("full_season")) {
+                    Intent i = new Intent(DetailsActivity.this, OpenFullsessionActivity.class);
+                    i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(DetailsActivity.this, BookDateActivity.class);
+                    i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
+                    startActivity(i);
+                }
+
+
                 break;
           /*  case R.id.signup_btn:
                 Intent i = new Intent(DetailsActivity.this, ConfirmDetailsActivity.class);
@@ -391,8 +407,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         options.position(new LatLng(Double.parseDouble(objArry.getString("latitude")), Double.parseDouble(objArry.getString("longitude")))).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)).title("starting Point");
 
                                         mMap.addMarker(options);
-                                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(objArry.getString("latitude")), Double.parseDouble(objArry.getString("longitude"))), 10));
-                                        mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+                                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(objArry.getString("latitude")), Double.parseDouble(objArry.getString("longitude"))), 7));
+                                        mMap.animateCamera(CameraUpdateFactory.zoomTo(7), 2000, null);
 
                                     } else {
                                         if (location.length() == 1) {
@@ -419,8 +435,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                             mMap.addMarker(options);
                                             mMap.addMarker(options1);
                                             LatLng pos = new LatLng(Double.parseDouble(locObj.getString("loc_1_latitude")), Double.parseDouble(locObj.getString("loc_1_longitude")));
-                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 10));
-                                            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 7));
+                                            mMap.animateCamera(CameraUpdateFactory.zoomTo(7), 2000, null);
                                         } else if (location.length() == 2) {
                                             JSONObject locObj = location.getJSONObject(0);
                                             HashMap<String, String> map = new HashMap<>();
@@ -457,8 +473,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                             mMap.addMarker(options1);
                                             mMap.addMarker(options2);
                                             LatLng pos = new LatLng(Double.parseDouble(locObj1.getString("loc_2_latitude")), Double.parseDouble(locObj1.getString("loc_2_longitude")));
-                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 10));
-                                            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 7));
+                                            mMap.animateCamera(CameraUpdateFactory.zoomTo(7), 2000, null);
                                         } else {
                                             JSONObject locObj = location.getJSONObject(0);
                                             HashMap<String, String> map = new HashMap<>();
@@ -505,8 +521,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                             mMap.addMarker(options2);
                                             mMap.addMarker(options3);
                                             LatLng pos = new LatLng(Double.parseDouble(locObj1.getString("loc_2_latitude")), Double.parseDouble(locObj1.getString("loc_2_longitude")));
-                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 10));
-                                            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 7));
+                                            mMap.animateCamera(CameraUpdateFactory.zoomTo(7), 2000, null);
                                         }
 
                                     }
@@ -515,8 +531,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     //--------------------------------end-map-location-variable---------------------------------------------
 
 
-                                    admin_name.setText(adminobj.getString(GlobalConstants.ADMIN_NAME));
-                                    global.setAdminName(adminobj.getString(GlobalConstants.ADMIN_NAME));
+                                    admin_name.setText(cap(adminobj.getString(GlobalConstants.ADMIN_NAME)));
+                                    global.setAdminName(cap(adminobj.getString(GlobalConstants.ADMIN_NAME)));
                                     header_textview.setText(objArry.getString(GlobalConstants.EVENT_NAME));
                                     global.setEvent_name(objArry.getString(GlobalConstants.EVENT_NAME));
                                     id = objArry.getString(GlobalConstants.USERID);
@@ -538,7 +554,22 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     String url = GlobalConstants.IMAGE_URL + adminobj.getString(GlobalConstants.ADMIN_IMAGE);
 
                                     global.setAdminUrl(url);
+                                    char a = admin_name.getText().toString().charAt(0);
+                                    drawable = TextDrawable.builder()
+                                            .buildRect(String.valueOf(a), getResources().getColor(R.color.textcolor));
                                     if (url != null && !url.equalsIgnoreCase("null")
+                                            && !url.equalsIgnoreCase("")){
+
+                                    Picasso.with(DetailsActivity.this).
+                                            load(url).
+                                            placeholder(drawable).
+                                            error(drawable).
+
+                                            into(orginiser_img);
+                                }else{
+                                        orginiser_img.setImageDrawable(drawable);
+                                    }
+                                   /* if (url != null && !url.equalsIgnoreCase("null")
                                             && !url.equalsIgnoreCase("")) {
                                         imageLoader.displayImage(url, orginiser_img, options,
                                                 new SimpleImageLoadingListener() {
@@ -551,8 +582,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                                     }
                                                 });
                                     } else {
-                                        orginiser_img.setImageResource(R.mipmap.ic_launcher);
-                                    }
+                                        orginiser_img.setImageDrawable(drawable);
+                                    }*/
 
                                     if (global.getList().get(0) != null && !global.getList().get(0).equalsIgnoreCase("null")
                                             && !url.equalsIgnoreCase("")) {
@@ -567,7 +598,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                                     }
                                                 });
                                     } else {
-                                        dumy_imageview.setImageResource(R.mipmap.ic_launcher);
+                                        dumy_imageview.setImageResource(R.drawable.placeholder_image1);
                                     }
                                     global.setAdminRating(objArry.getString(GlobalConstants.ADMIN_RATING));
 
@@ -576,10 +607,9 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
                                         stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", "")));
                                     } else {*/
-                                        // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
-                                        stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING)));
-                             //       }
-
+                                    // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
+                                    stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING)));
+                                    //       }
 
 
                                     location_name_txtView.setText(objArry.getString(GlobalConstants.LOCATION));
@@ -652,21 +682,24 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         places_txtView.setText(objArry.getString("total_no_of_places") + " Places");
                                     }
 
-                                    price_btn.setText("$" + objArry.getString("price"));
-                                    purchase_btn.setText("Submit");
+                                    price_btn.setText("$" + objArry.getString("price")+" per persone");
+                                    purchase_btn.setText("Book");
                                     global.setEvent_price(objArry.getString(GlobalConstants.EVENT_PRICE));
                                     user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, Integer.parseInt(objArry.getString("total_no_of_places")), eventUserList));
+                                    dateType = objArry.getString("event_type");
+                                    global.setEvent_no_of_days(objArry.getString("event_no_of_days"));
+                                    global.setEventSession(objArry.getString("event_season"));
 
                                     JSONArray event_dates = objArry.getJSONArray("event_dates");
-                                    for(int i=0;i<event_dates.length();i++){
-                                        JSONObject event_datesObj=event_dates.getJSONObject(i);
-                                        HashMap<String,String> map=new HashMap<>();
-                                        map.put(GlobalConstants.ID,event_datesObj.getString(GlobalConstants.ID));
-                                        map.put(GlobalConstants.EVENT_START_DATE,event_datesObj.getString(GlobalConstants.EVENT_START_DATE));
-                                        map.put(GlobalConstants.EVENT_END_DATE,event_datesObj.getString(GlobalConstants.EVENT_END_DATE));
+                                    for (int i = 0; i < event_dates.length(); i++) {
+                                        JSONObject event_datesObj = event_dates.getJSONObject(i);
+                                        HashMap<String, String> map = new HashMap<>();
+                                        map.put(GlobalConstants.ID, event_datesObj.getString(GlobalConstants.ID));
+                                        map.put(GlobalConstants.EVENT_START_DATE, event_datesObj.getString(GlobalConstants.EVENT_START_DATE));
+                                        map.put(GlobalConstants.EVENT_END_DATE, event_datesObj.getString(GlobalConstants.EVENT_END_DATE));
                                         event_date_array.add(map);
                                     }
-                                    Log.e("event_date_array",event_date_array.toString());
+                                    Log.e("event_date_array", event_date_array.toString());
                                     global.setBookdateArray(event_date_array);
                                     if (dateMatchMethod(event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE))) {
                                         status_text.setVisibility(View.VISIBLE);
@@ -741,6 +774,11 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         requestQueue.add(stringRequest);
     }
 
+    public String cap(String name) {
+        StringBuilder sb = new StringBuilder(name);
+        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+        return sb.toString();
+    }
     private String getMapsApiDirectionsUrl2(String startLat, String startlng, ArrayList<HashMap<String, String>> list) {
         if (locationList.size() == 1) {
             url1 = "https://maps.googleapis.com/maps/api/directions/json?origin=" + startLat + "," + startlng + "&waypoints=" + list.get(0).get("loc_1_latitude") + "," + list.get(0).get("loc_1_longitude") + "&destination=" + list.get(0).get("loc_1_latitude") + "," + list.get(0).get("loc_1_longitude") + "&sensor=true&mode=walking";
@@ -1015,6 +1053,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        rating_dialog();
         return false;
     }
 
@@ -1107,9 +1146,9 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     public void rating_dialog() {
         rating_dialog = new Dialog(this);
         rating_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //  rating_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.w));
+          //rating_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.w));
         rating_dialog.setCanceledOnTouchOutside(true);
-        // rating_dialog.setContentView(R.layout.review_layout);
+         rating_dialog.setContentView(R.layout.review_layout);
        /* AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
         loaderView.show();*/
 
@@ -1131,7 +1170,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                     Toast.makeText(DetailsActivity.this, "Please select rating star", Toast.LENGTH_SHORT).show();
                 } else {
                     dialogWindow();
-                    ratingApiMethod(rating_cmnt.getText().toString(), String.valueOf(stars_dailog.getRating()).split(".")[0]);
+                    ratingApiMethod(rating_cmnt.getText().toString(), String.valueOf(stars_dailog.getRating()));
+                    ratingValue=stars_dailog.getRating();
                 }
             }
         });
@@ -1160,6 +1200,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                             if (status.equalsIgnoreCase("1")) {
                                 rating_dialog.dismiss();
                                 Toast.makeText(DetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                                stars.setRating(ratingValue);
                             } else {
                                 Toast.makeText(DetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             }

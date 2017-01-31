@@ -16,7 +16,7 @@
         <ImageView
             android:id="@+id/cat_pager_img"
             android:layout_width="match_parent"
-            android:layout_height="221dp"
+            android:layout_height="220dp"
             android:adjustViewBounds="true"
             android:scaleType="fitXY" />
 

@@ -15,6 +15,7 @@
         android:layout_height="fill_parent"
         android:layout_below="@+id/main_heading"
 
+
         />
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
@@ -27,7 +28,7 @@
     <ImageView
         android:layout_width="35dp"
         android:layout_height="38dp"
-        android:src="@mipmap/app_name"
+        android:src="@drawable/splash_logo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="90dp"/>
 

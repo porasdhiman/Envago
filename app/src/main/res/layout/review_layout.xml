@@ -20,7 +20,7 @@
         android:layout_marginTop="15dp"
         android:isIndicator="false"
         android:numStars="5"
-        android:progressTint="@android:color/holo_orange_light"
+        android:progressTint="@android:color/holo_red_light"
         android:stepSize="1.0" />
 
     <EditText

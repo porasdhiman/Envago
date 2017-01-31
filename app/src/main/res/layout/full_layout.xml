@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/main_heading"
@@ -25,8 +27,30 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="Clear"
+            android:textColor="#fff"
+            android:visibility="gone"
 
+            android:layout_marginRight="10dp"
+            android:textSize="16sp"
+
+            android:textStyle="bold" />
     </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,7 +88,7 @@
             android:layout_height="wrap_content"
             android:entries="@array/session_name"
             android:layout_alignParentLeft="true"
-            android:background="@null"
+
             ></Spinner>
         <Spinner
             android:id="@+id/year_spinner"
@@ -72,12 +96,19 @@
             android:layout_height="wrap_content"
 
             android:layout_alignParentRight="true"
-            android:background="@null"
 
             ></Spinner>
 
 
     </RelativeLayout>
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:mcv_selectionColor="@color/textcolor"
+android:visibility="gone"
+        android:layout_marginTop="20dp"
+        />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -102,4 +133,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
