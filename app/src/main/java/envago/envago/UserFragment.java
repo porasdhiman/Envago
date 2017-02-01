@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -52,15 +53,13 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 /**
  * Created by vikas on 21-09-2016.
  */
 public class UserFragment extends Fragment {
 
     ImageView map_button;
-    CircleImageView profilepic;
+    ImageView profilepic;
     Dialog camgllry;
     TextView settings, pricing_layout, privacy, terms;
     SharedPreferences preferences;
@@ -88,7 +87,7 @@ TextView logout_txtView;
 
 
 
-        profilepic = (CircleImageView) v.findViewById(R.id.profile_img);
+        profilepic = (ImageView) v.findViewById(R.id.profile_img);
         settings = (TextView) v.findViewById(R.id.settings_txtView);
         pricing_layout = (TextView) v.findViewById(R.id.pricing_policy_txtView);
         privacy = (TextView) v.findViewById(R.id.privacy_policy_txtView);
@@ -167,11 +166,14 @@ TextView logout_txtView;
             if (preferences.getString(GlobalConstants.IMAGE, "").length() == 0) {
 
             } else {
-
+                TextDrawable drawable = TextDrawable.builder()
+                        .buildRound(username.getText().toString().substring(0,1).toUpperCase(), Color.parseColor("#F94444"));
                 if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
-                    Picasso.with(getActivity()).load(preferences.getString(GlobalConstants.IMAGE, ""));
+                    Picasso.with(getActivity()).load(preferences.getString(GlobalConstants.IMAGE, "")).placeholder(drawable).transform(new CircleTransform()).into(profilepic);
                 } else {
-                    profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
+                    Picasso.with(getActivity()).load(new File(preferences.getString(GlobalConstants.IMAGE, ""))).placeholder(drawable).transform(new CircleTransform()).into(profilepic);
+
+                    //profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
                 }
             }
 
@@ -236,12 +238,15 @@ TextView logout_txtView;
             if (preferences.getString(GlobalConstants.IMAGE, "").length() == 0) {
 
             } else {
-
+                TextDrawable drawable = TextDrawable.builder()
+                        .buildRound(username.getText().toString().substring(0,1).toUpperCase(), Color.parseColor("#F94444"));
                 if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
-                    Picasso.with(getActivity()).load(preferences.getString(GlobalConstants.IMAGE, "")).into(profilepic);
+                    Picasso.with(getActivity()).load(preferences.getString(GlobalConstants.IMAGE, "")).placeholder(drawable).transform(new CircleTransform()).into(profilepic);
                 } else {
                     if(!preferences.getString(GlobalConstants.IMAGE, "").equalsIgnoreCase("")) {
-                        profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
+                        Picasso.with(getActivity()).load(new File(preferences.getString(GlobalConstants.IMAGE, ""))).placeholder(drawable).transform(new CircleTransform()).into(profilepic);
+
+                        //profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
                     }
                 }
             }

@@ -43,6 +43,7 @@
                 android:gravity="center"
                 android:hint="Search by location or activity"
                 android:singleLine="true"
+                android:textCursorDrawable="@drawable/cursore_color"
 
                 android:textColor="#fff"
                 android:textColorHint="#fff"
@@ -71,6 +72,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:paddingTop="10dp"
+        android:divider="@color/White"
         android:paddingBottom="10dp"></ListView>
 
 

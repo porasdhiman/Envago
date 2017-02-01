@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,7 +32,7 @@ import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCach
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -42,8 +43,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 import static envago.envago.R.id.stars;
 
 /**
@@ -53,17 +52,18 @@ import static envago.envago.R.id.stars;
 public class AboutPlannerActivity extends Activity {
     ImageView cancel_button,review_user_img;
     TextView admin_name,review_txt,textWithUserName,review_user_name,comment,show_all_txtView;
-    RatingBar star;
+    TextView star;
     ListView main_list;
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
     Global global;
-    CircleImageView admin_image;
+    ImageView admin_image;
     Dialog dialog2;
     ArrayList<HashMap<String,String>> reviewList=new ArrayList<>();
     ArrayList<HashMap<String,String>> eventList=new ArrayList<>();
     RatingBar stars_review_list;
     RelativeLayout review_layout;
+    TextView no_review_txt,About_me_txt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +75,13 @@ public class AboutPlannerActivity extends Activity {
         admin_name=(TextView)findViewById(R.id.admin_name);
 
         textWithUserName=(TextView)findViewById(R.id.textWithUserName);
-        star=(RatingBar)findViewById(stars);
-        admin_image=(CircleImageView)findViewById(R.id.admin_img);
+        star=(TextView) findViewById(stars);
+        admin_image=(ImageView) findViewById(R.id.admin_img);
         stars_review_list=(RatingBar)findViewById(R.id.stars_review_list);
         review_user_name=(TextView)findViewById(R.id.review_list_username);
+        review_user_img=(ImageView) findViewById(R.id.review_user_img);
         show_all_txtView=(TextView)findViewById(R.id.show_all_txtView);
+        About_me_txt=(TextView)findViewById(R.id.About_me_txt);
         comment=(TextView)findViewById(R.id.comment) ;
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +90,7 @@ public class AboutPlannerActivity extends Activity {
             }
         });
         main_list=(ListView)findViewById(R.id.main_list);
-
+        no_review_txt=(TextView)findViewById(R.id.no_review_txt);
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
                 .showStubImage(R.drawable.placeholder_image1)        //	Display Stub Image
@@ -106,34 +108,7 @@ public class AboutPlannerActivity extends Activity {
 
     }
 public void getValueFromGlobal(){
-    admin_name.setText(global.getAdminName());
-    textWithUserName.setText("Adventure by "+global.getAdminName());
-    if (global.getAdminUrl() != null && !global.getAdminUrl() .equalsIgnoreCase("null")
-            && !global.getAdminUrl() .equalsIgnoreCase("")) {
-        imageLoader.displayImage(global.getAdminUrl() , admin_image, options,
-                new SimpleImageLoadingListener() {
-                    @Override
-                    public void onLoadingComplete(String imageUri,
-                                                  View view, Bitmap loadedImage) {
-                        super.onLoadingComplete(imageUri, view,
-                                loadedImage);
 
-                    }
-                });
-    } else {
-        admin_image.setImageResource(R.drawable.user_back);
-    }
-
-
-
-
-      /*  if (global.getAdminRating().contains(".")) {
-            // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
-            star.setRating(Float.parseFloat(global.getAdminRating().split("0")[0].replace(".", "")));
-        } else {*/
-            // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
-            star.setRating(Float.parseFloat(global.getAdminRating()));
-        //}
 
     dialogWindow();
     getEventMethod();
@@ -181,6 +156,26 @@ public void getValueFromGlobal(){
                             String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
                                 JSONObject data = obj.getJSONObject("data");
+
+                                        About_me_txt.setText(data.getString("about_me"));
+
+                                admin_name.setText(data.getString("username"));
+                                TextDrawable drawable2 = TextDrawable.builder()
+                                        .buildRound(admin_name.getText().toString().substring(0,1).toUpperCase(), Color.parseColor("#F94444"));
+
+                                String user_url=GlobalConstants.IMAGE_URL+data.getString("image");
+                                if (user_url != null && !user_url.equalsIgnoreCase("null")
+                                        && !user_url.equalsIgnoreCase("")) {
+                                    Picasso.with(AboutPlannerActivity.this).load(global.getAdminUrl()).placeholder(drawable2).transform(new CircleTransform()).into(admin_image);
+                                } else {
+                                    admin_image.setImageDrawable(drawable2);
+                                }
+
+
+
+
+
+
                                 JSONArray review=data.getJSONArray("reviews");
 
                                 for (int i = 0; i < review.length(); i++) {
@@ -192,13 +187,15 @@ public void getValueFromGlobal(){
                                     map.put("username", user.getString("username"));
                                     map.put("image", user.getString("image"));
                                     map.put("text", reviewObj.getString("text"));
-                                    map.put("rating", user.getString("rating"));
-                                    map.put("created", user.getString("created"));
+                                    map.put("rating", reviewObj.getString("rating"));
+                                    map.put("created", reviewObj.getString("created"));
                                     reviewList.add(map);
                                 }
                                 if(reviewList.size()>0){
+                                    star.setText(reviewList.size()+" Reviews");
+                                    no_review_txt.setText(reviewList.size()+" Reviews");
                                     review_layout.setVisibility(View.VISIBLE);
-                                    review_user_name.setText(reviewList.get(0).get("username"));
+                                    review_user_name.setText(cap(reviewList.get(0).get("username")));
                                     comment.setText(reviewList.get(0).get("text"));
 
 
@@ -209,21 +206,15 @@ public void getValueFromGlobal(){
                                             // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
                                             stars_review_list.setRating(Float.parseFloat(reviewList.get(0).get("rating")));
                                         //}
+                                    TextDrawable drawable = TextDrawable.builder()
+                                            .buildRound(review_user_name.getText().toString().substring(0,1).toUpperCase(), Color.parseColor("#d1d1d1"));
+
                                         String url = GlobalConstants.IMAGE_URL + reviewList.get(0).get("image");
                                         if (url != null && !url .equalsIgnoreCase("null")
                                             && !url .equalsIgnoreCase("")) {
-                                        imageLoader.displayImage(url , review_user_img, options,
-                                                new SimpleImageLoadingListener() {
-                                                    @Override
-                                                    public void onLoadingComplete(String imageUri,
-                                                                                  View view, Bitmap loadedImage) {
-                                                        super.onLoadingComplete(imageUri, view,
-                                                                loadedImage);
-
-                                                    }
-                                                });
+                                      Picasso.with(AboutPlannerActivity.this).load(url).placeholder(drawable).transform(new CircleTransform()).into(review_user_img);
                                     } else {
-                                        review_user_img.setImageResource(R.drawable.user_back);
+                                        review_user_img.setImageDrawable(drawable);
                                     }
 
                                 }
@@ -240,6 +231,7 @@ public void getValueFromGlobal(){
                                 }
                                 if(eventList.size()!=0) {
                                     main_list.setAdapter(new AboutEventAdapter(AboutPlannerActivity.this,eventList));
+                                    CommonUtils.getListViewSize(main_list);
                                 }
                             } else {
                                 Toast.makeText(AboutPlannerActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
@@ -289,5 +281,9 @@ public void getValueFromGlobal(){
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
         dialog2.show();
     }
-
+    public String cap(String name){
+        StringBuilder sb = new StringBuilder(name);
+        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+        return sb.toString();
+    }
 }

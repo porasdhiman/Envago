@@ -13,12 +13,14 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -100,9 +102,15 @@ holder.planer_stars=(RatingBar)convertView.findViewById(R.id.planer_stars) ;
         Log.e("urle",url);
         holder.Planner_name.setText(cap(list.get(position).get(GlobalConstants.USERNAME)));
         holder.planner_address.setText(list.get(position).get(GlobalConstants.ADDRESS));
+        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+// generate random color
+        int color1 = generator.getRandomColor();
+        TextDrawable drawable2 = TextDrawable.builder()
+                .buildRect(holder.Planner_name.getText().toString().substring(0,1), color1);
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
-            imageLoader.displayImage(url, holder.planner_img, options,
+            Picasso.with(context).load(url).placeholder(drawable2).into(holder.planner_img);
+           /* imageLoader.displayImage(url, holder.planner_img, options,
                     new SimpleImageLoadingListener() {
                         @Override
                         public void onLoadingComplete(String imageUri,
@@ -111,9 +119,9 @@ holder.planer_stars=(RatingBar)convertView.findViewById(R.id.planer_stars) ;
                                     loadedImage);
 
                         }
-                    });
+                    });*/
         } else {
-            holder.planner_img.setImageResource(R.mipmap.ic_launcher);
+            holder.planner_img.setImageDrawable(drawable2);
         }
         return convertView;
     }

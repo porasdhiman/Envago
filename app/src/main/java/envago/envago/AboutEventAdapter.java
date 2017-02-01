@@ -12,12 +12,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,7 +95,7 @@ public class AboutEventAdapter extends BaseAdapter {
         url = "http://worksdelight.com/envago/uploads/" + list.get(position).get(GlobalConstants.IMAGE);
         Log.e("urle",url);
         holder.event_price_txt.setText(list.get(position).get(GlobalConstants.EVENT_PRICE));
-        holder.event_name_txt.setText(list.get(position).get(GlobalConstants.EVENT_NAME));
+        holder.event_name_txt.setText(cap(list.get(position).get(GlobalConstants.EVENT_NAME)));
 
         String data = list.get(position).get(GlobalConstants.EVENT_START_DATE);
         String split[] = data.split("-");
@@ -102,20 +104,17 @@ public class AboutEventAdapter extends BaseAdapter {
         int mm = Integer.parseInt(minth);
 
         holder.event_start_txt.setText(date + " " + months[mm] + " " + split[0]);
+        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+// generate random color
+        int color1 = generator.getRandomColor();
+        TextDrawable drawable2 = TextDrawable.builder()
+                .buildRect(holder.event_name_txt.getText().toString().substring(0,1).toUpperCase(), color1);
+
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
-            imageLoader.displayImage(url, holder.event_img, options,
-                    new SimpleImageLoadingListener() {
-                        @Override
-                        public void onLoadingComplete(String imageUri,
-                                                      View view, Bitmap loadedImage) {
-                            super.onLoadingComplete(imageUri, view,
-                                    loadedImage);
-
-                        }
-                    });
+            Picasso.with(context).load(url).placeholder(drawable2).into(holder.event_img);
         } else {
-            holder.event_img.setImageResource(R.mipmap.ic_launcher);
+            holder.event_img.setImageDrawable(drawable2);
         }
         return convertView;
     }
@@ -148,5 +147,10 @@ public class AboutEventAdapter extends BaseAdapter {
                 .build();
 
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
+    }
+    public String cap(String name){
+        StringBuilder sb = new StringBuilder(name);
+        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+        return sb.toString();
     }
 }

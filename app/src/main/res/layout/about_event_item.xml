@@ -5,12 +5,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <ImageView
             android:id="@+id/event_img"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_launcher"/>
@@ -19,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/event_img"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_centerVertical="true">
             <TextView
                 android:id="@+id/event_name_txt"

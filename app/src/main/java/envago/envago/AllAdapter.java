@@ -103,7 +103,7 @@ public class AllAdapter extends PagerAdapter {
             public void onClick(View v) {
                 Intent j=new Intent(mContext,DetailsActivity.class);
                 j.putExtra(GlobalConstants.EVENT_ID,mResources.get(i).get(GlobalConstants.EVENT_ID));
-
+j.putExtra("user","no user");
                 mContext.startActivity(j);
 
             }

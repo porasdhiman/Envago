@@ -40,8 +40,8 @@ public class UserViewAdapter extends BaseAdapter {
         inflator=LayoutInflater.from(c);
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
-                .showStubImage(R.drawable.placeholder_image1)        //	Display Stub Image
-                .showImageForEmptyUri(R.drawable.placeholder_image1)    //	If Empty image found
+                .showStubImage(R.drawable.user_back)        //	Display Stub Image
+                .showImageForEmptyUri(R.drawable.user_back)    //	If Empty image found
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();

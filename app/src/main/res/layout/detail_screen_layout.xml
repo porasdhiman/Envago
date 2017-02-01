@@ -204,13 +204,13 @@
                              android:textColor="#fff" />
                      </RelativeLayout>-->
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <ImageView
                         android:id="@+id/orginiser_img"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
 
 
-                        android:src="@mipmap/app_name" />
+                        android:src="@drawable/user_back" />
 
                     <TextView
                         android:id="@+id/event_name"

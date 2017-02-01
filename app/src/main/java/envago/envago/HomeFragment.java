@@ -89,28 +89,9 @@ ShimmerFrameLayout shimmer_view_container;
         planner_list_cat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               /* Intent intent = new Intent(getActivity(), Adventure_list.class);
-
-                if (position == 0 || position == 1 || position == 2 || position == 3) {
-                    intent.putExtra("status", "single");
-                    intent.putExtra("main_id", "1");
-                    intent.putExtra("sub_id", String.valueOf(position + 1));
-                    intent.putExtra("cat", String.valueOf(position));
-                    startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                } else if (position == 4) {
-
-                    intent.putExtra("cat", String.valueOf(position));
-                    Intent intent1 = new Intent(getActivity(), Volunteers_list.class);
-                    startActivity(intent1);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                } else {
-                    intent.putExtra("status", "all");
-                    intent.putExtra("cat", String.valueOf(position));
-                    startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                }
-            }*/
+                Intent about = new Intent(getActivity(), AboutPlannerActivity.class);
+                about.putExtra(GlobalConstants.USERID, featured_planner_list.get(position).get(GlobalConstants.ID));
+                startActivity(about);
             }
         });
 

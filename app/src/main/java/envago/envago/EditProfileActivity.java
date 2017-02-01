@@ -594,6 +594,8 @@ Log.e("url value",preferences.getString(GlobalConstants.IMAGE, ""));
         } else if (resultCode == Activity.RESULT_CANCELED) {
             Toast.makeText(EditProfileActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
             camgllry.dismiss();
+        }else{
+
         }
     }
 
@@ -621,30 +623,32 @@ Log.e("url value",preferences.getString(GlobalConstants.IMAGE, ""));
 
     private void onCaptureImageResult(Intent data) {
         // Uri uri=data.getData();
-        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        File destination = new File(Environment.getExternalStorageDirectory(),
-                System.currentTimeMillis() + ".jpg");
-        FileOutputStream fo;
-        try {
-            destination.createNewFile();
-            fo = new FileOutputStream(destination);
-            fo.write(bytes.toByteArray());
-            fo.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        profileimg.setImageBitmap(thumbnail);
-        Uri uri = bitmapToUriConverter(thumbnail);
-        try {
-            selectedImagePath = getFilePath(EditProfileActivity.this, uri);
-            editor.putString(GlobalConstants.IMAGE, selectedImagePath);
-            editor.commit();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+        if(data!=null) {
+            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+            File destination = new File(Environment.getExternalStorageDirectory(),
+                    System.currentTimeMillis() + ".jpg");
+            FileOutputStream fo;
+            try {
+                destination.createNewFile();
+                fo = new FileOutputStream(destination);
+                fo.write(bytes.toByteArray());
+                fo.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            profileimg.setImageBitmap(thumbnail);
+            Uri uri = bitmapToUriConverter(thumbnail);
+            try {
+                selectedImagePath = getFilePath(EditProfileActivity.this, uri);
+                editor.putString(GlobalConstants.IMAGE, selectedImagePath);
+                editor.commit();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
         }
     }
     public Uri bitmapToUriConverter(Bitmap mBitmap) {

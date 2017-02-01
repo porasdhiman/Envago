@@ -40,9 +40,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
-<de.hdodenhof.circleimageview.CircleImageView
-    android:layout_width="100dp"
-    android:layout_height="100dp"
+<ImageView
+    android:layout_width="80dp"
+    android:layout_height="80dp"
     android:layout_marginTop="10dp"
     android:id="@+id/admin_img"
     android:src="@drawable/user_back"
@@ -60,9 +60,9 @@
             android:layout_height="wrap_content"
             android:textColor="@color/Black"
             android:textSize="14sp"/>
-        <RatingBar
+        <TextView
             android:id="@+id/stars"
-            style="?android:attr/ratingBarStyleSmall"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -71,16 +71,24 @@
 
             android:layout_toRightOf="@+id/orginiser_img"
             android:clickable="false"
-            android:focusableInTouchMode="false"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:progressTint="@android:color/holo_red_light"
-            android:stepSize="1.0"
+            android:text="No Review "
+            android:textSize="14sp"
             />
 
 
     </LinearLayout>
+
 </LinearLayout>
+            <TextView
+                android:id="@+id/About_me_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/review_user_img"
+                android:text=""
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+
+                android:textSize="12sp"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -109,17 +117,19 @@ android:id="@+id/no_review_txt"
                 android:visibility="gone"
                >
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/review_user_img"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+
+
                     android:src="@drawable/user_back" />
 
                 <TextView
                     android:id="@+id/review_list_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
                     android:layout_toRightOf="@+id/review_user_img"
                     android:text="username"
@@ -136,8 +146,9 @@ android:id="@+id/no_review_txt"
                     android:layout_toRightOf="@+id/review_user_img"
 
                     android:layout_gravity="center_vertical"
+android:layout_marginLeft="8dp"
 
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="3dp"
                     android:clickable="false"
                     android:focusableInTouchMode="false"
                     android:isIndicator="true"
@@ -150,7 +161,9 @@ android:id="@+id/no_review_txt"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/review_user_img"
                     android:text="comment"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
+
                     android:textSize="12sp"/>
 
                 <TextView
@@ -189,7 +202,7 @@ android:id="@+id/no_review_txt"
                 android:layout_below="@+id/main_heading"
                 android:layout_marginTop="10dp"
                 android:divider="@color/LightGrey"
-                android:dividerHeight="0.5dp"
+                android:dividerHeight="0.1dp"
 
                 android:scrollbars="none">
 

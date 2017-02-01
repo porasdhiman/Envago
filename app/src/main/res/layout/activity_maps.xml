@@ -44,6 +44,7 @@
                 android:gravity="center"
                 android:hint="Enter a location"
                 android:singleLine="true"
+                android:textCursorDrawable="@drawable/cursore_color"
 
                 android:textColor="#fff"
                 android:textColorHint="#fff"

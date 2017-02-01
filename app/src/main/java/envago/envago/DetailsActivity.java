@@ -91,14 +91,12 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 
 /**
  * Created by vikas on 15-10-2016.
  */
 public class DetailsActivity extends FragmentActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback , View.OnTouchListener{
+        GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback, View.OnTouchListener {
     protected View view;
     private ImageButton btnNext, btnFinish;
     private ViewPager intro_images;
@@ -116,7 +114,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
             location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview, header_textview, Disclaimer_txtView;
     LinearLayout about_layout, map_layout, review_layout, desclaimer_layout;
     ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView, flight, back_button_create;
-    CircleImageView orginiser_img;
+    ImageView orginiser_img;
     ArrayList<String> list = new ArrayList<>();
     Button purchase_btn;
     RatingBar stars;
@@ -171,8 +169,9 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     ArrayList<HashMap<String, String>> eventUserList = new ArrayList<>();
     ArrayList<HashMap<String, String>> locationList = new ArrayList<>();
     String url1, dateType;
-float ratingValue;
+    float ratingValue;
     TextDrawable drawable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -188,7 +187,7 @@ float ratingValue;
         // review_list = (ListView) findViewById(R.id.review_list);
         // pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         stars = (RatingBar) findViewById(R.id.stars);
-        stars.setOnTouchListener(this);
+
         back_button_create = (ImageView) findViewById(R.id.back_button_create);
         back_button_create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,7 +217,7 @@ float ratingValue;
         location_name_txtView = (TextView) findViewById(R.id.location_name);
         heart_img = (ImageView) findViewById(R.id.heart_img);
         heart_img.setOnClickListener(this);
-        orginiser_img = (CircleImageView) findViewById(R.id.orginiser_img);
+        orginiser_img = (ImageView) findViewById(R.id.orginiser_img);
         //rating = (TextView) findViewById(R.id.counter);
         //lower_description_txtView = (TextView) findViewById(R.id.lower_description);
         beginner_txt = (TextView) findViewById(R.id.beginner_txt);
@@ -236,11 +235,7 @@ float ratingValue;
         user_grid = (TwoWayGridView) findViewById(R.id.user_view);
         //event_info_layout = (RelativeLayout) findViewById(R.id.event_info_layout);
         //event_info_layout.setOnClickListener(this);
-        purchase_btn = (Button) findViewById(R.id.purchase_btn);
-        // signup_btn = (Button) findViewById(R.id.signup_btn);
-        // days_details = (TextView)findViewById(R.id.days_details);
-        //signup_btn.setOnClickListener(this);
-        purchase_btn.setOnClickListener(this);
+
         about_planner.setOnClickListener(this);
         //route_txtView.setOnClickListener(this);
         // review_txtview.setOnClickListener(this);
@@ -285,8 +280,14 @@ float ratingValue;
                 startActivity(i);
             }
         });
+        purchase_btn = (Button) findViewById(R.id.purchase_btn);
+        if (getIntent().getExtras().getString("user").equalsIgnoreCase("user")) {
+            purchase_btn.setVisibility(View.GONE);
+        } else {
+            stars.setOnTouchListener(this);
 
-
+            purchase_btn.setOnClickListener(this);
+        }
     }
 
     /*   private void setUiPageViewController() {
@@ -554,19 +555,16 @@ float ratingValue;
                                     String url = GlobalConstants.IMAGE_URL + adminobj.getString(GlobalConstants.ADMIN_IMAGE);
 
                                     global.setAdminUrl(url);
+
                                     char a = admin_name.getText().toString().charAt(0);
+
                                     drawable = TextDrawable.builder()
-                                            .buildRect(String.valueOf(a), getResources().getColor(R.color.textcolor));
+                                            .buildRound(String.valueOf(a), Color.parseColor("#F94444"));
                                     if (url != null && !url.equalsIgnoreCase("null")
-                                            && !url.equalsIgnoreCase("")){
+                                            && !url.equalsIgnoreCase("")) {
 
-                                    Picasso.with(DetailsActivity.this).
-                                            load(url).
-                                            placeholder(drawable).
-                                            error(drawable).
-
-                                            into(orginiser_img);
-                                }else{
+                                        Picasso.with(DetailsActivity.this).load(url).placeholder(drawable).resize(60, 60).transform(new CircleTransform()).into(orginiser_img);
+                                    } else {
                                         orginiser_img.setImageDrawable(drawable);
                                     }
                                    /* if (url != null && !url.equalsIgnoreCase("null")
@@ -682,7 +680,7 @@ float ratingValue;
                                         places_txtView.setText(objArry.getString("total_no_of_places") + " Places");
                                     }
 
-                                    price_btn.setText("$" + objArry.getString("price")+" per persone");
+                                    price_btn.setText("$" + objArry.getString("price") + " per persone");
                                     purchase_btn.setText("Book");
                                     global.setEvent_price(objArry.getString(GlobalConstants.EVENT_PRICE));
                                     user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, Integer.parseInt(objArry.getString("total_no_of_places")), eventUserList));
@@ -779,6 +777,7 @@ float ratingValue;
         sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
         return sb.toString();
     }
+
     private String getMapsApiDirectionsUrl2(String startLat, String startlng, ArrayList<HashMap<String, String>> list) {
         if (locationList.size() == 1) {
             url1 = "https://maps.googleapis.com/maps/api/directions/json?origin=" + startLat + "," + startlng + "&waypoints=" + list.get(0).get("loc_1_latitude") + "," + list.get(0).get("loc_1_longitude") + "&destination=" + list.get(0).get("loc_1_latitude") + "," + list.get(0).get("loc_1_longitude") + "&sensor=true&mode=walking";
@@ -1146,9 +1145,9 @@ float ratingValue;
     public void rating_dialog() {
         rating_dialog = new Dialog(this);
         rating_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-          //rating_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.w));
+        //rating_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.w));
         rating_dialog.setCanceledOnTouchOutside(true);
-         rating_dialog.setContentView(R.layout.review_layout);
+        rating_dialog.setContentView(R.layout.review_layout);
        /* AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
         loaderView.show();*/
 
@@ -1171,7 +1170,7 @@ float ratingValue;
                 } else {
                     dialogWindow();
                     ratingApiMethod(rating_cmnt.getText().toString(), String.valueOf(stars_dailog.getRating()));
-                    ratingValue=stars_dailog.getRating();
+                    ratingValue = stars_dailog.getRating();
                 }
             }
         });

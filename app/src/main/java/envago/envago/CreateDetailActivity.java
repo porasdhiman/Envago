@@ -41,10 +41,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
-import java.text.ParseException;
+import java.sql.Time;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+
+//import java.sql.Time;
 
 /**
  * Created by vikas on 05-01-2017.
@@ -457,22 +459,21 @@ pricing_editText.setText("$");
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-                        String time=hourOfDay + ":" + minute;
+                        meeting_time_editText.setText(getTime(hourOfDay,minute));
 
-                        try {
 
-                            SimpleDateFormat sdf = new SimpleDateFormat("h:mm");
-                            Date dateObj = sdf.parse(time);
-                            Log.e("metting time",dateObj.toString());
-                            
-                            meeting_time_editText.setText(dateObj.toString());
 
-                        } catch (final ParseException e) {
-                            e.printStackTrace();
-                        }
+
+
 
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
+    }
+    private String getTime(int hr,int min) {
+        Time tme = new Time(hr,min,0);//seconds by default set to zero
+        Format formatter;
+        formatter = new SimpleDateFormat("h:mm a");
+        return formatter.format(tme);
     }
 }
