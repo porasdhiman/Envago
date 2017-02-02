@@ -160,7 +160,7 @@ SharedPreferences sp;
                         if (event_list.size() > 0) {
                             wish_linear_layout.setVisibility(View.VISIBLE);
                             shimmer_container.setVisibility(View.GONE);
-                            view_item_pager2.setAdapter(new AdvantureFeatureAdapter(getActivity(), event_list));
+                            view_item_pager2.setAdapter(new Favorite_list_Adapter(getActivity(), event_list));
 
 
                             /*view_item_pager2.setClipToPadding(false);
@@ -230,7 +230,7 @@ SharedPreferences sp;
                         if (goint_to_event_list.size() > 0) {
                             ging_to_linear_layout.setVisibility(View.VISIBLE);
                             shimmer_container.setVisibility(View.GONE);
-                            view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(), event_list));
+                            view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(), goint_to_event_list));
 
 
                           /*  view_item_pager1.setClipToPadding(false);

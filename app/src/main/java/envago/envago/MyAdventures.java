@@ -159,7 +159,7 @@ public class MyAdventures extends Activity implements View.OnTouchListener {
 
                         }
                         if (event_list.size() > 0) {
-                            planning_list.setAdapter(new Favorite_list_Adapter(getApplicationContext(), event_list));
+                            //planning_list.setAdapter(new Favorite_list_Adapter(getApplicationContext(), event_list));
                         }
 
                     }
@@ -244,7 +244,7 @@ public class MyAdventures extends Activity implements View.OnTouchListener {
 
                         }
                         if (event_list.size() > 0) {
-                            planning_list.setAdapter(new Favorite_list_Adapter(getApplicationContext(), event_list));
+                           // planning_list.setAdapter(new Favorite_list_Adapter(getApplicationContext(), event_list));
                         }
 
                     }

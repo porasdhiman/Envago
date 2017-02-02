@@ -182,34 +182,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                int pos = map.get(marker.getId());
 
-                show_info_layout.setVisibility(View.VISIBLE);
-                event_name.setText(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_NAME));
-                event_date.setText(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_START_DATE));
-                event_price.setText(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_PRICE));
-                String url=GlobalConstants.IMAGE_URL + global.getEvent_list().get(pos).get(GlobalConstants.EVENT_IMAGES);
-                if (url != null && !url.equalsIgnoreCase("null")
-                        && !url.equalsIgnoreCase("")) {
-                    imageLoader.displayImage(url, event_image, options,
-                            new SimpleImageLoadingListener() {
-                                @Override
-                                public void onLoadingComplete(String imageUri,
-                                                              View view, Bitmap loadedImage) {
-                                    super.onLoadingComplete(imageUri, view,
-                                            loadedImage);
-
-                                }
-                            });
-                } else {
-                    event_image.setImageResource(R.mipmap.ic_launcher);
-                }
-                return false;
-            }
-        });
 
     }
 
@@ -274,7 +247,37 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             places.release();
         }
     };
+public void openMarkerView(){
+    mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            int pos = map.get(marker.getId());
 
+            show_info_layout.setVisibility(View.VISIBLE);
+            event_name.setText(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_NAME));
+            event_date.setText(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_START_DATE));
+            event_price.setText("$"+global.getEvent_list().get(pos).get(GlobalConstants.EVENT_PRICE));
+            String url=GlobalConstants.IMAGE_URL + global.getEvent_list().get(pos).get(GlobalConstants.EVENT_IMAGES);
+            if (url != null && !url.equalsIgnoreCase("null")
+                    && !url.equalsIgnoreCase("")) {
+                imageLoader.displayImage(url, event_image, options,
+                        new SimpleImageLoadingListener() {
+                            @Override
+                            public void onLoadingComplete(String imageUri,
+                                                          View view, Bitmap loadedImage) {
+                                super.onLoadingComplete(imageUri, view,
+                                        loadedImage);
+
+                            }
+                        });
+            } else {
+                event_image.setImageResource(R.mipmap.ic_launcher);
+            }
+            return false;
+        }
+    });
+
+}
     private static Spanned formatPlaceDetails(Resources res, CharSequence name, String id, CharSequence address,
                                               CharSequence phoneNumber, Uri websiteUri) {
         Log.e("Tag", res.getString(R.string.place_details, name, id, address, phoneNumber, websiteUri));
@@ -491,7 +494,6 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
                         }
                         global.getEvent_list().clear();
                         global.setEvent_list(event_list);
-                        Toast.makeText(MapsActivity.this, global.getEvent_list().toString(), Toast.LENGTH_SHORT).show();
                         eventLocOnMap();
                     }
                 } catch (JSONException e) {
@@ -525,7 +527,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             }
         };
 
-        cat_request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        cat_request.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         RequestQueue requestQueue = Volley.newRequestQueue(MapsActivity.this);
         requestQueue.add(cat_request);
@@ -552,9 +554,9 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             LatLng postion=new LatLng(Double.parseDouble(lat),Double.parseDouble(lng));
             mark = mMap.addMarker(new MarkerOptions().position(postion).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)));
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 10));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 6));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(6), 2000, null);
+            openMarkerView();
 
         }
     }

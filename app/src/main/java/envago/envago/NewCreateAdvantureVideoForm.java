@@ -2,6 +2,7 @@ package envago.envago;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,7 +14,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.VideoView;
+
+
+
 
 /**
  * Created by worksdelight on 20/01/17.
@@ -23,10 +26,10 @@ public class NewCreateAdvantureVideoForm extends FragmentActivity implements Vie
 
     ViewPager pager;
     TextView bottom_txt;
-    ImageView img1, img2, img3;
+    ImageView img1, img2, img3,back_button_create;
     String slider_upper_txt[];
     String slider_bottom_txt[];
-    VideoView videoView1;
+    MyVideoView videoView1;
     TextView slider_sign_up_btn, slider_fb_btn,document_status_txt;
     LinearLayout slider_sign_in_layout;
 
@@ -56,16 +59,26 @@ public class NewCreateAdvantureVideoForm extends FragmentActivity implements Vie
         img1 = (ImageView) findViewById(R.id.img1);
         img2 = (ImageView) findViewById(R.id.img2);
         img3 = (ImageView) findViewById(R.id.img3);
-        videoView1 = (VideoView) findViewById(R.id.videoView1);
+        back_button_create=(ImageView) findViewById(R.id.back_button_create);
+        videoView1 = (MyVideoView) findViewById(R.id.videoView1);
 slider_sign_up_btn=(TextView)findViewById(R.id.slider_sign_up_btn);
         slider_sign_in_layout = (LinearLayout) findViewById(R.id.slider_sign_in_layout);
         String uriPath = "android.resource://envago.envago/" + R.raw.k2_1408;
 
 
         Uri uri = Uri.parse(uriPath);
+
         videoView1.setVideoURI(uri);
         videoView1.requestFocus();
         videoView1.start();
+
+        videoView1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+            }
+        });
+
         slider_upper_txt = getResources().getStringArray(R.array.slide1_txt);
         slider_bottom_txt = getResources().getStringArray(R.array.slide1_bottom_txt);
 
@@ -116,6 +129,12 @@ slider_sign_up_btn=(TextView)findViewById(R.id.slider_sign_up_btn);
             slider_sign_in_layout.setOnClickListener(this);
             document_status_txt.setText("Upload document");
                 }
+        back_button_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 

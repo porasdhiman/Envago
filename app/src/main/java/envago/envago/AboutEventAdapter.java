@@ -92,7 +92,7 @@ public class AboutEventAdapter extends BaseAdapter {
         }
 
 
-        url = "http://worksdelight.com/envago/uploads/" + list.get(position).get(GlobalConstants.IMAGE);
+        url = GlobalConstants.IMAGE_URL + list.get(position).get(GlobalConstants.IMAGE);
         Log.e("urle",url);
         holder.event_price_txt.setText(list.get(position).get(GlobalConstants.EVENT_PRICE));
         holder.event_name_txt.setText(cap(list.get(position).get(GlobalConstants.EVENT_NAME)));

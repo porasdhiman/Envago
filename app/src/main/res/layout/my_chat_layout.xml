@@ -157,9 +157,9 @@
         android:id="@+id/chat_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/Gray"
+        android:divider="@color/LightGrey"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:visibility="gone"
-        android:dividerHeight="1dp"></ListView>
+        android:dividerHeight="0.1dp"></ListView>
 </LinearLayout>

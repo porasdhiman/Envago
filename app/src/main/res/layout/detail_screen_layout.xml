@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
@@ -25,15 +25,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/back_button_create"
             android:layout_toLeftOf="@+id/heart_img"
+            android:layout_toRightOf="@+id/back_button_create"
             android:gravity="center"
+            android:singleLine="true"
             android:text="Adventures"
+            android:textAllCaps="true"
             android:textColor="#fff"
             android:textSize="17sp"
-            android:textStyle="bold"
-            android:singleLine="true"
-            android:textAllCaps="true"/>
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/heart_img"
@@ -65,26 +65,26 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingTop="8dp"
                     android:paddingLeft="8dp"
-                    android:paddingRight="8dp">
+                    android:paddingRight="8dp"
+                    android:paddingTop="8dp">
 
                     <ImageView
                         android:id="@+id/dumy_imageview"
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
-                        android:scaleType="fitXY"
                         android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
                         android:src="@drawable/placeholder_image1" />
 
-                  <!--  <android.support.v4.view.ViewPager
-                        android:id="@+id/pager_introduction"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:fitsSystemWindows="true"
-                        android:visibility="gone"
-                        tools:listitem="@layout/pager_item" />
--->
+                    <!--  <android.support.v4.view.ViewPager
+                          android:id="@+id/pager_introduction"
+                          android:layout_width="match_parent"
+                          android:layout_height="300dp"
+                          android:fitsSystemWindows="true"
+                          android:visibility="gone"
+                          tools:listitem="@layout/pager_item" />
+  -->
 
                     <TextView
                         android:id="@+id/status_text"
@@ -103,24 +103,24 @@
 
                 </RelativeLayout>
 
-              <!--  <RelativeLayout
-                    android:id="@+id/viewPagerIndicator"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginTop="-50dp"
-                    android:gravity="center">
+                <!--  <RelativeLayout
+                      android:id="@+id/viewPagerIndicator"
+                      android:layout_width="match_parent"
+                      android:layout_height="55dp"
+                      android:layout_alignParentBottom="true"
+                      android:layout_marginTop="-50dp"
+                      android:gravity="center">
 
-                    <LinearLayout
-                        android:id="@+id/viewPagerCountDots"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="center"
-                        android:orientation="horizontal" />
+                      <LinearLayout
+                          android:id="@+id/viewPagerCountDots"
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:layout_centerHorizontal="true"
+                          android:gravity="center"
+                          android:orientation="horizontal" />
 
 
-                </RelativeLayout>-->
+                  </RelativeLayout>-->
 
                 <!-- <RelativeLayout
 
@@ -217,10 +217,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:inputType="textCapWords|textCapSentences"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="5dp"
                         android:layout_toRightOf="@+id/orginiser_img"
+                        android:inputType="textCapWords|textCapSentences"
                         android:text="Orginizer Name"
                         android:textColor="#000"
 
@@ -256,9 +256,7 @@
                         android:isIndicator="true"
                         android:numStars="5"
                         android:progressTint="@android:color/holo_red_light"
-                        android:stepSize="1.0"
-                    />
-
+                        android:stepSize="1.0" />
 
 
                 </RelativeLayout>
@@ -273,7 +271,7 @@
                     android:lineSpacingExtra="1.5mm"
                     android:textColor="@color/Gray"
 
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -281,63 +279,63 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/LightGrey"/>
+                    android:background="@color/LightGrey" />
 
-               <!-- <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:orientation="horizontal">
+                <!-- <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="40dp"
+                     android:layout_marginTop="10dp"
+                     android:layout_marginLeft="10dp"
+                     android:layout_marginRight="10dp"
+                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/date_details"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
-                        android:layout_toRightOf="@+id/calnder_img"
-                        android:text="Date goes here"
-                        android:textColor="#000" />
+                     <TextView
+                         android:id="@+id/date_details"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_centerVertical="true"
+                         android:layout_marginLeft="15dp"
+                         android:layout_toRightOf="@+id/calnder_img"
+                         android:text="Date goes here"
+                         android:textColor="#000" />
 
-                    <TextView
-                        android:id="@+id/days_details"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="80dp"
-                        android:layout_marginRight="15dp"
-                        android:text="Select a date"
-                        android:textColor="@color/textcolor" />
+                     <TextView
+                         android:id="@+id/days_details"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_alignParentRight="true"
+                         android:layout_centerVertical="true"
+                         android:layout_gravity="center"
+                         android:layout_marginLeft="80dp"
+                         android:layout_marginRight="15dp"
+                         android:text="Select a date"
+                         android:textColor="@color/textcolor" />
 
-                    <ImageView
-                        android:id="@+id/calnder_img"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
-                        android:src="@drawable/clock" />
+                     <ImageView
+                         android:id="@+id/calnder_img"
+                         android:layout_width="25dp"
+                         android:layout_height="25dp"
+                         android:layout_alignParentLeft="true"
+                         android:layout_alignParentStart="true"
+                         android:layout_centerVertical="true"
+                         android:layout_marginLeft="5dp"
+                         android:src="@drawable/clock" />
 
-                </RelativeLayout>
+                 </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/Gray" />-->
+                 <View
+                     android:layout_width="match_parent"
+                     android:layout_height="1dp"
+                     android:layout_marginLeft="10dp"
+                     android:layout_marginRight="10dp"
+                     android:layout_marginTop="10dp"
+                     android:background="@color/Gray" />-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="8dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -348,8 +346,7 @@
 
                         android:gravity="start"
                         android:text="Location"
-                        android:textColor="#000"
-                         />
+                        android:textColor="#000" />
 
                     <TextView
                         android:id="@+id/location_name"
@@ -360,7 +357,7 @@
                         android:singleLine="true"
                         android:text="Name Goes here"
                         android:textColor="@color/Gray"
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
 
 
                 </LinearLayout>
@@ -368,8 +365,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="8dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -380,8 +377,7 @@
 
                         android:gravity="start"
                         android:text="Difficulty"
-                        android:textColor="#000"
-                        />
+                        android:textColor="#000" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -393,11 +389,11 @@
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:textColor="@color/Gray"
-
                             android:gravity="start"
+
                             android:text="Beginner"
-                           />
+                            android:textColor="@color/Gray"
+                            android:textSize="13sp" />
 
 
                         <!-- <TextView
@@ -461,53 +457,54 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/meeting_text"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
-android:layout_centerVertical="true"
                         android:gravity="start"
                         android:text="Meeting"
-                        android:textColor="#000"
-                         />
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_toRightOf="@+id/meeting_text"
-    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/meeting_desc"
-                        android:layout_width="200dp"
+                        android:textColor="#000" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="start"
-                        android:singleLine="true"
-                        android:text="Name Goes here"
-                        android:textColor="@color/Gray"
+                        android:layout_toRightOf="@+id/meeting_text"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/meeting_desc"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="start"
+                            android:singleLine="true"
+                            android:text="Name Goes here"
+                            android:textColor="@color/Gray"
 
 
-                        android:textSize="12sp" />
+                            android:textSize="13sp" />
 
 
-                    <TextView
-                        android:id="@+id/time_txtView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        <TextView
+                            android:id="@+id/time_txtView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
 
-                        android:layout_marginRight="10dp"
-                       android:layout_marginTop="5dp"
-                        android:gravity="start"
-                        android:singleLine="true"
-                        android:text=""
-                        android:textColor="@color/Gray"
-                        android:textSize="12sp" />
-</LinearLayout>
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="5dp"
+                            android:gravity="start"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textColor="@color/Gray"
+                            android:textSize="12sp" />
+                    </LinearLayout>
                 </RelativeLayout>
 
 
@@ -547,33 +544,33 @@ android:layout_centerVertical="true"
                         android:lineSpacingExtra="1.5mm"
                         android:textColor="@color/Gray"
 
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
 
                         android:layout_marginTop="10dp"
-                        android:background="@color/LightGrey"/>
+                        android:background="@color/LightGrey" />
                 </LinearLayout>
+
                 <TextView
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="8dp"
+                    android:layout_marginTop="15dp"
                     android:gravity="start"
                     android:text="What's Included"
-                    android:textColor="#000"
-                    android:layout_marginTop="15dp"
-                    />
+                    android:textColor="#000" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:weightSum="6">
 
@@ -584,6 +581,7 @@ android:layout_centerVertical="true"
                         android:layout_weight="1"
 
                         android:src="@drawable/tansport_gray" />
+
                     <ImageView
                         android:id="@+id/flight"
                         android:layout_width="25dp"
@@ -662,18 +660,16 @@ android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
                         android:text="Who's going?"
                         android:textColor="#000"
-                        android:textSize="14sp"
-                         />
-
+                        android:textSize="14sp" />
 
 
                     <TextView
                         android:id="@+id/places_count_txtView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                       android:layout_toRightOf="@+id/wh0_txt"
-
                         android:layout_marginLeft="5dp"
+
+                        android:layout_toRightOf="@+id/wh0_txt"
                         android:text=""
 
                         android:textColor="#000"
@@ -702,21 +698,20 @@ android:layout_centerVertical="true"
                     <com.jess.ui.TwoWayGridView
                         android:id="@+id/user_view"
                         android:layout_width="match_parent"
-                        android:layout_height="160dp"
+                        android:layout_height="140dp"
                         android:background="#ffffff"
                         app:cacheColorHint="#E8E8E8"
-                        app:columnWidth="60dp"
-                        app:rowHeight="65dp"
-                        app:numColumns="auto_fit"
-                        app:numRows="2"
-                        app:verticalSpacing="7dp"
+                        app:columnWidth="50dp"
                         app:gravity="center"
                         app:horizontalSpacing="10dp"
+                        app:numColumns="auto_fit"
+                        app:numRows="2"
+                        app:rowHeight="50dp"
+                        app:scrollDirectionPortrait="horizontal"
                         app:stretchMode="spacingWidthUniform"
-                        app:scrollDirectionPortrait="horizontal">
+                        app:verticalSpacing="7dp">
 
                     </com.jess.ui.TwoWayGridView>
-
 
 
                 </LinearLayout>
@@ -730,104 +725,104 @@ android:layout_centerVertical="true"
                     android:background="@color/LightGrey" />
                 //------------------------Review-layout---------------------
 
-               <!-- <LinearLayout
-                    android:id="@+id/review_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
+                <!-- <LinearLayout
+                     android:id="@+id/review_layout"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginLeft="10dp"
+                     android:layout_marginRight="10dp"
+                     android:layout_marginTop="10dp"
+                     android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                     <RelativeLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content">
 
-                        <TextView
-                            android:id="@+id/review_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:text="21 Reviews"
-                            android:textColor="#000"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                         <TextView
+                             android:id="@+id/review_count"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_alignParentLeft="true"
+                             android:text="21 Reviews"
+                             android:textColor="#000"
+                             android:textSize="14sp"
+                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/view_all_review"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:text="View All"
-                            android:textColor="@color/textcolor"
-                            android:textSize="14sp" />
-                    </RelativeLayout>
+                         <TextView
+                             android:id="@+id/view_all_review"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_alignParentRight="true"
+                             android:text="View All"
+                             android:textColor="@color/textcolor"
+                             android:textSize="14sp" />
+                     </RelativeLayout>
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
+                     <RelativeLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginTop="10dp">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/review_user_img"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@mipmap/app_name" />
+                         <de.hdodenhof.circleimageview.CircleImageView
+                             android:id="@+id/review_user_img"
+                             android:layout_width="50dp"
+                             android:layout_height="50dp"
+                             android:src="@mipmap/app_name" />
 
-                        <TextView
-                            android:id="@+id/review_list_username"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_toRightOf="@+id/review_user_img"
-                            android:text="username"
-                            android:textColor="#000"
-                            android:textSize="14sp" />
+                         <TextView
+                             android:id="@+id/review_list_username"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_marginLeft="5dp"
+                             android:layout_marginTop="5dp"
+                             android:layout_toRightOf="@+id/review_user_img"
+                             android:text="username"
+                             android:textColor="#000"
+                             android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/review_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/review_list_username"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_toRightOf="@+id/review_user_img"
-                            android:text="Date"
-                            android:textColor="#000"
-                            android:textSize="14sp" />
+                         <TextView
+                             android:id="@+id/review_date"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_below="@+id/review_list_username"
+                             android:layout_marginLeft="5dp"
+                             android:layout_marginTop="5dp"
+                             android:layout_toRightOf="@+id/review_user_img"
+                             android:text="Date"
+                             android:textColor="#000"
+                             android:textSize="14sp" />
 
-                        <RatingBar
-                            android:id="@+id/stars_review_list"
-                            style="?android:attr/ratingBarStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                         <RatingBar
+                             android:id="@+id/stars_review_list"
+                             style="?android:attr/ratingBarStyleSmall"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_alignParentRight="true"
 
-                            android:layout_gravity="center_vertical"
+                             android:layout_gravity="center_vertical"
 
-                            android:layout_marginTop="5dp"
-                            android:clickable="false"
-                            android:focusableInTouchMode="false"
-                            android:isIndicator="true"
-                            android:numStars="5"
-                            android:progressTint="@android:color/holo_orange_light"
-                            android:stepSize="1.0" />
+                             android:layout_marginTop="5dp"
+                             android:clickable="false"
+                             android:focusableInTouchMode="false"
+                             android:isIndicator="true"
+                             android:numStars="5"
+                             android:progressTint="@android:color/holo_orange_light"
+                             android:stepSize="1.0" />
 
-                    </RelativeLayout>
-
-
-                    <TextView
-                        android:id="@+id/review_list_comment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Comment"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
+                     </RelativeLayout>
 
 
-                </LinearLayout>-->
+                     <TextView
+                         android:id="@+id/review_list_comment"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginTop="10dp"
+                         android:text="Comment"
+                         android:textColor="#000"
+                         android:textSize="14sp" />
+
+
+                 </LinearLayout>-->
 
                 <!-- <TextView
                      android:id="@+id/lower_description"
@@ -840,13 +835,13 @@ android:layout_centerVertical="true"
                      android:textColor="#000"
                      android:textSize="12sp" />
  -->
-              <!--  <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/Gray" />-->
+                <!--  <View
+                      android:layout_width="match_parent"
+                      android:layout_height="1dp"
+                      android:layout_marginLeft="10dp"
+                      android:layout_marginRight="10dp"
+                      android:layout_marginTop="10dp"
+                      android:background="@color/Gray" />-->
                 <TextView
                     android:id="@+id/price_btn"
                     android:layout_width="match_parent"
@@ -856,8 +851,8 @@ android:layout_centerVertical="true"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/red_border_button"
-                    android:text=""
                     android:gravity="center"
+                    android:text=""
                     android:textColor="@color/Black" />
 
                 <Button

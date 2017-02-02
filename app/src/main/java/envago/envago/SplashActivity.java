@@ -2,9 +2,7 @@ package envago.envago;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
@@ -16,14 +14,11 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Base64;
 import android.util.Log;
-import android.view.animation.Animation;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -60,7 +55,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    String SENDER_ID = "166286978746";
+    String SENDER_ID = "407984051965";
     GoogleCloudMessaging gcm;
     AtomicInteger msgId = new AtomicInteger();
     String regId;

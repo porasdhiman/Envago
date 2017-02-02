@@ -286,15 +286,18 @@ TextView logout_txtView;
                         if(!json_data.getString(GlobalConstants.IMAGE).equalsIgnoreCase("")){
                             img_url = json_data.getString(GlobalConstants.IMAGE);
                         }
-
-                        if (img_url.length() == 0) {
-                            profilepic.setImageResource(R.mipmap.app_name);
-                        } else {
-                            Picasso.with(getActivity()).load(GlobalConstants.IMAGE_URL+img_url).into(profilepic);
-                        }
                         editor.commit();
 
                         username.setText(preferences.getString(GlobalConstants.USERNAME, ""));
+                        TextDrawable drawable = TextDrawable.builder()
+                                .buildRound(username.getText().toString().substring(0,1).toUpperCase(), Color.parseColor("#F94444"));
+                        if (img_url.length() == 0) {
+
+                            profilepic.setImageDrawable(drawable);
+                        } else {
+                            Picasso.with(getActivity()).load(GlobalConstants.IMAGE_URL+img_url).placeholder(drawable).into(profilepic);
+                        }
+
 
 
 

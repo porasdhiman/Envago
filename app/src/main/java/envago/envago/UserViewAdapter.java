@@ -9,14 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,25 +67,22 @@ public class UserViewAdapter extends BaseAdapter {
 
         convertView=inflator.inflate(R.layout.user_view_item,null);
 
-        TextView user_name=(TextView)convertView.findViewById(R.id.user_name);
+        //TextView user_name=(TextView)convertView.findViewById(R.id.user_name);
         ImageView user_img=(ImageView)convertView.findViewById(R.id.user_img);
         if(list.size()>position) {
-            user_name.setText(list.get(position).get(GlobalConstants.USERNAME));
+           // user_name.setText(cap(list.get(position).get(GlobalConstants.USERNAME)));
+            ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+// generate random color
+            int color1 = generator.getRandomColor();
+            TextDrawable drawable2 = TextDrawable.builder()
+                    .buildRound(list.get(position).get(GlobalConstants.USERNAME).substring(0,1), color1);
             url = GlobalConstants.IMAGE_URL + list.get(position).get(GlobalConstants.IMAGE);
             if (url != null && !url.equalsIgnoreCase("null")
                     && !url.equalsIgnoreCase("")) {
-                imageLoader.displayImage(url, user_img, options,
-                        new SimpleImageLoadingListener() {
-                            @Override
-                            public void onLoadingComplete(String imageUri,
-                                                          View view, Bitmap loadedImage) {
-                                super.onLoadingComplete(imageUri, view,
-                                        loadedImage);
 
-                            }
-                        });
+                Picasso.with(c).load(url).placeholder(drawable2).transform(new CircleTransform()).into(user_img);
             } else {
-                user_img.setImageResource(R.drawable.user_back);
+                user_img.setImageDrawable(drawable2);
             }
         }
         return convertView;
@@ -112,5 +110,9 @@ public class UserViewAdapter extends BaseAdapter {
 
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
     }
-
+    public String cap(String name){
+        StringBuilder sb = new StringBuilder(name);
+        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+        return sb.toString();
+    }
 }

@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <VideoView
+    <envago.envago.MyVideoView
         android:id="@+id/videoView1"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"

@@ -238,11 +238,11 @@ android:singleLine="true"
 
                     <ImageView
                         android:id="@+id/minus"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentRight="true"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
                         android:padding="5dp"
 
                         android:src="@drawable/substract" />
@@ -252,7 +252,7 @@ android:singleLine="true"
                         android:layout_width="2dp"
                         android:layout_height="match_parent"
                         android:layout_marginRight="10dp"
-                        android:layout_toLeftOf="@+id/minus"
+                        android:layout_toRightOf="@+id/minus"
                         android:background="@color/LightGrey" />
 
                     <TextView
@@ -260,10 +260,10 @@ android:singleLine="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/view1"
-                        android:layout_toRightOf="@+id/view2"
+                        android:layout_toLeftOf="@+id/view2"
+                        android:layout_toRightOf="@+id/view1"
                         android:gravity="center"
-                        android:text="1 persone"
+                        android:text="1 person"
                         android:textColor="@color/Gray"
                         android:textSize="14sp" />
 
@@ -272,17 +272,17 @@ android:singleLine="true"
                         android:layout_width="2dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/plus"
+                        android:layout_toLeftOf="@+id/plus"
                         android:background="@color/LightGrey" />
 
 
                     <ImageView
                         android:id="@+id/plus"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:padding="5dp"
                         android:src="@drawable/add" />
                 </RelativeLayout>

@@ -1,9 +1,5 @@
 package envago.envago;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.NotificationManager;
@@ -19,10 +15,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -47,6 +40,10 @@ import com.wang.avi.AVLoadingIndicatorView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MessageFragment extends Activity implements OnClickListener {
@@ -81,11 +78,12 @@ public class MessageFragment extends Activity implements OnClickListener {
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
-
+        sharedPreferences=getSharedPreferences("chat",Context.MODE_PRIVATE);
+        edit = sharedPreferences.edit();
         buttonSend = (Button) findViewById(R.id.send);
 
         listView = (ListView) findViewById(R.id.msgview);
-        //	typing_txt = (TextView) findViewById(R.id.typing);
+        	typing_txt = (TextView) findViewById(R.id.typing_txt);
 
 
         chatText = (EditText) findViewById(R.id.msg);
@@ -154,17 +152,18 @@ public class MessageFragment extends Activity implements OnClickListener {
         public void onReceive(Context context, Intent intent) {
             typing_txt.setVisibility(View.VISIBLE);
             i = 1;
+            get_list();
             // do other stuff here
         }
     };
 
     @Override
     protected void onResume() {
-      /*  this.registerReceiver(mMessageReceiver, new IntentFilter("unique_name"));
+        this.registerReceiver(mMessageReceiver, new IntentFilter("unique_name"));
         edit = sharedPreferences.edit();
         edit.putBoolean("message", true);
 
-        edit.commit();*/
+        edit.commit();
         super.onResume();
     }
 
@@ -173,11 +172,11 @@ public class MessageFragment extends Activity implements OnClickListener {
     @Override
     protected void onPause() {
         // TODO Auto-generated method stub
-       /* this.unregisterReceiver(mMessageReceiver);
+        this.unregisterReceiver(mMessageReceiver);
         edit = sharedPreferences.edit();
         edit.putBoolean("message", false);
 
-        edit.commit();*/
+        edit.commit();
         super.onPause();
     }
 
@@ -197,7 +196,10 @@ public class MessageFragment extends Activity implements OnClickListener {
         StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                dialog2.dismiss();
+                if(i==0){
+                    dialog2.dismiss();
+                }
+
                 Log.e("Categoryyyy", s);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -238,6 +240,8 @@ public class MessageFragment extends Activity implements OnClickListener {
                                     listView.setSelection(chatArrayAdapter.getCount() - 1);
                                 }
                             });
+                            i=0;
+                            typing_txt.setVisibility(View.GONE);
                         }
 
                     }

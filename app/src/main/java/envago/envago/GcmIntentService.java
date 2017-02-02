@@ -37,7 +37,7 @@ public class GcmIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d("in gcm", "we are in pushnotification");
         global = (Global) getApplicationContext();
-
+mSharedPreferences=getSharedPreferences("chat",Context.MODE_PRIVATE);
         extras = intent.getExtras();
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         NOTIFICATION_ID = (int) System.currentTimeMillis();
@@ -60,7 +60,17 @@ public class GcmIntentService extends IntentService {
 
                 Log.e("envago app", extras.toString());
                 if (extras.getString("content_title").contains("message")) {
-                    sendNotification("Envago App", extras.getString("content_title"));
+                    String id = extras.getString("data").split(":")[1].replace("\"", "").replace("}", "").trim();
+                    Log.e("id", id);
+                    global.setEvent_id(id);
+                    if(mSharedPreferences.getBoolean("message",false)==true){
+                       MessageFragment m=new MessageFragment();
+                        m.CallAPI(GcmIntentService.this);
+                    }else {
+                        sendNotification("Envago App", extras.getString("content_title"));
+
+                    }
+
                 } else {
                     sendNotification("Envago App", extras.getString("content_title"));
                 }
@@ -79,7 +89,7 @@ public class GcmIntentService extends IntentService {
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (extras.getString("content_title").contains("message")) {
-            contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MyChatActivity.class), 0);
+            contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MessageFragment.class), 0);
 
         } else {
             contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, Tab_Activity.class), 0);
@@ -87,7 +97,7 @@ public class GcmIntentService extends IntentService {
         }
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_launcher).setContentTitle(notificationTitle).setAutoCancel(true)
+                .setSmallIcon(R.mipmap.app_name).setContentTitle(notificationTitle).setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(notificationMessage))
                 .setContentText(notificationMessage);

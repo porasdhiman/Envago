@@ -680,7 +680,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         places_txtView.setText(objArry.getString("total_no_of_places") + " Places");
                                     }
 
-                                    price_btn.setText("$" + objArry.getString("price") + " per persone");
+                                    price_btn.setText("$" + objArry.getString("price") + " per person");
                                     purchase_btn.setText("Book");
                                     global.setEvent_price(objArry.getString(GlobalConstants.EVENT_PRICE));
                                     user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, Integer.parseInt(objArry.getString("total_no_of_places")), eventUserList));

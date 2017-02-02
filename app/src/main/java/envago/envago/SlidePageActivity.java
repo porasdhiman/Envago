@@ -1,9 +1,12 @@
 package envago.envago;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -56,10 +58,11 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
     ImageView img1, img2, img3;
     String slider_upper_txt[];
     String slider_bottom_txt[];
-    VideoView videoView1;
+    MyVideoView videoView1;
     TextView slider_sign_up_btn, slider_fb_btn;
     LinearLayout slider_sign_in_layout;
-
+    SharedPreferences sp;
+    SharedPreferences.Editor ed;
     //--------------facebook variable--------------
     CallbackManager callbackManager;
     LoginButton Login_TV;
@@ -79,6 +82,8 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
         FacebookSdk.sdkInitialize(this.getApplicationContext());
 
         setContentView(R.layout.slider_pager_layout);
+        sp = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
+        ed = sp.edit();
         // bottom_txt = (TextView) findViewById(R.id.bottom_txt);
         global = (Global) getApplicationContext();
 
@@ -93,7 +98,7 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
         img1 = (ImageView) findViewById(R.id.img1);
         img2 = (ImageView) findViewById(R.id.img2);
         img3 = (ImageView) findViewById(R.id.img3);
-        videoView1 = (VideoView) findViewById(R.id.videoView1);
+        videoView1 = (MyVideoView) findViewById(R.id.videoView1);
         slider_sign_up_btn = (TextView) findViewById(R.id.slider_sign_up_btn);
         slider_sign_in_layout = (LinearLayout) findViewById(R.id.slider_sign_in_layout);
         String uriPath = "android.resource://envago.envago/" + R.raw.envagowalk;
@@ -103,6 +108,12 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
         videoView1.setVideoURI(uri);
         videoView1.requestFocus();
         videoView1.start();
+        videoView1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+            }
+        });
         slider_upper_txt = getResources().getStringArray(R.array.slide1_txt);
         slider_bottom_txt = getResources().getStringArray(R.array.slide1_bottom_txt);
 
@@ -250,7 +261,9 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
 
                             String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
-
+                                JSONObject data = obj.getJSONObject("data");
+                                ed.putString(GlobalConstants.USERID, data.getString(GlobalConstants.USERID));
+                                ed.commit();
                                 Intent intent = new Intent(SlidePageActivity.this, Tab_Activity.class);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

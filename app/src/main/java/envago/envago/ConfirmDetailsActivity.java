@@ -78,6 +78,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
     String months[] = { " ", "Jan", "Feb", "Mar", "Apr", "May",
             "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
             "Dec", };
+    ImageView search_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +90,13 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         }
         global = (Global) getApplicationContext();
         duration_txtView=(TextView)findViewById(R.id.duration_txtView);
+        search_button=(ImageView)findViewById(R.id.search_button);
+        search_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy-MM-dd");
          startDate=new Date();

@@ -96,6 +96,7 @@ public class ChatListAdapter extends BaseAdapter {
 
             holder.chat_img = (ImageView) view.findViewById(R.id.chat_img);
             holder.chat_name = (TextView) view.findViewById(R.id.chat_name);
+            holder.chat_address_name = (TextView) view.findViewById(R.id.chat_address_name);
 
             view.setTag(holder);
             holder.chat_img.setTag(holder);
@@ -108,6 +109,7 @@ public class ChatListAdapter extends BaseAdapter {
         url = GlobalConstants.IMAGE_URL + images.get(i).get("image");
 
         holder.chat_name.setText(images.get(i).get(GlobalConstants.EVENT_NAME));
+        holder.chat_address_name.setText(images.get(i).get("planner_name"));
 
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
@@ -130,7 +132,7 @@ public class ChatListAdapter extends BaseAdapter {
 
     public class Holder {
         ImageView chat_img ;
-        TextView chat_name;
+        TextView chat_name,chat_address_name;
 
 
     }

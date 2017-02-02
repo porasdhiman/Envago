@@ -64,10 +64,10 @@ LinearLayout message_linear_layout;
         message_linear_layout=(LinearLayout)findViewById(R.id.message_linear_layout);
         container=(ShimmerFrameLayout)findViewById(R.id.shimmer_view_container) ;
 
-        if(!sp.getString("chat","no chat").equalsIgnoreCase("no chat")){
+       // if(!sp.getString("chat","no chat").equalsIgnoreCase("no chat")){
             container.setVisibility(View.VISIBLE);
             message_linear_layout.setVisibility(View.GONE);
-        }
+        //}
         chat_list = (ListView) findViewById(R.id.chat_list);
         start_btn=(TextView)findViewById(R.id.start_btn);
         start_btn.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +117,7 @@ LinearLayout message_linear_layout;
 
                             details.put("id", arrobj.getString("id"));
                             details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
+                            details.put("planner_name", arrobj.getString("planner_name"));
 
                             details.put("image", arrobj.getString("image"));
 
