@@ -26,7 +26,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -45,7 +44,7 @@ public class MyChatActivity extends Activity {
     ArrayList<HashMap<String, String>> list = new ArrayList<>();
     Dialog dialog2;
     Global global;
-    ShimmerFrameLayout container;
+
 LinearLayout message_linear_layout;
     TextView start_btn;
     SharedPreferences sp;
@@ -62,25 +61,15 @@ LinearLayout message_linear_layout;
         }
         sp=getSharedPreferences("chat", Context.MODE_PRIVATE);
         message_linear_layout=(LinearLayout)findViewById(R.id.message_linear_layout);
-        container=(ShimmerFrameLayout)findViewById(R.id.shimmer_view_container) ;
 
-       // if(!sp.getString("chat","no chat").equalsIgnoreCase("no chat")){
-            container.setVisibility(View.VISIBLE);
-            message_linear_layout.setVisibility(View.GONE);
-        //}
+
+
         chat_list = (ListView) findViewById(R.id.chat_list);
-        start_btn=(TextView)findViewById(R.id.start_btn);
-        start_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(MyChatActivity.this, Tab_Activity.class);
-                startActivity(i);
-                finish();
-            }
-        });
+
+
        // dialogWindow();
 
-        container.startShimmerAnimation();
+
         get_list();
         chat_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -118,7 +107,8 @@ LinearLayout message_linear_layout;
                             details.put("id", arrobj.getString("id"));
                             details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
                             details.put("planner_name", arrobj.getString("planner_name"));
-
+                            JSONObject last_msg=arrobj.getJSONObject("last_msg");
+                            details.put("message", last_msg.getString("message"));
                             details.put("image", arrobj.getString("image"));
 
                             list.add(details);
@@ -126,7 +116,7 @@ LinearLayout message_linear_layout;
                         }
 
                         if (list.size() > 0) {
-                            container.setVisibility(View.GONE);
+                            message_linear_layout.setVisibility(View.GONE);
                             chat_list.setVisibility(View.VISIBLE);
                             chat_list.setAdapter(new ChatListAdapter(MyChatActivity.this, list));
                         }

@@ -52,8 +52,8 @@ public class ChatListAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(applicationContext);
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
-                .showStubImage(R.drawable.placeholder_image1)        //	Display Stub Image
-                .showImageForEmptyUri(R.drawable.placeholder_image1)    //	If Empty image found
+                .showStubImage(0)        //	Display Stub Image
+                .showImageForEmptyUri(0)    //	If Empty image found
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
@@ -97,7 +97,7 @@ public class ChatListAdapter extends BaseAdapter {
             holder.chat_img = (ImageView) view.findViewById(R.id.chat_img);
             holder.chat_name = (TextView) view.findViewById(R.id.chat_name);
             holder.chat_address_name = (TextView) view.findViewById(R.id.chat_address_name);
-
+            holder.chat_txt=(TextView)view.findViewById(R.id.chat_txt) ;
             view.setTag(holder);
             holder.chat_img.setTag(holder);
 
@@ -107,7 +107,7 @@ public class ChatListAdapter extends BaseAdapter {
         }
 
         url = GlobalConstants.IMAGE_URL + images.get(i).get("image");
-
+        holder.chat_txt.setText(images.get(i).get("message"));
         holder.chat_name.setText(images.get(i).get(GlobalConstants.EVENT_NAME));
         holder.chat_address_name.setText(images.get(i).get("planner_name"));
 
@@ -124,7 +124,7 @@ public class ChatListAdapter extends BaseAdapter {
                         }
                     });
         } else {
-            holder.chat_img.setImageResource(R.mipmap.ic_launcher);
+            holder.chat_img.setImageResource(0);
         }
 
         return view;
@@ -132,7 +132,7 @@ public class ChatListAdapter extends BaseAdapter {
 
     public class Holder {
         ImageView chat_img ;
-        TextView chat_name,chat_address_name;
+        TextView chat_name,chat_address_name,chat_txt;
 
 
     }

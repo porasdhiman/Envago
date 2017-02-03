@@ -150,7 +150,7 @@ public class MessageFragment extends Activity implements OnClickListener {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            typing_txt.setVisibility(View.VISIBLE);
+            //typing_txt.setVisibility(View.VISIBLE);
             i = 1;
             get_list();
             // do other stuff here
@@ -241,7 +241,7 @@ public class MessageFragment extends Activity implements OnClickListener {
                                 }
                             });
                             i=0;
-                            typing_txt.setVisibility(View.GONE);
+                            //typing_txt.setVisibility(View.GONE);
                         }
 
                     }

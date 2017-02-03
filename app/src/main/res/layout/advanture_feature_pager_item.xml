@@ -10,15 +10,17 @@ android:padding="8dp"
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
         <ImageView
             android:id="@+id/view_img"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             android:adjustViewBounds="true"
-            android:src="@drawable/placeholder_image1" />
-
+             />
+</FrameLayout>
         <TextView
             android:id="@+id/start_event_txtView"
             android:layout_width="wrap_content"

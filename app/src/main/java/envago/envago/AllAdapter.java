@@ -27,6 +27,7 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
@@ -69,8 +70,9 @@ public class AllAdapter extends PagerAdapter {
 
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
-                .showStubImage(R.drawable.placeholder_image1)        //	Display Stub Image
-                .showImageForEmptyUri(R.drawable.placeholder_image1)    //	If Empty image found
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .showStubImage(0)        //	Display Stub Image
+                .showImageForEmptyUri(0)    //	If Empty image found
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
@@ -125,7 +127,7 @@ j.putExtra("user","no user");
                             }
                         });
             } else {
-                view_img.setImageResource(R.drawable.placeholder_image1);
+                view_img.setImageResource(0);
             }
 
 
@@ -138,7 +140,7 @@ j.putExtra("user","no user");
         String date = split[2];
         int mm = Integer.parseInt(minth);
 
-        view_date_text.setText(date + " " + months[mm] + " " + split[0]);
+        view_date_text.setText(date + " " + months[mm]/* + " " + split[0]*/);
         view_location_txt.setText(mResources.get(i).get(GlobalConstants.EVENT_LOC));
 
         if (mResources.get(i).get(GlobalConstants.EVENT_FAV).equals("0")) {

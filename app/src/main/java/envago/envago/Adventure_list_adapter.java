@@ -26,6 +26,7 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
@@ -62,8 +63,10 @@ public class Adventure_list_adapter extends BaseAdapter {
         inflater = LayoutInflater.from(applicationContext);
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
-                .showStubImage(R.drawable.placeholder_image1)        //	Display Stub Image
-                .showImageForEmptyUri(R.drawable.placeholder_image1)    //	If Empty image found
+                .imageScaleType(ImageScaleType.EXACTLY)
+        
+                .showStubImage(0)        //	Display Stub Image
+                .showImageForEmptyUri(0)    //	If Empty image found
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
@@ -150,7 +153,7 @@ public class Adventure_list_adapter extends BaseAdapter {
                         }
                     });
         } else {
-            holder.backimg.setImageResource(R.mipmap.ic_launcher);
+            holder.backimg.setImageResource(0);
         }
         if (images.get(i).get(GlobalConstants.EVENT_FAV).equals("0")) {
             holder.heart_img.setImageResource(R.drawable.heart);

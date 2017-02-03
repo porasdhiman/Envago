@@ -59,7 +59,7 @@ ShimmerFrameLayout shimmer_view_container;
         planner_list_cat = (ListView) v.findViewById(R.id.main_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
         shimmer_view_container=(ShimmerFrameLayout)v.findViewById(R.id.shimmer_view_container);
-        shimmer_view_container.startShimmerAnimation();
+        shimmer_view_container.setVisibility(View.GONE);
         main_layout= (LinearLayout) v.findViewById(R.id.main_layout);
         Fonts.overrideFonts(getActivity(),main_layout);
         plus_button = (ImageView) v.findViewById(R.id.plus_button);

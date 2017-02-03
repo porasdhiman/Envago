@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -99,12 +100,7 @@ public class AboutPlannerActivity extends Activity {
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
         getValueFromGlobal();
-        show_all_txtView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
 
     }
 public void getValueFromGlobal(){
@@ -192,6 +188,15 @@ public void getValueFromGlobal(){
                                     reviewList.add(map);
                                 }
                                 if(reviewList.size()>0){
+                                    show_all_txtView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent i=new Intent(AboutPlannerActivity.this,AllReviewActivity.class);
+                                            startActivity(i);
+
+                                        }
+                                    });
+                                    global.setReviewList(reviewList);
                                     star.setText(reviewList.size()+" Reviews");
                                     no_review_txt.setText(reviewList.size()+" Reviews");
                                     review_layout.setVisibility(View.VISIBLE);
@@ -226,12 +231,16 @@ public void getValueFromGlobal(){
                                     map.put(GlobalConstants.EVENT_NAME,eventObj.getString(GlobalConstants.EVENT_NAME));
                                     map.put(GlobalConstants.IMAGE,eventObj.getString(GlobalConstants.IMAGE));
                                     map.put(GlobalConstants.EVENT_PRICE,eventObj.getString(GlobalConstants.EVENT_PRICE));
-                                    map.put(GlobalConstants.EVENT_START_DATE,eventObj.getString(GlobalConstants.EVENT_START_DATE));
+                                    JSONArray event_dates=eventObj.getJSONArray("event_dates");
+                                    JSONObject event_datesObj=event_dates.getJSONObject(0);
+
+                                    map.put(GlobalConstants.EVENT_START_DATE,event_datesObj.getString(GlobalConstants.EVENT_START_DATE));
                                     eventList.add(map);
                                 }
                                 if(eventList.size()!=0) {
                                     main_list.setAdapter(new AboutEventAdapter(AboutPlannerActivity.this,eventList));
                                     CommonUtils.getListViewSize(main_list);
+
                                 }
                             } else {
                                 Toast.makeText(AboutPlannerActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();

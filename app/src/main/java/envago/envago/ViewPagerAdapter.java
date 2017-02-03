@@ -40,8 +40,8 @@ public class ViewPagerAdapter extends PagerAdapter {
         this.mResources = mResources;
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
-                .showStubImage(R.mipmap.ic_launcher)        //	Display Stub Image
-                .showImageForEmptyUri(R.mipmap.ic_launcher)    //	If Empty image found
+                .showStubImage(0)        //	Display Stub Image
+                .showImageForEmptyUri(0)    //	If Empty image found
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
@@ -78,7 +78,7 @@ public class ViewPagerAdapter extends PagerAdapter {
                         }
                     });
         } else {
-            imageView.setImageResource(R.mipmap.ic_launcher);
+            imageView.setImageResource(0);
         }
 
         container.addView(itemView);

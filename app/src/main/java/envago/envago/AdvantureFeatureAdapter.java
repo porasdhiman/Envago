@@ -54,8 +54,8 @@ public class AdvantureFeatureAdapter extends PagerAdapter {
 
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
-                .showStubImage(R.drawable.placeholder_image1)        //	Display Stub Image
-                .showImageForEmptyUri(R.drawable.placeholder_image1)    //	If Empty image found
+                .showStubImage(0)        //	Display Stub Image
+                .showImageForEmptyUri(0)    //	If Empty image found
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
@@ -109,7 +109,7 @@ public class AdvantureFeatureAdapter extends PagerAdapter {
                             }
                         });
             } else {
-                view_img.setImageResource(R.drawable.placeholder_image1);
+                view_img.setImageResource(0);
             }
         }
 

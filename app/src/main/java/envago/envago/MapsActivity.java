@@ -102,6 +102,9 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
     LinearLayout show_info_layout;
     TextView event_name,event_date,event_price;
     ImageView event_image;
+    String months[] = { " ", "Jan", "Feb", "Mar", "Apr", "May",
+            "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
+            "Dec", };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -134,8 +137,8 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
         imageLoader = ImageLoader.getInstance();
 
         options = new DisplayImageOptions.Builder()
-                .showStubImage(R.mipmap.ic_launcher)        //	Display Stub Image
-                .showImageForEmptyUri(R.mipmap.ic_launcher)    //	If Empty image found
+                .showStubImage(0)        //	Display Stub Image
+                .showImageForEmptyUri(0)    //	If Empty image found
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         mapFragment.getMapAsync(this);
@@ -255,7 +258,14 @@ public void openMarkerView(){
 
             show_info_layout.setVisibility(View.VISIBLE);
             event_name.setText(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_NAME));
-            event_date.setText(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_START_DATE));
+            String data = global.getEvent_list().get(pos).get(GlobalConstants.EVENT_START_DATE);
+            String split[] = data.split("-");
+            String minth = split[1];
+            String date = split[2];
+            int mm = Integer.parseInt(minth);
+
+            event_date.setText(date + " " + months[mm] + " " + split[0]);
+
             event_price.setText("$"+global.getEvent_list().get(pos).get(GlobalConstants.EVENT_PRICE));
             String url=GlobalConstants.IMAGE_URL + global.getEvent_list().get(pos).get(GlobalConstants.EVENT_IMAGES);
             if (url != null && !url.equalsIgnoreCase("null")
@@ -271,7 +281,7 @@ public void openMarkerView(){
                             }
                         });
             } else {
-                event_image.setImageResource(R.mipmap.ic_launcher);
+                event_image.setImageResource(0);
             }
             return false;
         }

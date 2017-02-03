@@ -24,7 +24,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -49,8 +48,8 @@ public class AccordingToCountry extends Activity{
     Global global;
     Dialog dialog2;
 
-    ImageView back_img;
-    ShimmerFrameLayout shimmer_view_container;
+    ImageView list_back_img;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +64,11 @@ public class AccordingToCountry extends Activity{
 
         global = (Global) getApplicationContext();
         headtext = (TextView) findViewById(R.id.header_text_adv);
-        shimmer_view_container=(ShimmerFrameLayout) findViewById(R.id.shimmer_view_container);
-        shimmer_view_container.startShimmerAnimation();
+
         ad_items = (ListView) findViewById(R.id.ad_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
         // Log.e("Status", getIntent().getExtras().getString("status"));
-
+        list_back_img=(ImageView)findViewById(R.id.list_back_img);
         String category_name = getIntent().getExtras().getString(GlobalConstants.EVENT_NAME);
 
 
@@ -123,7 +121,9 @@ public class AccordingToCountry extends Activity{
                             details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
+                            JSONArray arr=arrobj.getJSONArray("event_dates");
+                            JSONObject objArr=arr.getJSONObject(0);
+                            details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
 
@@ -137,7 +137,7 @@ public class AccordingToCountry extends Activity{
                             ad_items.setVisibility(View.VISIBLE);
 
                             ad_items.setAdapter(new Adventure_list_adapter(getApplicationContext(), event_list));
-                            shimmer_view_container.setVisibility(View.GONE);
+                            list_back_img.setVisibility(View.GONE);
 
                         }
 

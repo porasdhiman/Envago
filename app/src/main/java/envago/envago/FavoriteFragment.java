@@ -3,7 +3,6 @@ package envago.envago;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -29,7 +28,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -55,7 +53,7 @@ public class FavoriteFragment extends Fragment {
     ImageView back_img;
     ViewPager view_item_pager1, view_item_pager2, cat_pager;
 
-    ShimmerFrameLayout shimmer_container;
+
     ScrollView scroll_view;
 TextView start_btn;
 SharedPreferences sp;
@@ -71,29 +69,18 @@ SharedPreferences sp;
         sp=getActivity().getSharedPreferences("message", Context.MODE_PRIVATE);
         message_linear_layout = (LinearLayout) v.findViewById(R.id.message_linear_layout);
         scroll_view=(ScrollView)v.findViewById(R.id.scroll_view);
-       if(!sp.getString("message","not wish").equalsIgnoreCase("not wish")){
-           message_linear_layout.setVisibility(View.GONE);
-           scroll_view.setVisibility(View.VISIBLE);
-       }
-        start_btn=(TextView)v.findViewById(R.id.start_btn);
+
+
+        //start_btn=(TextView)v.findViewById(R.id.start_btn);
         ging_to_linear_layout = (LinearLayout) v.findViewById(R.id.goint_to_linear_layout);
         planning_linear_layout = (LinearLayout) v.findViewById(R.id.planning_linear_layout);
         wish_linear_layout = (LinearLayout) v.findViewById(R.id.wish_linear_layout);
         view_item_pager1 = (ViewPager) v.findViewById(R.id.view_item_pager1);
         view_item_pager2 = (ViewPager) v.findViewById(R.id.view_item_pager2);
         cat_pager = (ViewPager) v.findViewById(R.id.cat_pager);
-        shimmer_container = (ShimmerFrameLayout) v.findViewById(R.id.shimmer_view_container);
-        shimmer_container.startShimmerAnimation();
 
-        start_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent tab=new Intent(getActivity(),Tab_Activity.class);
-                startActivity(tab);
-                getActivity().finish();
 
-            }
-        });
+
         // back_img=(ImageView)v.findViewById(R.id.back_img);
         // ad_items = (ListView)v.findViewById(R.id.ad_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
@@ -159,7 +146,7 @@ SharedPreferences sp;
                         }
                         if (event_list.size() > 0) {
                             wish_linear_layout.setVisibility(View.VISIBLE);
-                            shimmer_container.setVisibility(View.GONE);
+
                             view_item_pager2.setAdapter(new Favorite_list_Adapter(getActivity(), event_list));
 
 
@@ -195,7 +182,7 @@ SharedPreferences sp;
                         if (planning_event_list.size() > 0) {
                             // view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(),event_list));
                             planning_linear_layout.setVisibility(View.VISIBLE);
-                            shimmer_container.setVisibility(View.GONE);
+
                             cat_pager.setAdapter(new AdvantureFeatureAdapter(getActivity(), planning_event_list));
                             /*cat_pager.setClipToPadding(false);
                             cat_pager.setPadding(0, 0, 40, 0);
@@ -229,7 +216,7 @@ SharedPreferences sp;
                         }
                         if (goint_to_event_list.size() > 0) {
                             ging_to_linear_layout.setVisibility(View.VISIBLE);
-                            shimmer_container.setVisibility(View.GONE);
+
                             view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(), goint_to_event_list));
 
 
@@ -237,6 +224,8 @@ SharedPreferences sp;
                             view_item_pager1.setPadding(0, 0, 40, 0);*/
                         }
 
+                        message_linear_layout.setVisibility(View.GONE);
+                        scroll_view.setVisibility(View.VISIBLE);
 
                     }
                 } catch (JSONException e) {
@@ -328,7 +317,7 @@ SharedPreferences sp;
                         if (planning_event_list.size() > 0) {
                             // view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(),event_list));
                             planning_linear_layout.setVisibility(View.VISIBLE);
-                            shimmer_container.setVisibility(View.GONE);
+
                             cat_pager.setAdapter(new AdvantureFeatureAdapter(getActivity(), planning_event_list));
                             /*cat_pager.setClipToPadding(false);
                             cat_pager.setPadding(0, 0, 40, 0);
@@ -424,7 +413,7 @@ SharedPreferences sp;
                         }
                         if (goint_to_event_list.size() > 0) {
                             ging_to_linear_layout.setVisibility(View.VISIBLE);
-                            shimmer_container.setVisibility(View.GONE);
+
                             view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(), event_list));
 
 

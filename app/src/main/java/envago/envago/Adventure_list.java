@@ -50,7 +50,7 @@ public class Adventure_list extends Activity {
 
     ImageView back_img;
     ShimmerFrameLayout  shimmer_view_container;
-ImageView search_button;
+ImageView search_button,list_back_img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +71,9 @@ ImageView search_button;
             }
         });
         headtext = (TextView) findViewById(R.id.header_text_adv);
-        shimmer_view_container=(ShimmerFrameLayout) findViewById(R.id.shimmer_view_container);
-        shimmer_view_container.startShimmerAnimation();
+       /* shimmer_view_container=(ShimmerFrameLayout) findViewById(R.id.shimmer_view_container);
+        shimmer_view_container.startShimmerAnimation();*/
+        list_back_img=(ImageView)findViewById(R.id.list_back_img);
         ad_items = (ListView) findViewById(R.id.ad_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
        // Log.e("Status", getIntent().getExtras().getString("status"));
@@ -84,8 +85,22 @@ ImageView search_button;
 
         cat_id=getIntent().getExtras().getString(GlobalConstants.CAT_ID);
 
-
-
+if(headtext.getText().toString().equalsIgnoreCase("Air"))
+{
+    list_back_img.setImageResource(R.drawable.air_back);
+}else if(headtext.getText().toString().equalsIgnoreCase("Earth"))
+{
+    list_back_img.setImageResource(R.drawable.earth_back);
+}else if(headtext.getText().toString().equalsIgnoreCase("Water"))
+{
+    list_back_img.setImageResource(R.drawable.watering_back);
+}
+else if(headtext.getText().toString().equalsIgnoreCase("Rock & Ice"))
+{
+    list_back_img.setImageResource(R.drawable.rock_back);
+}else{
+    list_back_img.setImageResource(R.drawable.favourites_back);
+}
 
         get_list();
         ad_items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -145,8 +160,8 @@ ImageView search_button;
                             ad_items.setVisibility(View.VISIBLE);
 
                             ad_items.setAdapter(new Adventure_list_adapter(getApplicationContext(), event_list));
-                            shimmer_view_container.setVisibility(View.GONE);
 
+                            list_back_img.setVisibility(View.GONE);
                         }
 
                     }

@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/start_btn"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -67,10 +67,10 @@
                 android:gravity="center"
                 android:text="Start chating"
                 android:textColor="#fff"
-                android:textSize="15sp" />
+                android:textSize="15sp" />-->
         </RelativeLayout>
     </LinearLayout>
-    <com.facebook.shimmer.ShimmerFrameLayout
+   <!-- <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_view_container"
         android:layout_width="match_parent"
 
@@ -151,7 +151,7 @@
 
         </RelativeLayout>
 
-    </com.facebook.shimmer.ShimmerFrameLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>-->
 
     <ListView
         android:id="@+id/chat_list"

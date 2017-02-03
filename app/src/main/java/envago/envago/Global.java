@@ -556,12 +556,23 @@ public class Global extends Application {
     }
 
     String eventSession;
+
+    public ArrayList<HashMap<String, String>> getReviewList() {
+        return reviewList;
+    }
+
+    public void setReviewList(ArrayList<HashMap<String, String>> reviewList) {
+        this.reviewList = reviewList;
+    }
+
+    ArrayList<HashMap<String,String>> reviewList=new ArrayList<>();
     @Override
     public void onCreate() {
         super.onCreate();
 
         Font.overrideFont(getApplicationContext(), "SERIF", "fonts/avenir_book.ttf");
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+
                 .threadPoolSize(3)
                 .threadPriority(Thread.NORM_PRIORITY - 2)
                 .memoryCacheSize(1500000) // 1.5 Mb

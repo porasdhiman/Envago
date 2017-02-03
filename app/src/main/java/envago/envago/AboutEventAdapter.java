@@ -94,7 +94,7 @@ public class AboutEventAdapter extends BaseAdapter {
 
         url = GlobalConstants.IMAGE_URL + list.get(position).get(GlobalConstants.IMAGE);
         Log.e("urle",url);
-        holder.event_price_txt.setText(list.get(position).get(GlobalConstants.EVENT_PRICE));
+        holder.event_price_txt.setText("$"+list.get(position).get(GlobalConstants.EVENT_PRICE));
         holder.event_name_txt.setText(cap(list.get(position).get(GlobalConstants.EVENT_NAME)));
 
         String data = list.get(position).get(GlobalConstants.EVENT_START_DATE);
@@ -112,7 +112,7 @@ public class AboutEventAdapter extends BaseAdapter {
 
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
-            Picasso.with(context).load(url).placeholder(drawable2).into(holder.event_img);
+            Picasso.with(context).load(url).placeholder(drawable2).centerCrop().resize(80,80).into(holder.event_img);
         } else {
             holder.event_img.setImageDrawable(drawable2);
         }

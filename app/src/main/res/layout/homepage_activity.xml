@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 app:duration="3000"
-
+android:visibility="gone"
                 >
 
                 <LinearLayout
@@ -213,13 +213,49 @@
 
                 </LinearLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>
+            <LinearLayout
+                android:id="@+id/all_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
+
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="All Categories"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="@color/textcolor"
+                    android:textSize="18sp" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/cat_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="10dp"
+                    android:fitsSystemWindows="true"
+
+                    tools:listitem="@layout/advanture_pager_item_for_cat">
+
+                </android.support.v4.view.ViewPager>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/LightGrey" />
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/featured_linear_layout"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -247,49 +283,13 @@
                     android:background="@color/LightGrey" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/all_linear_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
 
-                android:layout_marginTop="20dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="All Categories"
-                    android:layout_marginLeft="8dp"
-                    android:textColor="@color/textcolor"
-                    android:textSize="18sp" />
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/cat_pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:layout_marginTop="10dp"
-                    android:fitsSystemWindows="true"
-
-                    tools:listitem="@layout/advanture_pager_item_for_cat">
-
-                </android.support.v4.view.ViewPager>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:background="@color/LightGrey" />
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/suggested_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical"
 
                 android:visibility="gone">
