@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -254,9 +255,10 @@ public void openMarkerView(){
     mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
         @Override
         public boolean onMarkerClick(Marker marker) {
-            int pos = map.get(marker.getId());
+            final int pos = map.get(marker.getId());
 
             show_info_layout.setVisibility(View.VISIBLE);
+
             event_name.setText(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_NAME));
             String data = global.getEvent_list().get(pos).get(GlobalConstants.EVENT_START_DATE);
             String split[] = data.split("-");
@@ -283,6 +285,16 @@ public void openMarkerView(){
             } else {
                 event_image.setImageResource(0);
             }
+            show_info_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i=new Intent(MapsActivity.this,DetailsActivity.class);
+                    i.putExtra(GlobalConstants.EVENT_ID,global.getEvent_list().get(pos).get(GlobalConstants.EVENT_ID));
+                    i.putExtra("user","non user");
+                    startActivity(i);
+                    startActivity(i);
+                }
+            });
             return false;
         }
     });

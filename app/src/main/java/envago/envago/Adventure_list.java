@@ -101,7 +101,7 @@ else if(headtext.getText().toString().equalsIgnoreCase("Rock & Ice"))
 }else{
     list_back_img.setImageResource(R.drawable.favourites_back);
 }
-
+        dialogWindow();
         get_list();
         ad_items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -121,7 +121,7 @@ else if(headtext.getText().toString().equalsIgnoreCase("Rock & Ice"))
         StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-
+dialog2.dismiss();
                 Log.e("Categoryyyy", s);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -174,7 +174,7 @@ else if(headtext.getText().toString().equalsIgnoreCase("Rock & Ice"))
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                dialog2.dismiss();
             }
         }) {
             @Override
@@ -216,7 +216,8 @@ else if(headtext.getText().toString().equalsIgnoreCase("Rock & Ice"))
         dialog2.setCancelable(false);
         dialog2.setContentView(R.layout.progrees_dialog);
         AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
-        loaderView.show();
+        loaderView.setVisibility(View.GONE);
+        //loaderView.show();
 
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
         dialog2.show();

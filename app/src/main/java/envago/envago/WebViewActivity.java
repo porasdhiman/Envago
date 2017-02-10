@@ -1,7 +1,6 @@
 package envago.envago;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +14,7 @@ import android.widget.TextView;
  */
 public class WebViewActivity extends Activity {
     WebView web_view;
-    ImageView map_image, back_button;
+    ImageView back_button;
     TextView web_view_title;
 
     @Override
@@ -30,15 +29,9 @@ public class WebViewActivity extends Activity {
 
         web_view = (WebView) findViewById(R.id.web_view);
         web_view_title = (TextView) findViewById(R.id.web_view_title);
-        map_image = (ImageView) findViewById(R.id.map_button);
+
         back_button = (ImageView) findViewById(R.id.back_button);
-        map_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(WebViewActivity.this, MapsActivity.class);
-                startActivity(i);
-            }
-        });
+
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,33 +54,6 @@ public class WebViewActivity extends Activity {
         {
             web_view.loadUrl("file:///android_asset/termsandconditions.html");
         }
-       /* String doc="<iframe src='http://docs.google.com/gview?embedded=true&url=https://www.scribd.com/document/326469804/Pricing?secret_password=kReqjJCpvnq5ZnyxnA2k'"+
-                " width='100%' height='100%' style='border: none;'></iframe>";
 
-
-        web_view.setWebViewClient(new AppWebViewClients());
-        web_view.getSettings().setJavaScriptEnabled(true);
-        web_view.getSettings().setUseWideViewPort(true);
-        web_view.loadData(doc , "text/html",  "UTF-8");
-    }
-
-    public class AppWebViewClients extends WebViewClient {
-
-
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            // TODO Auto-generated method stub
-            view.loadUrl(url);
-            return true;
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            // TODO Auto-generated method stub
-            super.onPageFinished(view, url);
-
-        }
-    }*/
     }
 }

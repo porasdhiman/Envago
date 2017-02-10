@@ -242,7 +242,8 @@ android:singleLine="true"
                         android:layout_height="25dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
                         android:padding="5dp"
 
                         android:src="@drawable/substract" />
@@ -282,7 +283,8 @@ android:singleLine="true"
                         android:layout_height="25dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
                         android:padding="5dp"
                         android:src="@drawable/add" />
                 </RelativeLayout>

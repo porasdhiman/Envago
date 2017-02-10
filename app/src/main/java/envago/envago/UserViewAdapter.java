@@ -30,15 +30,19 @@ public class UserViewAdapter extends BaseAdapter {
     Context c;
     LayoutInflater inflator;
     int size;
-    ArrayList<HashMap<String,String>> list=new ArrayList<>();
+    ArrayList<HashMap<String, String>> list = new ArrayList<>();
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
     String url;
-    UserViewAdapter(Context c,int size,ArrayList<HashMap<String,String>> list){
-        this.c=c;
-        this.size=size;
-        this.list=list;
-        inflator=LayoutInflater.from(c);
+    int remeanningPlace;
+    String type;
+
+    UserViewAdapter(Context c, int size, ArrayList<HashMap<String, String>> list) {
+        this.c = c;
+        this.size = size;
+        this.list = list;
+        this.type = type;
+        inflator = LayoutInflater.from(c);
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
                 .showStubImage(R.drawable.user_back)        //	Display Stub Image
@@ -47,9 +51,12 @@ public class UserViewAdapter extends BaseAdapter {
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
     }
+
     @Override
     public int getCount() {
-        return size;
+
+            return size;
+
     }
 
     @Override
@@ -65,28 +72,30 @@ public class UserViewAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        convertView=inflator.inflate(R.layout.user_view_item,null);
+        convertView = inflator.inflate(R.layout.user_view_item, null);
 
         //TextView user_name=(TextView)convertView.findViewById(R.id.user_name);
-        ImageView user_img=(ImageView)convertView.findViewById(R.id.user_img);
-        if(list.size()>position) {
-           // user_name.setText(cap(list.get(position).get(GlobalConstants.USERNAME)));
-            ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-// generate random color
-            int color1 = generator.getRandomColor();
-            TextDrawable drawable2 = TextDrawable.builder()
-                    .buildRound(list.get(position).get(GlobalConstants.USERNAME).substring(0,1), color1);
-            url = GlobalConstants.IMAGE_URL + list.get(position).get(GlobalConstants.IMAGE);
-            if (url != null && !url.equalsIgnoreCase("null")
-                    && !url.equalsIgnoreCase("")) {
+        ImageView user_img = (ImageView) convertView.findViewById(R.id.user_img);
 
-                Picasso.with(c).load(url).placeholder(drawable2).transform(new CircleTransform()).into(user_img);
-            } else {
-                user_img.setImageDrawable(drawable2);
+            if (list.size() > position) {
+                ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+// generate random color
+                int color1 = generator.getRandomColor();
+                TextDrawable drawable2 = TextDrawable.builder()
+                        .buildRound(list.get(position).get(GlobalConstants.USERNAME).substring(0, 1), color1);
+                url = GlobalConstants.IMAGE_URL + list.get(position).get(GlobalConstants.IMAGE);
+                if (url != null && !url.equalsIgnoreCase("null")
+                        && !url.equalsIgnoreCase("")) {
+
+                    Picasso.with(c).load(url).placeholder(drawable2).transform(new CircleTransform()).into(user_img);
+                } else {
+                    user_img.setImageDrawable(drawable2);
+                }
             }
-        }
+
         return convertView;
     }
+
     private void initImageLoader() {
         int memoryCacheSize;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
@@ -110,7 +119,8 @@ public class UserViewAdapter extends BaseAdapter {
 
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
     }
-    public String cap(String name){
+
+    public String cap(String name) {
         StringBuilder sb = new StringBuilder(name);
         sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
         return sb.toString();

@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -37,6 +39,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -171,7 +174,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     String url1, dateType;
     float ratingValue;
     TextDrawable drawable;
-
+    ScrollView scrollview_main;
+int r_value;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -187,6 +191,11 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         // review_list = (ListView) findViewById(R.id.review_list);
         // pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         stars = (RatingBar) findViewById(R.id.stars);
+        LayerDrawable star = (LayerDrawable) stars.getProgressDrawable();
+        star.getDrawable(2).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+        star.getDrawable(0).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+        star.getDrawable(1).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+        scrollview_main = (ScrollView) findViewById(R.id.scrollview_main);
 
         back_button_create = (ImageView) findViewById(R.id.back_button_create);
         back_button_create.setOnClickListener(new View.OnClickListener() {
@@ -249,8 +258,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
-                .showStubImage(R.drawable.placeholder_image1)        //	Display Stub Image
-                .showImageForEmptyUri(R.drawable.placeholder_image1)    //	If Empty image found
+                .showStubImage(0)        //	Display Stub Image
+                .showImageForEmptyUri(0)    //	If Empty image found
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
@@ -435,9 +444,9 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
                                             mMap.addMarker(options);
                                             mMap.addMarker(options1);
-                                            LatLng pos = new LatLng(Double.parseDouble(locObj.getString("loc_1_latitude")), Double.parseDouble(locObj.getString("loc_1_longitude")));
-                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 7));
-                                            mMap.animateCamera(CameraUpdateFactory.zoomTo(7), 2000, null);
+                                            LatLng pos = new LatLng(Double.parseDouble(objArry.getString("latitude")), Double.parseDouble(objArry.getString("longitude")));
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 10));
+                                            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
                                         } else if (location.length() == 2) {
                                             JSONObject locObj = location.getJSONObject(0);
                                             HashMap<String, String> map = new HashMap<>();
@@ -474,8 +483,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                             mMap.addMarker(options1);
                                             mMap.addMarker(options2);
                                             LatLng pos = new LatLng(Double.parseDouble(locObj1.getString("loc_2_latitude")), Double.parseDouble(locObj1.getString("loc_2_longitude")));
-                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 7));
-                                            mMap.animateCamera(CameraUpdateFactory.zoomTo(7), 2000, null);
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 10));
+                                            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
                                         } else {
                                             JSONObject locObj = location.getJSONObject(0);
                                             HashMap<String, String> map = new HashMap<>();
@@ -522,9 +531,10 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                             mMap.addMarker(options2);
                                             mMap.addMarker(options3);
                                             LatLng pos = new LatLng(Double.parseDouble(locObj1.getString("loc_2_latitude")), Double.parseDouble(locObj1.getString("loc_2_longitude")));
-                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 7));
-                                            mMap.animateCamera(CameraUpdateFactory.zoomTo(7), 2000, null);
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 10));
+                                            mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
                                         }
+
 
                                     }
 
@@ -596,7 +606,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                                     }
                                                 });
                                     } else {
-                                        dumy_imageview.setImageResource(R.drawable.placeholder_image1);
+                                        dumy_imageview.setImageResource(0);
                                     }
                                     global.setAdminRating(objArry.getString(GlobalConstants.ADMIN_RATING));
 
@@ -674,16 +684,12 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         }
                                     }
 
-                                    if (eventUserList.size() > 0) {
-                                        places_txtView.setText(eventUserList.size() + "/" + objArry.getString("total_no_of_places") + " Places");
-                                    } else {
-                                        places_txtView.setText(objArry.getString("total_no_of_places") + " Places");
-                                    }
+
 
                                     price_btn.setText("$" + objArry.getString("price") + " per person");
                                     purchase_btn.setText("Book");
                                     global.setEvent_price(objArry.getString(GlobalConstants.EVENT_PRICE));
-                                    user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, Integer.parseInt(objArry.getString("total_no_of_places")), eventUserList));
+                                    scrollview_main.smoothScrollTo(0, 0);
                                     dateType = objArry.getString("event_type");
                                     global.setEvent_no_of_days(objArry.getString("event_no_of_days"));
                                     global.setEventSession(objArry.getString("event_season"));
@@ -695,10 +701,22 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         map.put(GlobalConstants.ID, event_datesObj.getString(GlobalConstants.ID));
                                         map.put(GlobalConstants.EVENT_START_DATE, event_datesObj.getString(GlobalConstants.EVENT_START_DATE));
                                         map.put(GlobalConstants.EVENT_END_DATE, event_datesObj.getString(GlobalConstants.EVENT_END_DATE));
+                                        map.put(GlobalConstants.remaining_places, event_datesObj.getString(GlobalConstants.remaining_places));
+
                                         event_date_array.add(map);
                                     }
                                     Log.e("event_date_array", event_date_array.toString());
                                     global.setBookdateArray(event_date_array);
+                                    user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, Integer.parseInt(objArry.getString("total_no_of_places"))*event_date_array.size(), eventUserList));
+                                   int total=Integer.parseInt(objArry.getString("total_no_of_places"))*event_date_array.size();
+                                    if (eventUserList.size() > 0) {
+                                        places_txtView.setText(eventUserList.size() + "/" + String.valueOf(total) + " Places (per user "+objArry.getString("total_no_of_places")+" places )");
+                                    } else {
+                                        places_txtView.setText(String.valueOf(total) + " Places (per user "+objArry.getString("total_no_of_places")+" places )");
+                                    }
+
+
+
                                     if (dateMatchMethod(event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE))) {
                                         status_text.setVisibility(View.VISIBLE);
                                     } else {
@@ -857,7 +875,9 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
             }
             if (polyLineOptions != null) {
                 mMap.addPolyline(polyLineOptions);
+
             }
+
         }
 
     }
@@ -934,7 +954,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         dialog2.setCancelable(false);
         dialog2.setContentView(R.layout.progrees_dialog);
         AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
-        loaderView.show();
+        loaderView.setVisibility(View.GONE);
+        // loaderView.show();
 
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
         dialog2.show();
@@ -1157,6 +1178,10 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         rating_save = (TextView) rating_dialog.findViewById(R.id.save_button);
         rating_cancel = (TextView) rating_dialog.findViewById(R.id.cancel_button);
         final RatingBar stars_dailog = (RatingBar) rating_dialog.findViewById(R.id.stars_dailog);
+        LayerDrawable star = (LayerDrawable) stars_dailog.getProgressDrawable();
+        star.getDrawable(2).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+        star.getDrawable(0).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+        star.getDrawable(1).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
         final EditText rating_cmnt = (EditText) rating_dialog.findViewById(R.id.rating_edittext);
 
 

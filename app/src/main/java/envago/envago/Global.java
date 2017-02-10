@@ -308,7 +308,7 @@ public class Global extends Application {
         this.event_level = event_level;
     }
 
-    String event_level;
+    String event_level="1";
 
     public String getEvent_cat_id() {
         return event_cat_id;

@@ -64,7 +64,7 @@ public class Adventure_list_adapter extends BaseAdapter {
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
                 .imageScaleType(ImageScaleType.EXACTLY)
-        
+
                 .showStubImage(0)        //	Display Stub Image
                 .showImageForEmptyUri(0)    //	If Empty image found
                 .cacheInMemory()

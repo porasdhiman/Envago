@@ -1,9 +1,11 @@
 package envago.envago;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
@@ -40,6 +43,7 @@ import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,12 +70,14 @@ public class SearchByLocationActivity extends FragmentActivity implements Google
     ListView search_listView;
     ArrayList<HashMap<String,String>> countryList=new ArrayList<>();
     Global global;
+    Dialog dialog2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_by_location_layout);
         global=(Global)getApplicationContext();
         search_listView=(ListView)findViewById(R.id.search_list);
+        dialogWindow();
         searchMethod();
         search_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -112,7 +118,7 @@ public class SearchByLocationActivity extends FragmentActivity implements Google
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+dialog2.dismiss();
 
                         Log.e("response", response);
                         try {
@@ -148,7 +154,7 @@ global.setCountryList(countryList);
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        dialog2.dismiss();
                     }
                 }) {
             @Override
@@ -319,4 +325,20 @@ Intent i=new Intent(SearchByLocationActivity.this,SearchByGoogleApiLocation.clas
             return convertView;
         }
     }
+    //---------------------------Progrees Dialog-----------------------
+    public void dialogWindow() {
+        dialog2 = new Dialog(SearchByLocationActivity.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog2.setCanceledOnTouchOutside(false);
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.progrees_dialog);
+        AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
+        loaderView.setVisibility(View.GONE);
+        //loaderView.show();
+
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        dialog2.show();
+    }
+
 }

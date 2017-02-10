@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +68,7 @@ public class AboutPlannerActivity extends Activity {
     RatingBar stars_review_list;
     RelativeLayout review_layout;
     TextView no_review_txt,About_me_txt;
+    ScrollView main_scrollview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,11 +78,15 @@ public class AboutPlannerActivity extends Activity {
         review_layout=(RelativeLayout)findViewById(R.id.review_layout);
         cancel_button=(ImageView)findViewById(R.id.cancel_button);
         admin_name=(TextView)findViewById(R.id.admin_name);
-
+        main_scrollview=(ScrollView)findViewById(R.id.main_scrollview);
         textWithUserName=(TextView)findViewById(R.id.textWithUserName);
         star=(TextView) findViewById(stars);
         admin_image=(ImageView) findViewById(R.id.admin_img);
         stars_review_list=(RatingBar)findViewById(R.id.stars_review_list);
+        LayerDrawable star = (LayerDrawable) stars_review_list.getProgressDrawable();
+        star.getDrawable(2).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+        star.getDrawable(0).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+        star.getDrawable(1).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
         review_user_name=(TextView)findViewById(R.id.review_list_username);
         review_user_img=(ImageView) findViewById(R.id.review_user_img);
         show_all_txtView=(TextView)findViewById(R.id.show_all_txtView);
@@ -94,8 +102,8 @@ public class AboutPlannerActivity extends Activity {
         no_review_txt=(TextView)findViewById(R.id.no_review_txt);
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
-                .showStubImage(R.drawable.placeholder_image1)        //	Display Stub Image
-                .showImageForEmptyUri(R.drawable.placeholder_image1)    //	If Empty image found
+                .showStubImage(0)        //	Display Stub Image
+                .showImageForEmptyUri(0)    //	If Empty image found
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
@@ -242,6 +250,9 @@ public void getValueFromGlobal(){
                                     CommonUtils.getListViewSize(main_list);
 
                                 }
+                                main_scrollview.smoothScrollTo(0,0);
+
+
                             } else {
                                 Toast.makeText(AboutPlannerActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             }
@@ -285,7 +296,9 @@ public void getValueFromGlobal(){
         dialog2.setCancelable(false);
         dialog2.setContentView(R.layout.progrees_dialog);
         AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
-        loaderView.show();
+
+        loaderView.setVisibility(View.GONE);
+        //loaderView.show();
 
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
         dialog2.show();

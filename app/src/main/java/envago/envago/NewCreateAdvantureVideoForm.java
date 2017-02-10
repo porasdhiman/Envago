@@ -9,27 +9,32 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.SurfaceHolder;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.VideoView;
 
-
+import java.util.Timer;
 
 
 /**
  * Created by worksdelight on 20/01/17.
  */
 
-public class NewCreateAdvantureVideoForm extends FragmentActivity implements View.OnClickListener {
+public class NewCreateAdvantureVideoForm extends FragmentActivity implements View.OnClickListener,SurfaceHolder.Callback, MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener
+          {
 
     ViewPager pager;
     TextView bottom_txt;
     ImageView img1, img2, img3,back_button_create;
     String slider_upper_txt[];
     String slider_bottom_txt[];
-    MyVideoView videoView1;
+    VideoView videoView1;
     TextView slider_sign_up_btn, slider_fb_btn,document_status_txt;
     LinearLayout slider_sign_in_layout;
 
@@ -39,6 +44,15 @@ public class NewCreateAdvantureVideoForm extends FragmentActivity implements Vie
     Dialog dialog2;
     Global global;
 
+              //------Video controle------------
+
+              private static final String TAG = "VideoPlayer";
+              private SurfaceHolder holder;
+              private ProgressBar progressBarWait;
+
+              private MediaPlayer player;
+              private Timer updateTimer;
+              String uriPath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +74,19 @@ public class NewCreateAdvantureVideoForm extends FragmentActivity implements Vie
         img2 = (ImageView) findViewById(R.id.img2);
         img3 = (ImageView) findViewById(R.id.img3);
         back_button_create=(ImageView) findViewById(R.id.back_button_create);
-        videoView1 = (MyVideoView) findViewById(R.id.videoView1);
+        videoView1 = (VideoView) findViewById(R.id.videoView1);
 slider_sign_up_btn=(TextView)findViewById(R.id.slider_sign_up_btn);
         slider_sign_in_layout = (LinearLayout) findViewById(R.id.slider_sign_in_layout);
-        String uriPath = "android.resource://envago.envago/" + R.raw.k2_1408;
+         uriPath = "android.resource://envago.envago/" + R.raw.k2_1408;
+      /*  holder = videoView1.getHolder();
+        holder.addCallback(this);
+        holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
+        player = new MediaPlayer();
+        player.setOnPreparedListener(this);
+        player.setOnCompletionListener(this);
+        player.setScreenOnWhilePlaying(true);*/
+      //  player.setDisplay(holder);
 
         Uri uri = Uri.parse(uriPath);
 
@@ -170,4 +192,76 @@ slider_sign_up_btn=(TextView)findViewById(R.id.slider_sign_up_btn);
 
     }
 
-}
+              //--------Video method---------
+              private void playVideo() {
+                  new Thread(new Runnable() {
+                      public void run() {
+                          try {
+                              player.setDataSource(NewCreateAdvantureVideoForm.this, Uri.parse(uriPath));
+                              player.prepareAsync();
+                              /*player.setDataSource(uriPath);
+                              player.prepare();*/
+                          } catch (Exception e) { // I can split the exceptions to get which error i need.
+
+                              Log.i(TAG, "Error");
+                              e.printStackTrace();
+                          }
+                      }
+                  }).start();
+              }
+
+              public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+                  // TODO Auto-generated method stub
+
+              }
+
+              public void surfaceCreated(SurfaceHolder holder) {
+                  playVideo();
+                  player.setDisplay(holder);
+              }
+
+              public void surfaceDestroyed(SurfaceHolder holder) {
+                  // TODO Auto-generated method stub
+
+              }
+              //prepare the video
+              public void onPrepared(MediaPlayer mp) {
+
+
+                  // Adjust the size of the video
+                  // so it fits on the screen
+                  int surfaceView_Width = videoView1.getWidth();
+                  int surfaceView_Height = videoView1.getHeight();
+
+                  float video_Width = player.getVideoWidth();
+                  float video_Height = player.getVideoHeight();
+
+                  float ratio_width = surfaceView_Width/video_Width;
+                  float ratio_height = surfaceView_Height/video_Height;
+                  float aspectratio = video_Width/video_Height;
+
+                  ViewGroup.LayoutParams layoutParams = videoView1.getLayoutParams();
+
+                  if (ratio_width > ratio_height){
+                      layoutParams.width = (int) (surfaceView_Height * aspectratio);
+                      layoutParams.height = surfaceView_Height;
+                  }else{
+                      layoutParams.width = surfaceView_Width;
+                      layoutParams.height = (int) (surfaceView_Width / aspectratio);
+                  }
+
+                  videoView1.setLayoutParams(layoutParams);
+
+
+                  if (!player.isPlaying()) {
+                      player.start();
+                  }
+                  //videoView1.setClickable(true);
+              }
+
+              // callback when the video is over
+              public void onCompletion(MediaPlayer mp) {
+                 player.setLooping(true);
+              }
+
+          }

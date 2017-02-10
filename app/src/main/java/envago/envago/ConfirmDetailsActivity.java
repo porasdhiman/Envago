@@ -123,7 +123,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         Time_details = (TextView) findViewById(R.id.Time_details);
         Time_details.setText(global.getEvent_meetin_point()+"\n"+global.getEvent_time());
         person_count = (TextView) findViewById(R.id.person_count);
-        person_count.setText(String.valueOf(i));
+        person_count.setText(String.valueOf(i)+" person");
         total_money = (TextView) findViewById(R.id.total_money);
         total_money.setText("$" + global.getEvent_price());
         total=Integer.parseInt(global.getEvent_price());
@@ -238,14 +238,14 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         switch (v.getId()) {
             case R.id.plus:
                 i++;
-                person_count.setText(String.valueOf(i)+" persone");
+                person_count.setText(String.valueOf(i)+" person");
                 Change_total=Change_total+total;
                 total_money.setText("$" + String.valueOf(Change_total));
                 break;
             case R.id.minus:
                 if (i != 1) {
                     i--;
-                    person_count.setText(String.valueOf(i)+" persone");
+                    person_count.setText(String.valueOf(i)+" person");
                     if(total!=Change_total){
                         Change_total=Change_total-total;
                         total_money.setText("$" + String.valueOf(Change_total));

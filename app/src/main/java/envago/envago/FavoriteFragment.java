@@ -86,7 +86,7 @@ SharedPreferences sp;
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
         // ad_items.setAdapter(new FavoriteAdvantureAdapter(getActivity()));
 
-
+dialogWindow();
         get_list();
         //get_list_goingto();
         //get_planning_list();
@@ -112,7 +112,7 @@ SharedPreferences sp;
         StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-
+dialog2.dismiss();
                 Log.e("wish list", s);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -237,7 +237,7 @@ SharedPreferences sp;
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                dialog2.dismiss();
             }
         }) {
             @Override
@@ -270,7 +270,8 @@ SharedPreferences sp;
         dialog2.setCancelable(false);
         dialog2.setContentView(R.layout.progrees_dialog);
         AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
-        loaderView.show();
+        loaderView.setVisibility(View.GONE);
+        //loaderView.show();
 
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
         dialog2.show();

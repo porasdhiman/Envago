@@ -279,7 +279,7 @@ TextView logout_txtView;
                         editor.putString(GlobalConstants.ADDRESS, json_data.getString(GlobalConstants.ADDRESS));
                         editor.putString(GlobalConstants.PAYPAL, json_data.getString(GlobalConstants.PAYPAL));
                         editor.putString(GlobalConstants.ABOUT, json_data.getString(GlobalConstants.ABOUT));
-                        //editor.putString(GlobalConstants.DOCUMENT, json_data.getString(GlobalConstants.DOCUMENT));
+                        editor.putString(GlobalConstants.DOCUMENT, GlobalConstants.IMAGE_URL+json_data.getString(GlobalConstants.DOCUMENT));
                         editor.putString(GlobalConstants.IMAGE, GlobalConstants.IMAGE_URL+json_data.getString(GlobalConstants.IMAGE));
 
                         String img_url="";
@@ -295,7 +295,7 @@ TextView logout_txtView;
 
                             profilepic.setImageDrawable(drawable);
                         } else {
-                            Picasso.with(getActivity()).load(GlobalConstants.IMAGE_URL+img_url).placeholder(drawable).into(profilepic);
+                            Picasso.with(getActivity()).load(GlobalConstants.IMAGE_URL+img_url).placeholder(drawable).transform(new CircleTransform()).into(profilepic);
                         }
 
 

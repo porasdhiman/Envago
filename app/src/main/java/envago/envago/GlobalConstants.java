@@ -76,4 +76,5 @@ public class GlobalConstants {
     public static String CODE="code";
     public static String TREANDING_COUNT="trending_count";
     public static String IMAGE_URL="http://envagoapp.com/envago/uploads/";
+    public static String remaining_places="remaining_places";
 }

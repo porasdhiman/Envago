@@ -97,7 +97,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:text="Username"
-                    android:textStyle="bold"
+
                     android:textColor="#000" />
 
                 <EditText
@@ -149,7 +149,7 @@ android:textCursorDrawable="@drawable/cursore_color"
                     android:layout_centerVertical="true"
                     android:text="Name"
                     android:textSize="15sp"
-                    android:textStyle="bold"
+
                     android:textColor="#000" />
 
                 <EditText
@@ -198,7 +198,7 @@ android:textCursorDrawable="@drawable/cursore_color"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:textSize="15sp"
-                    android:textStyle="bold"
+
                     android:text="Email"
                     android:textColor="#000"
 
@@ -253,7 +253,7 @@ android:textCursorDrawable="@drawable/cursore_color"
                     android:text="Phone"
                     android:textColor="#000"
                     android:textSize="15sp"
-                    android:textStyle="bold"
+
                     />
 
                 <EditText
@@ -342,7 +342,49 @@ android:textCursorDrawable="@drawable/cursore_color"
 
             </View>-->
 
+            <RelativeLayout
+                android:id="@+id/forgot_pass_layout"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
 
+                <TextView
+                    android:id="@+id/forgot_txtView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="Forgot password"
+                    android:textColor="@color/textcolor"
+                    android:textSize="15sp"
+                    />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                   android:src="@drawable/forward"
+                    android:layout_centerVertical="true"
+                    android:textCursorDrawable="@drawable/cursore_color"
+                     />
+
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/LightGrey"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
+
+            </View>
             <RelativeLayout
                 android:id="@+id/paypal_body"
                 android:layout_width="match_parent"
@@ -360,7 +402,6 @@ android:textCursorDrawable="@drawable/cursore_color"
                     android:text="Paypal Address"
                     android:textColor="#000"
                     android:textSize="15sp"
-                    android:textStyle="bold"
                     />
 
                 <EditText
@@ -409,7 +450,6 @@ android:hint="Your Paypal Address"
                     android:layout_centerVertical="true"
                     android:text="Upload ID"
                     android:textColor="#000"
-                    android:textStyle="bold"
                     android:textSize="15sp"
                     />
 
@@ -444,7 +484,7 @@ android:hint="Your Paypal Address"
             <LinearLayout
                 android:id="@+id/about_body"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
@@ -459,18 +499,15 @@ android:hint="Your Paypal Address"
                     android:text="About me"
                     android:textColor="#000"
                     android:textSize="15sp"
-                    android:textStyle="bold"
                     />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
 
                     android:textSize="15sp"
                     android:id="@+id/about_edit"
                    android:layout_marginTop="10dp"
-                    android:padding="10dp"
-                    android:background="@null"
                     android:textColor="#000"
                    />
 

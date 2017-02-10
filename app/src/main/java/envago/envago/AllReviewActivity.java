@@ -2,6 +2,8 @@ package envago.envago;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +21,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static envago.envago.R.id.stars_review_list;
 
 /**
  * Created by worksdelight on 03/02/17.
@@ -93,8 +97,11 @@ import java.util.HashMap;
 
                 holder.event_img = (ImageView) convertView.findViewById(R.id.review_user_img);
                 holder.event_name_txt = (TextView) convertView.findViewById(R.id.review_list_username);
-              holder.star=(RatingBar)convertView.findViewById(R.id.stars_review_list) ;
-
+              holder.star=(RatingBar)convertView.findViewById(stars_review_list) ;
+                LayerDrawable star = (LayerDrawable) holder.star.getProgressDrawable();
+                star.getDrawable(2).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+                star.getDrawable(0).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+                star.getDrawable(1).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
                 holder.event_price_txt=(TextView)convertView.findViewById(R.id.comment);
                 convertView.setTag(holder);
 
@@ -113,11 +120,11 @@ import java.util.HashMap;
 // generate random color
             int color1 = generator.getRandomColor();
             TextDrawable drawable2 = TextDrawable.builder()
-                    .buildRect(holder.event_name_txt.getText().toString().substring(0,1).toUpperCase(), color1);
+                    .buildRound(holder.event_name_txt.getText().toString().substring(0,1).toUpperCase(), color1);
 
             if (url != null && !url.equalsIgnoreCase("null")
                     && !url.equalsIgnoreCase("")) {
-                Picasso.with(context).load(url).placeholder(drawable2).centerCrop().resize(80,80).into(holder.event_img);
+                Picasso.with(context).load(url).placeholder(drawable2).centerCrop().resize(80,80).transform(new CircleTransform()).into(holder.event_img);
             } else {
                 holder.event_img.setImageDrawable(drawable2);
             }

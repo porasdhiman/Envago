@@ -1,8 +1,10 @@
 package envago.envago;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -40,6 +43,7 @@ import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,7 +57,7 @@ import java.util.Map;
  * Created by worksdelight on 17/01/17.
  */
 
-public class SearchByGoogleApiLocation  extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener,
+public class SearchByGoogleApiLocation extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks {
     protected GoogleApiClient mGoogleApiClient;
     private GoogleMap mMap;
@@ -68,6 +72,7 @@ public class SearchByGoogleApiLocation  extends FragmentActivity implements Goog
     Global global;
     TextView trending_txt;
     String lat, lng;
+    Dialog dialog2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +103,7 @@ public class SearchByGoogleApiLocation  extends FragmentActivity implements Goog
         mAutocompleteView.setText(getIntent().getExtras().getString("loc"));
         lat = getIntent().getExtras().getString("lat");
         lng = getIntent().getExtras().getString("lng");
+        dialogWindow();
         searchMethod();
         mAutocompleteView.setOnItemClickListener(mAutocompleteClickListener);
         mAdapter = new PlaceAutocompleteAdapter(this, android.R.layout.simple_list_item_1,
@@ -124,7 +130,7 @@ public class SearchByGoogleApiLocation  extends FragmentActivity implements Goog
         StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-
+                dialog2.dismiss();
                 Log.e("Categoryyyy", s);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -140,14 +146,16 @@ public class SearchByGoogleApiLocation  extends FragmentActivity implements Goog
 
                             HashMap<String, String> details = new HashMap<>();
 
-                            details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.EVENT_ID));
+                            details.put(GlobalConstants.EVENT_ID, arrobj.getString("id"));
                             details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
                             details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
                             details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
                             details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
+                            JSONArray arr = arrobj.getJSONArray("event_dates");
+                            JSONObject objArr = arr.getJSONObject(0);
+                            details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
 
@@ -168,7 +176,7 @@ public class SearchByGoogleApiLocation  extends FragmentActivity implements Goog
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                dialog2.dismiss();
             }
         }) {
             @Override
@@ -195,6 +203,21 @@ public class SearchByGoogleApiLocation  extends FragmentActivity implements Goog
 
         RequestQueue requestQueue = Volley.newRequestQueue(SearchByGoogleApiLocation.this);
         requestQueue.add(cat_request);
+    }
+
+    public void dialogWindow() {
+        dialog2 = new Dialog(SearchByGoogleApiLocation.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog2.setCanceledOnTouchOutside(false);
+        dialog2.setCancelable(false);
+        dialog2.setContentView(R.layout.progrees_dialog);
+        AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
+        loaderView.setVisibility(View.GONE);
+        //loaderView.show();
+
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        dialog2.show();
     }
 
     //-------------------------------Autolocation Method------------------------

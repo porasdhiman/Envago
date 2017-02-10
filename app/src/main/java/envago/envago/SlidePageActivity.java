@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -58,7 +59,7 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
     ImageView img1, img2, img3;
     String slider_upper_txt[];
     String slider_bottom_txt[];
-    MyVideoView videoView1;
+    VideoView videoView1;
     TextView slider_sign_up_btn, slider_fb_btn;
     LinearLayout slider_sign_in_layout;
     SharedPreferences sp;
@@ -98,7 +99,7 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
         img1 = (ImageView) findViewById(R.id.img1);
         img2 = (ImageView) findViewById(R.id.img2);
         img3 = (ImageView) findViewById(R.id.img3);
-        videoView1 = (MyVideoView) findViewById(R.id.videoView1);
+        videoView1 = (VideoView) findViewById(R.id.videoView1);
         slider_sign_up_btn = (TextView) findViewById(R.id.slider_sign_up_btn);
         slider_sign_in_layout = (LinearLayout) findViewById(R.id.slider_sign_in_layout);
         String uriPath = "android.resource://envago.envago/" + R.raw.envagowalk;

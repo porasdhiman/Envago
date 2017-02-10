@@ -3,6 +3,8 @@ package envago.envago;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,8 +47,8 @@ public class FeaturedPlannerAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(context);
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
-                .showStubImage(R.drawable.placeholder_image1)        //	Display Stub Image
-                .showImageForEmptyUri(R.drawable.placeholder_image1)    //	If Empty image found
+                .showStubImage(0)        //	Display Stub Image
+                .showImageForEmptyUri(0)    //	If Empty image found
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
@@ -80,8 +82,11 @@ public class FeaturedPlannerAdapter extends BaseAdapter {
             holder.planner_img = (ImageView) convertView.findViewById(R.id.planer_img);
             holder.Planner_name = (TextView) convertView.findViewById(R.id.planner_txt);
             holder.planner_address = (TextView) convertView.findViewById(R.id.planner_address_txt);
-holder.planer_stars=(RatingBar)convertView.findViewById(R.id.planer_stars) ;
-
+            holder.planer_stars = (RatingBar) convertView.findViewById(R.id.planer_stars);
+            LayerDrawable stars = (LayerDrawable) holder.planer_stars.getProgressDrawable();
+            stars.getDrawable(2).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+            stars.getDrawable(0).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+            stars.getDrawable(1).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
             convertView.setTag(holder);
 
 
@@ -94,22 +99,22 @@ holder.planer_stars=(RatingBar)convertView.findViewById(R.id.planer_stars) ;
                 // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
                 holder.planer_stars.setRating(Float.parseFloat(list.get(position).get("rating").split("0")[1].replace(".", "")));
             } else {*/
-                // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
-                holder.planer_stars.setRating(Float.parseFloat(list.get(position).get("rating")));
-            //}
+        // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
+        holder.planer_stars.setRating(Float.parseFloat(list.get(position).get("rating")));
+        //}
 
         url = GlobalConstants.IMAGE_URL + list.get(position).get(GlobalConstants.IMAGE);
-        Log.e("urle",url);
+        Log.e("urle", url);
         holder.Planner_name.setText(cap(list.get(position).get(GlobalConstants.USERNAME)));
         holder.planner_address.setText(list.get(position).get(GlobalConstants.ADDRESS));
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
 // generate random color
         int color1 = generator.getRandomColor();
         TextDrawable drawable2 = TextDrawable.builder()
-                .buildRect(holder.Planner_name.getText().toString().substring(0,1), color1);
+                .buildRect(holder.Planner_name.getText().toString().substring(0, 1), color1);
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
-            Picasso.with(context).load(url).placeholder(drawable2).into(holder.planner_img);
+            Picasso.with(context).load(url).placeholder(drawable2).centerCrop().resize(80,80).into(holder.planner_img);
            /* imageLoader.displayImage(url, holder.planner_img, options,
                     new SimpleImageLoadingListener() {
                         @Override
@@ -155,7 +160,8 @@ holder.planer_stars=(RatingBar)convertView.findViewById(R.id.planer_stars) ;
 
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
     }
-    public String cap(String name){
+
+    public String cap(String name) {
         StringBuilder sb = new StringBuilder(name);
         sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
         return sb.toString();

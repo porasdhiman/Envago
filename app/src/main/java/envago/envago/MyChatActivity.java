@@ -69,7 +69,7 @@ LinearLayout message_linear_layout;
 
        // dialogWindow();
 
-
+dialogWindow();
         get_list();
         chat_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -88,7 +88,7 @@ LinearLayout message_linear_layout;
         StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-             //   dialog2.dismiss();
+               dialog2.dismiss();
                 Log.e("Categoryyyy", s);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -107,8 +107,8 @@ LinearLayout message_linear_layout;
                             details.put("id", arrobj.getString("id"));
                             details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
                             details.put("planner_name", arrobj.getString("planner_name"));
-                            JSONObject last_msg=arrobj.getJSONObject("last_msg");
-                            details.put("message", last_msg.getString("message"));
+
+                            details.put("message", arrobj.getString("last_msg"));
                             details.put("image", arrobj.getString("image"));
 
                             list.add(details);
@@ -131,7 +131,7 @@ LinearLayout message_linear_layout;
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                //dialog2.dismiss();
+                dialog2.dismiss();
             }
         }) {
             @Override
@@ -173,7 +173,8 @@ LinearLayout message_linear_layout;
         dialog2.setCancelable(false);
         dialog2.setContentView(R.layout.progrees_dialog);
         AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
-        loaderView.show();
+        loaderView.setVisibility(View.GONE);
+        //loaderView.show();
 
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
         dialog2.show();

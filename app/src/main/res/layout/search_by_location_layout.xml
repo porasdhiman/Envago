@@ -73,6 +73,7 @@
         android:layout_marginRight="10dp"
         android:paddingTop="10dp"
         android:divider="@color/White"
+        android:scrollbars="none"
         android:paddingBottom="10dp"></ListView>
 
 

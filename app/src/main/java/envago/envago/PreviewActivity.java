@@ -5,10 +5,13 @@ import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -41,6 +44,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -64,6 +68,7 @@ import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
+import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.apache.http.HttpEntity;
@@ -88,8 +93,6 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 
 /**
  * Created by vikas on 15-10-2016.
@@ -113,7 +116,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
             location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview, header_textview, Disclaimer_txtView;
     LinearLayout about_layout, map_layout, review_layout, desclaimer_layout;
     ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView;
-    CircleImageView orginiser_img;
+    ImageView orginiser_img;
     ArrayList<String> list = new ArrayList<>();
     Button purchase_btn;
     RatingBar stars;
@@ -161,13 +164,14 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
     Global global;
     Date startDate, endDate;
 
-    TextView days_details, desclaimer_txt_show,price_btn;
+    TextView days_details, desclaimer_txt_show,price_btn,beginner_txt;
     ImageView dumy_imageview;
     TwoWayGridView user_grid;
     ArrayList<HashMap<String, String>> eventUserList = new ArrayList<>();
     String message;
     HttpEntity resEntity;
-
+TextDrawable drawable;
+    SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,6 +180,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
+        preferences = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         global = (Global) getApplicationContext();
         desclaimer_layout = (LinearLayout) findViewById(R.id.desclaimer_layout);
         //intro_images = (ViewPager) findViewById(R.id.pager_introduction);
@@ -185,8 +190,13 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         // review_list = (ListView) findViewById(R.id.review_list);
         //pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         stars = (RatingBar) findViewById(R.id.stars);
+        LayerDrawable star = (LayerDrawable) stars.getProgressDrawable();
+        star.getDrawable(2).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+        star.getDrawable(0).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+        star.getDrawable(1).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
         stars.setOnTouchListener(null);
         price_btn = (TextView) findViewById(R.id.price_btn);
+        beginner_txt=(TextView)findViewById(R.id.beginner_txt);
         about_layout = (LinearLayout) findViewById(R.id.about_layout);
         map_layout = (LinearLayout) findViewById(R.id.map_layout);
         status_text = (TextView) findViewById(R.id.status_text);
@@ -206,7 +216,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         location_name_txtView = (TextView) findViewById(R.id.location_name);
         heart_img = (ImageView) findViewById(R.id.heart_img);
         heart_img.setOnClickListener(this);
-        orginiser_img = (CircleImageView) findViewById(R.id.orginiser_img);
+        orginiser_img = (ImageView) findViewById(R.id.orginiser_img);
         //rating = (TextView) findViewById(R.id.counter);
         //lower_description_txtView = (TextView) findViewById(R.id.lower_description);
         Disclaimer_txtView = (TextView) findViewById(R.id.Disclaimer_txtView);
@@ -236,8 +246,8 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         });
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
-                .showStubImage(R.drawable.placeholder_image1)        //	Display Stub Image
-                .showImageForEmptyUri(R.drawable.placeholder_image1)    //	If Empty image found
+                .showStubImage(0)        //	Display Stub Image
+                .showImageForEmptyUri(0)    //	If Empty image found
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
@@ -301,7 +311,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
 
 //    mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
         // Add a marker in Sydney and move the camera
-       /* String url = getMapsApiDirectionsUrl(meeting_lat, meeting_long, global.getW_lat(), global.getW_lng());
+      /*  String url = getMapsApiDirectionsUrl(meeting_lat, meeting_long, global.getW_lat(), global.getW_lng());
         Log.e("locationUrl", url);
         dialogWindow();
         PreviewActivity.ReadTask downloadTask = new PreviewActivity.ReadTask();
@@ -317,15 +327,14 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(global.getW_lat()), Double.parseDouble(global.getW_lng())), 10));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 */
-
         //--------------------------------end-map-location-variable---------------------------------------------
 
 
-        //admin_name.setText(adminobj.getString(GlobalConstants.ADMIN_NAME));
+        admin_name.setText(preferences.getString(GlobalConstants.USERNAME, ""));
         header_textview.setText(global.getEvent_name());
 
 
-        orginiser_img.setImageResource(R.mipmap.ic_launcher);
+
 
 
         admin_description.setText(global.getDescriptionString());
@@ -376,8 +385,29 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
                                         level_no4.setVisibility(View.VISIBLE);
                                     }*/
         meeting_desc.setText(global.getEvent_meetin_point());
+        char a = admin_name.getText().toString().charAt(0);
 
-        time_txtVIew.setText(global.getEvent_time());
+        drawable = TextDrawable.builder()
+                .buildRound(String.valueOf(a), Color.parseColor("#F94444"));
+
+
+        if (preferences.getString(GlobalConstants.IMAGE, "").length() == 0) {
+
+        } else {
+            drawable = TextDrawable.builder()
+                    .buildRound(String.valueOf(a), Color.parseColor("#F94444"));
+            if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
+                Picasso.with(PreviewActivity.this).load(preferences.getString(GlobalConstants.IMAGE, "")).placeholder(drawable).transform(new CircleTransform()).into(orginiser_img);
+            } else {
+                if(!preferences.getString(GlobalConstants.IMAGE, "").equalsIgnoreCase("")) {
+                    Picasso.with(PreviewActivity.this).load(new File(preferences.getString(GlobalConstants.IMAGE, ""))).placeholder(drawable).transform(new CircleTransform()).into(orginiser_img);
+
+                    //profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
+                }else{
+                    orginiser_img.setImageDrawable(drawable);
+                }
+            }
+        }        time_txtVIew.setText(global.getEvent_time());
         i = 0;
         if (i == 1) {
             heart_img.setImageResource(R.drawable.heart_field);
@@ -418,12 +448,21 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
 
             makeTextViewResizable(Disclaimer_txtView, 3, "Read More", true);
         }
-        places_txtView.setText(global.getEvent_place() + "Places");
+        places_txtView.setText(global.getEvent_place() + "Places (per user "+global.getEvent_place()+" place )");
         purchase_btn.setText("Submit");
 
         user_grid.setAdapter(new UserViewAdapter(PreviewActivity.this, Integer.parseInt(global.getEvent_place()), eventUserList));
         dumy_imageview.setImageURI(Uri.fromFile(new File(global.getListImg().get(0))));
         price_btn.setText("$"+global.getEvent_price());
+        if (global.getEvent_level().equalsIgnoreCase("1")) {
+            beginner_txt.setText("Easy");
+        } else if (global.getEvent_level().equalsIgnoreCase("2")) {
+            beginner_txt.setText("Moderate");
+        } else if (global.getEvent_level().equalsIgnoreCase("3")) {
+            beginner_txt.setText("Difficult");
+        } else {
+            beginner_txt.setText("Extreme");
+        }
 
     }
 
