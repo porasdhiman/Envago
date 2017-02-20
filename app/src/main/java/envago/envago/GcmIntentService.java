@@ -61,8 +61,9 @@ mSharedPreferences=getSharedPreferences("chat",Context.MODE_PRIVATE);
                 Log.e("envago app", extras.toString());
                 if (extras.getString("content_title").contains("message")) {
                     String id = extras.getString("data").split(":")[1].replace("\"", "").replace("}", "").trim();
-                    Log.e("id", id);
-                    global.setEvent_id(id);
+String main_id=id.replace("action","").replace(",","").trim();
+                    global.setEvent_id(main_id);
+                    Log.e("id",global.getEvent_id());
                     if(mSharedPreferences.getBoolean("message",false)==true){
                        MessageFragment m=new MessageFragment();
                         m.CallAPI(GcmIntentService.this);

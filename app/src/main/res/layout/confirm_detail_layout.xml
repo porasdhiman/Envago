@@ -19,15 +19,15 @@
             <RelativeLayout
                 android:id="@+id/main_heading"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 >
 
                 <ImageView
                     android:id="@+id/search_button"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_margin="14dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                  android:padding="13dp"
                     android:src="@drawable/multiply" />
 
 
@@ -51,6 +51,7 @@
                     android:layout_toRightOf="@+id/name"
                     android:text=""
                     android:textColor="#000"
+                    android:singleLine="true"
                     android:textSize="20sp" />
 
             </RelativeLayout>
@@ -177,7 +178,7 @@ android:singleLine="true"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Meating:"
+                    android:text="Meeting:"
                     android:textColor="#000"
                     android:layout_centerVertical="true"
                     android:textSize="16sp" />
@@ -250,7 +251,7 @@ android:singleLine="true"
 
                     <View
                         android:id="@+id/view1"
-                        android:layout_width="2dp"
+                        android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:layout_marginRight="10dp"
                         android:layout_toRightOf="@+id/minus"
@@ -270,7 +271,7 @@ android:singleLine="true"
 
                     <View
                         android:id="@+id/view2"
-                        android:layout_width="2dp"
+                        android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_toLeftOf="@+id/plus"
@@ -310,7 +311,7 @@ android:singleLine="true"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_centerVertical="true"
                     android:text="Total:"
                     android:textColor="#000"
@@ -337,6 +338,17 @@ android:singleLine="true"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/LightGrey" />
+
+            <TextView
+                android:id="@+id/remanning_place_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#000"
+
+                android:textSize="14sp"/>
 
 
             <RelativeLayout

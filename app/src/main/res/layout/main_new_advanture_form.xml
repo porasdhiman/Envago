@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#fff">
+    android:background="#fff"
+    android:id="@+id/main_layout">
 
     <RelativeLayout
         android:id="@+id/main_heading"
@@ -37,7 +38,7 @@
         android:layout_marginTop="10dp"
         android:text="Make your adventure"
         android:textColor="#000"
-        android:textSize="30sp" />
+        android:textSize="28sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,14 +49,16 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/date_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="Dates and scheduls"
+                android:text="Dates and schedules"
                 android:textColor="@color/Black"
                 android:layout_toLeftOf="@+id/booking_checkBox"
                 android:layout_centerVertical="true"
@@ -76,6 +79,8 @@
             android:background="@color/LightGrey" />
 
         <RelativeLayout
+            android:id="@+id/details_layout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
@@ -106,6 +111,8 @@
             android:background="@color/LightGrey" />
 
         <RelativeLayout
+            android:id="@+id/photo_layout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
@@ -135,6 +142,8 @@
             android:background="@color/LightGrey" />
 
         <RelativeLayout
+            android:id="@+id/route_layout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
@@ -174,11 +183,12 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="10dp"
                 android:text="Preview"
-                android:textColor="@color/Gray"
+                android:textColor="@color/textcolor"
                 android:gravity="center"
+
              android:layout_alignParentBottom="true"
                 android:textAllCaps="false"
-                android:background="#fff"
+                android:background="@drawable/red_border_button"
                 android:textSize="14sp" />
 
         <!--    <Button

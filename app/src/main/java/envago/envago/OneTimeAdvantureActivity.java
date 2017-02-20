@@ -1,19 +1,30 @@
 package envago.envago;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
@@ -22,7 +33,9 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
+import java.lang.reflect.Type;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,12 +53,13 @@ public class OneTimeAdvantureActivity extends Activity implements OnDateSelected
     MaterialCalendarView calendarView;
 
     private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
-    TextView select_date_txtView;
+    TextView select_date_txtView, end_date_txtView;
     Button submit_button;
     Global global;
     List<CalendarDay> list = new ArrayList<CalendarDay>();
     CalendarDay date1;
     String start_date, end_date;
+    ArrayList<String> sharedData;
 
     private Collection<CalendarDay> calendarDays = new Collection<CalendarDay>() {
         @Override
@@ -117,7 +131,18 @@ public class OneTimeAdvantureActivity extends Activity implements OnDateSelected
         }
     };
     EditText of_days_txtView;
-ImageView back_button_create;
+    ImageView back_button_create;
+    SharedPreferences sp;
+    SharedPreferences.Editor ed;
+    String months[] = {" ", "Jan", "Feb", "Mar", "Apr", "May",
+            "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
+            "Dec",};
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
+RelativeLayout start_end_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,38 +152,84 @@ ImageView back_button_create;
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
+        sp = getSharedPreferences(GlobalConstants.CREATE_DATA, Context.MODE_PRIVATE);
+        ed = sp.edit();
         global = (Global) getApplicationContext();
-        back_button_create=(ImageView)findViewById(R.id.back_button_create);
+        back_button_create = (ImageView) findViewById(R.id.back_button_create);
         of_days_txtView = (EditText) findViewById(R.id.no_of_days_txtView);
+        start_end_layout=(RelativeLayout)findViewById(R.id.start_end_layout);
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = df.format(c.getTime());
 
-        String date=formattedDate.split("-")[0];
-        String month=formattedDate.split("-")[1];
-        String year=formattedDate.split("-")[2];
-       // Toast.makeText(this,date+"-"+month+"-"+year,Toast.LENGTH_SHORT).show();
+        String date = formattedDate.split("-")[0];
+        String month = formattedDate.split("-")[1];
+        String year = formattedDate.split("-")[2];
+        // Toast.makeText(this,date+"-"+month+"-"+year,Toast.LENGTH_SHORT).show();
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         calendarView.state().edit()
 
-                .setMinimumDate(CalendarDay.from(Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(date)))
+                .setMinimumDate(CalendarDay.from(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(date)))
                 .setMaximumDate(CalendarDay.from(2023, 12, 31))
 
                 .commit();
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+        try {
+            Date convertedDate = inputFormat.parse("2017-02-21");
+            calendarView.setDateSelected(convertedDate,true);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_RANGE);
         select_date_txtView = (TextView) findViewById(R.id.select_date_txtView);
+        end_date_txtView = (TextView) findViewById(R.id.end_date_view);
         submit_button = (Button) findViewById(R.id.submit_button);
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!select_date_txtView.getText().toString().equalsIgnoreCase("Select a date")) {
-                    global.setDateType("one_time");
-                    global.setNumberOfDay(of_days_txtView.getText().toString());
-                    finish();
-
+                if (of_days_txtView.getText().toString().length() == 0) {
+                    Toast.makeText(OneTimeAdvantureActivity.this, "Please enter number of days", Toast.LENGTH_SHORT).show();
                 }
+                else if (select_date_txtView.getText().toString().length() == 0) {
+                    Toast.makeText(OneTimeAdvantureActivity.this, "Please enter select date", Toast.LENGTH_SHORT).show();
+                }
+               else {
+                    global.setDateType("one_time");
+                    global.setNumberOfDay(of_days_txtView.getText().toString().split(" ")[0]);
+                    ed.putString("date type", global.getDateType());
+                    ed.putString(GlobalConstants.EVENT_START_DATE, start_date);
+                    ed.putString(GlobalConstants.EVENT_END_DATE, end_date);
+                    Gson gson = new Gson();
+                    String json = gson.toJson(list);
+                    ed.putString(GlobalConstants.DATE_DATA, json);
+                    ed.putString(GlobalConstants.NUMBER_OF_DAY, global.getNumberOfDay());
+                    ed.commit();
+
+                    finish();
+                }
+
+            }
+        });
+        of_days_txtView.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
+
+                        case KeyEvent.KEYCODE_ENTER:
+                            calendarView.setVisibility(View.VISIBLE);
+                            submit_button.setVisibility(View.VISIBLE);
+                            start_end_layout.setVisibility(View.VISIBLE);
+                            of_days_txtView.setText(of_days_txtView.getText()+" days");
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
             }
         });
         back_button_create.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +242,29 @@ ImageView back_button_create;
         calendarView.setOnDateChangedListener(this);
         calendarView.setOnMonthChangedListener(this);
         of_days_txtView.setOnTouchListener(this);
+        if (sp.getString("date type", "").equalsIgnoreCase("one_time")) {
+
+
+            of_days_txtView.setText(sp.getString(GlobalConstants.NUMBER_OF_DAY, "")+" days");
+
+            list = loadSharedPreferencesLogList();
+
+
+            calendarDays = list;
+            calendarView.addDecorators(new EventDecorator(getResources().getColor(R.color.textcolor), calendarDays));
+
+            select_date_txtView.setText(formatdate2(sp.getString(GlobalConstants.EVENT_START_DATE, "")));
+            end_date_txtView.setText(formatdate2(sp.getString(GlobalConstants.EVENT_END_DATE, "")));
+        }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        if (of_days_txtView.getText().length() != 0) {
+            calendarView.setVisibility(View.VISIBLE);
+            submit_button.setVisibility(View.VISIBLE);
+            start_end_layout.setVisibility(View.VISIBLE);
+
+        }
     }
 
     @Override
@@ -178,11 +272,34 @@ ImageView back_button_create;
         // Toast.makeText(OneTimeAdvantureActivity.this,getSelectedDatesString(),Toast.LENGTH_SHORT).show();
         if (of_days_txtView.getText().length() > 0) {
             select_date_txtView.setText(getSelectedDatesString());
+            String endDate = select_date_txtView.getText().toString().split(" ")[0];
+            String endMonthe = select_date_txtView.getText().toString().split(" ")[1];
+            String endYear = select_date_txtView.getText().toString().split(" ")[2];
+            String completeEndDate = String.valueOf(Integer.parseInt(endDate) + Integer.parseInt(of_days_txtView.getText().toString().split(" ")[0]) - 1) + " " + endMonthe + " " + endYear;
+            Log.e("select Date", completeEndDate);
+            end_date_txtView.setText(completeEndDate);
             calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_NONE);
             calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
         } else {
             Toast.makeText(OneTimeAdvantureActivity.this, "Please enter number of days", Toast.LENGTH_SHORT).show();
         }
+
+    }
+
+    public String formatdate2(String fdate) {
+        String datetime = null;
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        SimpleDateFormat d = new SimpleDateFormat("dd MMM yyyy");
+        try {
+            Date convertedDate = inputFormat.parse(fdate);
+            datetime = d.format(convertedDate);
+
+        } catch (ParseException e) {
+
+        }
+        return datetime;
+
 
     }
 
@@ -194,13 +311,18 @@ ImageView back_button_create;
     private String getSelectedDatesString() {
         if (list.size() == 0) {
             date1 = calendarView.getSelectedDate();
-            int valye = Integer.parseInt(of_days_txtView.getText().toString());
+
+            Log.e("share date array", date1.toString());
+            int valye = Integer.parseInt(of_days_txtView.getText().toString().split(" ")[0]);
             //calendarView.setSelectedDate(incrementDateByOne(new Date(FORMATTER.format(date.getDate()).toString())));
             for (int i = 0; i < valye; i++) {
+
                 CalendarDay date = new CalendarDay(incrementDateByOne(new Date(FORMATTER.format(date1.getDate()).toString()), i));
                 list.add(date);
             }
             calendarDays = list;
+            Log.e("share date array", list.toString());
+
             calendarView.addDecorators(new EventDecorator(getResources().getColor(R.color.textcolor), calendarDays));
             start_date = list.get(0).toString().substring(12, list.get(0).toString().length() - 1);
             String year = start_date.split("-")[0];
@@ -216,6 +338,7 @@ ImageView back_button_create;
             end_date = year_end + "-" + months_end + "-" + date_end;
             Log.e("end date", end_date);
             global.setEvent_end_date(end_date);
+
             if (date1 == null) {
                 return "No Selection";
             }
@@ -228,7 +351,7 @@ ImageView back_button_create;
             calendarDays.clear();
             date1 = calendarView.getSelectedDate();
             //calendarView.setSelectedDate(incrementDateByOne(new Date(FORMATTER.format(date.getDate()).toString())));
-            int valye = Integer.parseInt(of_days_txtView.getText().toString());
+            int valye = Integer.parseInt(of_days_txtView.getText().toString().split(" ")[0]);
             for (int i = 0; i < valye; i++) {
                 CalendarDay date = new CalendarDay(incrementDateByOne(new Date(FORMATTER.format(date1.getDate()).toString()), i));
                 list.add(date);
@@ -249,13 +372,29 @@ ImageView back_button_create;
             end_date = year_end + "-" + months_end + "-" + date_end;
             Log.e("end date", end_date);
             global.setEvent_end_date(end_date);
+
             if (date1 == null) {
                 return "No Selection";
             }
             Log.e("calender day value1", calendarDays.toString());
         }
-
+//end_date_txtView.setText(incrementDateByOne(new Date(FORMATTER.format(date1.getDate()).toString()), Integer.parseInt(of_days_txtView.getText().toString())).toString());
         return FORMATTER.format(date1.getDate());
+    }
+
+    public ArrayList<CalendarDay> loadSharedPreferencesLogList() {
+        ArrayList<CalendarDay> callLog = new ArrayList<CalendarDay>();
+
+        Gson gson = new Gson();
+        String json = sp.getString(GlobalConstants.DATE_DATA, "");
+        if (json.isEmpty()) {
+            callLog = new ArrayList<CalendarDay>();
+        } else {
+            Type type = new TypeToken<List<CalendarDay>>() {
+            }.getType();
+            callLog = gson.fromJson(json, type);
+        }
+        return callLog;
     }
 
     public Date incrementDateByOne(Date date, int i) {
@@ -266,11 +405,55 @@ ImageView back_button_create;
         return nextDate;
     }
 
+    public Date DateByOne(Date date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, 0);
+        Date nextDate = c.getTime();
+        return nextDate;
+    }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_NONE);
         calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
         return false;
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("OneTimeAdvanture Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 
     class EventDecorator implements DayViewDecorator {
@@ -293,5 +476,6 @@ ImageView back_button_create;
             view.addSpan(new DotSpan(7, color));
         }
     }
+
 }
 

@@ -3,20 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/main_layout">
     <RelativeLayout
         android:id="@+id/main_heading"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/textcolor">
 
-        <ImageView
-            android:id="@+id/search_button"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="14dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/search" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,10 +41,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:lineSpacingExtra="1.5mm"
-            android:text="So now that you have booked your adventures, chat with the Planner and the group going. Have fun!"
+            android:lineSpacingExtra="1.1mm"
+            android:text="No message here,Book your adventure and \n start chatting and planning with other \nadvanture"
             android:textColor="#000"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -161,5 +156,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:visibility="gone"
+        android:scrollbars="none"
         android:dividerHeight="0.1dp"></ListView>
 </LinearLayout>

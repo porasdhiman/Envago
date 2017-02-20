@@ -20,10 +20,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -81,6 +78,8 @@ public class AdvantureFeatureAdapter extends PagerAdapter {
         ImageView view_img = (ImageView) itemView.findViewById(R.id.view_img);
         ImageView heart_img = (ImageView) itemView.findViewById(R.id.heart_img);
         TextView start_event_txtView = (TextView) itemView.findViewById(R.id.start_event_txtView);
+        LinearLayout maain_layout=(LinearLayout)itemView.findViewById(R.id.main_layout);
+        Fonts.overrideFonts(mContext,maain_layout);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +131,7 @@ public class AdvantureFeatureAdapter extends PagerAdapter {
 
         }*/
 
-        Calendar c = Calendar.getInstance();
+      /*  Calendar c = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy/MM/dd");
         String dateafter = dateFormat.format(c.getTime());
@@ -151,7 +150,7 @@ public class AdvantureFeatureAdapter extends PagerAdapter {
         } else {
             start_event_txtView.setVisibility(View.GONE);
         }
-
+*/
         container.addView(itemView);
 
         return itemView;

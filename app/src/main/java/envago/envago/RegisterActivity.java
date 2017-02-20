@@ -2,7 +2,6 @@ package envago.envago;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +50,7 @@ public class RegisterActivity extends Activity implements View.OnTouchListener, 
     SharedPreferences sp;
     SharedPreferences.Editor ed;
     Dialog dialog2;
-
+ImageView back_from_login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,42 +67,47 @@ public class RegisterActivity extends Activity implements View.OnTouchListener, 
         password_error_txtView = (TextView) findViewById(R.id.password_error_txtView);
         name_error_txtView = (TextView) findViewById(R.id.name_error_txtView);
         mail_error_txtView = (TextView) findViewById(R.id.mail_error_txtView);
+        back_from_login=(ImageView)findViewById(R.id.back_from_login);
         show_txt.setOnClickListener(this);
         sign_up_button.setOnClickListener(this);
         sign_up_layout.setOnClickListener(this);
         password_editText.setOnTouchListener(this);
-        name_error_txtView.setOnTouchListener(this);
-        mail_error_txtView.setOnTouchListener(this);
+        name_editText.setOnTouchListener(this);
+        mail_editText.setOnTouchListener(this);
+        back_from_login.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sign_up_layout:
-                Intent i = new Intent(RegisterActivity.this, ActivityLogin.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
                 finish();
                 break;
+            case R.id.back_from_login:
+
+                finish();
+                break;
+
             case R.id.sign_up_button:
                 if (name_editText.getText().length() == 0) {
                     name_error_txtView.setVisibility(View.VISIBLE);
                     name_error_txtView.setText("Please enter username");
 
                 } else if (mail_editText.getText().length() == 0) {
-                    mail_editText.setVisibility(View.VISIBLE);
-                    mail_editText.setText("Please enter email");
+                    mail_error_txtView.setVisibility(View.VISIBLE);
+                    mail_error_txtView.setText("Please enter email");
 
 
                 }
-                if (password_editText.getText().length() == 0) {
-                    password_editText.setVisibility(View.VISIBLE);
-                    password_editText.setText("Please enter password");
+                else if (password_editText.getText().length() == 0) {
+                    password_error_txtView.setVisibility(View.VISIBLE);
+                    password_error_txtView.setText("Please enter password");
 
 
                 } else if (!CommonUtils.isEmailValid(mail_editText.getText().toString())) {
-                    mail_editText.setVisibility(View.VISIBLE);
-                    mail_editText.setText("Please enter Valid Email");
+                    mail_error_txtView.setVisibility(View.VISIBLE);
+                    mail_error_txtView.setText("Please enter Valid Email");
                 } else {
                     registerMethod();
                     dialogWindow();
@@ -130,6 +135,21 @@ public class RegisterActivity extends Activity implements View.OnTouchListener, 
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        int id = v.getId();
+
+
+        if (id == R.id.mail_editText) {
+            mail_error_txtView.setVisibility(View.GONE);
+
+        } else if (id == R.id.password) {
+            password_error_txtView.setVisibility(View.GONE);
+
+
+        }else if (id == R.id.name_edit_TxtView) {
+            name_error_txtView.setVisibility(View.GONE);
+
+
+        }
         return false;
     }
     //------------------------------------Register Api Method------------------------------
@@ -154,6 +174,8 @@ public class RegisterActivity extends Activity implements View.OnTouchListener, 
                                 ed.commit();
 
                                 Intent j = new Intent(RegisterActivity.this, Tab_Activity.class);
+                                j.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                                 startActivity(j);
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 

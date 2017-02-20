@@ -28,6 +28,7 @@ import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
@@ -127,7 +128,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     ImageView back_button;
     ArrayList<HashMap<String, String>> mapLatLong = new ArrayList<>();
     Button signup_btn;
-    int i;
+    int i = 0;
     //--------------------------------------MAp object-----------
     Marker marker;
     private GoogleMap mMap;
@@ -165,7 +166,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     Global global;
     Date startDate, endDate;
 
-    TextView days_details, desclaimer_txt_show, about_planner, review_txt, beginner_txt, price_btn;
+    TextView locatio_txt, desclaimer_txt_show, about_planner, level_txt, beginner_txt, price_btn, more_txtView, more_dis_txtView, who_txt, whts_txt, meeting_txt;
     ImageView dumy_imageview;
     TwoWayGridView user_grid;
     String id;
@@ -175,7 +176,9 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     float ratingValue;
     TextDrawable drawable;
     ScrollView scrollview_main;
-int r_value;
+    int r_value;
+    LinearLayout main_layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,17 +188,33 @@ int r_value;
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
+        main_layout = (LinearLayout) findViewById(R.id.main_layout);
+        Fonts.overrideFonts(this, main_layout);
 
         // review_txtview = (TextView) findViewById(R.id.review_txtView);
         //  review_layout = (LinearLayout) findViewById(R.id.review_layout);
         // review_list = (ListView) findViewById(R.id.review_list);
         // pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         stars = (RatingBar) findViewById(R.id.stars);
-        LayerDrawable star = (LayerDrawable) stars.getProgressDrawable();
-        star.getDrawable(2).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
-        star.getDrawable(0).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
-        star.getDrawable(1).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+        LayerDrawable star_draw = (LayerDrawable) stars.getProgressDrawable();
+        star_draw.getDrawable(2).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
         scrollview_main = (ScrollView) findViewById(R.id.scrollview_main);
+        locatio_txt = (TextView) findViewById(R.id.location_txt);
+        level_txt = (TextView) findViewById(R.id.levl_txt);
+        who_txt = (TextView) findViewById(R.id.who_txt);
+        whts_txt = (TextView) findViewById(R.id.whts_txt);
+        meeting_txt = (TextView) findViewById(R.id.meeting_text);
+        places_txtView = (TextView) findViewById(R.id.places_count_txtView);
+
+        desclaimer_txt_show = (TextView) findViewById(R.id.desclaimer_txt_show);
+        Fonts.overrideFonts1(this, locatio_txt);
+        Fonts.overrideFonts1(this, meeting_txt);
+
+        Fonts.overrideFonts1(this, level_txt);
+        Fonts.overrideFonts1(this, who_txt);
+        Fonts.overrideFonts1(this, whts_txt);
+        Fonts.overrideFonts1(this, desclaimer_txt_show);
+        Fonts.overrideFonts1(this, places_txtView);
 
         back_button_create = (ImageView) findViewById(R.id.back_button_create);
         back_button_create.setOnClickListener(new View.OnClickListener() {
@@ -209,6 +228,8 @@ int r_value;
         status_text = (TextView) findViewById(R.id.status_text);
         admin_name = (TextView) findViewById(R.id.event_name);
         about_planner = (TextView) findViewById(R.id.about_planner);
+        more_txtView = (TextView) findViewById(R.id.more_txtView);
+        more_dis_txtView = (TextView) findViewById(R.id.more_dis_txtView);
         //route_txtView = (TextView) findViewById(R.id.route_txtView);
         // date_details = (TextView) findViewById(R.id.date_details);
         meeting_desc = (TextView) findViewById(R.id.meeting_desc);
@@ -232,7 +253,7 @@ int r_value;
         beginner_txt = (TextView) findViewById(R.id.beginner_txt);
         price_btn = (TextView) findViewById(R.id.price_btn);
         Disclaimer_txtView = (TextView) findViewById(R.id.Disclaimer_txtView);
-        desclaimer_txt_show = (TextView) findViewById(R.id.desclaimer_txt_show);
+
         accomodation_txtView = (ImageView) findViewById(R.id.accomodation);
         transport_txtView = (ImageView) findViewById(R.id.transport);
         meal_txtView = (ImageView) findViewById(R.id.meals);
@@ -240,12 +261,13 @@ int r_value;
         gear_txtView = (ImageView) findViewById(R.id.gear);
         tent_txtView = (ImageView) findViewById(R.id.tent);
         back_button = (ImageView) findViewById(R.id.detail_back_button);
-        places_txtView = (TextView) findViewById(R.id.places_count_txtView);
         user_grid = (TwoWayGridView) findViewById(R.id.user_view);
         //event_info_layout = (RelativeLayout) findViewById(R.id.event_info_layout);
         //event_info_layout.setOnClickListener(this);
 
         about_planner.setOnClickListener(this);
+        more_txtView.setOnClickListener(this);
+        more_dis_txtView.setOnClickListener(this);
         //route_txtView.setOnClickListener(this);
         // review_txtview.setOnClickListener(this);
 
@@ -273,6 +295,7 @@ int r_value;
         }*/
 
         //------------- map object initilization------------
+        more_txtView.setOnClickListener(this);
         buildGoogleApiClient();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -292,6 +315,12 @@ int r_value;
         purchase_btn = (Button) findViewById(R.id.purchase_btn);
         if (getIntent().getExtras().getString("user").equalsIgnoreCase("user")) {
             purchase_btn.setVisibility(View.GONE);
+            heart_img.setVisibility(View.GONE);
+        } else if (getIntent().getExtras().getString("user").equalsIgnoreCase("no user wish")) {
+            heart_img.setVisibility(View.GONE);
+            stars.setOnTouchListener(this);
+
+            purchase_btn.setOnClickListener(this);
         } else {
             stars.setOnTouchListener(this);
 
@@ -327,6 +356,7 @@ int r_value;
             case R.id.about_planner:
                 Intent about = new Intent(DetailsActivity.this, AboutPlannerActivity.class);
                 about.putExtra(GlobalConstants.USERID, id);
+                about.putExtra(GlobalConstants.EVENT_NAME, admin_name.getText().toString());
                 startActivity(about);
 
                 break;
@@ -335,6 +365,7 @@ int r_value;
                 if (dateType.equalsIgnoreCase("one_time")) {
                     Intent i = new Intent(DetailsActivity.this, ConfirmDetailsActivity.class);
                     i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
+                    i.putExtra(GlobalConstants.remaining_places, event_date_array.get(0).get(GlobalConstants.remaining_places));
                     i.putExtra("pos", String.valueOf(0));
                     startActivity(i);
 
@@ -350,16 +381,103 @@ int r_value;
 
 
                 break;
-          /*  case R.id.signup_btn:
-                Intent i = new Intent(DetailsActivity.this, ConfirmDetailsActivity.class);
-                i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
-                startActivity(i);
-                break;*/
+            case R.id.more_txtView:
+                if (more_txtView.getText().toString().equalsIgnoreCase("More...")) {
+                    more_txtView.setText("Less...");
+                    ViewGroup.LayoutParams params = admin_description.getLayoutParams();
+                    params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                    admin_description.setLayoutParams(params);
+                } else {
+                    more_txtView.setText("More...");
+
+                    ViewGroup.LayoutParams params = admin_description.getLayoutParams();
+                    params.height = 50;
+                    admin_description.setLayoutParams(params);
+                }
+                break;
+            case R.id.more_dis_txtView:
+                if (more_dis_txtView.getText().toString().equalsIgnoreCase("More...")) {
+                    more_dis_txtView.setText("Less...");
+                    ViewGroup.LayoutParams params = Disclaimer_txtView.getLayoutParams();
+                    params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                    Disclaimer_txtView.setLayoutParams(params);
+                } else {
+                    more_dis_txtView.setText("More...");
+
+                    ViewGroup.LayoutParams params = Disclaimer_txtView.getLayoutParams();
+                    params.height = 50;
+                    Disclaimer_txtView.setLayoutParams(params);
+                }
+                break;
+            case R.id.heart_img:
+                if (i == 0) {
+                    favoriteMethod(getIntent().getExtras().getString(GlobalConstants.EVENT_ID), "1");
+                    heart_img.setImageResource(R.drawable.heart_white);
+
+                } else {
+                    favoriteMethod(getIntent().getExtras().getString(GlobalConstants.EVENT_ID), "0");
+                    heart_img.setImageResource(R.drawable.heart);
+
+                }
+                break;
 
         }
 
     }
 
+    private void favoriteMethod(final String event_id, final String like_status) {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GlobalConstants.URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.e("response", response);
+                        try {
+                            JSONObject obj = new JSONObject(response);
+
+                            String status = obj.getString("success");
+                            if (status.equalsIgnoreCase("1")) {
+
+
+                            } else {
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(DetailsActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(GlobalConstants.USERID, CommonUtils.UserID(DetailsActivity.this));
+                params.put(GlobalConstants.EVENT_ID, event_id);
+                params.put(GlobalConstants.LIKE_STATUS, like_status);
+
+                params.put("action", GlobalConstants.ACTION_LIKE_EVENT);
+                Log.e("favorite param", params.toString());
+                return params;
+            }
+
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(DetailsActivity.this);
+        requestQueue.add(stringRequest);
+    }
 
 
     /*public void pagerAdapterMethod(ArrayList<String> list) {
@@ -549,14 +667,16 @@ int r_value;
                                     id = objArry.getString(GlobalConstants.USERID);
 
                                     admin_description.setText(objArry.getString("description"));
-                                    if (objArry.getString("description").length() > 150) {
+                                    if (objArry.getString("description").length() > 200) {
 
-                                        makeTextViewResizable(admin_description, 3, "Read More", true);
+                                        more_txtView.setVisibility(View.VISIBLE);
                                     }
                                     JSONArray event_users = objArry.getJSONArray("event_users");
                                     for (int i = 0; i < event_users.length(); i++) {
                                         JSONObject event_obj = event_users.getJSONObject(i);
                                         HashMap<String, String> map = new HashMap<>();
+                                        map.put(GlobalConstants.ID, event_obj.getString(GlobalConstants.ID));
+
                                         map.put(GlobalConstants.USERNAME, event_obj.getString(GlobalConstants.USERNAME));
                                         map.put(GlobalConstants.IMAGE, event_obj.getString(GlobalConstants.IMAGE));
                                         eventUserList.add(map);
@@ -636,7 +756,7 @@ int r_value;
                                     time_txtVIew.setText(objArry.getString("time"));
                                     i = Integer.parseInt(objArry.getString("is_liked"));
                                     if (i == 1) {
-                                        heart_img.setImageResource(R.drawable.heart_field);
+                                        heart_img.setImageResource(R.drawable.heart_white);
                                     } else {
                                         heart_img.setImageResource(R.drawable.heart);
                                     }
@@ -678,12 +798,11 @@ int r_value;
                                         desclaimer_layout.setVisibility(view.VISIBLE);
 
                                         Disclaimer_txtView.setText(objArry.getString("disclaimer"));
-                                        if (objArry.getString("disclaimer").length() > 150) {
+                                        if (objArry.getString("disclaimer").length() > 200) {
 
-                                            makeTextViewResizable(Disclaimer_txtView, 3, "Read More", true);
+                                            more_dis_txtView.setVisibility(View.VISIBLE);
                                         }
                                     }
-
 
 
                                     price_btn.setText("$" + objArry.getString("price") + " per person");
@@ -707,21 +826,92 @@ int r_value;
                                     }
                                     Log.e("event_date_array", event_date_array.toString());
                                     global.setBookdateArray(event_date_array);
-                                    user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, Integer.parseInt(objArry.getString("total_no_of_places"))*event_date_array.size(), eventUserList));
-                                   int total=Integer.parseInt(objArry.getString("total_no_of_places"))*event_date_array.size();
-                                    if (eventUserList.size() > 0) {
-                                        places_txtView.setText(eventUserList.size() + "/" + String.valueOf(total) + " Places (per user "+objArry.getString("total_no_of_places")+" places )");
+
+
+                                    if (dateType.equalsIgnoreCase("one_time")) {
+                                        int total = Integer.parseInt(objArry.getString("total_no_of_places"));
+
+                                        if (Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places)) == 0) {
+                                            total = eventUserList.size();
+                                            purchase_btn.setText("Sold out");
+                                            purchase_btn.setOnClickListener(null);
+                                        } else {
+                                            if (total != Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places))) {
+
+                                                total = Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places)) + eventUserList.size();
+
+                                            }
+
+                                        }
+
+
+                                        user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, total, eventUserList,header_textview.getText().toString()));
+                                        if (eventUserList.size() > 0) {
+                                            places_txtView.setText(Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places)) + "/" + objArry.getString("total_no_of_places") + " Places ");
+                                        } else {
+                                            places_txtView.setText(String.valueOf(total) + " Places ");
+                                        }
+
+
+                                    } else if (dateType.equalsIgnoreCase("full_season")) {
+                                        int total = Integer.parseInt(objArry.getString("total_no_of_places"));
+
+                                        if (Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places)) == 0) {
+                                            total = eventUserList.size();
+                                            purchase_btn.setText("Sold out");
+                                            purchase_btn.setOnClickListener(null);
+                                        } else {
+                                            if (total != Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places))) {
+
+                                                total = Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places)) + eventUserList.size();
+
+                                            }
+
+                                        }
+
+
+                                        user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, total, eventUserList,header_textview.getText().toString()));
+                                        if (eventUserList.size() > 0) {
+                                            places_txtView.setText(Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places)) + "/" + objArry.getString("total_no_of_places") + " Places ");
+                                        } else {
+                                            places_txtView.setText(String.valueOf(total) + " Places ");
+                                        }
                                     } else {
-                                        places_txtView.setText(String.valueOf(total) + " Places (per user "+objArry.getString("total_no_of_places")+" places )");
+                                        int total = Integer.parseInt(objArry.getString("total_no_of_places")) * event_date_array.size();
+                                        int l = 0, p = 0;
+                                        for (int k = 0; k < event_date_array.size(); k++) {
+                                            l = Integer.parseInt(event_date_array.get(k).get(GlobalConstants.remaining_places)) + l;
+                                        }
+                                        if (l == 0) {
+                                            total = eventUserList.size();
+                                            purchase_btn.setText("Sold out");
+                                            purchase_btn.setOnClickListener(null);
+                                        } else {
+                                            if (l != total) {
+                                                p = l;
+                                                l = l + eventUserList.size();
+                                            } else {
+                                                p = total;
+                                            }
+                                        }
+
+
+                                        user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, l, eventUserList,header_textview.getText().toString()));
+                                        if (eventUserList.size() > 0) {
+                                            places_txtView.setText(String.valueOf(p) + "/" + String.valueOf(total) + " Places ");
+                                        } else {
+                                            Log.e("total", String.valueOf(p));
+                                            places_txtView.setText(String.valueOf(p) + " Places ");
+                                        }
+
                                     }
 
 
-
-                                    if (dateMatchMethod(event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE))) {
+                                  /*  if (dateMatchMethod(event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE))) {
                                         status_text.setVisibility(View.VISIBLE);
                                     } else {
                                         status_text.setVisibility(View.GONE);
-                                    }
+                                    }*/
                                     global.setEvent_time(objArry.getString("time"));
                                     String date_data = event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE);
                                     String split[] = date_data.split("-");
@@ -870,7 +1060,7 @@ int r_value;
                 }
 
                 polyLineOptions.addAll(points);
-                polyLineOptions.width(5);
+                polyLineOptions.width(8);
                 polyLineOptions.color(Color.BLUE);
             }
             if (polyLineOptions != null) {
@@ -1178,10 +1368,8 @@ int r_value;
         rating_save = (TextView) rating_dialog.findViewById(R.id.save_button);
         rating_cancel = (TextView) rating_dialog.findViewById(R.id.cancel_button);
         final RatingBar stars_dailog = (RatingBar) rating_dialog.findViewById(R.id.stars_dailog);
-        LayerDrawable star = (LayerDrawable) stars_dailog.getProgressDrawable();
-        star.getDrawable(2).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
-        star.getDrawable(0).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
-        star.getDrawable(1).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+        LayerDrawable stars = (LayerDrawable) stars_dailog.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
         final EditText rating_cmnt = (EditText) rating_dialog.findViewById(R.id.rating_edittext);
 
 
@@ -1258,7 +1446,7 @@ int r_value;
             }
 
         };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
@@ -1394,6 +1582,8 @@ int r_value;
             tv.setTag(tv.getText());
         }
         ViewTreeObserver vto = tv.getViewTreeObserver();
+        Log.e("text data", tv.getText().toString());
+
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
             @SuppressWarnings("deprecation")
@@ -1436,6 +1626,7 @@ int r_value;
                                                                             final int maxLine, final String spanableText, final boolean viewMore) {
 
         String str = strSpanned.toString();
+        Log.e("Spanned text data ", str);
         SpannableStringBuilder ssb = new SpannableStringBuilder(strSpanned);
 
 
@@ -1449,13 +1640,13 @@ int r_value;
                         tv.setLayoutParams(tv.getLayoutParams());
                         tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
                         tv.invalidate();
-                        makeTextViewResizable(tv, -1, "Read Less", false);
+                        makeTextViewResizable(tv, -1, "Less", false);
 
                     } else {
                         tv.setLayoutParams(tv.getLayoutParams());
                         tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
                         tv.invalidate();
-                        makeTextViewResizable(tv, 3, "Read More", true);
+                        makeTextViewResizable(tv, 3, "More..", true);
 
                     }
 

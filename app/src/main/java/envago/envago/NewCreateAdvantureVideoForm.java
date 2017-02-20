@@ -26,33 +26,32 @@ import java.util.Timer;
  * Created by worksdelight on 20/01/17.
  */
 
-public class NewCreateAdvantureVideoForm extends FragmentActivity implements View.OnClickListener,SurfaceHolder.Callback, MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener
-          {
+public class NewCreateAdvantureVideoForm extends FragmentActivity implements View.OnClickListener, SurfaceHolder.Callback, MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener {
 
     ViewPager pager;
     TextView bottom_txt;
-    ImageView img1, img2, img3,back_button_create;
+    ImageView img1, img2, img3, back_button_create;
     String slider_upper_txt[];
     String slider_bottom_txt[];
     VideoView videoView1;
-    TextView slider_sign_up_btn, slider_fb_btn,document_status_txt;
+    TextView slider_sign_up_btn, slider_fb_btn, document_status_txt;
     LinearLayout slider_sign_in_layout;
-
 
 
     String username_mString, email_mString, id_mString;
     Dialog dialog2;
     Global global;
 
-              //------Video controle------------
+    //------Video controle------------
 
-              private static final String TAG = "VideoPlayer";
-              private SurfaceHolder holder;
-              private ProgressBar progressBarWait;
+    private static final String TAG = "VideoPlayer";
+    private SurfaceHolder holder;
+    private ProgressBar progressBarWait;
 
-              private MediaPlayer player;
-              private Timer updateTimer;
-              String uriPath;
+    private MediaPlayer player;
+    private Timer updateTimer;
+    String uriPath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,18 +65,22 @@ public class NewCreateAdvantureVideoForm extends FragmentActivity implements Vie
         // bottom_txt = (TextView) findViewById(R.id.bottom_txt);
         global = (Global) getApplicationContext();
 
-        document_status_txt=(TextView)findViewById(R.id.document_status_txt);
+        document_status_txt = (TextView) findViewById(R.id.document_status_txt);
 
         //---------------------------------
-        pager = (ViewPager) findViewById(R.id.viewpager);
+     /*   pager = (ViewPager) findViewById(R.id.viewpager);
         img1 = (ImageView) findViewById(R.id.img1);
         img2 = (ImageView) findViewById(R.id.img2);
-        img3 = (ImageView) findViewById(R.id.img3);
-        back_button_create=(ImageView) findViewById(R.id.back_button_create);
+        img3 = (ImageView) findViewById(R.id.img3);*/
+        back_button_create = (ImageView) findViewById(R.id.back_view);
         videoView1 = (VideoView) findViewById(R.id.videoView1);
-slider_sign_up_btn=(TextView)findViewById(R.id.slider_sign_up_btn);
+        slider_sign_up_btn = (TextView) findViewById(R.id.slider_sign_up_btn);
         slider_sign_in_layout = (LinearLayout) findViewById(R.id.slider_sign_in_layout);
-         uriPath = "android.resource://envago.envago/" + R.raw.k2_1408;
+        uriPath = "android.resource://envago.envago/" + R.raw.envagowalk;
+        TextView slider_txt = (TextView) findViewById(R.id.slider_txt);
+        TextView slider_txt_bottom = (TextView) findViewById(R.id.slider_bottom_txt);
+
+
       /*  holder = videoView1.getHolder();
         holder.addCallback(this);
         holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -86,7 +89,7 @@ slider_sign_up_btn=(TextView)findViewById(R.id.slider_sign_up_btn);
         player.setOnPreparedListener(this);
         player.setOnCompletionListener(this);
         player.setScreenOnWhilePlaying(true);*/
-      //  player.setDisplay(holder);
+        //  player.setDisplay(holder);
 
         Uri uri = Uri.parse(uriPath);
 
@@ -103,8 +106,9 @@ slider_sign_up_btn=(TextView)findViewById(R.id.slider_sign_up_btn);
 
         slider_upper_txt = getResources().getStringArray(R.array.slide1_txt);
         slider_bottom_txt = getResources().getStringArray(R.array.slide1_bottom_txt);
-
-        pager.setAdapter(new CutomePagerAdapter(NewCreateAdvantureVideoForm.this, slider_upper_txt, slider_bottom_txt));
+        slider_txt.setText(slider_upper_txt[0]);
+        slider_txt_bottom.setText(slider_bottom_txt[0]);
+       /* pager.setAdapter(new CutomePagerAdapter(NewCreateAdvantureVideoForm.this, slider_upper_txt, slider_bottom_txt));
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -142,21 +146,29 @@ slider_sign_up_btn=(TextView)findViewById(R.id.slider_sign_up_btn);
                 // TODO Auto-generated method stub
 
             }
-        });
+        });*/
+        slider_sign_up_btn.setOnClickListener(this);
+        slider_sign_in_layout.setOnClickListener(this);
+        if (global.getIsVerified().equalsIgnoreCase("0")) {
+            slider_sign_up_btn.setText("Upload Document again");
+            document_status_txt.setText("Document rejected");
 
-        if (global.getIsVerified().equalsIgnoreCase("Approved")) {
-            slider_sign_up_btn.setOnClickListener(this);
-                }
+
+
+        }else  if (global.getIsVerified().equalsIgnoreCase("1")) {
+            slider_sign_up_btn.setText("Create an Adventure Now");
+            document_status_txt.setText("You are already registered as a planner");
+        }
+        else if (global.getIsVerified().equalsIgnoreCase("2")) {
+            slider_sign_up_btn.setText("Upload Document");
+            document_status_txt.setText("A new Planner? Register");
+        }
         else {
-            slider_sign_in_layout.setOnClickListener(this);
-            document_status_txt.setText("Upload document");
-                }
-        back_button_create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
+            slider_sign_up_btn.setText("Pending Approval");
+            document_status_txt.setText("Document verification is in process");
+        }
+        back_button_create.setOnClickListener(this);
 
     }
 
@@ -166,16 +178,54 @@ slider_sign_up_btn=(TextView)findViewById(R.id.slider_sign_up_btn);
         switch (v.getId()) {
 
             case R.id.slider_sign_in_layout:
-                Intent j = new Intent(NewCreateAdvantureVideoForm.this, CreateAdventuresActivity.class);
-                startActivity(j);
+                if(global.isVerified.equalsIgnoreCase("0")){
+                    Intent j = new Intent(NewCreateAdvantureVideoForm.this, CreateAdventuresActivity.class);
+                    startActivity(j);
 
+                    finish();
+                }else  if(global.isVerified.equalsIgnoreCase("2")){
+                    Intent j = new Intent(NewCreateAdvantureVideoForm.this, CreateAdventuresActivity.class);
+                    startActivity(j);
+
+                    finish();
+                }
+                else  if(global.isVerified.equalsIgnoreCase("1")){
+                    Intent k = new Intent(NewCreateAdvantureVideoForm.this, NewAdvantureForm.class);
+                    startActivity(k);
+
+                    finish();
+                }else{
+
+                }
+
+
+                break;
+            case R.id.back_view:
                 finish();
+
                 break;
             case R.id.slider_sign_up_btn:
-                Intent k = new Intent(NewCreateAdvantureVideoForm.this, NewAdvantureForm.class);
-                startActivity(k);
 
-                finish();
+                if(global.isVerified.equalsIgnoreCase("0")){
+                    Intent j = new Intent(NewCreateAdvantureVideoForm.this, CreateAdventuresActivity.class);
+                    startActivity(j);
+
+                    finish();
+                }else  if(global.isVerified.equalsIgnoreCase("2")){
+                    Intent j = new Intent(NewCreateAdvantureVideoForm.this, CreateAdventuresActivity.class);
+                    startActivity(j);
+
+                    finish();
+                }
+                else  if(global.isVerified.equalsIgnoreCase("1")){
+                    Intent k = new Intent(NewCreateAdvantureVideoForm.this, NewAdvantureForm.class);
+                    startActivity(k);
+
+                    finish();
+                }else{
+
+                }
+
 
                 break;
 
@@ -183,85 +233,84 @@ slider_sign_up_btn=(TextView)findViewById(R.id.slider_sign_up_btn);
     }
 
 
-
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
 
+    }
+
+    //--------Video method---------
+    private void playVideo() {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    player.setDataSource(NewCreateAdvantureVideoForm.this, Uri.parse(uriPath));
+                    player.prepareAsync();
+                              /*player.setDataSource(uriPath);
+                              player.prepare();*/
+                } catch (Exception e) { // I can split the exceptions to get which error i need.
+
+                    Log.i(TAG, "Error");
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        // TODO Auto-generated method stub
 
     }
 
-              //--------Video method---------
-              private void playVideo() {
-                  new Thread(new Runnable() {
-                      public void run() {
-                          try {
-                              player.setDataSource(NewCreateAdvantureVideoForm.this, Uri.parse(uriPath));
-                              player.prepareAsync();
-                              /*player.setDataSource(uriPath);
-                              player.prepare();*/
-                          } catch (Exception e) { // I can split the exceptions to get which error i need.
+    public void surfaceCreated(SurfaceHolder holder) {
+        playVideo();
+        player.setDisplay(holder);
+    }
 
-                              Log.i(TAG, "Error");
-                              e.printStackTrace();
-                          }
-                      }
-                  }).start();
-              }
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        // TODO Auto-generated method stub
 
-              public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-                  // TODO Auto-generated method stub
+    }
 
-              }
-
-              public void surfaceCreated(SurfaceHolder holder) {
-                  playVideo();
-                  player.setDisplay(holder);
-              }
-
-              public void surfaceDestroyed(SurfaceHolder holder) {
-                  // TODO Auto-generated method stub
-
-              }
-              //prepare the video
-              public void onPrepared(MediaPlayer mp) {
+    //prepare the video
+    public void onPrepared(MediaPlayer mp) {
 
 
-                  // Adjust the size of the video
-                  // so it fits on the screen
-                  int surfaceView_Width = videoView1.getWidth();
-                  int surfaceView_Height = videoView1.getHeight();
+        // Adjust the size of the video
+        // so it fits on the screen
+        int surfaceView_Width = videoView1.getWidth();
+        int surfaceView_Height = videoView1.getHeight();
 
-                  float video_Width = player.getVideoWidth();
-                  float video_Height = player.getVideoHeight();
+        float video_Width = player.getVideoWidth();
+        float video_Height = player.getVideoHeight();
 
-                  float ratio_width = surfaceView_Width/video_Width;
-                  float ratio_height = surfaceView_Height/video_Height;
-                  float aspectratio = video_Width/video_Height;
+        float ratio_width = surfaceView_Width / video_Width;
+        float ratio_height = surfaceView_Height / video_Height;
+        float aspectratio = video_Width / video_Height;
 
-                  ViewGroup.LayoutParams layoutParams = videoView1.getLayoutParams();
+        ViewGroup.LayoutParams layoutParams = videoView1.getLayoutParams();
 
-                  if (ratio_width > ratio_height){
-                      layoutParams.width = (int) (surfaceView_Height * aspectratio);
-                      layoutParams.height = surfaceView_Height;
-                  }else{
-                      layoutParams.width = surfaceView_Width;
-                      layoutParams.height = (int) (surfaceView_Width / aspectratio);
-                  }
+        if (ratio_width > ratio_height) {
+            layoutParams.width = (int) (surfaceView_Height * aspectratio);
+            layoutParams.height = surfaceView_Height;
+        } else {
+            layoutParams.width = surfaceView_Width;
+            layoutParams.height = (int) (surfaceView_Width / aspectratio);
+        }
 
-                  videoView1.setLayoutParams(layoutParams);
+        videoView1.setLayoutParams(layoutParams);
 
 
-                  if (!player.isPlaying()) {
-                      player.start();
-                  }
-                  //videoView1.setClickable(true);
-              }
+        if (!player.isPlaying()) {
+            player.start();
+        }
+        //videoView1.setClickable(true);
+    }
 
-              // callback when the video is over
-              public void onCompletion(MediaPlayer mp) {
-                 player.setLooping(true);
-              }
+    // callback when the video is over
+    public void onCompletion(MediaPlayer mp) {
+        player.setLooping(true);
+    }
 
-          }
+}

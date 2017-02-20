@@ -12,9 +12,10 @@
 
         <ImageView
             android:id="@+id/back_button_create"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="14dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+           android:padding="15dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/back_button" />
 
         <TextView
@@ -76,9 +77,9 @@
             <View
                 android:id="@+id/view1"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
 
-                android:background="@android:color/darker_gray" />
+                android:background="@color/LightGrey" />
 
             <TextView
 
@@ -115,7 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
 
-                android:background="@android:color/darker_gray" />
+                android:background="@color/LightGrey" />
 
             <TextView
 
@@ -153,7 +154,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
 
-                android:background="@android:color/darker_gray" />
+                android:background="@color/LightGrey" />
 
             <TextView
 
@@ -190,7 +191,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
 
-                android:background="@android:color/darker_gray" />
+                android:background="@color/LightGrey" />
 
             <TextView
 
@@ -227,7 +228,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
 
-                android:background="@android:color/darker_gray" />
+                android:background="@color/LightGrey" />
 
             <RelativeLayout
                 android:id="@+id/firstchk_group"
@@ -239,49 +240,59 @@
 
                 <LinearLayout
                     android:id="@+id/individual_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="30dp"
+                    android:background="@drawable/red_border_button"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
-                    <ImageView
+                   <!-- <ImageView
                         android:id="@+id/chk_group_create"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/unselected" />
+                        android:src="@drawable/unselected" />-->
 
                     <TextView
+                        android:id="@+id/ind_txtView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+
+
                         android:text="Individual"
+
                         android:textColor="@color/Black"
                         android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/group_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="30dp"
+                    android:padding="4dp"
+                    android:background="@drawable/red_border_button"
+android:gravity="center"
                     android:orientation="horizontal">
 
-                    <ImageView
+                    <!--<ImageView
                         android:id="@+id/chk_individual_create"
 
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/unselected" />
+                        android:src="@drawable/unselected" />-->
 
                     <TextView
-                        android:layout_width="70dp"
+                        android:id="@+id/gp_txtView"
+
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+
                         android:text="Group"
+
                         android:textColor="@color/Black"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -321,23 +332,26 @@
 
                 <LinearLayout
                     android:id="@+id/license_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="30dp"
+                    android:background="@drawable/red_border_button"
+android:gravity="center"
                     android:orientation="horizontal">
 
-                    <ImageView
+                  <!--  <ImageView
                         android:id="@+id/chk_licensed_create"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/unselected" />
+                        android:src="@drawable/unselected" />-->
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:id="@+id/li_txtView"
+
                         android:text="Licensed"
                         android:textColor="@color/Black"
                         android:textSize="14sp" />
@@ -345,24 +359,27 @@
 
                 <LinearLayout
                     android:id="@+id/not_license_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/red_border_button"
+android:gravity="center"
                     android:orientation="horizontal">
 
-                    <ImageView
+                   <!-- <ImageView
                         android:id="@+id/chk_notlicensed_create"
 
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/unselected" />
-
+-->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:id="@+id/nl_txtView"
+
                         android:text="Not Licensed"
                         android:textColor="@color/Black"
                         android:textSize="14sp" />
@@ -417,7 +434,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="Upload id"
+                    android:text="Upload ID"
                     android:textColor="@color/textcolor"
                     android:textSize="16dp" />
 

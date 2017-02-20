@@ -57,6 +57,7 @@ public class FavoriteFragment extends Fragment {
     ScrollView scroll_view;
 TextView start_btn;
 SharedPreferences sp;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
 
@@ -65,7 +66,7 @@ SharedPreferences sp;
         Fonts.overrideFonts(getActivity(),main_layout);
         headtext = (TextView) v.findViewById(R.id.header_text_adv);
 
-        headtext.setText("Wish");
+        headtext.setText("My adventures");
         sp=getActivity().getSharedPreferences("message", Context.MODE_PRIVATE);
         message_linear_layout = (LinearLayout) v.findViewById(R.id.message_linear_layout);
         scroll_view=(ScrollView)v.findViewById(R.id.scroll_view);

@@ -14,17 +14,19 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/previous_btn"
+            android:layout_toLeftOf="@+id/cancel_txtView"
+
             android:background="#DD1111">
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true">
+                android:layout_centerInParent="true"
+                >
 
             <ImageView
                 android:id="@+id/search_button"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
@@ -32,7 +34,7 @@
 
             <AutoCompleteTextView
                 android:id="@+id/mAutocompleteView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
@@ -40,7 +42,7 @@
                 android:layout_toLeftOf="@+id/loc_button"
                 android:layout_toRightOf="@+id/search_button"
                 android:background="@null"
-                android:gravity="center"
+
                 android:hint="Search by location or activity"
                 android:singleLine="true"
                 android:textCursorDrawable="@drawable/cursore_color"
@@ -53,7 +55,15 @@
         </RelativeLayout>
 
 
-
+        <TextView
+            android:id="@+id/cancel_txtView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="cancel"
+            android:textColor="#fff"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
     <TextView
         android:id="@+id/trending_txt"

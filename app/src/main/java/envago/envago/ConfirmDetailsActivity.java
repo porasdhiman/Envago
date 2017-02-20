@@ -2,9 +2,7 @@ package envago.envago;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -39,6 +37,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -79,6 +79,8 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
             "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
             "Dec", };
     ImageView search_button;
+    TextView remanning_place_txt;
+    int r_place;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,13 +115,14 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         person_name = (TextView) findViewById(R.id.person_name);
         person_name.setText(global.getEvent_name());
         date_details = (TextView) findViewById(R.id.date_details);
+        remanning_place_txt=(TextView)findViewById(R.id.remanning_place_txt);
         String data = global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_END_DATE);
         String split[] = data.split("-");
         String minth = split[1];
         String date = split[2];
         int mm = Integer.parseInt(minth);
 
-        date_details.setText(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_START_DATE).split("-")[2] + " to " + date + " " + months[mm] + " " + split[0]);
+        date_details.setText(formatdate2(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_START_DATE)) + " to " + formatdate2(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_END_DATE)));
         Time_details = (TextView) findViewById(R.id.Time_details);
         Time_details.setText(global.getEvent_meetin_point()+"\n"+global.getEvent_time());
         person_count = (TextView) findViewById(R.id.person_count);
@@ -141,6 +144,8 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);
+        remanning_place_txt.setText("Remaining places "+getIntent().getExtras().getString(GlobalConstants.remaining_places));
+        r_place=Integer.parseInt(getIntent().getExtras().getString(GlobalConstants.remaining_places));
     }
 
     //---------------------------------------------Payment method----------------------------------
@@ -150,7 +155,24 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
 
         startActivityForResult(intent, REQUEST_CODE_FUTURE_PAYMENT);
     }
+    public String formatdate2(String fdate)
+    {
+        String datetime=null;
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+        SimpleDateFormat d= new SimpleDateFormat("dd MMM yyyy");
+        try {
+            Date convertedDate = inputFormat.parse(fdate);
+            datetime = d.format(convertedDate);
+
+        }catch (ParseException e)
+        {
+
+        }
+        return  datetime;
+
+
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_PAYMENT) {
@@ -237,10 +259,15 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.plus:
-                i++;
-                person_count.setText(String.valueOf(i)+" person");
-                Change_total=Change_total+total;
-                total_money.setText("$" + String.valueOf(Change_total));
+                if(i==r_place){
+
+                }else{
+                    i++;
+                    person_count.setText(String.valueOf(i)+" person");
+                    Change_total=Change_total+total;
+                    total_money.setText("$" + String.valueOf(Change_total));
+                }
+
                 break;
             case R.id.minus:
                 if (i != 1) {
@@ -285,10 +312,15 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
 
                             String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
-                                SharedPreferences sp=getSharedPreferences("chat", Context.MODE_PRIVATE);
+                               /* SharedPreferences sp=getSharedPreferences("chat", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor ed=sp.edit();
                                 ed.putString("chat","chat");
-                                ed.commit();
+                                ed.commit();*/
+                                Intent i=new Intent(ConfirmDetailsActivity.this,Tab_Activity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                startActivity(i);
+                                finish();
                                 Toast.makeText(ConfirmDetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(ConfirmDetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();

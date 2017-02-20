@@ -21,10 +21,10 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AbsListView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -41,7 +41,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +57,7 @@ public class MessageFragment extends Activity implements OnClickListener {
     private ChatArrayAdapter chatArrayAdapter;
     private ListView listView;
     private EditText chatText;
-    private Button buttonSend;
+    private TextView buttonSend;
     private boolean side = false;
     ImageView messageBack;
     Dialog dialog2;
@@ -62,11 +66,13 @@ public class MessageFragment extends Activity implements OnClickListener {
     Global global;
     ProgressDialog progressDialog;
     ArrayList<HashMap<String, String>> listing = new ArrayList<HashMap<String, String>>();
+    ArrayList<HashMap<String, String>> Demolisting = new ArrayList<HashMap<String, String>>();
     HashMap<String, String> map = new HashMap<String, String>();
     NotificationManager mNotificationManager;
     String chatMessage;
     TextView typing_txt;
     int i = 0;
+    RelativeLayout main_layout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,17 +84,18 @@ public class MessageFragment extends Activity implements OnClickListener {
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
-        sharedPreferences=getSharedPreferences("chat",Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("chat", Context.MODE_PRIVATE);
         edit = sharedPreferences.edit();
-        buttonSend = (Button) findViewById(R.id.send);
-
+        buttonSend = (TextView) findViewById(R.id.send);
+        main_layout = (RelativeLayout) findViewById(R.id.main_layout);
+        Fonts.overrideFonts(this, main_layout);
         listView = (ListView) findViewById(R.id.msgview);
-        	typing_txt = (TextView) findViewById(R.id.typing_txt);
+        typing_txt = (TextView) findViewById(R.id.typing_txt);
 
 
         chatText = (EditText) findViewById(R.id.msg);
         /*chatText.setOnKeyListener(new View.OnKeyListener() {
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
 					return sendChatMessage();
 				}
@@ -104,12 +111,16 @@ public class MessageFragment extends Activity implements OnClickListener {
                 if (chatText.getText().toString().equalsIgnoreCase(null) || chatText.getText().toString().equalsIgnoreCase("")) {
 
                 } else {
+                    String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
                     chatMessage = chatText.getText().toString();
-                    listing = global.getListing();
+                    Demolisting = global.getListing();
                     map.put("id", CommonUtils.UserID(MessageFragment.this));
                     map.put("text", chatMessage);
-                    listing.add(map);
-                    global.setListing(listing);
+                    map.put("image", global.getUser_url());
+                    map.put("created", formatdate2(date));
+                    Demolisting.add(map);
+                    global.setListing(Demolisting);
                     chatArrayAdapter = new ChatArrayAdapter(MessageFragment.this, global.getListing());
                     listView.setAdapter(chatArrayAdapter);
                     listView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
@@ -132,6 +143,23 @@ public class MessageFragment extends Activity implements OnClickListener {
 
     }
 
+    public String formatdate2(String fdate) {
+        String datetime = null;
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        SimpleDateFormat d = new SimpleDateFormat("dd MMM yyyy");
+        try {
+            Date convertedDate = inputFormat.parse(fdate);
+            datetime = d.format(convertedDate);
+
+        } catch (ParseException e) {
+
+        }
+        return datetime;
+
+
+    }
+
 	/*private boolean sendChatMessage() {
 		chatArrayAdapter.add(new ChatMessage(side, chatText.getText().toString()));
 		chatText.setText("");
@@ -144,7 +172,6 @@ public class MessageFragment extends Activity implements OnClickListener {
         // TODO Auto-generated method stub
 
     }
-
 
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -196,7 +223,7 @@ public class MessageFragment extends Activity implements OnClickListener {
         StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                if(i==0){
+                if (i == 0) {
                     dialog2.dismiss();
                 }
 
@@ -216,7 +243,9 @@ public class MessageFragment extends Activity implements OnClickListener {
                             HashMap<String, String> details = new HashMap<>();
 
                             details.put("text", arrobj.getString("text"));
-                            JSONObject user_detail=arrobj.getJSONObject("user_detail");
+                            details.put("created", arrobj.getString("created"));
+
+                            JSONObject user_detail = arrobj.getJSONObject("user_detail");
                             details.put("id", user_detail.getString("id"));
 
                             details.put("image", user_detail.getString("image"));
@@ -228,6 +257,7 @@ public class MessageFragment extends Activity implements OnClickListener {
 
                         if (listing.size() > 0) {
                             chatArrayAdapter = new ChatArrayAdapter(MessageFragment.this, global.getListing());
+
                             listView.setAdapter(chatArrayAdapter);
                             listView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 
@@ -240,7 +270,7 @@ public class MessageFragment extends Activity implements OnClickListener {
                                     listView.setSelection(chatArrayAdapter.getCount() - 1);
                                 }
                             });
-                            i=0;
+                            i = 0;
                             //typing_txt.setVisibility(View.GONE);
                         }
 
@@ -314,7 +344,7 @@ public class MessageFragment extends Activity implements OnClickListener {
 
                     if (res.equalsIgnoreCase("1")) {
 
-
+                        Demolisting.clear();
 
 
                     }

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -93,11 +94,7 @@ public class BookDateActivity extends Activity {
 
 
 
-            String data1 = list.get(position).get(GlobalConstants.EVENT_END_DATE);
-            String split1[] = data1.split("-");
-            String minth1 = split1[1];
-            String date1 = split1[2];
-            int mm1 = Integer.parseInt(minth1);
+
             Calendar calendar = Calendar.getInstance();
             Date startdateObj = new Date();
             SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd");
@@ -118,19 +115,44 @@ public class BookDateActivity extends Activity {
             }
             calendar2.setTime(enddateObj);
 
-            date_txtView.setText( days[calendar.get(Calendar.DAY_OF_WEEK)-1]+","+months[mm]+ " " + date + " " + split[0]+"-"+ days[calendar2.get(Calendar.DAY_OF_WEEK)-1]+","+months[mm1]+ " " + date1+ " " + split1[0]);
-            book_txtView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i=new Intent(c,ConfirmDetailsActivity.class);
-                    i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
-                    i.putExtra("pos", String.valueOf(position));
-                    startActivity(i);
-                }
-            });
+            date_txtView.setText( days[calendar.get(Calendar.DAY_OF_WEEK)-1]+","+formatdate2(list.get(position).get(GlobalConstants.EVENT_START_DATE))+"-"+ days[calendar2.get(Calendar.DAY_OF_WEEK)-1]+","+formatdate2(list.get(position).get(GlobalConstants.EVENT_END_DATE)));
+
+            if(Integer.parseInt(list.get(position).get(GlobalConstants.remaining_places))==0){
+                book_txtView.setText("Sold out");
+            }else{
+                book_txtView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i=new Intent(c,ConfirmDetailsActivity.class);
+                        i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
+                        i.putExtra(GlobalConstants.remaining_places, list.get(position).get(GlobalConstants.remaining_places));
+                        i.putExtra("pos", String.valueOf(position));
+                        startActivity(i);
+                    }
+                });
+            }
+
 
             return convertView;
         }
+    }
+    public String formatdate2(String fdate)
+    {
+        String datetime=null;
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        SimpleDateFormat d= new SimpleDateFormat("dd MMM yyyy");
+        try {
+            Date convertedDate = inputFormat.parse(fdate);
+            datetime = d.format(convertedDate);
+
+        }catch (ParseException e)
+        {
+
+        }
+        return  datetime;
+
+
     }
 
 }

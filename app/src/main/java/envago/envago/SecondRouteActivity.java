@@ -93,6 +93,7 @@ public class SecondRouteActivity extends FragmentActivity implements GoogleApiCl
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
+    RelativeLayout main_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +105,8 @@ public class SecondRouteActivity extends FragmentActivity implements GoogleApiCl
         }
         global = (Global) getApplicationContext();
         buildGoogleApiClient();
+        main_layout=(RelativeLayout) findViewById(R.id.main_layout);
+        Fonts.overrideFonts(this,main_layout);
         back_button_create=(ImageView)findViewById(R.id.back_button_create);
         a_letter_layout = (RelativeLayout) findViewById(R.id.a_letter_layout);
         b_letter_layout = (RelativeLayout) findViewById(R.id.b_letter_layout);
@@ -410,12 +413,17 @@ finish();
                 }
 
                 polyLineOptions.addAll(points);
-                polyLineOptions.width(5);
+                polyLineOptions.width(7);
                 polyLineOptions.color(Color.BLUE);
             }
-
-            mMap.addPolyline(polyLineOptions);
             dialog2.dismiss();
+
+            if(polyLineOptions!=null){
+    mMap.addPolyline(polyLineOptions);
+}else{
+    Toast.makeText(SecondRouteActivity.this,"Google Api not found path",Toast.LENGTH_SHORT).show();
+}
+
         }
 
     }

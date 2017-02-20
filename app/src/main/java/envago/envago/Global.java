@@ -565,7 +565,27 @@ public class Global extends Application {
         this.reviewList = reviewList;
     }
 
+    public ArrayList<HashMap<String, String>> getSearchList() {
+        return SearchList;
+    }
+
+    public void setSearchList(ArrayList<HashMap<String, String>> searchList) {
+        SearchList = searchList;
+    }
+
+    ArrayList<HashMap<String, String>> SearchList=new ArrayList<HashMap<String,String>>();
     ArrayList<HashMap<String,String>> reviewList=new ArrayList<>();
+
+    public String getUser_url() {
+        return user_url;
+    }
+
+    public void setUser_url(String user_url) {
+        this.user_url = user_url;
+    }
+
+    String user_url;
+    String v="0";
     @Override
     public void onCreate() {
         super.onCreate();

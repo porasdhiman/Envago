@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -28,11 +29,12 @@ import static envago.envago.R.id.stars_review_list;
  * Created by worksdelight on 03/02/17.
  */
 
- class AllReviewActivity extends Activity {
+ public class AllReviewActivity extends Activity {
     TextView no_review_txt;
     ImageView cancel_btn;
     ListView review_list;
     Global global;
+    LinearLayout main_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,8 @@ import static envago.envago.R.id.stars_review_list;
                 finish();
             }
         });
+        main_layout=(LinearLayout)findViewById(R.id.main_layout);
+        Fonts.overrideFonts(this,main_layout);
     }
 
      class FullReviewAdapter extends BaseAdapter {
@@ -98,18 +102,17 @@ import static envago.envago.R.id.stars_review_list;
                 holder.event_img = (ImageView) convertView.findViewById(R.id.review_user_img);
                 holder.event_name_txt = (TextView) convertView.findViewById(R.id.review_list_username);
               holder.star=(RatingBar)convertView.findViewById(stars_review_list) ;
-                LayerDrawable star = (LayerDrawable) holder.star.getProgressDrawable();
-                star.getDrawable(2).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
-                star.getDrawable(0).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
-                star.getDrawable(1).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+                LayerDrawable star_draw = (LayerDrawable)holder.star.getProgressDrawable();
+                star_draw.getDrawable(2).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
                 holder.event_price_txt=(TextView)convertView.findViewById(R.id.comment);
+                holder.main_layout=(LinearLayout)convertView.findViewById(R.id.main_layout);
                 convertView.setTag(holder);
 
 
             } else {
                 holder = (Holder) convertView.getTag();
             }
-
+Fonts.overrideFonts(context,holder.main_layout);
 
             url = GlobalConstants.IMAGE_URL + list.get(position).get(GlobalConstants.IMAGE);
             Log.e("urle",url);
@@ -135,6 +138,7 @@ import static envago.envago.R.id.stars_review_list;
             ImageView event_img;
             TextView event_name_txt, event_start_txt,event_price_txt;
             RatingBar star;
+            LinearLayout main_layout;
 
         }
 

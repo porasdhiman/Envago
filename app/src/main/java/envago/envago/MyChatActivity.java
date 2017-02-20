@@ -45,9 +45,10 @@ public class MyChatActivity extends Activity {
     Dialog dialog2;
     Global global;
 
-LinearLayout message_linear_layout;
+    LinearLayout message_linear_layout, main_layout;
     TextView start_btn;
     SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,17 +60,18 @@ LinearLayout message_linear_layout;
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
-        sp=getSharedPreferences("chat", Context.MODE_PRIVATE);
-        message_linear_layout=(LinearLayout)findViewById(R.id.message_linear_layout);
+        sp = getSharedPreferences("chat", Context.MODE_PRIVATE);
+        message_linear_layout = (LinearLayout) findViewById(R.id.message_linear_layout);
+        main_layout = (LinearLayout) findViewById(R.id.main_layout);
 
-
+        Fonts.overrideFonts(this, main_layout);
 
         chat_list = (ListView) findViewById(R.id.chat_list);
 
 
-       // dialogWindow();
+        // dialogWindow();
 
-dialogWindow();
+        dialogWindow();
         get_list();
         chat_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -88,7 +90,7 @@ dialogWindow();
         StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-               dialog2.dismiss();
+                dialog2.dismiss();
                 Log.e("Categoryyyy", s);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -107,8 +109,15 @@ dialogWindow();
                             details.put("id", arrobj.getString("id"));
                             details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
                             details.put("planner_name", arrobj.getString("planner_name"));
+                            Object valuesObject = arrobj.get("last_msg");
+                            if(valuesObject instanceof JSONObject){
 
-                            details.put("message", arrobj.getString("last_msg"));
+                                JSONObject last_msg = arrobj.getJSONObject("last_msg");
+                                details.put("message", last_msg.getString("message"));
+                            }else{
+                                details.put("message", "No message");
+                            }
+
                             details.put("image", arrobj.getString("image"));
 
                             list.add(details);

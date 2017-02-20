@@ -2,7 +2,9 @@ package envago.envago;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
@@ -11,8 +13,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -55,7 +59,7 @@ import java.util.Calendar;
 public class CreateDetailActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks, View.OnClickListener, View.OnTouchListener {
     EditText name_editText, place_editText, pricing_editText, crtieria_editText;
-    TextView name_error_txtView,meeting_time_error_txtView, meeting_error_txtView, desc_error_txtView, place_error_txtView, pricing_error_txtView,
+    TextView name_error_txtView, meeting_time_error_txtView, meeting_error_txtView, desc_error_txtView, place_error_txtView, pricing_error_txtView,
             crtieria_error_txtView, disclaimer_error_txtView, whts_error_txtView, whts_editText, desc_editText, meeting_time_editText, cat_error_txtView, disclaimer_editText;
     Spinner cat_editText;
     private Calendar calendar;
@@ -75,8 +79,12 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
     Global global;
     Button submit_button;
     String catgory = "";
-SeekBar seekBar;
-ImageView back_button_create;
+    SeekBar seekBar;
+    ImageView back_button_create;
+    SharedPreferences sp;
+    SharedPreferences.Editor ed;
+    String[] catArray = {"Select", "Air", "Earth", "Water", "Rock &amp; Ice ", "Go Volunteer"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,10 +94,12 @@ ImageView back_button_create;
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         buildGoogleApiClient();
+        sp = getSharedPreferences(GlobalConstants.CREATE_DATA, Context.MODE_PRIVATE);
+        ed = sp.edit();
         global = (Global) getApplicationContext();
         //-------------------------------Call AutocompleteTxtView-----------------
         mAutocompleteView = (AutoCompleteTextView) findViewById(R.id.meeting_editText);
-        back_button_create=(ImageView)findViewById(R.id.back_button_create);
+        back_button_create = (ImageView) findViewById(R.id.back_button_create);
         back_button_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,13 +126,13 @@ ImageView back_button_create;
         cat_editText.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ((TextView) parent.getChildAt(0)).setTextColor(Color.GRAY);
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
                 if (position == 0) {
 
                 } else {
 
                     global.setEvent_cat_id(String.valueOf(position));
-                    catgory=cat_editText.getSelectedItem().toString();
+                    catgory = cat_editText.getSelectedItem().toString();
                 }
 
             }
@@ -139,11 +149,14 @@ ImageView back_button_create;
         // Current Minute
         minute = calendar.get(Calendar.MINUTE);
 
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                global.setEvent_level(String.valueOf(progress+1));
+                global.setEvent_level(String.valueOf(progress + 1));
+                ed.putString(GlobalConstants.EVENT_LEVEL, global.getEvent_level());
+                ed.commit();
+
             }
 
             @Override
@@ -159,7 +172,7 @@ ImageView back_button_create;
     }
 
     public void init() {
-        seekBar=(SeekBar)findViewById(R.id.seekBar);
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
         name_editText = (EditText) findViewById(R.id.name_editText);
         meeting_time_editText = (TextView) findViewById(R.id.meeting_time_editText);
         desc_editText = (TextView) findViewById(R.id.desc_editText);
@@ -169,12 +182,12 @@ ImageView back_button_create;
         disclaimer_editText = (TextView) findViewById(R.id.disclaimer_editText);
         whts_editText = (TextView) findViewById(R.id.whts_editText);
         name_error_txtView = (TextView) findViewById(R.id.name_error_txtView);
-        meeting_time_error_txtView=(TextView)findViewById(R.id.meeting_time_error_txtView);
+        meeting_time_error_txtView = (TextView) findViewById(R.id.meeting_time_error_txtView);
         meeting_error_txtView = (TextView) findViewById(R.id.meeting_error_txtView);
         desc_error_txtView = (TextView) findViewById(R.id.desc_error_txtView);
         place_error_txtView = (TextView) findViewById(R.id.place_error_txtView);
         pricing_error_txtView = (TextView) findViewById(R.id.pricing_error_txtView);
-       // crtieria_error_txtView = (TextView) findViewById(R.id.crtieria_error_txtView);
+        // crtieria_error_txtView = (TextView) findViewById(R.id.crtieria_error_txtView);
         disclaimer_error_txtView = (TextView) findViewById(R.id.disclaimer_error_txtView);
         whts_error_txtView = (TextView) findViewById(R.id.whts_error_txtView);
         cat_error_txtView = (TextView) findViewById(R.id.cat_error_txtView);
@@ -182,7 +195,7 @@ ImageView back_button_create;
         submit_button = (Button) findViewById(R.id.submit_button);
         meeting_time_editText.setOnClickListener(this);
         desc_editText.setOnClickListener(this);
-       // crtieria_editText.setOnClickListener(this);
+        // crtieria_editText.setOnClickListener(this);
         disclaimer_editText.setOnClickListener(this);
         whts_editText.setOnClickListener(this);
         submit_button.setOnClickListener(this);
@@ -191,15 +204,80 @@ ImageView back_button_create;
         desc_editText.setOnTouchListener(this);
         place_editText.setOnTouchListener(this);
         pricing_editText.setOnTouchListener(this);
-       // crtieria_editText.setOnTouchListener(this);
+        // crtieria_editText.setOnTouchListener(this);
         disclaimer_editText.setOnTouchListener(this);
         whts_editText.setOnTouchListener(this);
         cat_editText.setOnTouchListener(this);
         mAutocompleteView.setOnTouchListener(this);
-pricing_editText.setText("$");
+        pricing_editText.setText("$");
         pricing_editText.setSelection(1);
 
+        if (!sp.getString(GlobalConstants.EVENT_NAME, "").equalsIgnoreCase("")) {
+            name_editText.setText(sp.getString(GlobalConstants.EVENT_NAME, ""));
+        }
+        if (!sp.getString(GlobalConstants.EVENT_TIME, "").equalsIgnoreCase("")) {
+            meeting_time_editText.setText(sp.getString(GlobalConstants.EVENT_TIME, ""));
+        }
+        if (!sp.getString(GlobalConstants.EVENT_PLACE, "").equalsIgnoreCase("")) {
+            place_editText.setText(sp.getString(GlobalConstants.EVENT_PLACE, ""));
+        }
+        if (!sp.getString(GlobalConstants.EVENT_PRICE, "").equalsIgnoreCase("")) {
+            pricing_editText.setText("$"+sp.getString(GlobalConstants.EVENT_PRICE, ""));
+        }
+        if (!sp.getString(GlobalConstants.EVENT_METTING_POINT, "").equalsIgnoreCase("")) {
+            mAutocompleteView.setText(sp.getString(GlobalConstants.EVENT_METTING_POINT, ""));
+        }
+        if (!sp.getString(GlobalConstants.EVENT_DESCRIPTION, "").equalsIgnoreCase("")) {
+            desc_editText.setText(sp.getString(GlobalConstants.EVENT_DESCRIPTION, ""));
+        }
+        if (!sp.getString(GlobalConstants.EVENT_DISCLAIMER, "").equalsIgnoreCase("")) {
+            disclaimer_editText.setText("$" + sp.getString(GlobalConstants.EVENT_DISCLAIMER, ""));
+        }
+        if (!sp.getString(GlobalConstants.EVENT_CAT_NAME, "").equalsIgnoreCase("")) {
+            selectSpinnerValue(cat_editText, sp.getString(GlobalConstants.EVENT_CAT_NAME, ""));
+        }
+        if (!sp.getString(GlobalConstants.EVENT_LEVEL, "").equalsIgnoreCase("")) {
 
+            seekBar.setProgress(Integer.parseInt(sp.getString(GlobalConstants.EVENT_LEVEL, ""))-1);
+        }
+        if (!sp.getString(GlobalConstants.WHATS_INCLUDED, "").equalsIgnoreCase("")) {
+
+            whts_editText.setText(sp.getString(GlobalConstants.WHATS_INCLUDED, ""));
+        }
+
+        place_editText.addTextChangedListener(new TextWatcher()
+        {
+            public void afterTextChanged(Editable s)
+            {
+                String x = s.toString();
+                if(x.startsWith("0"))
+                {
+                    place_error_txtView.setText("First digit zero not allowed");
+                    place_error_txtView.setVisibility(View.VISIBLE);
+                }else{
+                    place_error_txtView.setVisibility(View.GONE);
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+        });
+
+    }
+
+    public void selectSpinnerValue(Spinner spinner, String myString) {
+        int index = 0;
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equals(myString)) {
+                spinner.setSelection(i);
+                break;
+            }
+        }
     }
 
     @Override
@@ -298,12 +376,24 @@ pricing_editText.setText("$");
                     global.setEvent_name(name_editText.getText().toString());
                     global.setEvent_time(meeting_time_editText.getText().toString());
                     global.setEvent_place(place_editText.getText().toString());
-                    global.setEvent_price(pricing_editText.getText().toString().replace("$","").trim());
+                    global.setEvent_price(pricing_editText.getText().toString().replace("$", "").trim());
                     //global.setEvent_criteria(crtieria_editText.getText().toString());
 
                     global.setEvent_meetin_point(mAutocompleteView.getText().toString());
                     global.setEvent_description("true");
+                    ed.putString(GlobalConstants.EVENT_NAME, global.getEvent_name());
+                    ed.putString(GlobalConstants.EVENT_TIME, global.getEvent_time());
+                    ed.putString(GlobalConstants.EVENT_PLACE, global.getEvent_place());
+                    ed.putString(GlobalConstants.EVENT_PRICE, global.getEvent_price());
+                    ed.putString(GlobalConstants.EVENT_PRICE, global.getEvent_price());
+                    ed.putString(GlobalConstants.EVENT_METTING_POINT, global.getEvent_meetin_point());
+                    ed.putString(GlobalConstants.VALUE, "true");
+                    ed.putString(GlobalConstants.EVENT_DESCRIPTION, desc_editText.getText().toString());
+                    ed.putString(GlobalConstants.EVENT_DISCLAIMER, disclaimer_editText.getText().toString());
+                    ed.putString(GlobalConstants.EVENT_CAT_NAME, catgory);
 
+                    ed.putString(GlobalConstants.EVENT_CAT_ID,global.getEvent_cat_id());
+                    ed.commit();
                     finish();
                 }
                 break;
@@ -315,16 +405,16 @@ pricing_editText.setText("$");
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            if(!global.getDescriptionString().equalsIgnoreCase("")) {
-                desc_editText.setText(global.getDescriptionString());
+            if (!sp.getString(GlobalConstants.EVENT_DESCRIPTION,"").equalsIgnoreCase("")) {
+                desc_editText.setText(sp.getString(GlobalConstants.EVENT_DESCRIPTION,""));
             }
         } else if (requestCode == 2) {
-            if(!global.getWhtsicludedString().equalsIgnoreCase("")) {
-                whts_editText.setText(global.getWhtsicludedString());
+            if (!sp.getString(GlobalConstants.WHATS_INCLUDED,"").equalsIgnoreCase("")) {
+                whts_editText.setText(sp.getString(GlobalConstants.WHATS_INCLUDED,""));
             }
-        }else if (requestCode == 3) {
-            if(!global.getEvent_disclaimer().equalsIgnoreCase("")) {
-                disclaimer_editText.setText(global.getEvent_disclaimer());
+        } else if (requestCode == 3) {
+            if (!sp.getString(GlobalConstants.EVENT_DISCLAIMER,"").equalsIgnoreCase("")) {
+                disclaimer_editText.setText(sp.getString(GlobalConstants.EVENT_DISCLAIMER,""));
             }
         }
     }
@@ -387,6 +477,9 @@ pricing_editText.setText("$");
             String lng = completeLatLng.split(",")[1];
             global.setEvent_meeting_lat(lat);
             global.setEvent_meeting_lng(lng);
+            ed.putString(GlobalConstants.EVENT_MEETING_LAT, lat);
+            ed.putString(GlobalConstants.EVENT_MEETING_LNG, lng);
+            ed.commit();
 
             places.release();
         }
@@ -459,19 +552,16 @@ pricing_editText.setText("$");
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-                        meeting_time_editText.setText(getTime(hourOfDay,minute));
-
-
-
-
+                        meeting_time_editText.setText(getTime(hourOfDay, minute));
 
 
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
     }
-    private String getTime(int hr,int min) {
-        Time tme = new Time(hr,min,0);//seconds by default set to zero
+
+    private String getTime(int hr, int min) {
+        Time tme = new Time(hr, min, 0);//seconds by default set to zero
         Format formatter;
         formatter = new SimpleDateFormat("h:mm a");
         return formatter.format(tme);

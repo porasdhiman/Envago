@@ -11,9 +11,9 @@
 
         <ImageView
             android:id="@+id/back_button_create"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="14dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+android:padding="15dp"
             android:src="@drawable/back_button"  />
 
         <TextView

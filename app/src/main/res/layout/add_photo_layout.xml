@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+
     <RelativeLayout
         android:id="@+id/main_heading"
         android:layout_width="match_parent"
@@ -14,7 +15,8 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_margin="14dp"
-            android:src="@drawable/back_button"  />
+            android:src="@drawable/back_button"
+            />
 
         <TextView
             android:id="@+id/title"
@@ -39,6 +41,15 @@
             android:textStyle="bold" />
 
     </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/view_photo_layout"
         android:layout_width="match_parent"
@@ -98,4 +109,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

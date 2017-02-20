@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/back_from_login"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/backward" />
 
@@ -38,7 +38,7 @@
         android:id="@+id/name_edit_TxtView"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:background="@null"
         android:layout_below="@+id/sign_up_name_txtView"
         android:inputType="textEmailAddress" />
@@ -51,15 +51,15 @@
         android:inputType="textEmailAddress"
         android:visibility="gone"
         android:textColor="#ff0000"
-        android:textSize="12sp" />
+        android:textSize="14sp" />
 
 
     <View
         android:id="@+id/view_1"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_below="@+id/name_error_txtView"
-        android:background="@android:color/darker_gray" />
+        android:background="@color/LightGrey" />
 
 
     <TextView
@@ -78,7 +78,7 @@
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_below="@+id/email_txtView"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:background="@null"
         android:inputType="textEmailAddress" />
     <TextView
@@ -90,14 +90,14 @@
         android:inputType="textEmailAddress"
         android:visibility="gone"
         android:textColor="#ff0000"
-        android:textSize="12sp" />
+        android:textSize="14sp" />
 
     <View
         android:id="@+id/view1"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_below="@+id/mail_error_txtView"
-        android:background="@android:color/darker_gray" />
+        android:background="@color/LightGrey" />
 
     <RelativeLayout
         android:id="@+id/pass_and_show_layout"
@@ -138,7 +138,7 @@ android:id="@+id/show_txt"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:inputType="textPassword"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:background="@null"/>
 
 
@@ -152,13 +152,13 @@ android:id="@+id/show_txt"
         android:inputType="textEmailAddress"
         android:visibility="gone"
         android:textColor="#ff0000"
-        android:textSize="12sp" />
+        android:textSize="14sp" />
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_below="@+id/password_error_txtView"
-        android:background="@android:color/darker_gray" />
+        android:background="@color/LightGrey" />
 
     <TextView
         android:id="@+id/sign_up_button"

@@ -103,6 +103,7 @@ public class HomeFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent about = new Intent(getActivity(), AboutPlannerActivity.class);
                 about.putExtra(GlobalConstants.USERID, featured_planner_list.get(position).get(GlobalConstants.ID));
+                about.putExtra(GlobalConstants.EVENT_NAME, featured_planner_list.get(position).get(GlobalConstants.EVENT_CAT_NAME));
                 startActivity(about);
             }
         });
@@ -119,7 +120,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(String s) {
 
-                Log.e("Categoryyyy", s);
+                Log.e("map data", s);
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
@@ -152,6 +153,7 @@ public class HomeFragment extends Fragment {
                         }
 
                         global.setEvent_list(event_list);
+                        Log.e("sie of map data",String.valueOf(global.getEvent_list().size()));
                         map_button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

@@ -30,6 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -256,18 +257,7 @@ return v;
         String document = preferences.getString(GlobalConstants.DOCUMENT, "");
         String about = preferences.getString(GlobalConstants.ABOUT, "");
 
-        if (preferences.getString(GlobalConstants.IMAGE, "").length() == 0) {
 
-        } else {
-            Log.e("url value", preferences.getString(GlobalConstants.IMAGE, ""));
-            if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
-                Picasso.with(EditProfileActivity.this).load(preferences.getString(GlobalConstants.IMAGE, "")).into(profileimg);
-            } else {
-                if (!preferences.getString(GlobalConstants.IMAGE, "").equalsIgnoreCase("")) {
-                    profileimg.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
-                }
-            }
-        }
 
         if (username.length() == 0) {
 
@@ -314,18 +304,60 @@ return v;
 
         }
         if (document.length() == 0) {
+            document_edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                        Toast.makeText(EditProfileActivity.this, "Document image not available", Toast.LENGTH_SHORT).show();
+
+                }
+            });
         } else {
             document_edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(EditProfileActivity.this, DocumentImgActivity.class);
-                    startActivity(i);
+
+
+                        Intent i = new Intent(EditProfileActivity.this, DocumentImgActivity.class);
+                        startActivity(i);
+
                 }
             });
         }
         //editor.commit();
+        if (preferences.getString(GlobalConstants.IMAGE, "").length() == 0) {
 
+        } else {
+            if(username_edit.getText().length()==0){
+                TextDrawable drawable = TextDrawable.builder()
+                        .buildRect("U", Color.parseColor("#F94444"));
+                if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
+                    Picasso.with(EditProfileActivity.this).load(preferences.getString(GlobalConstants.IMAGE, "")).placeholder(drawable).transform(new CircleTransform()).into(profileimg);
+                } else {
+                    Picasso.with(EditProfileActivity.this).load(new File(preferences.getString(GlobalConstants.IMAGE, ""))).placeholder(drawable).transform(new CircleTransform()).into(profileimg);
+
+                    //profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
+                }
+            }else {
+                TextDrawable drawable = TextDrawable.builder()
+                        .buildRect(username_edit.getText().toString().substring(0, 1).toUpperCase(), Color.parseColor("#F94444"));
+                if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
+                    Picasso.with(EditProfileActivity.this).load(preferences.getString(GlobalConstants.IMAGE, "")).placeholder(drawable).transform(new CircleTransform()).into(profileimg);
+                } else {
+                    Picasso.with(EditProfileActivity.this).load(new File(preferences.getString(GlobalConstants.IMAGE, ""))).placeholder(drawable).transform(new CircleTransform()).into(profileimg);
+
+                    //profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
+                }
+            }
+          /*  Log.e("url value", preferences.getString(GlobalConstants.IMAGE, ""));
+            if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
+                Picasso.with(EditProfileActivity.this).load(preferences.getString(GlobalConstants.IMAGE, "")).into(profileimg);
+            } else {
+                if (!preferences.getString(GlobalConstants.IMAGE, "").equalsIgnoreCase("")) {
+                    profileimg.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
+                }
+            }*/
+        }
 
     }
 

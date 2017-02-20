@@ -71,6 +71,7 @@ public class SearchByLocationActivity extends FragmentActivity implements Google
     ArrayList<HashMap<String,String>> countryList=new ArrayList<>();
     Global global;
     Dialog dialog2;
+    TextView cancel_txtView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +109,15 @@ public class SearchByLocationActivity extends FragmentActivity implements Google
         mAutocompleteView.setThreshold(1);
 
         mAutocompleteView.setAdapter(mAdapter);
+        mAutocompleteView.setDropDownWidth(getResources().getDisplayMetrics().widthPixels);
 
+        cancel_txtView=(TextView)findViewById(R.id.cancel_txtView);
+        cancel_txtView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAutocompleteView.setText("");
+            }
+        });
     }
 
     private void searchMethod() {

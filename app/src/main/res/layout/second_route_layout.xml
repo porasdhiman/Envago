@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/main_layout"
+    >
 
     <RelativeLayout
         android:id="@+id/main_heading"
@@ -44,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/tab_back"
+        android:background="@drawable/back_view"
         android:orientation="vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
@@ -70,8 +72,8 @@
             />
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/Gray"
+            android:layout_height="0.5dp"
+            android:background="@color/LightGrey"
             android:layout_marginTop="10dp"/>
         <RelativeLayout
 
@@ -79,12 +81,18 @@
             android:layout_height="wrap_content"
             android:id="@+id/a_letter_layout"
             android:layout_marginTop="10dp"
-            android:visibility="gone">
-            <ImageView
+            android:visibility="gone"
+           >
+            <TextView
                 android:id="@+id/a_letter_img"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:background="@drawable/a"/>
+                android:text="A"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="#fff"
+                android:layout_centerVertical="true"
+                android:background="@drawable/read_img"/>
             <AutoCompleteTextView
                 android:id="@+id/a_letter_txtView"
                 android:layout_width="match_parent"
@@ -98,9 +106,9 @@
                 android:textSize="16sp"/>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_toRightOf="@+id/a_letter_img"
-                android:background="@color/Gray"
+                android:background="@color/LightGrey"
                 android:layout_marginLeft="10dp"
                 android:layout_below="@+id/a_letter_txtView"
                 android:layout_marginTop="10dp"/>
@@ -113,11 +121,16 @@
             android:id="@+id/b_letter_layout"
             android:layout_marginTop="10dp"
             android:visibility="gone">
-            <ImageView
+            <TextView
                 android:id="@+id/b_letter_img"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:background="@drawable/b"/>
+                android:text="B"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="#fff"
+                android:layout_centerVertical="true"
+                android:background="@drawable/read_img"/>
             <AutoCompleteTextView
                 android:id="@+id/b_letter_txtView"
                 android:layout_width="match_parent"
@@ -131,9 +144,9 @@
                 android:textSize="16sp"/>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_toRightOf="@+id/b_letter_img"
-                android:background="@color/Gray"
+                android:background="@color/LightGrey"
                 android:layout_marginLeft="10dp"
                 android:layout_below="@+id/b_letter_txtView"
                 android:layout_marginTop="10dp"/>
@@ -147,11 +160,16 @@
             android:id="@+id/c_letter_layout"
             android:layout_marginTop="10dp"
             android:visibility="gone">
-            <ImageView
+            <TextView
                 android:id="@+id/c_letter_img"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:background="@drawable/c"/>
+                android:text="C"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="#fff"
+                android:layout_centerVertical="true"
+                android:background="@drawable/read_img"/>
             <AutoCompleteTextView
                 android:id="@+id/c_letter_txtView"
                 android:layout_width="match_parent"
@@ -165,9 +183,9 @@
                 android:textSize="16sp"/>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_toRightOf="@+id/c_letter_img"
-                android:background="@color/Gray"
+                android:background="@color/LightGrey"
                 android:layout_marginLeft="10dp"
                 android:layout_below="@+id/c_letter_txtView"
                 android:layout_marginTop="10dp"/>
@@ -184,7 +202,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/blue_button_back"
             android:gravity="center"
-            android:text="Add next ponit"
+            android:text="Add next point"
             android:textColor="@color/White"
             android:textSize="14sp" />
 

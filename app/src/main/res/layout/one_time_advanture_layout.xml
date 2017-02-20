@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <RelativeLayout
         android:id="@+id/main_heading"
         android:layout_width="match_parent"
@@ -12,23 +13,24 @@
 
         <ImageView
             android:id="@+id/back_button_create"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="14dp"
-            android:src="@drawable/back_button"  />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="15dp"
+            android:src="@drawable/back_button" />
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="One Time Advanture"
+            android:text="One Time Adventure"
             android:textColor="#fff"
             android:textSize="16sp"
             android:textStyle="bold" />
 
 
     </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,72 +40,93 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <EditText
                 android:id="@+id/no_of_days_txtView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/Gray"
-                android:textSize="14sp"
                 android:background="@null"
+                android:hint="Number of days"
                 android:inputType="number"
-                android:hint="Number of days"/>
+                android:textColor="#373737"
+                android:textSize="14sp" />
+
+
+
+            <RelativeLayout
+                android:id="@+id/start_end_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:id="@+id/select_date_txtView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:hint="Start date"
+                    android:textColor="#373737"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/end_date_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:hint="End date"
+                    android:textColor="#373737"
+                    android:textSize="14sp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/select_date_txtView"
+                    android:background="@color/LightGrey" />
+            </RelativeLayout>
+
+
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:mcv_selectionColor="@color/textcolor"
+                app:mcv_showOtherDates="all"
+                android:visibility="gone"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp">
+
+                <Button
+                    android:id="@+id/submit_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/id_text"
+                    android:layout_marginBottom="10dp"
+
+                    android:background="@drawable/red_button_back"
+                    android:text="Submit"
+                    android:textAllCaps="false"
+                    android:textColor="#fff"
+                    android:textSize="14sp"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/Gray"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
-
-            <TextView
-        android:id="@+id/select_date_txtView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/Gray"
-        android:textSize="14sp"
-        android:text="Select a date"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/Gray"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
-
-    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:mcv_selectionColor="@color/textcolor"
-        app:mcv_showOtherDates="all"
-        android:layout_marginTop="20dp"
-        />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="16dp">
-
-        <Button
-            android:id="@+id/submit_button"
-            android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@+id/id_text"
-            android:layout_marginBottom="10dp"
-
-            android:background="@drawable/red_button_back"
-            android:text="Submit"
-            android:textAllCaps="false"
-            android:textColor="#fff"
-            android:textSize="14sp" />
-    </RelativeLayout>
+                android:layout_height="10dp" />
         </LinearLayout>
     </ScrollView>
 

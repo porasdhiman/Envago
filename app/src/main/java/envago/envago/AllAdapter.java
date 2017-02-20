@@ -34,10 +34,7 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -98,8 +95,10 @@ public class AllAdapter extends PagerAdapter {
         TextView view_date_text = (TextView) itemView.findViewById(R.id.view_advanture_date_txt);
         TextView view_location_txt = (TextView) itemView.findViewById(R.id.view_advanture_location_txt);
         ImageView view_img = (ImageView) itemView.findViewById(R.id.view_img);
+        LinearLayout main_layout=(LinearLayout)itemView.findViewById(R.id.main_layout);
         final ImageView heart_img = (ImageView) itemView.findViewById(R.id.heart_img);
         TextView start_event_txtView = (TextView) itemView.findViewById(R.id.start_event_txtView);
+        Fonts.overrideFonts(mContext,main_layout);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,7 +167,7 @@ j.putExtra("user","no user");
 
             }
         });
-        Calendar c = Calendar.getInstance();
+       /* Calendar c = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy/MM/dd");
         String dateafter = dateFormat.format(c.getTime());
@@ -186,7 +185,7 @@ j.putExtra("user","no user");
             start_event_txtView.setVisibility(View.VISIBLE);
         } else {
             start_event_txtView.setVisibility(View.GONE);
-        }
+        }*/
 
         container.addView(itemView);
 

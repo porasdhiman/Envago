@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -84,6 +85,7 @@ public class AboutEventAdapter extends BaseAdapter {
             holder.event_start_txt = (TextView) convertView.findViewById(R.id.event_date_txt);
 
             holder.event_price_txt=(TextView)convertView.findViewById(R.id.event_price_txt);
+            holder.main_layout=(LinearLayout)convertView.findViewById(R.id.main_layout);
             convertView.setTag(holder);
 
 
@@ -91,7 +93,7 @@ public class AboutEventAdapter extends BaseAdapter {
             holder = (AboutEventAdapter.Holder) convertView.getTag();
         }
 
-
+Fonts.overrideFonts(context,holder.main_layout);
         url = GlobalConstants.IMAGE_URL + list.get(position).get(GlobalConstants.IMAGE);
         Log.e("urle",url);
         holder.event_price_txt.setText("$"+list.get(position).get(GlobalConstants.EVENT_PRICE));
@@ -112,7 +114,7 @@ public class AboutEventAdapter extends BaseAdapter {
 
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
-            Picasso.with(context).load(url).placeholder(drawable2).centerCrop().resize(80,80).into(holder.event_img);
+            Picasso.with(context).load(url).placeholder(drawable2).centerCrop().resize(200,160).into(holder.event_img);
         } else {
             holder.event_img.setImageDrawable(drawable2);
         }
@@ -122,7 +124,7 @@ public class AboutEventAdapter extends BaseAdapter {
     class Holder {
         ImageView event_img;
         TextView event_name_txt, event_start_txt,event_price_txt;
-
+LinearLayout main_layout;
     }
 
     private void initImageLoader() {

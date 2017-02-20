@@ -31,6 +31,7 @@ import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
@@ -54,6 +55,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jess.ui.TwoWayGridView;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache;
@@ -85,6 +88,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -113,7 +117,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
     ArrayList<HashMap<String, String>> review_list_array = new ArrayList<>();
     TextView status_text, lower_description_txtView, admin_name, places_txtView, level_no1, level_no2,
             level_no3, admin_description, level_no4, date_details, meeting_desc, time_txtVIew,
-            location_name_txtView, rating, about_txtView, route_txtView, rating_save, rating_cancel, review_txtview, header_textview, Disclaimer_txtView;
+            location_name_txtView, rating, about_txtView, route_txtView, whts_txt, who_txt, level_txt, header_textview, Disclaimer_txtView,locatio_txt;
     LinearLayout about_layout, map_layout, review_layout, desclaimer_layout;
     ImageView heart_img, accomodation_txtView, transport_txtView, meal_txtView, gear_txtView, tent_txtView;
     ImageView orginiser_img;
@@ -163,15 +167,16 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
 
     Global global;
     Date startDate, endDate;
-
-    TextView days_details, desclaimer_txt_show,price_btn,beginner_txt;
+LinearLayout main_layout;
+    TextView days_details, desclaimer_txt_show,price_btn,beginner_txt,more_txtView,more_dis_txtView,meeting_txt;
     ImageView dumy_imageview;
     TwoWayGridView user_grid;
     ArrayList<HashMap<String, String>> eventUserList = new ArrayList<>();
     String message;
     HttpEntity resEntity;
 TextDrawable drawable;
-    SharedPreferences preferences;
+    SharedPreferences preferences,sp;
+    SharedPreferences.Editor ed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -181,7 +186,12 @@ TextDrawable drawable;
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         preferences = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
+        sp = getSharedPreferences(GlobalConstants.CREATE_DATA, Context.MODE_PRIVATE);
+        ed=sp.edit();
         global = (Global) getApplicationContext();
+        main_layout=(LinearLayout)findViewById(R.id.main_layout);
+        Fonts.overrideFonts(this,main_layout);
+
         desclaimer_layout = (LinearLayout) findViewById(R.id.desclaimer_layout);
         //intro_images = (ViewPager) findViewById(R.id.pager_introduction);
         dumy_imageview = (ImageView) findViewById(R.id.dumy_imageview);
@@ -192,9 +202,12 @@ TextDrawable drawable;
         stars = (RatingBar) findViewById(R.id.stars);
         LayerDrawable star = (LayerDrawable) stars.getProgressDrawable();
         star.getDrawable(2).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
-        star.getDrawable(0).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
-        star.getDrawable(1).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+
         stars.setOnTouchListener(null);
+        more_txtView = (TextView) findViewById(R.id.more_txtView);
+        more_dis_txtView = (TextView) findViewById(R.id.more_dis_txtView);
+        more_txtView.setOnClickListener(this);
+        more_dis_txtView.setOnClickListener(this);
         price_btn = (TextView) findViewById(R.id.price_btn);
         beginner_txt=(TextView)findViewById(R.id.beginner_txt);
         about_layout = (LinearLayout) findViewById(R.id.about_layout);
@@ -251,7 +264,21 @@ TextDrawable drawable;
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
+        locatio_txt=(TextView)findViewById(R.id.location_txt);
+        level_txt=(TextView)findViewById(R.id.levl_txt);
+        who_txt=(TextView)findViewById(R.id.who_txt);
+        whts_txt=(TextView)findViewById(R.id.whts_txt);
+        places_txtView = (TextView) findViewById(R.id.places_count_txtView);
+        meeting_txt=(TextView)findViewById(R.id.meeting_text);
 
+        desclaimer_txt_show = (TextView) findViewById(R.id.desclaimer_txt_show);
+        Fonts.overrideFonts1(this,locatio_txt);
+        Fonts.overrideFonts1(this,meeting_txt);
+        Fonts.overrideFonts1(this,level_txt);
+        Fonts.overrideFonts1(this,who_txt);
+        Fonts.overrideFonts1(this,whts_txt);
+        Fonts.overrideFonts1(this,desclaimer_txt_show);
+        Fonts.overrideFonts1(this,places_txtView);
        /* dialogWindow();
         singleEventMethod();
 */
@@ -292,12 +319,34 @@ TextDrawable drawable;
                         .start();
 
                 break;
-          /*  case R.id.signup_btn:
-                Intent i = new Intent(DetailsActivity.this, ConfirmDetailsActivity.class);
-                i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
-                startActivity(i);
-                break;*/
+            case R.id.more_txtView:
+                if (more_txtView.getText().toString().equalsIgnoreCase("More...")) {
+                    more_txtView.setText("Less...");
+                    ViewGroup.LayoutParams params = admin_description.getLayoutParams();
+                    params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                    admin_description.setLayoutParams(params);
+                } else {
+                    more_txtView.setText("More...");
 
+                    ViewGroup.LayoutParams params = admin_description.getLayoutParams();
+                    params.height = 50;
+                    admin_description.setLayoutParams(params);
+                }
+                break;
+            case R.id.more_dis_txtView:
+                if (more_dis_txtView.getText().toString().equalsIgnoreCase("More...")) {
+                    more_dis_txtView.setText("Less...");
+                    ViewGroup.LayoutParams params = Disclaimer_txtView.getLayoutParams();
+                    params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                    Disclaimer_txtView.setLayoutParams(params);
+                } else {
+                    more_dis_txtView.setText("More...");
+
+                    ViewGroup.LayoutParams params = Disclaimer_txtView.getLayoutParams();
+                    params.height = 50;
+                    Disclaimer_txtView.setLayoutParams(params);
+                }
+                break;
         }
 
     }
@@ -311,46 +360,41 @@ TextDrawable drawable;
 
 //    mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
         // Add a marker in Sydney and move the camera
-      /*  String url = getMapsApiDirectionsUrl(meeting_lat, meeting_long, global.getW_lat(), global.getW_lng());
+        String url = getMapsApiDirectionsUrl(meeting_lat, meeting_long, global.getW_lat(), global.getW_lng());
         Log.e("locationUrl", url);
-        dialogWindow();
+       /* dialogWindow();
         PreviewActivity.ReadTask downloadTask = new PreviewActivity.ReadTask();
-        downloadTask.execute(url);
-        MarkerOptions options = new MarkerOptions();
-        MarkerOptions options1 = new MarkerOptions();
+        downloadTask.execute(url);*/
+      /*  MarkerOptions options = new MarkerOptions();
         options.position(new LatLng(Double.parseDouble(meeting_lat), Double.parseDouble(meeting_long))).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)).title("starting Point");
 
-
-        options1.position(new LatLng(Double.parseDouble(global.getW_lat()), Double.parseDouble(global.getW_lng()))).icon(BitmapDescriptorFactory.fromResource(R.drawable.c)).title("ending Point");
         mMap.addMarker(options);
-        mMap.addMarker(options1);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(global.getW_lat()), Double.parseDouble(global.getW_lng())), 10));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-*/
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(meeting_lat), Double.parseDouble(meeting_long)), 7));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(7), 2000, null);*/
         //--------------------------------end-map-location-variable---------------------------------------------
 
 
         admin_name.setText(preferences.getString(GlobalConstants.USERNAME, ""));
-        header_textview.setText(global.getEvent_name());
+        header_textview.setText(sp.getString(GlobalConstants.EVENT_NAME,""));
 
 
 
 
 
-        admin_description.setText(global.getDescriptionString());
+        admin_description.setText(sp.getString(GlobalConstants.EVENT_DESCRIPTION,""));
 
-        if (global.getDescriptionString().length() > 150) {
+        if (sp.getString(GlobalConstants.EVENT_DESCRIPTION,"").length() > 200) {
+            more_txtView.setVisibility(View.VISIBLE);
 
-            makeTextViewResizable(admin_description, 3, "Read More", true);
         }
 
-        if (dateMatchMethod(global.getEvent_start_date())) {
+      /*  if (dateMatchMethod(global.getEvent_start_date())) {
             status_text.setVisibility(View.VISIBLE);
         } else {
             status_text.setVisibility(View.GONE);
-        }
-        global.setEvent_time(global.getEvent_time());
-        String date_data = global.getEvent_start_date();
+        }*/
+        global.setEvent_time(sp.getString(GlobalConstants.EVENT_TIME,""));
+        //String date_data = global.getEvent_start_date();
     /*SimpleDateFormat dateFormat = new SimpleDateFormat(
             "yyyy-MM-dd");
     date_data=dateFormat.format(date_data);
@@ -384,7 +428,7 @@ TextDrawable drawable;
                                     } else {
                                         level_no4.setVisibility(View.VISIBLE);
                                     }*/
-        meeting_desc.setText(global.getEvent_meetin_point());
+        meeting_desc.setText(sp.getString(GlobalConstants.EVENT_METTING_POINT,""));
         char a = admin_name.getText().toString().charAt(0);
 
         drawable = TextDrawable.builder()
@@ -407,58 +451,59 @@ TextDrawable drawable;
                     orginiser_img.setImageDrawable(drawable);
                 }
             }
-        }        time_txtVIew.setText(global.getEvent_time());
+        }        time_txtVIew.setText(sp.getString(GlobalConstants.EVENT_TIME,""));
         i = 0;
-        if (i == 1) {
+        /*if (i == 1) {
             heart_img.setImageResource(R.drawable.heart_field);
         } else {
             heart_img.setImageResource(R.drawable.heart);
-        }
+        }*/
         //   lower_description_txtView.setText(objArry.getString("description"));
 
-        if (global.getTransportataion() == 0) {
+        if (sp.getString("trans","0").equalsIgnoreCase("0")) {
             transport_txtView.setImageResource(R.drawable.tansport_gray);
         } else {
             transport_txtView.setImageResource(R.drawable.transportation);
         }
-        if (global.getMeal() == 0) {
+        if (sp.getString("meal","0").equalsIgnoreCase("0")) {
             meal_txtView.setImageResource(R.drawable.food_gray);
         } else {
             meal_txtView.setImageResource(R.drawable.meal);
         }
-        if (global.getAccomodation() == 0) {
+        if (sp.getString("Accomodation","0").equalsIgnoreCase("0")) {
             accomodation_txtView.setImageResource(R.drawable.accomodation_gray);
         } else {
             accomodation_txtView.setImageResource(R.drawable.accomodation);
         }
-        if (global.getGear() == 0) {
+        if (sp.getString("gear","0").equalsIgnoreCase("0")) {
             gear_txtView.setImageResource(R.drawable.gear_gray);
         } else {
             gear_txtView.setImageResource(R.drawable.gear);
         }
-        if (global.getTent() == 0) {
+        if (sp.getString("tent","0").equalsIgnoreCase("0")) {
             tent_txtView.setImageResource(R.drawable.tent_gray);
         } else {
             tent_txtView.setImageResource(R.drawable.tent);
         }
 
-        Disclaimer_txtView.setText(global.getEvent_disclaimer());
+        Disclaimer_txtView.setText(sp.getString(GlobalConstants.EVENT_DISCLAIMER,""));
 
-        if (global.getEvent_disclaimer().length() > 150) {
 
-            makeTextViewResizable(Disclaimer_txtView, 3, "Read More", true);
+        if (sp.getString(GlobalConstants.EVENT_DISCLAIMER,"").length() > 200) {
+
+            more_dis_txtView.setVisibility(View.VISIBLE);
         }
-        places_txtView.setText(global.getEvent_place() + "Places (per user "+global.getEvent_place()+" place )");
+        places_txtView.setText(sp.getString(GlobalConstants.EVENT_PLACE,"")+" places");
         purchase_btn.setText("Submit");
 
-        user_grid.setAdapter(new UserViewAdapter(PreviewActivity.this, Integer.parseInt(global.getEvent_place()), eventUserList));
+        user_grid.setAdapter(new UserViewAdapter(PreviewActivity.this, Integer.parseInt(sp.getString(GlobalConstants.EVENT_PLACE,"")), eventUserList,header_textview.getText().toString()));
         dumy_imageview.setImageURI(Uri.fromFile(new File(global.getListImg().get(0))));
-        price_btn.setText("$"+global.getEvent_price());
-        if (global.getEvent_level().equalsIgnoreCase("1")) {
+        price_btn.setText("$"+sp.getString(GlobalConstants.EVENT_PRICE,""));
+        if (sp.getString(GlobalConstants.EVENT_LEVEL,"").equalsIgnoreCase("1")) {
             beginner_txt.setText("Easy");
-        } else if (global.getEvent_level().equalsIgnoreCase("2")) {
+        } else if (sp.getString(GlobalConstants.EVENT_LEVEL,"").equalsIgnoreCase("2")) {
             beginner_txt.setText("Moderate");
-        } else if (global.getEvent_level().equalsIgnoreCase("3")) {
+        } else if (sp.getString(GlobalConstants.EVENT_LEVEL,"").equalsIgnoreCase("3")) {
             beginner_txt.setText("Difficult");
         } else {
             beginner_txt.setText("Extreme");
@@ -799,7 +844,20 @@ TextDrawable drawable;
         }
 
     };
+    public ArrayList<HashMap<String,String>> loadSharedPreferencesLogList() {
+        ArrayList<HashMap<String,String>> callLog = new ArrayList<HashMap<String,String>>();
 
+        Gson gson = new Gson();
+        String json = sp.getString(GlobalConstants.DATE_DATA, "");
+        if (json.isEmpty()) {
+            callLog = new ArrayList<HashMap<String,String>>();
+        } else {
+            Type type = new TypeToken<List<HashMap<String,String>>>() {
+            }.getType();
+            callLog = gson.fromJson(json, type);
+        }
+        return callLog;
+    }
     // ------------------------------------------------------upload
     // method---------------
     private String doFileUpload() {
@@ -825,67 +883,72 @@ TextDrawable drawable;
 
             reqEntity.addPart(GlobalConstants.MAIN_CAT_ID, new StringBody("1"));
             Log.e("main  id", "1");
-            reqEntity.addPart(GlobalConstants.EVENT_CAT_ID, new StringBody(global.getEvent_cat_id()));
-            Log.e("sub_cat_id", global.getEvent_cat_id());
-            reqEntity.addPart(GlobalConstants.EVENT_NAME, new StringBody(global.getEvent_name()));
-            Log.e("name", global.getEvent_name());
-            if (global.getDateType().equalsIgnoreCase("one_time")) {
-                reqEntity.addPart("event_type", new StringBody(global.getDateType()));
-                Log.e("event_type", global.getDateType());
-                reqEntity.addPart("event_no_of_days", new StringBody(global.getNumberOfDay()));
-                Log.e("event_no_of_days", global.getNumberOfDay());
+            reqEntity.addPart(GlobalConstants.EVENT_CAT_ID, new StringBody(sp.getString(GlobalConstants.EVENT_CAT_ID,"")));
+            Log.e("sub_cat_id", sp.getString(GlobalConstants.EVENT_CAT_ID,""));
+            reqEntity.addPart(GlobalConstants.EVENT_NAME, new StringBody(sp.getString(GlobalConstants.EVENT_NAME,"")));
+            Log.e("name", sp.getString(GlobalConstants.EVENT_NAME,""));
+            if (sp.getString("date type","").equalsIgnoreCase("one_time")) {
+                reqEntity.addPart("event_type", new StringBody(sp.getString("date type","")));
+                Log.e("event_type", sp.getString("date type",""));
+                reqEntity.addPart("event_no_of_days", new StringBody(sp.getString(GlobalConstants.NUMBER_OF_DAY,"")));
+                Log.e("event_no_of_days", sp.getString(GlobalConstants.NUMBER_OF_DAY,""));
                 JSONArray installedList = new JSONArray();
+
 
 
                 try {
                     JSONObject installedPackage = new JSONObject();
-                    installedPackage.put(GlobalConstants.EVENT_START_DATE, global.getEvent_start_date());
-                    installedPackage.put(GlobalConstants.EVENT_END_DATE, global.getEvent_end_date());
+                    installedPackage.put(GlobalConstants.EVENT_START_DATE, sp.getString(GlobalConstants.EVENT_START_DATE,""));
+                    installedPackage.put(GlobalConstants.EVENT_END_DATE, sp.getString(GlobalConstants.EVENT_END_DATE,""));
                     installedList.put(installedPackage);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
 
 
                 String dataToSend = installedList.toString();
                 reqEntity.addPart("event_dates", new StringBody(dataToSend));
                 Log.e("event_datesjjjjjj", dataToSend);
-            } else if (global.getDateType().equalsIgnoreCase("full_season")) {
-                reqEntity.addPart("event_type", new StringBody(global.getDateType()));
-                Log.e("event_type", global.getDateType());
-                reqEntity.addPart("event_no_of_days", new StringBody(global.getNumberOfDay()));
-                Log.e("event_no_of_days", global.getNumberOfDay());
+            } else if (sp.getString("date type","").equalsIgnoreCase("full_season")) {
+                reqEntity.addPart("event_type", new StringBody(sp.getString("date type","")));
+                Log.e("event_type", sp.getString("date type",""));
+                reqEntity.addPart("event_no_of_days", new StringBody(sp.getString(GlobalConstants.NUMBER_OF_DAY,"")));
+                Log.e("event_no_of_days", sp.getString(GlobalConstants.NUMBER_OF_DAY,""));
 
-                reqEntity.addPart("event_season", new StringBody(global.getSessionType()));
-                Log.e("event_season", global.getSessionType());
+                reqEntity.addPart("event_season", new StringBody(""));
+                Log.e("event_season","");
                 JSONArray installedList = new JSONArray();
+
 
 
                 try {
                     JSONObject installedPackage = new JSONObject();
-                    installedPackage.put(GlobalConstants.EVENT_START_DATE, global.getEvent_start_date());
-                    installedPackage.put(GlobalConstants.EVENT_END_DATE, global.getEvent_end_date());
+                    installedPackage.put(GlobalConstants.EVENT_START_DATE, sp.getString(GlobalConstants.EVENT_START_DATE,""));
+                    installedPackage.put(GlobalConstants.EVENT_END_DATE, sp.getString(GlobalConstants.EVENT_END_DATE,""));
                     installedList.put(installedPackage);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
 
 
                 String dataToSend = installedList.toString();
                 reqEntity.addPart("event_dates", new StringBody(dataToSend));
                 Log.e("event_datesjjjjjj", dataToSend);
             } else {
-                reqEntity.addPart("event_type", new StringBody(global.getDateType()));
-                Log.e("event_type", global.getDateType());
-                reqEntity.addPart("event_no_of_days", new StringBody(global.getNumberOfDay()));
-                Log.e("event_no_of_days", global.getNumberOfDay());
-
+                reqEntity.addPart("event_type", new StringBody(sp.getString("date type","")));
+                Log.e("event_type", sp.getString("date type",""));
+                reqEntity.addPart("event_no_of_days", new StringBody(sp.getString(GlobalConstants.NUMBER_OF_DAY,"")));
+                Log.e("event_no_of_days", sp.getString(GlobalConstants.NUMBER_OF_DAY,""));
+                global.setDateArray(loadSharedPreferencesLogList());
                 JSONArray installedList = new JSONArray();
 
 
-                for (int i = 0; i < global.getDateArray().size(); i++) {
+                for (int i = 0; i < global.getDateArray().size(); i++)
+                {
                     try {
                         JSONObject installedPackage = new JSONObject();
                         installedPackage.put(GlobalConstants.EVENT_START_DATE, global.getDateArray().get(i).get(GlobalConstants.EVENT_START_DATE));
@@ -906,16 +969,16 @@ TextDrawable drawable;
             }
 
 
-            reqEntity.addPart(GlobalConstants.EVENT_TIME, new StringBody(global.getEvent_time()));
-            Log.e(GlobalConstants.EVENT_TIME, global.getEvent_time());
-            reqEntity.addPart(GlobalConstants.EVENT_LEVEL, new StringBody(global.getEvent_level()));
-            Log.e(GlobalConstants.EVENT_LEVEL, global.getEvent_level());
-            reqEntity.addPart(GlobalConstants.EVENT_METTING_POINT, new StringBody(global.getEvent_meetin_point()));
-            Log.e(GlobalConstants.EVENT_METTING_POINT, global.getEvent_meetin_point());
-            reqEntity.addPart("meeting_point_latitude", new StringBody(global.getEvent_meeting_lat()));
-            Log.e("meeting_point_latitude", global.getEvent_meeting_lat());
-            reqEntity.addPart("meeting_point_longitude", new StringBody(global.getEvent_meeting_lng()));
-            Log.e("meeting_point_longitude", global.getEvent_meeting_lng());
+            reqEntity.addPart(GlobalConstants.EVENT_TIME, new StringBody(sp.getString(GlobalConstants.EVENT_TIME,"")));
+            Log.e(GlobalConstants.EVENT_TIME, sp.getString(GlobalConstants.EVENT_TIME,""));
+            reqEntity.addPart(GlobalConstants.EVENT_LEVEL, new StringBody(sp.getString(GlobalConstants.EVENT_LEVEL,"")));
+            Log.e(GlobalConstants.EVENT_LEVEL, sp.getString(GlobalConstants.EVENT_LEVEL,""));
+            reqEntity.addPart(GlobalConstants.EVENT_METTING_POINT, new StringBody(sp.getString(GlobalConstants.EVENT_METTING_POINT,"")));
+            Log.e(GlobalConstants.EVENT_METTING_POINT, sp.getString(GlobalConstants.EVENT_METTING_POINT,""));
+            reqEntity.addPart("meeting_point_latitude", new StringBody(sp.getString(GlobalConstants.EVENT_MEETING_LAT,"")));
+            Log.e("meeting_point_latitude", sp.getString(GlobalConstants.EVENT_MEETING_LAT,""));
+            reqEntity.addPart("meeting_point_longitude", new StringBody(sp.getString(GlobalConstants.EVENT_MEETING_LNG,"")));
+            Log.e("meeting_point_longitude",sp.getString(GlobalConstants.EVENT_MEETING_LNG,""));
             /*reqEntity.addPart("crireria_eligibilty", new StringBody(global.getEvent_criteria()));
             Log.e("crireria_eligibilty", global.getEvent_criteria());*/
             reqEntity.addPart(GlobalConstants.LOCATION, new StringBody(global.getStartingPoint()));
@@ -954,31 +1017,30 @@ TextDrawable drawable;
             Log.e("loc_4_latitude", loc4_lat);
             reqEntity.addPart("loc_4_longitude", new StringBody(loc4_lng));
             Log.e("loc_4_longitude", loc4_lng);*/
-            reqEntity.addPart("description", new StringBody(global.getDescriptionString()));
-            Log.e("description", global.getDescriptionString());
-            reqEntity.addPart("no_of_places", new StringBody(global.getEvent_place()));
-            reqEntity.addPart("price", new StringBody(global.getEvent_price()));
-            Log.e("no_of_places", global.getEvent_place());
-            Log.e("price", global.getEvent_price());
+            reqEntity.addPart("description", new StringBody(sp.getString(GlobalConstants.EVENT_DESCRIPTION,"")));
+            Log.e("description", sp.getString(GlobalConstants.EVENT_DESCRIPTION,""));
+            reqEntity.addPart("no_of_places", new StringBody(sp.getString(GlobalConstants.EVENT_PLACE,"")));
+            reqEntity.addPart("price", new StringBody(sp.getString(GlobalConstants.EVENT_PRICE,"")));
+            Log.e("no_of_places", sp.getString(GlobalConstants.EVENT_PRICE,""));
+            Log.e("price", sp.getString(GlobalConstants.EVENT_PRICE,""));
             reqEntity.addPart("whats_included", new StringBody("dddd"));
             Log.e("whats_included", "dddd");
-            reqEntity.addPart("meals", new StringBody(String.valueOf(global.getMeal())));
-            Log.e("meals", String.valueOf(global.getMeal()));
-            reqEntity.addPart("transport", new StringBody(String.valueOf(global.getTransportataion())));
-            Log.e("transport", String.valueOf(global.getTransportataion()));
-            reqEntity.addPart("tent", new StringBody(String.valueOf(global.getTent())));
-            Log.e("tent", String.valueOf(global.getTent()));
-            reqEntity.addPart("accomodation", new StringBody(String.valueOf(global.getAccomodation())));
-            Log.e("accomodation", String.valueOf(global.getAccomodation()));
-            reqEntity.addPart("gear", new StringBody(String.valueOf(global.getGear())));
-            Log.e("gear", String.valueOf(global.getGear()));
-            reqEntity.addPart("disclaimer", new StringBody(global.getEvent_disclaimer()));
-            Log.e("disclaimer", global.getEvent_disclaimer());
-            reqEntity.addPart("flight", new StringBody(String.valueOf(global.getFlight())));
-            Log.e("flight", String.valueOf(global.getFlight()));
+            reqEntity.addPart("meals", new StringBody(sp.getString("meal","0")));
+            Log.e("meals", sp.getString("meal","0"));
+            reqEntity.addPart("transport", new StringBody(sp.getString("trans","0")));
+            Log.e("transport", sp.getString("trans","0"));
+            reqEntity.addPart("tent", new StringBody(sp.getString("tent","0")));
+            Log.e("tent", String.valueOf(sp.getString("tent","0")));
+            reqEntity.addPart("accomodation", new StringBody(sp.getString("Accomodation","0")));
+            Log.e("accomodation", sp.getString("Accomodation","0"));
+            reqEntity.addPart("gear", new StringBody(sp.getString("gear","0")));
+            Log.e("gear", sp.getString("gear","0"));
+            reqEntity.addPart("disclaimer", new StringBody(sp.getString(GlobalConstants.EVENT_DISCLAIMER,"")));
+            Log.e("disclaimer", sp.getString(GlobalConstants.EVENT_DISCLAIMER,""));
+            reqEntity.addPart("flight", new StringBody(sp.getString("flight","0")));
+            Log.e("flight", sp.getString("flight","0"));
             reqEntity.addPart("action", new StringBody(GlobalConstants.CREATE_EVENT_ACTION));
             Log.e("action", GlobalConstants.CREATE_EVENT_ACTION);
-
 
             post.setEntity(reqEntity);
             HttpResponse response = client.execute(post);
@@ -991,6 +1053,13 @@ TextDrawable drawable;
                 if (status.equalsIgnoreCase("1")) {
                     success = "true";
                     message = obj.getString("msg");
+                    ed.clear();
+                    ed.commit();
+
+                    Intent i=new Intent(PreviewActivity.this,Tab_Activity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+
                 } else {
                     success = "false";
                     message = obj.getString("msg");

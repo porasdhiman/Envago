@@ -15,9 +15,9 @@
 
         <ImageView
             android:id="@+id/plus_button"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="14dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="15dp"
             android:src="@drawable/plus" />
 
         <TextView
@@ -32,10 +32,10 @@
 
         <ImageView
             android:id="@+id/map_button"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
+            android:padding="15dp"
             android:src="@drawable/map" />
 
     </RelativeLayout>
@@ -56,9 +56,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                app:duration="3000"
-android:visibility="gone"
-                >
+                android:visibility="gone"
+                app:duration="3000">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -213,6 +212,7 @@ android:visibility="gone"
 
                 </LinearLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>
+
             <LinearLayout
                 android:id="@+id/all_linear_layout"
                 android:layout_width="match_parent"
@@ -225,9 +225,9 @@ android:visibility="gone"
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
                     android:text="All Categories"
-                    android:layout_marginLeft="8dp"
                     android:textColor="@color/textcolor"
                     android:textSize="18sp" />
 
@@ -245,17 +245,18 @@ android:visibility="gone"
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginTop="20dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
+                    android:layout_marginTop="20dp"
                     android:background="@color/LightGrey" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/featured_linear_layout"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -263,9 +264,9 @@ android:layout_marginTop="10dp"
                     android:id="@+id/view_top_txtView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
                     android:text="Featured Adventures"
-                    android:layout_marginLeft="8dp"
                     android:textColor="@color/textcolor"
                     android:textSize="18sp" />
 
@@ -284,12 +285,11 @@ android:layout_marginTop="10dp"
             </LinearLayout>
 
 
-
             <LinearLayout
                 android:id="@+id/suggested_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical"
 
                 android:visibility="gone">
@@ -298,9 +298,9 @@ android:layout_marginTop="10dp"
                     android:id="@+id/view_top_txtView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
                     android:text=" Suggested Adventures"
                     android:textColor="@color/textcolor"
-                    android:layout_marginLeft="8dp"
                     android:textSize="18sp" />
 
                 <android.support.v4.view.ViewPager
@@ -313,9 +313,9 @@ android:layout_marginTop="10dp"
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/LightGrey"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"/>
+                    android:layout_marginRight="8dp"
+                    android:background="@color/LightGrey" />
             </LinearLayout>
 
             <LinearLayout
@@ -323,7 +323,7 @@ android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
 
                 android:orientation="vertical"
                 android:visibility="gone">
@@ -332,9 +332,9 @@ android:layout_marginTop="10dp"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
                     android:text="Featured Planners"
                     android:textColor="@color/textcolor"
-android:layout_marginLeft="8dp"
                     android:textSize="18sp" />
 
                 <ListView

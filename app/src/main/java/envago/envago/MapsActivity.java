@@ -70,13 +70,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback{
+        GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback {
     Marker marker;
     private GoogleMap mMap;
     private Hashtable<String, String> markers;
@@ -99,13 +103,14 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
     int i;
     Marker mark;
     Dialog dialog2;
-    final HashMap<String,Integer> map=new HashMap<>();
+    final HashMap<String, Integer> map = new HashMap<>();
     LinearLayout show_info_layout;
-    TextView event_name,event_date,event_price;
+    TextView event_name, event_date, event_price;
     ImageView event_image;
-    String months[] = { " ", "Jan", "Feb", "Mar", "Apr", "May",
+    String months[] = {" ", "Jan", "Feb", "Mar", "Apr", "May",
             "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
-            "Dec", };
+            "Dec",};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -124,11 +129,11 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
-        show_info_layout=(LinearLayout)findViewById(R.id.show_info_layout);
-        event_name=(TextView)findViewById(R.id.event_name) ;
-        event_date=(TextView)findViewById(R.id.event_date) ;
-        event_price=(TextView)findViewById(R.id.event_price) ;
-        event_image=(ImageView) findViewById(R.id.event_img) ;
+        show_info_layout = (LinearLayout) findViewById(R.id.show_info_layout);
+        event_name = (TextView) findViewById(R.id.event_name);
+        event_date = (TextView) findViewById(R.id.event_date);
+        event_price = (TextView) findViewById(R.id.event_price);
+        event_image = (ImageView) findViewById(R.id.event_img);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -163,7 +168,9 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
         mAutocompleteView.setThreshold(1);
 
         mAutocompleteView.setAdapter(mAdapter);
-        previous_btn=(ImageView)findViewById(R.id.previous_btn);
+        mAutocompleteView.setDropDownWidth(getResources().getDisplayMetrics().widthPixels);
+
+        previous_btn = (ImageView) findViewById(R.id.previous_btn);
         previous_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,63 +250,88 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             String latlong = place.getLatLng().toString().split(":")[1];
             String completeLatLng = latlong.substring(1, latlong.length() - 1);
             // Toast.makeText(MapsActivity.this,completeLatLng,Toast.LENGTH_SHORT).show();
-            String lat = completeLatLng.split(",")[0];
+            lat = completeLatLng.split(",")[0];
             lat = lat.substring(1, lat.length());
-            String lng = completeLatLng.split(",")[1];
+            lng = completeLatLng.split(",")[1];
+            eventLocOnMap();
+          /*  if(event_list.size()>0){
+                event_list.clear();
+            }
             dialogWindow();
-            get_list();
+            get_list();*/
             places.release();
         }
     };
-public void openMarkerView(){
-    mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-        @Override
-        public boolean onMarkerClick(Marker marker) {
-            final int pos = map.get(marker.getId());
 
-            show_info_layout.setVisibility(View.VISIBLE);
+    public void openMarkerView() {
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                final int pos = map.get(marker.getId());
 
-            event_name.setText(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_NAME));
-            String data = global.getEvent_list().get(pos).get(GlobalConstants.EVENT_START_DATE);
-            String split[] = data.split("-");
-            String minth = split[1];
-            String date = split[2];
-            int mm = Integer.parseInt(minth);
+                show_info_layout.setVisibility(View.VISIBLE);
 
-            event_date.setText(date + " " + months[mm] + " " + split[0]);
+                event_name.setText(cap(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_NAME)));
 
-            event_price.setText("$"+global.getEvent_list().get(pos).get(GlobalConstants.EVENT_PRICE));
-            String url=GlobalConstants.IMAGE_URL + global.getEvent_list().get(pos).get(GlobalConstants.EVENT_IMAGES);
-            if (url != null && !url.equalsIgnoreCase("null")
-                    && !url.equalsIgnoreCase("")) {
-                imageLoader.displayImage(url, event_image, options,
-                        new SimpleImageLoadingListener() {
-                            @Override
-                            public void onLoadingComplete(String imageUri,
-                                                          View view, Bitmap loadedImage) {
-                                super.onLoadingComplete(imageUri, view,
-                                        loadedImage);
 
-                            }
-                        });
-            } else {
-                event_image.setImageResource(0);
-            }
-            show_info_layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i=new Intent(MapsActivity.this,DetailsActivity.class);
-                    i.putExtra(GlobalConstants.EVENT_ID,global.getEvent_list().get(pos).get(GlobalConstants.EVENT_ID));
-                    i.putExtra("user","non user");
-                    startActivity(i);
-                    startActivity(i);
+                event_date.setText(formatdate2(global.getEvent_list().get(pos).get(GlobalConstants.EVENT_START_DATE)));
+
+                event_price.setText("$" + global.getEvent_list().get(pos).get(GlobalConstants.EVENT_PRICE));
+                String url = GlobalConstants.IMAGE_URL + global.getEvent_list().get(pos).get(GlobalConstants.EVENT_IMAGES);
+                if (url != null && !url.equalsIgnoreCase("null")
+                        && !url.equalsIgnoreCase("")) {
+                    imageLoader.displayImage(url, event_image, options,
+                            new SimpleImageLoadingListener() {
+                                @Override
+                                public void onLoadingComplete(String imageUri,
+                                                              View view, Bitmap loadedImage) {
+                                    super.onLoadingComplete(imageUri, view,
+                                            loadedImage);
+
+                                }
+                            });
+                } else {
+                    event_image.setImageResource(0);
                 }
-            });
-            return false;
-        }
-    });
+                show_info_layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(MapsActivity.this, DetailsActivity.class);
+                        i.putExtra(GlobalConstants.EVENT_ID, global.getEvent_list().get(pos).get(GlobalConstants.EVENT_ID));
+                        i.putExtra("user", "non user");
+                        startActivity(i);
+                        startActivity(i);
+                    }
+                });
+                return false;
+            }
+        });
 
-}
+    }
+    public String formatdate2(String fdate)
+    {
+        String datetime=null;
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        SimpleDateFormat d= new SimpleDateFormat("dd MMM yyyy");
+        try {
+            Date convertedDate = inputFormat.parse(fdate);
+            datetime = d.format(convertedDate);
+
+        }catch (ParseException e)
+        {
+
+        }
+        return  datetime;
+
+
+    }
+    public String cap(String name) {
+        StringBuilder sb = new StringBuilder(name);
+        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+        return sb.toString();
+    }
+
     private static Spanned formatPlaceDetails(Resources res, CharSequence name, String id, CharSequence address,
                                               CharSequence phoneNumber, Uri websiteUri) {
         Log.e("Tag", res.getString(R.string.place_details, name, id, address, phoneNumber, websiteUri));
@@ -414,7 +446,7 @@ public void openMarkerView(){
             mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                 @Override
                 public void onInfoWindowClick(Marker marker) {
-                    Toast.makeText(MapsActivity.this,marker.getId(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MapsActivity.this, marker.getId(), Toast.LENGTH_SHORT).show();
                        /* Intent j=new Intent(MapsActivity.this,DetailsActivity.class);
                         j.putExtra(GlobalConstants.EVENT_ID,global.getEvent_list().get(i).get(GlobalConstants.EVENT_ID));
                         startActivity(j);
@@ -485,14 +517,14 @@ public void openMarkerView(){
             @Override
             public void onResponse(String s) {
                 dialog2.dismiss();
-                Log.e("Categoryyyy", s);
+                Log.e("map data", s);
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
 
                     if (res.equalsIgnoreCase("1")) {
 
-                         JSONObject data = obj.getJSONObject("data");
+                        JSONObject data = obj.getJSONObject("data");
 
                         JSONArray events = data.getJSONArray("events");
                         for (int i = 0; i < events.length(); i++) {
@@ -507,15 +539,19 @@ public void openMarkerView(){
                             details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            details.put(GlobalConstants.EVENT_START_DATE, arrobj.getString(GlobalConstants.EVENT_START_DATE));
+                            JSONArray arr=arrobj.getJSONArray("event_dates");
+                            JSONObject objArr=arr.getJSONObject(0);
+                            details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
-
+Log.e("list value",String.valueOf(i));
 
                             event_list.add(details);
 
                         }
                         global.getEvent_list().clear();
                         global.setEvent_list(event_list);
+                        Log.e("sie of map data",String.valueOf(global.getEvent_list().size()));
+
                         eventLocOnMap();
                     }
                 } catch (JSONException e) {
@@ -557,7 +593,13 @@ public void openMarkerView(){
 
     public void eventLocOnMap() {
         if (mMap != null) {
-            mMap.clear();
+            LatLng postion = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+            mark = mMap.addMarker(new MarkerOptions().position(postion).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)));
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 6));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(6), 2000, null);
+            openMarkerView();
+
         }
         {
 
@@ -565,15 +607,15 @@ public void openMarkerView(){
             // Add a marker in Sydney and move the camera
             for (i = 0; i < global.getEvent_list().size(); i++) {
                 LatLng postion = new LatLng(Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LATITUDE)), Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LONGITUDE)));
-                mark = mMap.addMarker(new MarkerOptions().position(postion).title(global.getEvent_list().get(i).get(GlobalConstants.EVENT_NAME)).icon(BitmapDescriptorFactory.fromResource(R.mipmap.app_name)));
+                mark = mMap.addMarker(new MarkerOptions().position(postion).title(global.getEvent_list().get(i).get(GlobalConstants.EVENT_NAME)).icon(BitmapDescriptorFactory.fromResource(R.drawable.red_pin)));
 
-               // markers.put(mark.getId(), "http://envagoapp.com/uploads/" + global.getEvent_list().get(i).get(GlobalConstants.EVENT_IMAGES));
-                map.put(mark.getId(),i);
+                // markers.put(mark.getId(), "http://envagoapp.com/uploads/" + global.getEvent_list().get(i).get(GlobalConstants.EVENT_IMAGES));
+                map.put(mark.getId(), i);
                 //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
             }
 
-            LatLng postion=new LatLng(Double.parseDouble(lat),Double.parseDouble(lng));
+            LatLng postion = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
             mark = mMap.addMarker(new MarkerOptions().position(postion).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)));
 
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 6));

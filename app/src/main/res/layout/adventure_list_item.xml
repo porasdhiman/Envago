@@ -67,7 +67,7 @@
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/price_lenier"
-        android:src="@drawable/vline" />
+         />
 
     <LinearLayout
         android:layout_width="match_parent"

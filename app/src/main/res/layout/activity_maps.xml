@@ -24,8 +24,8 @@
 
             <ImageView
                 android:id="@+id/search_button"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
@@ -52,8 +52,8 @@
 
             <ImageView
                 android:id="@+id/loc_button"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
@@ -62,10 +62,11 @@
 
         <ImageView
             android:id="@+id/previous_btn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/back_list_to_home" />
 
     </RelativeLayout>
@@ -98,15 +99,16 @@
             android:id="@+id/event_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="hkhkl"
+            android:text=""
             android:textSize="14sp"
             android:layout_marginLeft="10dp"
-            android:textColor="@color/Gray"/>
+            android:singleLine="true"
+            android:textColor="@color/Black"/>
         <TextView
             android:id="@+id/event_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="hkhkl"
+            android:text=""
             android:layout_marginLeft="10dp"
             android:textSize="14sp"
             android:textColor="@color/Gray"/>
@@ -114,7 +116,7 @@
             android:id="@+id/event_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$30"
+            android:text=""
             android:layout_marginLeft="10dp"
             android:textSize="14sp"
             android:textColor="@color/textcolor"

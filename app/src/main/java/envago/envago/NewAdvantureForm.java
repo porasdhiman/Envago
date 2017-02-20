@@ -2,7 +2,9 @@ package envago.envago;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -15,9 +17,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.apache.http.HttpEntity;
@@ -34,12 +40,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by vikas on 03-01-2017.
  */
 
-public class NewAdvantureForm extends Activity {
+public class NewAdvantureForm extends Activity implements View.OnClickListener {
     ImageView booking_checkBox, route_checkbox, photo_checkBox, detail_checkBox,back_button_create;
     boolean is_booking, is_route, is_addPhoto, is_detail;
     Global global;
@@ -48,7 +59,9 @@ public class NewAdvantureForm extends Activity {
     HttpEntity resEntity;
     String message;
     Dialog dialog2;
-
+SharedPreferences sp;
+    RelativeLayout date_layout,detail_layout,add_layout,route_layout;
+    LinearLayout main_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +71,23 @@ public class NewAdvantureForm extends Activity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
+        sp=getSharedPreferences(GlobalConstants.CREATE_DATA, Context.MODE_PRIVATE);
         global = (Global) getApplicationContext();
         global.setEvent_start_date("");
+        main_layout=(LinearLayout)findViewById(R.id.main_layout);
+        Fonts.overrideFonts(this,main_layout);
         back_button_create=(ImageView) findViewById(R.id.back_button_create);
         booking_checkBox = (ImageView) findViewById(R.id.booking_checkBox);
+        date_layout=(RelativeLayout)findViewById(R.id.date_layout);
+        detail_layout=(RelativeLayout)findViewById(R.id.details_layout);
+        add_layout=(RelativeLayout)findViewById(R.id.photo_layout);
+        route_layout=(RelativeLayout)findViewById(R.id.route_layout);
+        date_layout.setOnClickListener(this);
+        detail_layout.setOnClickListener(this);
+        add_layout.setOnClickListener(this);
+        route_layout.setOnClickListener(this);
+
+
         //submit_button = (Button) findViewById(R.id.submit_button_create_advanture);
         preview_button = (TextView) findViewById(R.id.preview_button);
         back_button_create.setOnClickListener(new View.OnClickListener() {
@@ -105,13 +131,22 @@ public class NewAdvantureForm extends Activity {
                 startActivityForResult(i, 4);
             }
         });
+        if(!sp.getString(GlobalConstants.EVENT_START_DATE,"").equalsIgnoreCase("")){
+            booking_checkBox.setImageResource(R.drawable.selected);
+        }
+
+        if(!sp.getString(GlobalConstants.VALUE,"").equalsIgnoreCase("")){
+            detail_checkBox.setImageResource(R.drawable.selected);
+        }
+
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            if (!global.getEvent_start_date().equalsIgnoreCase("")) {
+            if (!sp.getString(GlobalConstants.EVENT_START_DATE,"").equalsIgnoreCase("")) {
                 booking_checkBox.setImageResource(R.drawable.selected);
             }
         }
@@ -126,13 +161,13 @@ public class NewAdvantureForm extends Activity {
             }
         }
         if (requestCode == 4) {
-            if (global.getEvent_description().equalsIgnoreCase("true")) {
+            if (sp.getString(GlobalConstants.VALUE,"").equalsIgnoreCase("true")) {
                 detail_checkBox.setImageResource(R.drawable.selected);
             }
 
         }
-        if (!global.getEvent_start_date().equalsIgnoreCase("") && !global.getStartingPoint().equalsIgnoreCase("")
-                && global.getListImg().size() != 0 && global.getEvent_description().equalsIgnoreCase("true")) {
+        if (!sp.getString(GlobalConstants.EVENT_START_DATE,"").equalsIgnoreCase("") && !global.getStartingPoint().equalsIgnoreCase("")
+                && global.getListImg().size() != 0 && sp.getString(GlobalConstants.VALUE,"").equalsIgnoreCase("true")) {
             /*submit_button.setBackgroundResource(R.drawable.red_button_back);
             submit_button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -190,7 +225,20 @@ public class NewAdvantureForm extends Activity {
         }
 
     };
+    public ArrayList<HashMap<String,String>> loadSharedPreferencesLogList() {
+        ArrayList<HashMap<String,String>> callLog = new ArrayList<HashMap<String,String>>();
 
+        Gson gson = new Gson();
+        String json = sp.getString(GlobalConstants.DATE_DATA, "");
+        if (json.isEmpty()) {
+            callLog = new ArrayList<HashMap<String,String>>();
+        } else {
+            Type type = new TypeToken<List<HashMap<String,String>>>() {
+            }.getType();
+            callLog = gson.fromJson(json, type);
+        }
+        return callLog;
+    }
     // ------------------------------------------------------upload
     // method---------------
     private String doFileUpload() {
@@ -216,23 +264,23 @@ public class NewAdvantureForm extends Activity {
 
             reqEntity.addPart(GlobalConstants.MAIN_CAT_ID, new StringBody("1"));
             Log.e("main  id", "1");
-            reqEntity.addPart(GlobalConstants.EVENT_CAT_ID, new StringBody(global.getEvent_cat_id()));
-            Log.e("sub_cat_id", global.getEvent_cat_id());
-            reqEntity.addPart(GlobalConstants.EVENT_NAME, new StringBody(global.getEvent_name()));
-            Log.e("name", global.getEvent_name());
+            reqEntity.addPart(GlobalConstants.EVENT_CAT_ID, new StringBody(sp.getString(GlobalConstants.EVENT_CAT_ID,"")));
+            Log.e("sub_cat_id", sp.getString(GlobalConstants.EVENT_CAT_ID,""));
+            reqEntity.addPart(GlobalConstants.EVENT_NAME, new StringBody(sp.getString(GlobalConstants.EVENT_NAME,"")));
+            Log.e("name", sp.getString(GlobalConstants.EVENT_NAME,""));
             if (global.getDateType().equalsIgnoreCase("one_time")) {
-                reqEntity.addPart("event_type", new StringBody(global.getDateType()));
-                Log.e("event_type", global.getDateType());
-                reqEntity.addPart("event_no_of_days", new StringBody(global.getNumberOfDay()));
-                Log.e("event_no_of_days", global.getNumberOfDay());
+                reqEntity.addPart("event_type", new StringBody(sp.getString("date type","")));
+                Log.e("event_type", sp.getString("date type",""));
+                reqEntity.addPart("event_no_of_days", new StringBody(sp.getString(GlobalConstants.NUMBER_OF_DAY,"")));
+                Log.e("event_no_of_days", sp.getString(GlobalConstants.NUMBER_OF_DAY,""));
                 JSONArray installedList = new JSONArray();
 
 
 
                     try {
                         JSONObject installedPackage = new JSONObject();
-                        installedPackage.put(GlobalConstants.EVENT_START_DATE, global.getEvent_start_date());
-                        installedPackage.put(GlobalConstants.EVENT_END_DATE, global.getEvent_end_date());
+                        installedPackage.put(GlobalConstants.EVENT_START_DATE, sp.getString(GlobalConstants.EVENT_START_DATE,""));
+                        installedPackage.put(GlobalConstants.EVENT_END_DATE, sp.getString(GlobalConstants.EVENT_END_DATE,""));
                         installedList.put(installedPackage);
 
                     } catch (JSONException e) {
@@ -245,21 +293,21 @@ public class NewAdvantureForm extends Activity {
                 reqEntity.addPart("event_dates", new StringBody(dataToSend));
                 Log.e("event_datesjjjjjj", dataToSend);
             } else if (global.getDateType().equalsIgnoreCase("full_season")) {
-                reqEntity.addPart("event_type", new StringBody(global.getDateType()));
-                Log.e("event_type", global.getDateType());
-                reqEntity.addPart("event_no_of_days", new StringBody(global.getNumberOfDay()));
-                Log.e("event_no_of_days", global.getNumberOfDay());
+                reqEntity.addPart("event_type", new StringBody(sp.getString("date type","")));
+                Log.e("event_type", sp.getString("date type",""));
+                reqEntity.addPart("event_no_of_days", new StringBody(sp.getString(GlobalConstants.NUMBER_OF_DAY,"")));
+                Log.e("event_no_of_days", sp.getString(GlobalConstants.NUMBER_OF_DAY,""));
 
-                reqEntity.addPart("event_season", new StringBody(global.getSessionType()));
-                Log.e("event_season", global.getSessionType());
+                reqEntity.addPart("event_season", new StringBody(""));
+                Log.e("event_season","");
                 JSONArray installedList = new JSONArray();
 
 
 
                 try {
                     JSONObject installedPackage = new JSONObject();
-                    installedPackage.put(GlobalConstants.EVENT_START_DATE, global.getEvent_start_date());
-                    installedPackage.put(GlobalConstants.EVENT_END_DATE, global.getEvent_end_date());
+                    installedPackage.put(GlobalConstants.EVENT_START_DATE, sp.getString(GlobalConstants.EVENT_START_DATE,""));
+                    installedPackage.put(GlobalConstants.EVENT_END_DATE, sp.getString(GlobalConstants.EVENT_END_DATE,""));
                     installedList.put(installedPackage);
 
                 } catch (JSONException e) {
@@ -272,11 +320,11 @@ public class NewAdvantureForm extends Activity {
                 reqEntity.addPart("event_dates", new StringBody(dataToSend));
                 Log.e("event_datesjjjjjj", dataToSend);
             } else {
-                reqEntity.addPart("event_type", new StringBody(global.getDateType()));
-                Log.e("event_type", global.getDateType());
-                reqEntity.addPart("event_no_of_days", new StringBody(global.getNumberOfDay()));
-                Log.e("event_no_of_days", global.getNumberOfDay());
-
+                reqEntity.addPart("event_type", new StringBody(sp.getString("date type","")));
+                Log.e("event_type", sp.getString("date type",""));
+                reqEntity.addPart("event_no_of_days", new StringBody(sp.getString(GlobalConstants.NUMBER_OF_DAY,"")));
+                Log.e("event_no_of_days", sp.getString(GlobalConstants.NUMBER_OF_DAY,""));
+global.setDateArray(loadSharedPreferencesLogList());
                 JSONArray installedList = new JSONArray();
 
 
@@ -302,16 +350,16 @@ public class NewAdvantureForm extends Activity {
             }
 
 
-            reqEntity.addPart(GlobalConstants.EVENT_TIME, new StringBody(global.getEvent_time()));
-            Log.e(GlobalConstants.EVENT_TIME, global.getEvent_time());
-            reqEntity.addPart(GlobalConstants.EVENT_LEVEL, new StringBody(global.getEvent_level()));
-            Log.e(GlobalConstants.EVENT_LEVEL, global.getEvent_level());
-            reqEntity.addPart(GlobalConstants.EVENT_METTING_POINT, new StringBody(global.getEvent_meetin_point()));
-            Log.e(GlobalConstants.EVENT_METTING_POINT, global.getEvent_meetin_point());
-            reqEntity.addPart("meeting_point_latitude", new StringBody(global.getEvent_meeting_lat()));
-            Log.e("meeting_point_latitude", global.getEvent_meeting_lat());
-            reqEntity.addPart("meeting_point_longitude", new StringBody(global.getEvent_meeting_lng()));
-            Log.e("meeting_point_longitude", global.getEvent_meeting_lng());
+            reqEntity.addPart(GlobalConstants.EVENT_TIME, new StringBody(sp.getString(GlobalConstants.EVENT_TIME,"")));
+            Log.e(GlobalConstants.EVENT_TIME, sp.getString(GlobalConstants.EVENT_TIME,""));
+            reqEntity.addPart(GlobalConstants.EVENT_LEVEL, new StringBody(sp.getString(GlobalConstants.EVENT_LEVEL,"")));
+            Log.e(GlobalConstants.EVENT_LEVEL, sp.getString(GlobalConstants.EVENT_LEVEL,""));
+            reqEntity.addPart(GlobalConstants.EVENT_METTING_POINT, new StringBody(sp.getString(GlobalConstants.EVENT_METTING_POINT,"")));
+            Log.e(GlobalConstants.EVENT_METTING_POINT, sp.getString(GlobalConstants.EVENT_METTING_POINT,""));
+            reqEntity.addPart("meeting_point_latitude", new StringBody(sp.getString(GlobalConstants.EVENT_MEETING_LAT,"")));
+            Log.e("meeting_point_latitude", sp.getString(GlobalConstants.EVENT_MEETING_LAT,""));
+            reqEntity.addPart("meeting_point_longitude", new StringBody(sp.getString(GlobalConstants.EVENT_MEETING_LNG,"")));
+            Log.e("meeting_point_longitude",sp.getString(GlobalConstants.EVENT_MEETING_LNG,""));
             /*reqEntity.addPart("crireria_eligibilty", new StringBody(global.getEvent_criteria()));
             Log.e("crireria_eligibilty", global.getEvent_criteria());*/
             reqEntity.addPart(GlobalConstants.LOCATION, new StringBody(global.getStartingPoint()));
@@ -350,28 +398,28 @@ public class NewAdvantureForm extends Activity {
             Log.e("loc_4_latitude", loc4_lat);
             reqEntity.addPart("loc_4_longitude", new StringBody(loc4_lng));
             Log.e("loc_4_longitude", loc4_lng);*/
-            reqEntity.addPart("description", new StringBody(global.getDescriptionString()));
-            Log.e("description", global.getDescriptionString());
-            reqEntity.addPart("no_of_places", new StringBody(global.getEvent_place()));
-            reqEntity.addPart("price", new StringBody(global.getEvent_price()));
-            Log.e("no_of_places", global.getEvent_place());
-            Log.e("price", global.getEvent_price());
+            reqEntity.addPart("description", new StringBody(sp.getString(GlobalConstants.EVENT_DESCRIPTION,"")));
+            Log.e("description", sp.getString(GlobalConstants.EVENT_DESCRIPTION,""));
+            reqEntity.addPart("no_of_places", new StringBody(sp.getString(GlobalConstants.EVENT_PLACE,"")));
+            reqEntity.addPart("price", new StringBody(sp.getString(GlobalConstants.EVENT_PRICE,"")));
+            Log.e("no_of_places", sp.getString(GlobalConstants.EVENT_PRICE,""));
+            Log.e("price", sp.getString(GlobalConstants.EVENT_PRICE,""));
             reqEntity.addPart("whats_included", new StringBody("dddd"));
             Log.e("whats_included", "dddd");
-            reqEntity.addPart("meals", new StringBody(String.valueOf(global.getMeal())));
-            Log.e("meals", String.valueOf(global.getMeal()));
-            reqEntity.addPart("transport", new StringBody(String.valueOf(global.getTransportataion())));
-            Log.e("transport", String.valueOf(global.getTransportataion()));
-            reqEntity.addPart("tent", new StringBody(String.valueOf(global.getTent())));
-            Log.e("tent", String.valueOf(global.getTent()));
-            reqEntity.addPart("accomodation", new StringBody(String.valueOf(global.getAccomodation())));
-            Log.e("accomodation", String.valueOf(global.getAccomodation()));
-            reqEntity.addPart("gear", new StringBody(String.valueOf(global.getGear())));
-            Log.e("gear", String.valueOf(global.getGear()));
-            reqEntity.addPart("disclaimer", new StringBody(global.getEvent_disclaimer()));
-            Log.e("disclaimer", global.getEvent_disclaimer());
-            reqEntity.addPart("flight", new StringBody(String.valueOf(global.getFlight())));
-            Log.e("flight", String.valueOf(global.getFlight()));
+            reqEntity.addPart("meals", new StringBody(sp.getString("meal","0")));
+            Log.e("meals", sp.getString("meal","0"));
+            reqEntity.addPart("transport", new StringBody(sp.getString("trans","0")));
+            Log.e("transport", sp.getString("trans","0"));
+            reqEntity.addPart("tent", new StringBody(sp.getString("tent","0")));
+            Log.e("tent", String.valueOf(sp.getString("tent","0")));
+            reqEntity.addPart("accomodation", new StringBody(sp.getString("Accomodation","0")));
+            Log.e("accomodation", sp.getString("Accomodation","0"));
+            reqEntity.addPart("gear", new StringBody(sp.getString("gear","0")));
+            Log.e("gear", sp.getString("gear","0"));
+            reqEntity.addPart("disclaimer", new StringBody(sp.getString(GlobalConstants.EVENT_DISCLAIMER,"")));
+            Log.e("disclaimer", sp.getString(GlobalConstants.EVENT_DISCLAIMER,""));
+            reqEntity.addPart("flight", new StringBody(sp.getString("flight","0")));
+            Log.e("flight", sp.getString("flight","0"));
             reqEntity.addPart("action", new StringBody(GlobalConstants.CREATE_EVENT_ACTION));
             Log.e("action", GlobalConstants.CREATE_EVENT_ACTION);
 
@@ -424,5 +472,45 @@ public class NewAdvantureForm extends Activity {
 
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
         dialog2.show();
+    }
+    private String convertToString(ArrayList<String> list) {
+
+        StringBuilder sb = new StringBuilder();
+        String delim = "";
+        for (String s : list)
+        {
+            sb.append(delim);
+            sb.append(s);;
+            delim = ",";
+        }
+        return sb.toString();
+    }
+
+    private ArrayList<String> convertToArray(String string) {
+
+        ArrayList<String> list = new ArrayList<String>(Arrays.asList(string.split(",")));
+        return list;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.date_layout:
+                Intent i = new Intent(NewAdvantureForm.this, BookingDateActivity.class);
+                startActivityForResult(i, 1);
+                break;
+            case R.id.photo_layout:
+                Intent p = new Intent(NewAdvantureForm.this, AddPhotoActivity.class);
+                startActivityForResult(p, 3);
+                break;
+            case R.id.route_layout:
+                Intent r = new Intent(NewAdvantureForm.this, StartingRouteActivity.class);
+                startActivityForResult(r, 2);
+                break;
+            case R.id.details_layout:
+                Intent d = new Intent(NewAdvantureForm.this, CreateDetailActivity.class);
+                startActivityForResult(d, 4);
+                break;
+        }
     }
 }

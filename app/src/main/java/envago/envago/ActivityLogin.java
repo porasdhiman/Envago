@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.InputType;
@@ -15,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -52,7 +52,7 @@ public class ActivityLogin extends Activity implements View.OnTouchListener,View
     Global global;
     RelativeLayout main_layout;
     TextView mail_error_txtView,password_error_txtView;
-
+ImageView back_from_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +69,13 @@ public class ActivityLogin extends Activity implements View.OnTouchListener,View
         login_button=(TextView)findViewById(R.id.login_button);
         mail_error_txtView=(TextView)findViewById(R.id.mail_error_txtView) ;
         password_error_txtView=(TextView)findViewById(R.id.password_error_txtView);
+        back_from_login=(ImageView)findViewById(R.id.back_from_login);
         login_button.setOnClickListener(this);
         sign_in_layout.setOnClickListener(this);
         show_txt.setOnClickListener(this);
         email_editText.setOnTouchListener(this);
         password_editView.setOnClickListener(this);
+        back_from_login.setOnClickListener(this);
 
     }
     @Override
@@ -121,6 +123,14 @@ public class ActivityLogin extends Activity implements View.OnTouchListener,View
                 Intent j=new Intent(ActivityLogin.this,RegisterActivity.class);
                 startActivity(j);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+
+
+                break;
+            case R.id.back_from_login:
+                Intent k = new Intent(ActivityLogin.this, SlidePageActivity.class);
+                startActivity(k);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
 
 
@@ -160,6 +170,8 @@ public class ActivityLogin extends Activity implements View.OnTouchListener,View
                                 ed.putString(GlobalConstants.USERID, data.getString(GlobalConstants.USERID));
                                 ed.commit();
                                 Intent i=new Intent(ActivityLogin.this,Tab_Activity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                                 startActivity(i);
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 finish();

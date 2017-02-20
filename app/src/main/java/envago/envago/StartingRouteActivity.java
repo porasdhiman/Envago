@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,7 @@ public class StartingRouteActivity extends FragmentActivity implements GoogleApi
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
     Global global;
 ImageView back_button_create;
+    LinearLayout main_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,8 @@ ImageView back_button_create;
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
+        main_layout=(LinearLayout)findViewById(R.id.main_layout);
+        Fonts.overrideFonts(this,main_layout);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);

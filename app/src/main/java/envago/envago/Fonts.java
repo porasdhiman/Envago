@@ -28,4 +28,21 @@ public class Fonts {
         } catch (Exception e) {
         }
     }
+    public static void overrideFonts1(final Context context, final View v) {
+        try {
+            if (v instanceof ViewGroup) {
+                ViewGroup vg = (ViewGroup) v;
+                for (int i = 0; i < vg.getChildCount(); i++) {
+                    View child = vg.getChildAt(i);
+                    overrideFonts(context, child);
+                }
+            } else if (v instanceof TextView) {
+                ((TextView) v).setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/avenir_medium.ttf"));
+            }
+            else if (v instanceof EditText) {
+                ((EditText) v).setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/avenir_medium.ttf"));
+            }
+        } catch (Exception e) {
+        }
+    }
 }

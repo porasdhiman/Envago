@@ -14,9 +14,9 @@
 
         <ImageView
             android:id="@+id/back_editprofile"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="14dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="15dp"
             android:src="@drawable/back_button" />
 
         <TextView
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_alignParentRight="true"
-            android:text="Done"
+            android:text="save"
             android:textColor="#fff"
             android:layout_marginRight="10dp"
             android:textSize="17sp"
@@ -126,7 +126,7 @@ android:textCursorDrawable="@drawable/cursore_color"
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:background="@color/LightGrey">
@@ -137,7 +137,7 @@ android:textCursorDrawable="@drawable/cursore_color"
                 android:id="@+id/body_name"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp">
 
@@ -177,7 +177,7 @@ android:textCursorDrawable="@drawable/cursore_color"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:background="@color/LightGrey"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp">
 
@@ -187,7 +187,7 @@ android:textCursorDrawable="@drawable/cursore_color"
                 android:id="@+id/body_email"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp">
 
@@ -230,7 +230,7 @@ android:textCursorDrawable="@drawable/cursore_color"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:background="@color/LightGrey"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp">
 
@@ -240,7 +240,7 @@ android:textCursorDrawable="@drawable/cursore_color"
                 android:id="@+id/body_phone"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp">
 
@@ -281,7 +281,7 @@ android:textCursorDrawable="@drawable/cursore_color"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:background="@color/LightGrey"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp">
 
@@ -346,7 +346,7 @@ android:textCursorDrawable="@drawable/cursore_color"
                 android:id="@+id/forgot_pass_layout"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp">
 
@@ -380,7 +380,7 @@ android:textCursorDrawable="@drawable/cursore_color"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:background="@color/LightGrey"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp">
 
@@ -389,7 +389,7 @@ android:textCursorDrawable="@drawable/cursore_color"
                 android:id="@+id/paypal_body"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp">
 
@@ -428,7 +428,7 @@ android:hint="Your Paypal Address"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:background="@color/LightGrey"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp">
 
@@ -438,7 +438,7 @@ android:hint="Your Paypal Address"
                 android:id="@+id/id_body"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp">
 
@@ -475,7 +475,7 @@ android:hint="Your Paypal Address"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:background="@color/LightGrey"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp">
 
@@ -519,7 +519,7 @@ android:hint="Your Paypal Address"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:background="@color/LightGrey"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp">
 

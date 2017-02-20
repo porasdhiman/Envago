@@ -166,13 +166,13 @@ public class Tab_Activity extends TabActivity {
                             String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
                                 if (obj.getString("doc_status").equalsIgnoreCase("0")) {
-                                    global.setIsVerified("Not Approved");
+                                    global.setIsVerified("0");
                                 } else if (obj.getString("doc_status").equalsIgnoreCase("1")) {
-                                    global.setIsVerified("Approved");
+                                    global.setIsVerified("1");
                                 } else if (obj.getString("doc_status").equalsIgnoreCase("2")) {
-                                    global.setIsVerified("Document Not Submitted Yet");
+                                    global.setIsVerified("2");
                                 } else {
-                                    global.setIsVerified("Document Submitted But no approved Yet");
+                                    global.setIsVerified("3");
                                 }
 
 

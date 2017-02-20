@@ -59,7 +59,7 @@ import java.util.Random;
 public class CreateAdventuresActivity extends Activity implements View.OnTouchListener, View.OnClickListener {
 
     EditText name, address, about, paypal;
-    ImageView individual, group, licensed, nlicensed;
+    TextView individual, group, licensed, nlicensed;
     ImageView back_button, document_pic;
     Button submit;
     RelativeLayout upload_id;
@@ -96,10 +96,10 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
         name_error_txtView = (TextView) findViewById(R.id.name_error_txtView);
         about_error_txtView = (TextView) findViewById(R.id.about_error_txtView);
 
-        individual = (ImageView) findViewById(R.id.chk_individual_create);
-        group = (ImageView) findViewById(R.id.chk_group_create);
-        licensed = (ImageView) findViewById(R.id.chk_licensed_create);
-        nlicensed = (ImageView) findViewById(R.id.chk_notlicensed_create);
+        individual = (TextView) findViewById(R.id.ind_txtView);
+        group = (TextView) findViewById(R.id.gp_txtView);
+        licensed = (TextView) findViewById(R.id.li_txtView);
+        nlicensed = (TextView) findViewById(R.id.nl_txtView);
 
 
         back_button = (ImageView) findViewById(R.id.back_button_create);
@@ -129,6 +129,7 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
         address.setOnTouchListener(this);
         about.setOnTouchListener(this);
         paypal.setOnTouchListener(this);
+        back_button.setOnClickListener(this);
 
     }
 
@@ -188,31 +189,66 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
         int id = view.getId();
 
         if (id == R.id.individual_layout) {
-            individual.setImageResource(R.drawable.unselected);
-            group.setImageResource(R.drawable.selected);
+            individual.setTextColor(getResources().getColor(R.color.White));
+            group.setTextColor(getResources().getColor(R.color.Black));
             usertype = "Individual";
-
+            individual_layout.setBackgroundResource(R.drawable.red_button_back);
+            group_layout.setBackgroundResource(R.drawable.red_border_button);
         }
 
         if (id == R.id.group_layout) {
-            individual.setImageResource(R.drawable.selected);
-            group.setImageResource(R.drawable.unselected);
+            individual.setTextColor(getResources().getColor(R.color.Black));
+            group.setTextColor(getResources().getColor(R.color.White));
             usertype = "Group";
-
+            individual_layout.setBackgroundResource(R.drawable.red_border_button);
+            group_layout.setBackgroundResource(R.drawable.red_button_back);
 
         }
 
         if (id == R.id.license_layout) {
-            licensed.setImageResource(R.drawable.selected);
-            nlicensed.setImageResource(R.drawable.unselected);
+            licensed.setTextColor(getResources().getColor(R.color.White));
+            nlicensed.setTextColor(getResources().getColor(R.color.Black));
             license = "Licensed";
-
+            licence_layout.setBackgroundResource(R.drawable.red_button_back);
+            not_liscence_layout.setBackgroundResource(R.drawable.red_border_button);
         }
         if (id == R.id.not_license_layout) {
-            licensed.setImageResource(R.drawable.unselected);
-            nlicensed.setImageResource(R.drawable.selected);
+            licensed.setTextColor(getResources().getColor(R.color.Black));
+            nlicensed.setTextColor(getResources().getColor(R.color.White));
             license = "Not Licensed";
+            licence_layout.setBackgroundResource(R.drawable.red_border_button);
+            not_liscence_layout.setBackgroundResource(R.drawable.red_button_back);
+        }
+        if (id == R.id.ind_txtView) {
+            individual.setTextColor(getResources().getColor(R.color.White));
+            group.setTextColor(getResources().getColor(R.color.Black));
+            usertype = "Individual";
+            individual_layout.setBackgroundResource(R.drawable.red_button_back);
+            group_layout.setBackgroundResource(R.drawable.red_border_button);
+        }
 
+        if (id == R.id.gp_txtView) {
+            individual.setTextColor(getResources().getColor(R.color.Black));
+            group.setTextColor(getResources().getColor(R.color.White));
+            usertype = "Group";
+            individual_layout.setBackgroundResource(R.drawable.red_border_button);
+            group_layout.setBackgroundResource(R.drawable.red_button_back);
+
+        }
+
+        if (id == R.id.li_txtView) {
+            licensed.setTextColor(getResources().getColor(R.color.White));
+            nlicensed.setTextColor(getResources().getColor(R.color.Black));
+            license = "Licensed";
+            licence_layout.setBackgroundResource(R.drawable.red_button_back);
+            not_liscence_layout.setBackgroundResource(R.drawable.red_border_button);
+        }
+        if (id == R.id.nl_txtView) {
+            licensed.setTextColor(getResources().getColor(R.color.Black));
+            nlicensed.setTextColor(getResources().getColor(R.color.White));
+            license = "Not Licensed";
+            licence_layout.setBackgroundResource(R.drawable.red_border_button);
+            not_liscence_layout.setBackgroundResource(R.drawable.red_button_back);
         }
         if (id == R.id.back_button_create) {
             finish();

@@ -73,7 +73,7 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
     TextView trending_txt;
     String lat, lng;
     Dialog dialog2;
-
+    TextView cancel_txtView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +95,13 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
                 i.putExtra("user", "non user");
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        });
+        cancel_txtView=(TextView)findViewById(R.id.cancel_txtView);
+        cancel_txtView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAutocompleteView.setText("");
             }
         });
         //-------------------------------Call AutocompleteTxtView-----------------
@@ -121,6 +128,7 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
         mAutocompleteView.setThreshold(1);
 
         mAutocompleteView.setAdapter(mAdapter);
+        mAutocompleteView.setDropDownWidth(getResources().getDisplayMetrics().widthPixels);
 
     }
 
@@ -131,7 +139,9 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
             @Override
             public void onResponse(String s) {
                 dialog2.dismiss();
-                Log.e("Categoryyyy", s);
+
+
+                Log.e("all data", s);
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
@@ -146,7 +156,7 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
 
                             HashMap<String, String> details = new HashMap<>();
 
-                            details.put(GlobalConstants.EVENT_ID, arrobj.getString("id"));
+                            details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.EVENT_ID));
                             details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
                             details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
                             details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
@@ -162,9 +172,10 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
                             event_list.add(details);
 
                         }
-                        global.getEvent_list().clear();
-                        global.setEvent_list(event_list);
-                        search_listView.setAdapter(new Adventure_list_adapter(SearchByGoogleApiLocation.this, global.getEvent_list()));
+
+                        global.setSearchList(event_list);
+                        Log.e("list size",String.valueOf(global.getSearchList().size()));
+                        search_listView.setAdapter(new Adventure_list_adapter(SearchByGoogleApiLocation.this, global.getSearchList()));
 
                     }
                 } catch (JSONException e) {
@@ -191,7 +202,7 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
                 params.put(GlobalConstants.LONGITUDE, lng);
                 params.put(GlobalConstants.RESPONSE_TYPE, "list");
                 params.put("page", "1");
-                params.put("perpage", "20");
+                params.put("perpage", "10");
                 params.put("action", GlobalConstants.GET_EVENT_FILTER);
 
                 Log.e("paramsssssssss", params.toString());
@@ -273,10 +284,11 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
             String latlong = place.getLatLng().toString().split(":")[1];
             String completeLatLng = latlong.substring(1, latlong.length() - 1);
             // Toast.makeText(MapsActivity.this,completeLatLng,Toast.LENGTH_SHORT).show();
-            String lat = completeLatLng.split(",")[0];
+             lat = completeLatLng.split(",")[0];
             lat = lat.substring(1, lat.length());
-            String lng = completeLatLng.split(",")[1];
-
+             lng = completeLatLng.split(",")[1];
+            dialogWindow();
+            searchMethod();
             places.release();
         }
     };

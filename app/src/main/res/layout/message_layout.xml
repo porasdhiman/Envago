@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main_layout"
      >
 
     <RelativeLayout
@@ -12,9 +13,9 @@
 
         <ImageView
             android:id="@+id/search_button"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="14dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+android:padding="15dp"
             android:src="@drawable/back_button" />
         <TextView
             android:layout_width="wrap_content"
@@ -73,15 +74,15 @@
             android:textColorHint="#222222"
             android:textSize="12sp" />
 
-        <Button
+        <TextView
             android:id="@+id/send"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-
+android:textColor="@color/textcolor"
+            android:text="Send"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/send" />
+            android:layout_marginRight="10dp"/>
     </RelativeLayout>
     <View android:id="@+id/view"
         android:layout_width="match_parent"

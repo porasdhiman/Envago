@@ -35,9 +35,9 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:textSize="17sp"
+        android:textSize="14sp"
         android:background="@null"
-
+android:gravity="top"
         android:hint="Describe the adventure including activities and daily itinerary if applicable."/>
     <RelativeLayout
         android:layout_width="match_parent"

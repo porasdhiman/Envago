@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/back_from_login"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/backward" />
 
@@ -23,7 +23,7 @@
         android:layout_marginTop="20dp"
         android:text="Sign In"
         android:textColor="@android:color/black"
-        android:textSize="30sp" />
+        android:textSize="28sp" />
 
     <TextView
         android:id="@+id/email_txtView"
@@ -42,7 +42,7 @@
     android:layout_below="@+id/email_txtView"
     android:background="@null"
     android:inputType="textEmailAddress"
-    android:textSize="12sp" />
+    android:textSize="14sp" />
     <TextView
         android:id="@+id/mail_error_txtView"
         android:layout_width="match_parent"
@@ -52,14 +52,14 @@
         android:inputType="textEmailAddress"
         android:textColor="#ff0000"
         android:visibility="gone"
-        android:textSize="12sp" />
+        android:textSize="14sp" />
 
     <View
         android:id="@+id/view1"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_below="@+id/mail_error_txtView"
-        android:background="@android:color/darker_gray" />
+        android:background="@color/LightGrey" />
 
     <RelativeLayout
         android:id="@+id/pass_and_show_layout"
@@ -100,7 +100,7 @@
             android:layout_height="40dp"
             android:background="@null"
             android:inputType="textPassword"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
 
     </RelativeLayout>
@@ -113,14 +113,14 @@
         android:inputType="textEmailAddress"
         android:visibility="gone"
         android:textColor="#ff0000"
-        android:textSize="12sp" />
+        android:textSize="14sp" />
 
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_below="@+id/password_error_txtView"
-        android:background="@android:color/darker_gray" />
+        android:background="@color/LightGrey" />
 
     <TextView
         android:id="@+id/forgot_txtView"
@@ -131,7 +131,7 @@
         android:layout_marginTop="20dp"
         android:text="Forgot password?"
         android:textColor="@android:color/darker_gray"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/login_button"

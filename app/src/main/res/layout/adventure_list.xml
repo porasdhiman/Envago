@@ -12,13 +12,13 @@
         android:background="@color/textcolor"
         android:id="@+id/main_heading">
 
-        <ImageView
+        <!--<ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/search"
             android:id="@+id/search_button"
             android:layout_alignParentRight="true"
-            android:layout_margin="14dp"/>
+            android:layout_margin="14dp"/>-->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -54,6 +54,7 @@
         android:scrollbars="none">
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -72,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="8dp"
-                    android:text="Goning to"
+                    android:text="Going to"
                     android:textColor="@color/textcolor"
                     android:textSize="18sp" />
 
@@ -297,7 +298,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Wish list"
+                    android:text="Wishlist"
                     android:layout_marginLeft="8dp"
                     android:textColor="@color/textcolor"
                     android:textSize="18sp" />

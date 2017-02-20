@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -98,6 +99,7 @@ public class ChatListAdapter extends BaseAdapter {
             holder.chat_name = (TextView) view.findViewById(R.id.chat_name);
             holder.chat_address_name = (TextView) view.findViewById(R.id.chat_address_name);
             holder.chat_txt=(TextView)view.findViewById(R.id.chat_txt) ;
+            holder.main_layout=(RelativeLayout)view.findViewById(R.id.main_layout);
             view.setTag(holder);
             holder.chat_img.setTag(holder);
 
@@ -105,7 +107,7 @@ public class ChatListAdapter extends BaseAdapter {
         } else {
             holder = (Holder) view.getTag();
         }
-
+Fonts.overrideFonts(applicationContext,holder.main_layout);
         url = GlobalConstants.IMAGE_URL + images.get(i).get("image");
         holder.chat_txt.setText(images.get(i).get("message"));
         holder.chat_name.setText(images.get(i).get(GlobalConstants.EVENT_NAME));
@@ -134,7 +136,7 @@ public class ChatListAdapter extends BaseAdapter {
         ImageView chat_img ;
         TextView chat_name,chat_address_name,chat_txt;
 
-
+RelativeLayout main_layout;
     }
 
     private void initImageLoader() {

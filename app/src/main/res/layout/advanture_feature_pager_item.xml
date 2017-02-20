@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
+android:id="@+id/main_layout"
 android:padding="8dp"
     >
 
@@ -40,8 +40,8 @@ android:padding="8dp"
 
         <ImageView
             android:id="@+id/heart_img"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_alignParentRight="true"
             android:layout_margin="12dp"
             android:src="@drawable/heart" />
@@ -74,6 +74,7 @@ android:padding="8dp"
             android:singleLine="true"
             android:textColor="@color/Black"
             android:textSize="20sp"
+            android:layout_marginRight="30dp"
             android:textAllCaps="true"/>
 
 
@@ -82,7 +83,7 @@ android:padding="8dp"
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -91,9 +92,9 @@ android:padding="8dp"
 
             <ImageView
                 android:id="@+id/view_date_img"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:src="@drawable/clock" />
 
@@ -102,7 +103,7 @@ android:padding="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="12dp"
                 android:layout_toRightOf="@+id/view_date_img"
                 android:text="22 jun"
                 android:textSize="13dp" />
@@ -111,12 +112,14 @@ android:padding="8dp"
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp">
+            android:layout_marginLeft="35dp"
+            >
 
             <ImageView
                 android:id="@+id/view_location_img"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_centerVertical="true"
 
                 android:layout_alignParentLeft="true"
                 android:src="@drawable/location" />
@@ -126,7 +129,7 @@ android:padding="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="12dp"
                 android:layout_toRightOf="@+id/view_location_img"
                 android:text="Bosnia and Herzegovina"
                 android:singleLine="true"

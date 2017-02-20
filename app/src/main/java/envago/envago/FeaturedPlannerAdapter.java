@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -83,10 +84,11 @@ public class FeaturedPlannerAdapter extends BaseAdapter {
             holder.Planner_name = (TextView) convertView.findViewById(R.id.planner_txt);
             holder.planner_address = (TextView) convertView.findViewById(R.id.planner_address_txt);
             holder.planer_stars = (RatingBar) convertView.findViewById(R.id.planer_stars);
+            holder.main_layout = (RelativeLayout) convertView.findViewById(R.id.main_layout);
             LayerDrawable stars = (LayerDrawable) holder.planer_stars.getProgressDrawable();
             stars.getDrawable(2).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
-            stars.getDrawable(0).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
-            stars.getDrawable(1).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+          /*  stars.getDrawable(0).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+            stars.getDrawable(1).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);*/
             convertView.setTag(holder);
 
 
@@ -94,7 +96,7 @@ public class FeaturedPlannerAdapter extends BaseAdapter {
             holder = (Holder) convertView.getTag();
         }
 
-
+Fonts.overrideFonts(context,holder.main_layout);
             /*if (list.get(position).get("rating").contains(".")) {
                 // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
                 holder.planer_stars.setRating(Float.parseFloat(list.get(position).get("rating").split("0")[1].replace(".", "")));
@@ -135,6 +137,7 @@ public class FeaturedPlannerAdapter extends BaseAdapter {
         ImageView planner_img;
         TextView Planner_name, planner_address;
         RatingBar planer_stars;
+        RelativeLayout main_layout;
     }
 
     private void initImageLoader() {

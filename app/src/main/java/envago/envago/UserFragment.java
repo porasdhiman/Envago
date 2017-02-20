@@ -62,12 +62,13 @@ public class UserFragment extends Fragment {
     ImageView profilepic;
     Dialog camgllry;
     TextView settings, pricing_layout, privacy, terms;
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
+    SharedPreferences preferences,sp;
+    SharedPreferences.Editor editor,ed;
     TextView username;
     Dialog dialog2;
     String selectedImagePath = "";
 TextView logout_txtView;
+    LinearLayout main_layout;
 
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -83,10 +84,12 @@ TextView logout_txtView;
 
         preferences = getActivity().getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         editor = preferences.edit();
+        sp = getActivity().getSharedPreferences(GlobalConstants.CREATE_DATA, Context.MODE_PRIVATE);
+        ed = sp.edit();
 
 
-
-
+        main_layout=(LinearLayout)v.findViewById(R.id.main_layout);
+Fonts.overrideFonts(getActivity(),main_layout);
         profilepic = (ImageView) v.findViewById(R.id.profile_img);
         settings = (TextView) v.findViewById(R.id.settings_txtView);
         pricing_layout = (TextView) v.findViewById(R.id.pricing_policy_txtView);
@@ -101,6 +104,8 @@ TextView logout_txtView;
 
                 editor.clear();
                 editor.commit();
+                ed.clear();
+                ed.commit();
                 Intent intent = new Intent(getActivity(), ActivityLogin.class);
                 startActivity(intent);
                 getActivity().finish();

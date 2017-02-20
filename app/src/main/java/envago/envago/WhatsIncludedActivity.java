@@ -1,12 +1,13 @@
 package envago.envago;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 
 /**
@@ -19,7 +20,8 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
     Button submit_button;
     String value = "";
     boolean is_trans = false, is_flight = false, is_acc = false, is_tent = false, is_gear = false, is_meals = false;
-
+SharedPreferences sp;
+    SharedPreferences.Editor ed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,8 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
+        sp=getSharedPreferences(GlobalConstants.CREATE_DATA, Context.MODE_PRIVATE);
+        ed=sp.edit();
         global = (Global) getApplicationContext();
         init();
     }
@@ -47,6 +51,67 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
         gear_checkBox.setOnClickListener(this);
         meals_checkBox.setOnClickListener(this);
         submit_button.setOnClickListener(this);
+        if(!sp.getString("trans","0").equalsIgnoreCase("0")){
+            is_trans = true;
+
+
+            trans_checkBox.setImageResource(R.drawable.selected);
+            if (value.equalsIgnoreCase("")) {
+                value = "Transportation";
+            } else {
+                value = value + ",Transportation";
+            }
+        }
+        if(!sp.getString("flight","0").equalsIgnoreCase("0")){
+            is_flight = true;
+
+            flight_checkbox.setImageResource(R.drawable.selected);
+            if (value.equalsIgnoreCase("")) {
+                value = "Flight";
+            } else {
+                value = value + ",Flight";
+            }
+        }
+        if(!sp.getString("Accomodation","0").equalsIgnoreCase("0")){
+            is_acc = true;
+
+            acc_checkBox.setImageResource(R.drawable.selected);
+            if (value.equalsIgnoreCase("")) {
+                value = "Accomodation";
+            } else {
+                value = value + ",Accomodation";
+            }
+        }
+        if(!sp.getString("tent","0").equalsIgnoreCase("0")){
+            is_tent = true;
+
+            tent_checkBox.setImageResource(R.drawable.selected);
+            if (value.equalsIgnoreCase("")) {
+                value = "Tent";
+            } else {
+                value = value + ",Tent";
+            }
+        }
+        if(!sp.getString("gear","0").equalsIgnoreCase("0")){
+
+            is_gear = true;
+            gear_checkBox.setImageResource(R.drawable.selected);
+            if (value.equalsIgnoreCase("")) {
+                value = "Gear";
+            } else {
+                value = value + ",Gear";
+            }
+        }
+        if(!sp.getString("meal","0").equalsIgnoreCase("0")){
+
+            is_meals = true;
+            meals_checkBox.setImageResource(R.drawable.selected);
+            if (value.equalsIgnoreCase("")) {
+                value = "Meal";
+            } else {
+                value = value + ",Meal";
+            }
+        }
     }
 
     @Override
@@ -56,6 +121,8 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
                 if (is_trans == false) {
                     is_trans = true;
                     global.setTransportataion(1);
+
+
                     trans_checkBox.setImageResource(R.drawable.selected);
                     if (value.equalsIgnoreCase("")) {
                         value = "Transportation";
@@ -64,6 +131,8 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
                     }
                 } else {
                     global.setTransportataion(0);
+
+
                     is_trans = false;
                     trans_checkBox.setImageResource(R.drawable.unselected);
                     value.replace("Transportation", "");
@@ -73,6 +142,8 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
                 if (is_flight == false) {
                     is_flight = true;
                     global.setFlight(1);
+
+
                     flight_checkbox.setImageResource(R.drawable.selected);
                     if (value.equalsIgnoreCase("")) {
                         value = "Flight";
@@ -82,6 +153,7 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
                 } else {
                     is_flight = false;
                     global.setFlight(0);
+
                     flight_checkbox.setImageResource(R.drawable.unselected);
                     value.replace("Flight", "");
                 }
@@ -90,6 +162,8 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
                 if (is_acc == false) {
                     is_acc = true;
                     global.setAccomodation(1);
+
+
                     acc_checkBox.setImageResource(R.drawable.selected);
                     if (value.equalsIgnoreCase("")) {
                         value = "Accomodation";
@@ -98,6 +172,7 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
                     }
                 } else {
                     global.setAccomodation(0);
+
                     is_acc = false;
                     acc_checkBox.setImageResource(R.drawable.unselected);
                     value.replace("Accomodation", "");
@@ -107,6 +182,8 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
                 if (is_tent == false) {
                     is_tent = true;
                     global.setTent(1);
+
+
                     tent_checkBox.setImageResource(R.drawable.selected);
                     if (value.equalsIgnoreCase("")) {
                         value = "Tent";
@@ -115,6 +192,7 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
                     }
                 } else {
                     global.setTent(0);
+
                     is_tent = false;
                     tent_checkBox.setImageResource(R.drawable.unselected);
                     value.replace("Tent", "");
@@ -123,6 +201,8 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
             case R.id.gear_checkBox:
                 if (is_gear == false) {
                     global.setGear(1);
+
+
                     is_gear = true;
                     gear_checkBox.setImageResource(R.drawable.selected);
                     if (value.equalsIgnoreCase("")) {
@@ -132,6 +212,7 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
                     }
                 } else {
                     global.setGear(0);
+
                     is_gear = false;
                     gear_checkBox.setImageResource(R.drawable.unselected);
                     value.replace("Tent", "");
@@ -140,6 +221,8 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
             case R.id.meals_checkBox:
                 if (is_meals == false) {
                     global.setMeal(1);
+
+
                     is_meals = true;
                     meals_checkBox.setImageResource(R.drawable.selected);
                     if (value.equalsIgnoreCase("")) {
@@ -149,6 +232,7 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
                     }
                 } else {
                     global.setMeal(0);
+
                     is_meals = false;
                     meals_checkBox.setImageResource(R.drawable.unselected);
                     value.replace("Meal", "");
@@ -156,6 +240,14 @@ public class WhatsIncludedActivity extends Activity implements View.OnClickListe
                 break;
             case R.id.submit_button:
                 global.setWhtsicludedString(value);
+                ed.putString("trans",String.valueOf(global.getTransportataion()));
+                ed.putString("flight",String.valueOf(global.getFlight()));
+                ed.putString("Accomodation",String.valueOf(global.getAccomodation()));
+                ed.putString("tent",String.valueOf(global.getTent()));
+                ed.putString("gear",String.valueOf(global.getGear()));
+                ed.putString("meal",String.valueOf(global.getMeal()));
+                ed.putString(GlobalConstants.WHATS_INCLUDED, global.getWhtsicludedString());
+                ed.commit();
                 finish();
                 break;
         }

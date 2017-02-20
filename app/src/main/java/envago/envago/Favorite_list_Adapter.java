@@ -20,10 +20,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -81,12 +78,14 @@ public class Favorite_list_Adapter extends PagerAdapter {
         ImageView view_img = (ImageView) itemView.findViewById(R.id.view_img);
         ImageView heart_img = (ImageView) itemView.findViewById(R.id.heart_img);
         TextView start_event_txtView = (TextView) itemView.findViewById(R.id.start_event_txtView);
+        LinearLayout main_layout=(LinearLayout)itemView.findViewById(R.id.main_layout);
+        Fonts.overrideFonts(mContext,main_layout);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent j=new Intent(mContext,DetailsActivity.class);
                 j.putExtra(GlobalConstants.EVENT_ID,mResources.get(i).get(GlobalConstants.EVENT_ID));
-                j.putExtra("user","no user");
+                j.putExtra("user","no user wish");
                 mContext.startActivity(j);
 
             }
@@ -132,7 +131,7 @@ public class Favorite_list_Adapter extends PagerAdapter {
 
         }*/
 
-        Calendar c = Calendar.getInstance();
+       /* Calendar c = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy/MM/dd");
         String dateafter = dateFormat.format(c.getTime());
@@ -150,7 +149,7 @@ public class Favorite_list_Adapter extends PagerAdapter {
             start_event_txtView.setVisibility(View.VISIBLE);
         } else {
             start_event_txtView.setVisibility(View.GONE);
-        }
+        }*/
 
         container.addView(itemView);
 

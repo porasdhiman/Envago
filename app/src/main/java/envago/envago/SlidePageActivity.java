@@ -170,7 +170,7 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
                 Intent j = new Intent(SlidePageActivity.this, ActivityLogin.class);
                 startActivity(j);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                finish();
+finish();
 
                 break;
             case R.id.slider_sign_in_layout:
@@ -178,7 +178,7 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
                 Intent i = new Intent(SlidePageActivity.this, RegisterActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                finish();
+
                 break;
             case R.id.slider_fb_btn:
                 Login_TV.performClick();
@@ -266,6 +266,8 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
                                 ed.putString(GlobalConstants.USERID, data.getString(GlobalConstants.USERID));
                                 ed.commit();
                                 Intent intent = new Intent(SlidePageActivity.this, Tab_Activity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 finish();

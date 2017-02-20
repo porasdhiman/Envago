@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/main_layout">
     <RelativeLayout
         android:id="@+id/main_heading"
         android:layout_width="match_parent"
@@ -20,14 +21,13 @@
 
         <ImageView
             android:id="@+id/back_button_create"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/back_button"
-            android:layout_marginLeft="14dp"
-            android:layout_alignBottom="@+id/title"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="14dp" />
+
+            android:padding="15dp"
+
+             />
 
     </RelativeLayout>
 
@@ -37,17 +37,17 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:text="Dates and schedules"
-        android:textColor="#000"
-        android:textSize="30sp" />
+        android:textColor="@color/textcolor"
+        android:textSize="28sp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
 
-        android:text="Set dates for adventurers to book. You \n can set a specific date/s or a full season \n to book from."
+        android:text="Set dates for adventures to book. You \n can set a specific date/s or a full season \n to book from."
         android:textColor="#000"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
     <RelativeLayout
         android:id="@+id/one_time_advanture_layout"
         android:layout_width="match_parent"
@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="One time Adventure"
-            android:textSize="17sp"
+            android:textSize="15sp"
             android:textColor="@color/Black"
             android:layout_alignParentLeft="true"/>
         <ImageView
@@ -69,12 +69,23 @@
             android:layout_alignParentRight="true"/>
 
     </RelativeLayout>
+    <TextView
+        android:id="@+id/one_time_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text=""
+        android:textColor="#000"
+        android:textSize="12sp"
+        android:visibility="gone"
+        android:layout_marginTop="5dp"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/Gray"/>
+        android:layout_height="0.5dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/LightGrey"/>
     <RelativeLayout
         android:id="@+id/full_season_layout"
         android:layout_width="match_parent"
@@ -85,8 +96,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Full season"
-            android:textSize="17sp"
+            android:text="Daily adventures (full season)"
+            android:textSize="15sp"
             android:textColor="@color/Black"
             android:layout_alignParentLeft="true"/>
         <ImageView
@@ -96,12 +107,23 @@
             android:layout_alignParentRight="true"/>
 
     </RelativeLayout>
+    <TextView
+        android:id="@+id/daily_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text=""
+        android:textColor="#000"
+        android:textSize="12sp"
+        android:visibility="gone"
+        android:layout_marginTop="5dp"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/Gray"/>
+        android:layout_height="0.5dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/LightGrey"/>
     <RelativeLayout
         android:id="@+id/repeated_dates_adventure_layout"
         android:layout_width="match_parent"
@@ -112,8 +134,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Repeated dates for the same adventure"
-            android:textSize="17sp"
+            android:text="Selected dates"
+            android:textSize="15sp"
             android:textColor="@color/Black"
             android:layout_alignParentLeft="true"/>
         <ImageView
@@ -123,12 +145,23 @@
             android:layout_alignParentRight="true"/>
 
     </RelativeLayout>
+    <TextView
+        android:id="@+id/repeate_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text=""
+        android:textColor="#000"
+        android:textSize="12sp"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/Gray"/>
+        android:layout_height="0.5dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/LightGrey"/>
 
 
 </LinearLayout>

@@ -57,9 +57,9 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
                 android:background="@null"
-                android:hint="The Best Way Around The Island"
+                android:hint="Name"
                 android:inputType="text"
-
+android:textColor="@color/Black"
                 android:textSize="14sp" />
 
             <TextView
@@ -92,6 +92,7 @@
                 android:layout_marginTop="10dp"
                 android:text="Difficulty"
                 android:textSize="14sp"
+                android:textAllCaps="true"
                 android:textStyle="bold" />
 
             <SeekBar
@@ -175,7 +176,7 @@ android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
-                android:text="CATGORY"
+                android:text="CATEGORY"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -234,6 +235,8 @@ android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@null"
                 android:hint="Please Select"
+                android:textColor="@color/Black"
+
                 android:inputType="textEmailAddress"
                 android:textSize="14sp" />
 
@@ -279,7 +282,9 @@ android:gravity="center"
                 android:layout_marginTop="10dp"
              android:gravity="center_vertical"
                 android:background="@null"
-                android:text="Please Select"
+                android:hint="Please Select"
+                android:textColor="@color/Black"
+
                 android:textSize="14sp" />
 
             <TextView
@@ -310,7 +315,7 @@ android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
-                android:text="ADVENTAURE DESCRIPTION"
+                android:text="ADVENTURE DESCRIPTION"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -323,9 +328,11 @@ android:gravity="center"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
                 android:background="@null"
-                android:text="Write a description"
+                android:hint="Write a description"
                 android:inputType="textEmailAddress"
                 android:gravity="center_vertical"
+                android:textColor="@color/Black"
+
                 android:singleLine="true"
                 android:textSize="14sp" />
 
@@ -357,7 +364,7 @@ android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
-                android:text="PLACES/EVENTS"
+                android:text="PLACES/EVENT"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -372,6 +379,8 @@ android:gravity="center"
                 android:background="@null"
                 android:hint="Please Select"
                 android:inputType="number"
+                android:textColor="@color/Black"
+
                 android:textSize="14sp" />
 
             <TextView
@@ -415,9 +424,10 @@ android:gravity="center"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
                 android:background="@null"
+                android:textColor="@color/Black"
 
                 android:hint="$"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 android:textSize="14sp" />
 
             <TextView
@@ -507,6 +517,8 @@ android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@null"
                 android:hint="Write something"
+                android:textColor="@color/Black"
+
                 android:inputType="textEmailAddress"
                 android:textSize="14sp" />
 
@@ -552,6 +564,8 @@ android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@null"
                 android:text="Write something"
+                android:textColor="@color/Black"
+
                 android:inputType="textEmailAddress"
                 android:textSize="14sp" />
 

@@ -59,49 +59,49 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <EditText
+                <TextView
                     android:id="@+id/no_of_days_txtView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
+                    android:textColor="@color/Black"
+                    android:textSize="14sp"
                     android:background="@null"
-                    android:hint="Number of days"
-                    android:inputType="number"
-                    android:textColor="@color/Gray"
-                    android:textSize="14sp" />
 
+                    android:text="1 day advanture"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:background="@color/Gray"
                     android:layout_marginTop="5dp"
-                    android:background="@color/Gray" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp">
-
+                >
                 <TextView
                     android:id="@+id/session_spinner"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-
+                    android:textColor="@color/Gray"
+                    android:text="Start Date"
 
                     ></TextView>
-
                 <TextView
                     android:id="@+id/year_spinner"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:gravity="right"
+                    android:layout_alignParentRight="true"
+                    android:text="End Date"
 
                     ></TextView>
 

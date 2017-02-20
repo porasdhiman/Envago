@@ -2,6 +2,7 @@ package envago.envago;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -35,13 +36,14 @@ public class UserViewAdapter extends BaseAdapter {
     DisplayImageOptions options;
     String url;
     int remeanningPlace;
-    String type;
+    String type,event_name;
 
-    UserViewAdapter(Context c, int size, ArrayList<HashMap<String, String>> list) {
+    UserViewAdapter(Context c, int size, ArrayList<HashMap<String, String>> list,String event_name) {
         this.c = c;
         this.size = size;
         this.list = list;
         this.type = type;
+        this.event_name=event_name;
         inflator = LayoutInflater.from(c);
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
@@ -70,7 +72,7 @@ public class UserViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         convertView = inflator.inflate(R.layout.user_view_item, null);
 
@@ -91,6 +93,15 @@ public class UserViewAdapter extends BaseAdapter {
                 } else {
                     user_img.setImageDrawable(drawable2);
                 }
+                user_img.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent about = new Intent(c, AboutPlannerActivity.class);
+                        about.putExtra(GlobalConstants.ID, list.get(position).get(GlobalConstants.ID));
+                        about.putExtra(GlobalConstants.EVENT_NAME, event_name);
+                        c.startActivity(about);
+                    }
+                });
             }
 
         return convertView;

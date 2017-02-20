@@ -14,9 +14,9 @@
 
         <ImageView
             android:id="@+id/search_button"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="14dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="15dp"
             android:src="@drawable/back_button"  />
 
         <TextView
@@ -35,6 +35,7 @@
             android:layout_height="35dp"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
+
             android:src="@drawable/map"
             android:visibility="gone"/>
 

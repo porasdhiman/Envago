@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,10 +34,7 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -116,6 +114,7 @@ public class Adventure_list_adapter extends BaseAdapter {
             holder.advanture_location = (TextView) view.findViewById(R.id.view_advanture_location_txt);
             holder.heart_img = (ImageView) view.findViewById(R.id.heart_img);
             holder.start_event_txtView = (TextView) view.findViewById(R.id.start_event_txtView);
+            holder.main_layout=(LinearLayout)view.findViewById(R.id.main_layout);
             view.setTag(holder);
             holder.heart_img.setTag(holder);
 
@@ -123,7 +122,7 @@ public class Adventure_list_adapter extends BaseAdapter {
         } else {
             holder = (Adventure_holder) view.getTag();
         }
-
+Fonts.overrideFonts(applicationContext,holder.main_layout);
         url = GlobalConstants.IMAGE_URL + images.get(i).get(GlobalConstants.EVENT_IMAGES);
         holder.ad_name.setText(images.get(i).get(GlobalConstants.EVENT_NAME));
         holder.price .setText("$" + images.get(i).get(GlobalConstants.EVENT_PRICE));
@@ -184,7 +183,7 @@ public class Adventure_list_adapter extends BaseAdapter {
         });
 
 
-        Calendar c = Calendar.getInstance();
+      /*  Calendar c = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy/MM/dd");
         String dateafter = dateFormat.format(c.getTime());
@@ -202,7 +201,7 @@ public class Adventure_list_adapter extends BaseAdapter {
             holder.start_event_txtView.setVisibility(View.VISIBLE);
         } else {
             holder.start_event_txtView.setVisibility(View.GONE);
-        }
+        }*/
 
         return view;
     }
@@ -213,6 +212,7 @@ public class Adventure_list_adapter extends BaseAdapter {
         TextView ad_name;
         TextView advanture_date, start_event_txtView;
         TextView advanture_location;
+        LinearLayout main_layout;
 
     }
 

@@ -13,14 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -44,8 +43,9 @@ public class MultiPhotoSelectActivity extends BaseActivity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
-Global global;
+    Global global;
     ImageView back_button_create;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +54,8 @@ Global global;
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
-        global=(Global)getApplicationContext();
-        back_button_create=(ImageView)findViewById(R.id.back_button_create);
+        global = (Global) getApplicationContext();
+        back_button_create = (ImageView) findViewById(R.id.back_button_create);
         back_button_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,9 +114,14 @@ Global global;
     public void btnChoosePhotosClick(View v) {
 
         ArrayList<String> selectedItems = imageAdapter.getCheckedItems();
-        global.setListImg(selectedItems);
-        Log.d(MultiPhotoSelectActivity.class.getSimpleName(), "Selected Items: " + selectedItems.toString());
-        finish();
+        if(selectedItems.size()>4){
+            Toast.makeText(MultiPhotoSelectActivity.this,"You can select only four image",Toast.LENGTH_SHORT).show();
+        }else{
+            global.setListImg(selectedItems);
+            Log.d(MultiPhotoSelectActivity.class.getSimpleName(), "Selected Items: " + selectedItems.toString());
+            finish();
+        }
+
 
     }
 
@@ -215,15 +220,15 @@ Global global;
             imageLoader.displayImage("file://" + imageUrls.get(position), imageView, options, new SimpleImageLoadingListener() {
 
                 public void onLoadingComplete(Bitmap loadedImage) {
-                    Animation anim = AnimationUtils.loadAnimation(MultiPhotoSelectActivity.this, R.anim.fade_in);
-                    imageView.setAnimation(anim);
-                    anim.start();
+
                 }
             });
 
             mCheckBox.setTag(position);
+
             mCheckBox.setChecked(mSparseBooleanArray.get(position));
             mCheckBox.setOnCheckedChangeListener(mCheckedChangeListener);
+
 
             return convertView;
         }
@@ -234,6 +239,7 @@ Global global;
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // TODO Auto-generated method stub
                 mSparseBooleanArray.put((Integer) buttonView.getTag(), isChecked);
+
             }
         };
     }

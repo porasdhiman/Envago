@@ -48,7 +48,7 @@ public class AccordingToCountry extends Activity{
     Global global;
     Dialog dialog2;
 
-    ImageView list_back_img;
+    ImageView list_back_img,search_btn;
 
 
     @Override
@@ -69,6 +69,7 @@ public class AccordingToCountry extends Activity{
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
         // Log.e("Status", getIntent().getExtras().getString("status"));
         list_back_img=(ImageView)findViewById(R.id.list_back_img);
+        search_btn=(ImageView)findViewById(R.id.search_button);
         String category_name = getIntent().getExtras().getString(GlobalConstants.EVENT_NAME);
 
 
@@ -84,10 +85,16 @@ public class AccordingToCountry extends Activity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i=new Intent(AccordingToCountry.this,DetailsActivity.class);
-                i.putExtra(GlobalConstants.EVENT_ID,event_list.get(position).get(GlobalConstants.ID));
+                i.putExtra(GlobalConstants.EVENT_ID,event_list.get(position).get(GlobalConstants.EVENT_ID));
                 i.putExtra("user","non user");
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        });
+        search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
