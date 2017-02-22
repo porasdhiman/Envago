@@ -3,7 +3,10 @@ package envago.envago;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
+import android.os.ParcelFileDescriptor;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import it.sephiroth.android.library.imagezoom.ImageViewTouch;
@@ -33,11 +39,12 @@ public class ViewPagerAdapter extends PagerAdapter {
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
     String url;
+    String url_value;
 
-
-    public ViewPagerAdapter(Context mContext, ArrayList<String> mResources) {
+    public ViewPagerAdapter(Context mContext, ArrayList<String> mResources, String url_value) {
         this.mContext = mContext;
         this.mResources = mResources;
+        this.url_value = url_value;
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
                 .showStubImage(0)        //	Display Stub Image
@@ -63,23 +70,31 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         ImageViewTouch imageView = (ImageViewTouch) itemView.findViewById(R.id.img_pager_item);
         imageView.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
-//imageView.setImageURI(Uri.fromFile(new File(mResources.get(position))));
-        url = mResources.get(position);
-        if (url != null && !url.equalsIgnoreCase("null")
-                && !url.equalsIgnoreCase("")) {
-            imageLoader.displayImage(url, imageView, options,
-                    new SimpleImageLoadingListener() {
-                        @Override
-                        public void onLoadingComplete(String imageUri,
-                                                      View view, Bitmap loadedImage) {
-                            super.onLoadingComplete(imageUri, view,
-                                    loadedImage);
 
-                        }
-                    });
+        if (url_value.equalsIgnoreCase("1")) {
+            url = mResources.get(position);
+
+            if (url != null && !url.equalsIgnoreCase("null")
+                    && !url.equalsIgnoreCase("")) {
+                imageLoader.displayImage(url, imageView, options,
+                        new SimpleImageLoadingListener() {
+                            @Override
+                            public void onLoadingComplete(String imageUri,
+                                                          View view, Bitmap loadedImage) {
+                                super.onLoadingComplete(imageUri, view,
+                                        loadedImage);
+
+                            }
+                        });
+            } else {
+                imageView.setImageResource(0);
+            }
         } else {
-            imageView.setImageResource(0);
+            imageView.setImageBitmap(uriToBitmap(Uri.fromFile(new File(mResources.get(position)))));
+            //imageView.setImageURI(Uri.fromFile(new File(mResources.get(position))));
+
         }
+
 
         container.addView(itemView);
 
@@ -113,6 +128,21 @@ public class ViewPagerAdapter extends PagerAdapter {
                 .build();
 
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
+    }
+    public Bitmap uriToBitmap(Uri selectedFileUri) {
+        Bitmap image=null;
+        try {
+            ParcelFileDescriptor parcelFileDescriptor =
+                    mContext.getContentResolver().openFileDescriptor(selectedFileUri, "r");
+            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+            image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+
+
+            parcelFileDescriptor.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 }
 

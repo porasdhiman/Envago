@@ -189,6 +189,7 @@ android:gravity="center"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
                 android:background="@null"
+
                 android:entries="@array/event_cat"
                 android:textSize="14sp" />
 

@@ -158,11 +158,21 @@ RelativeLayout splash_img;
 
                                         finish();
                                     } else {
-                                        Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
-                                        startActivity(intent);
-                                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                        if(global.getNotifyType().equalsIgnoreCase("0")) {
+                                            Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
+                                            startActivity(intent);
+                                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
-                                        finish();
+                                            finish();
+                                        }else{
+                                            Intent intent = new Intent(SplashActivity.this, MessageFragment.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                            startActivity(intent);
+                                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                                            finish();
+                                        }
                                     }
                                 }
                             }, 1000);

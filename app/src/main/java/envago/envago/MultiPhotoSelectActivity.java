@@ -45,6 +45,7 @@ public class MultiPhotoSelectActivity extends BaseActivity {
     private GoogleApiClient client;
     Global global;
     ImageView back_button_create;
+    int i = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,9 +115,9 @@ public class MultiPhotoSelectActivity extends BaseActivity {
     public void btnChoosePhotosClick(View v) {
 
         ArrayList<String> selectedItems = imageAdapter.getCheckedItems();
-        if(selectedItems.size()>4){
-            Toast.makeText(MultiPhotoSelectActivity.this,"You can select only four image",Toast.LENGTH_SHORT).show();
-        }else{
+        if (selectedItems.size() > 4) {
+            Toast.makeText(MultiPhotoSelectActivity.this, "You can select only four image", Toast.LENGTH_SHORT).show();
+        } else {
             global.setListImg(selectedItems);
             Log.d(MultiPhotoSelectActivity.class.getSimpleName(), "Selected Items: " + selectedItems.toString());
             finish();
@@ -226,8 +227,10 @@ public class MultiPhotoSelectActivity extends BaseActivity {
 
             mCheckBox.setTag(position);
 
-            mCheckBox.setChecked(mSparseBooleanArray.get(position));
-            mCheckBox.setOnCheckedChangeListener(mCheckedChangeListener);
+                mCheckBox.setChecked(mSparseBooleanArray.get(position));
+                mCheckBox.setOnCheckedChangeListener(mCheckedChangeListener);
+
+
 
 
             return convertView;
@@ -238,6 +241,8 @@ public class MultiPhotoSelectActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // TODO Auto-generated method stub
+
+                i = i + 1;
                 mSparseBooleanArray.put((Integer) buttonView.getTag(), isChecked);
 
             }

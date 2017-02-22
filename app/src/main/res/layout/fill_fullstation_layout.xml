@@ -59,22 +59,23 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
+                <EditText
                     android:id="@+id/no_of_days_txtView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/Black"
+                    android:paddingTop="5dp"
                     android:textSize="14sp"
                     android:background="@null"
-
-                    android:text="1 day adventure"/>
+android:inputType="number"
+                    android:hint="number of days"/>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/Gray"
-                    android:layout_marginTop="5dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/LightGrey"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"/>
             </LinearLayout>
@@ -92,7 +93,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:textColor="@color/Gray"
+
                     android:text="Start Date"
+                    android:paddingTop="5dp"
+
 
                     ></TextView>
                 <TextView
@@ -102,7 +106,7 @@
                     android:gravity="right"
                     android:layout_alignParentRight="true"
                     android:text="End Date"
-
+                    android:paddingTop="5dp"
                     ></TextView>
 
 
@@ -114,6 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:mcv_showOtherDates="all"
+                android:visibility="gone"
                 app:mcv_selectionColor="@color/textcolor" />
 
             <RelativeLayout

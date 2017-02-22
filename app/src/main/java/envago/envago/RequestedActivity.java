@@ -30,6 +30,7 @@ import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +40,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+
+import static envago.envago.R.id.end_date_txtView;
 
 /**
  * Created by vikas on 03-01-2017.
@@ -149,7 +152,7 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
         back_button_create = (ImageView) findViewById(R.id.back_button_create);
         start_txtView = (TextView) findViewById(R.id.start_date_txtView);
         no_of_days_txtView = (EditText) findViewById(R.id.no_of_days_txtView);
-        end_txtView = (TextView) findViewById(R.id.end_date_txtView);
+        end_txtView = (TextView) findViewById(end_date_txtView);
         clear = (TextView) findViewById(R.id.clear);
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         Calendar c = Calendar.getInstance();
@@ -210,9 +213,7 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
                 if (start_txtView.getText().toString().equalsIgnoreCase("Start")) {
                     Toast.makeText(RequestedActivity.this, "please select start date", Toast.LENGTH_SHORT).show();
 
-                } else if (start_txtView.getText().toString().equalsIgnoreCase("End")) {
-                    Toast.makeText(RequestedActivity.this, "please select end date", Toast.LENGTH_SHORT).show();
-                }else if (no_of_days_txtView.getText().toString().length()==0) {
+                } else if (no_of_days_txtView.getText().toString().length()==0) {
                     Toast.makeText(RequestedActivity.this, "please enter number of days", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -269,6 +270,21 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
                 calendarDays = list;
 
                 calendarView.addDecorators(new RequestedActivity.EventDecorator(getResources().getColor(R.color.textcolor), calendarDays));
+                DateFormat inputFormat = new SimpleDateFormat("dd MMM yyyy");
+
+
+                Date sDate=null;
+
+                try {
+                    sDate = inputFormat.parse(start_txtView.getText().toString());
+
+
+
+                } catch (ParseException e) {
+
+                }
+
+                calendarView.setCurrentDate(sDate);
                 i = i + 1;
             }
         }
@@ -300,6 +316,13 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
         if (no_of_days_txtView.getText().length() > 0) {
             if (i == 0) {
                 start_txtView.setText(getSelectedDatesString());
+                Log.e("select Date", formatdate2(end_date));
+
+
+
+
+                end_txtView.setText(formatdate2(end_date));
+
                 i = i + 1;
             } else {
                 end_txtView.setText(getSelectedDatesString());
@@ -314,6 +337,22 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
 
     @Override
     public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
+
+    }
+    public String formatdate2(String fdate) {
+        String datetime = null;
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        SimpleDateFormat d = new SimpleDateFormat("dd MMM yyyy");
+        try {
+            Date convertedDate = inputFormat.parse(fdate);
+            datetime = d.format(convertedDate);
+
+        } catch (ParseException e) {
+
+        }
+        return datetime;
+
 
     }
 
@@ -432,6 +471,14 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        start_txtView.setText("Start");
+        end_txtView.setText("End");
+        i = 0;
+        calendarView.removeDecorators();
+        list.clear();
+        calendarDays.clear();
+        demolist.clear();
+        no_of_days_txtView.setText("");
         calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_NONE);
         calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
         return false;
@@ -456,5 +503,10 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
         public void decorate(DayViewFacade view) {
             view.addSpan(new DotSpan(7, color));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

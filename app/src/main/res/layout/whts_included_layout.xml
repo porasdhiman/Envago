@@ -39,12 +39,13 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/trans_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Transportation"
                 android:textColor="@color/Black"
@@ -54,8 +55,10 @@
 
             <ImageView
                 android:id="@+id/trans_checkBox"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+
                 android:layout_alignParentRight="true"
                 android:src="@drawable/unselected"/>
         </RelativeLayout>
@@ -67,13 +70,15 @@
             android:background="@color/LightGrey" />
 
         <RelativeLayout
+            android:id="@+id/flight_layout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Flight"
                 android:textColor="@color/Black"
@@ -83,8 +88,10 @@
 
             <ImageView
                 android:id="@+id/flight_checkbox"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+
                 android:layout_alignParentRight="true"
                 android:src="@drawable/unselected"/>
         </RelativeLayout>
@@ -97,13 +104,15 @@
 
 
         <RelativeLayout
+            android:id="@+id/accom_layout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Accomodation"
                 android:textColor="@color/Black"
@@ -113,8 +122,10 @@
 
             <ImageView
                 android:id="@+id/acc_checkBox"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+
                 android:layout_alignParentRight="true"
                 android:src="@drawable/unselected"/>
         </RelativeLayout>
@@ -126,13 +137,15 @@
             android:background="@color/LightGrey" />
 
         <RelativeLayout
+            android:id="@+id/tent_layout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Tent"
                 android:textColor="@color/Black"
@@ -142,8 +155,10 @@
 
             <ImageView
                 android:id="@+id/tent_checkBox"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+
                 android:layout_alignParentRight="true"
                 android:src="@drawable/unselected"/>
         </RelativeLayout>
@@ -155,13 +170,15 @@
             android:background="@color/LightGrey" />
 
         <RelativeLayout
+            android:id="@+id/gear_layout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Gear"
                 android:textColor="@color/Black"
@@ -171,8 +188,10 @@
 
             <ImageView
                 android:id="@+id/gear_checkBox"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+
                 android:layout_alignParentRight="true"
                 android:src="@drawable/unselected"/>
         </RelativeLayout>
@@ -184,13 +203,15 @@
             android:background="@color/LightGrey" />
 
         <RelativeLayout
+            android:id="@+id/meal_layout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Meal"
                 android:textColor="@color/Black"
@@ -200,8 +221,10 @@
 
             <ImageView
                 android:id="@+id/meals_checkBox"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+
                 android:layout_alignParentRight="true"
                 android:src="@drawable/unselected"/>
         </RelativeLayout>

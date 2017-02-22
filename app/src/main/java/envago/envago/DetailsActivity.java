@@ -178,7 +178,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     ScrollView scrollview_main;
     int r_value;
     LinearLayout main_layout;
-
+    int total;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -309,6 +309,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(DetailsActivity.this, FullViewImage.class);
+                i.putExtra("image_url","1");
                 startActivity(i);
             }
         });
@@ -372,6 +373,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                 } else if (dateType.equalsIgnoreCase("full_season")) {
                     Intent i = new Intent(DetailsActivity.this, OpenFullsessionActivity.class);
                     i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
+                    i.putExtra(GlobalConstants.NUMBER_OF_DAY, String.valueOf(total));
                     startActivity(i);
                 } else {
                     Intent i = new Intent(DetailsActivity.this, BookDateActivity.class);
@@ -829,12 +831,13 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
 
                                     if (dateType.equalsIgnoreCase("one_time")) {
-                                        int total = Integer.parseInt(objArry.getString("total_no_of_places"));
+                                         total = Integer.parseInt(objArry.getString("total_no_of_places"));
 
                                         if (Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places)) == 0) {
                                             total = eventUserList.size();
                                             purchase_btn.setText("Sold out");
                                             purchase_btn.setOnClickListener(null);
+
                                         } else {
                                             if (total != Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places))) {
 
@@ -843,7 +846,10 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                             }
 
                                         }
-
+                                        if(dateMatchMethod(event_date_array.get(0).get(GlobalConstants.EVENT_END_DATE))){
+                                            purchase_btn.setText("Closed");
+                                            purchase_btn.setOnClickListener(null);
+                                        }
 
                                         user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, total, eventUserList,header_textview.getText().toString()));
                                         if (eventUserList.size() > 0) {
@@ -854,7 +860,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
 
                                     } else if (dateType.equalsIgnoreCase("full_season")) {
-                                        int total = Integer.parseInt(objArry.getString("total_no_of_places"));
+                                         total = Integer.parseInt(objArry.getString("total_no_of_places"));
 
                                         if (Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places)) == 0) {
                                             total = eventUserList.size();
@@ -868,7 +874,10 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                             }
 
                                         }
-
+                                        if(dateMatchMethod(event_date_array.get(0).get(GlobalConstants.EVENT_END_DATE))){
+                                            purchase_btn.setText("Closed");
+                                            purchase_btn.setOnClickListener(null);
+                                        }
 
                                         user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, total, eventUserList,header_textview.getText().toString()));
                                         if (eventUserList.size() > 0) {
@@ -877,7 +886,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                             places_txtView.setText(String.valueOf(total) + " Places ");
                                         }
                                     } else {
-                                        int total = Integer.parseInt(objArry.getString("total_no_of_places")) * event_date_array.size();
+                                         total = Integer.parseInt(objArry.getString("total_no_of_places")) * event_date_array.size();
                                         int l = 0, p = 0;
                                         for (int k = 0; k < event_date_array.size(); k++) {
                                             l = Integer.parseInt(event_date_array.get(k).get(GlobalConstants.remaining_places)) + l;

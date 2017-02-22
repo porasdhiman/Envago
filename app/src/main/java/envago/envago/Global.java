@@ -193,7 +193,7 @@ public class Global extends Application {
     public void setA_lng(String a_lng) {
         this.a_lng = a_lng;
     }
-    String wPoint,w_lat,w_lng;
+    String wPoint="",w_lat="",w_lng="";
     String aPoint="",a_lat="",a_lng="";
 
     public String getwPoint() {
@@ -585,7 +585,16 @@ public class Global extends Application {
     }
 
     String user_url;
-    String v="0";
+
+    public String getNotifyType() {
+        return notifyType;
+    }
+
+    public void setNotifyType(String notifyType) {
+        this.notifyType = notifyType;
+    }
+
+    String notifyType="0";
     @Override
     public void onCreate() {
         super.onCreate();

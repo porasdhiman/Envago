@@ -169,6 +169,7 @@ MaterialCalendarView calendarView;
         year_spinner = (TextView) findViewById(R.id.year_spinner);
         session_spinner.setText(date+" "+months[Integer.parseInt(month)]+" "+year);
         year_spinner.setText(date1+" "+months[Integer.parseInt(month1)]+" "+year1);
+        no_of_days.setText(getIntent().getExtras().getString(GlobalConstants.NUMBER_OF_DAY)+" days");
         back_button_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

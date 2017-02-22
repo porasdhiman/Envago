@@ -37,7 +37,7 @@ public class GcmIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d("in gcm", "we are in pushnotification");
         global = (Global) getApplicationContext();
-mSharedPreferences=getSharedPreferences("chat",Context.MODE_PRIVATE);
+        mSharedPreferences = getSharedPreferences("chat", Context.MODE_PRIVATE);
         extras = intent.getExtras();
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         NOTIFICATION_ID = (int) System.currentTimeMillis();
@@ -61,13 +61,13 @@ mSharedPreferences=getSharedPreferences("chat",Context.MODE_PRIVATE);
                 Log.e("envago app", extras.toString());
                 if (extras.getString("content_title").contains("message")) {
                     String id = extras.getString("data").split(":")[1].replace("\"", "").replace("}", "").trim();
-String main_id=id.replace("action","").replace(",","").trim();
+                    String main_id = id.replace("action", "").replace(",", "").trim();
                     global.setEvent_id(main_id);
-                    Log.e("id",global.getEvent_id());
-                    if(mSharedPreferences.getBoolean("message",false)==true){
-                       MessageFragment m=new MessageFragment();
+                    Log.e("id", global.getEvent_id());
+                    if (mSharedPreferences.getBoolean("message", false) == true) {
+                        MessageFragment m = new MessageFragment();
                         m.CallAPI(GcmIntentService.this);
-                    }else {
+                    } else {
                         sendNotification("Envago App", extras.getString("content_title"));
 
                     }
@@ -90,10 +90,12 @@ String main_id=id.replace("action","").replace(",","").trim();
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (extras.getString("content_title").contains("message")) {
+            global.setNotifyType("1");
             contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MessageFragment.class), 0);
 
         } else {
-            contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, Tab_Activity.class), 0);
+            global.setNotifyType("0");
+            contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, SplashActivity.class), 0);
 
         }
 

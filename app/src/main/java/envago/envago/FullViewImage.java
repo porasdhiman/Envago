@@ -35,7 +35,12 @@ public class FullViewImage extends Activity implements View.OnClickListener, Vie
         pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
 
         intro_images = (ViewPager) findViewById(R.id.pager_introduction);
-        pagerAdapterMethod(global.getList());
+        if(getIntent().getExtras().getString("image_url").equalsIgnoreCase("1")){
+            pagerAdapterMethod(global.getList(), getIntent().getExtras().getString("image_url"));
+
+        }else {
+            pagerAdapterMethod(global.getListImg(), getIntent().getExtras().getString("image_url"));
+        }
 
     }
 
@@ -62,12 +67,12 @@ public class FullViewImage extends Activity implements View.OnClickListener, Vie
     public void onClick(View v) {
 
     }
-    public void pagerAdapterMethod(ArrayList<String> list) {
+    public void pagerAdapterMethod(ArrayList<String> list,String url_value) {
         this.list = list;
         if(list.size()!=0) {
 
             intro_images.setVisibility(View.VISIBLE);
-            mAdapter = new ViewPagerAdapter(FullViewImage.this, list);
+            mAdapter = new ViewPagerAdapter(FullViewImage.this, list,url_value);
             intro_images.setAdapter(mAdapter);
             intro_images.setCurrentItem(0);
             intro_images.setOnPageChangeListener(this);

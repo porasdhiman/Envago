@@ -21,6 +21,7 @@ import android.support.v4.app.FragmentActivity;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -177,7 +178,13 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
                 finish();
             }
         });
-
+        mAutocompleteView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mAutocompleteView.setText("");
+                return false;
+            }
+        });
     }
 
 
@@ -253,12 +260,12 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             lat = completeLatLng.split(",")[0];
             lat = lat.substring(1, lat.length());
             lng = completeLatLng.split(",")[1];
-            eventLocOnMap();
-          /*  if(event_list.size()>0){
-                event_list.clear();
-            }
+
+if(event_list.size()>0){
+    event_list.clear();
+}
             dialogWindow();
-            get_list();*/
+            get_list();
             places.release();
         }
     };
@@ -300,7 +307,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
                         i.putExtra(GlobalConstants.EVENT_ID, global.getEvent_list().get(pos).get(GlobalConstants.EVENT_ID));
                         i.putExtra("user", "non user");
                         startActivity(i);
-                        startActivity(i);
+
                     }
                 });
                 return false;
@@ -308,24 +315,24 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
         });
 
     }
-    public String formatdate2(String fdate)
-    {
-        String datetime=null;
+
+    public String formatdate2(String fdate) {
+        String datetime = null;
         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        SimpleDateFormat d= new SimpleDateFormat("dd MMM yyyy");
+        SimpleDateFormat d = new SimpleDateFormat("dd MMM yyyy");
         try {
             Date convertedDate = inputFormat.parse(fdate);
             datetime = d.format(convertedDate);
 
-        }catch (ParseException e)
-        {
+        } catch (ParseException e) {
 
         }
-        return  datetime;
+        return datetime;
 
 
     }
+
     public String cap(String name) {
         StringBuilder sb = new StringBuilder(name);
         sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
@@ -378,6 +385,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
         if (mLastLocation != null) {
             lat = String.valueOf(mLastLocation.getLatitude());
             lng = String.valueOf(mLastLocation.getLongitude());
+
             eventLocOnMap();
 
         } else {
@@ -539,20 +547,20 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
                             details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            JSONArray arr=arrobj.getJSONArray("event_dates");
-                            JSONObject objArr=arr.getJSONObject(0);
+                            JSONArray arr = arrobj.getJSONArray("event_dates");
+                            JSONObject objArr = arr.getJSONObject(0);
                             details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
-Log.e("list value",String.valueOf(i));
+                            Log.e("list value", String.valueOf(i));
 
                             event_list.add(details);
 
                         }
-                        global.getEvent_list().clear();
-                        global.setEvent_list(event_list);
-                        Log.e("sie of map data",String.valueOf(global.getEvent_list().size()));
 
-                        eventLocOnMap();
+                        global.setEvent_list(event_list);
+                        Log.e("sie of map data", String.valueOf(global.getEvent_list().size()));
+
+                        eventLocOnMap1();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -592,19 +600,38 @@ Log.e("list value",String.valueOf(i));
     }
 
     public void eventLocOnMap() {
-        if (mMap != null) {
-            LatLng postion = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-            mark = mMap.addMarker(new MarkerOptions().position(postion).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)));
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 6));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(6), 2000, null);
-            openMarkerView();
-
-        }
-        {
 
             //mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
             // Add a marker in Sydney and move the camera
+        Log.e("event list value ",global.getEvent_list().toString());
+            for (i = 0; i < global.getEvent_list().size(); i++) {
+                LatLng postion = new LatLng(Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LATITUDE)), Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LONGITUDE)));
+                mark = mMap.addMarker(new MarkerOptions().position(postion).title(global.getEvent_list().get(i).get(GlobalConstants.EVENT_NAME)).icon(BitmapDescriptorFactory.fromResource(R.drawable.red_pin)));
+
+                // markers.put(mark.getId(), "http://envagoapp.com/uploads/" + global.getEvent_list().get(i).get(GlobalConstants.EVENT_IMAGES));
+                map.put(mark.getId(), i);
+                //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+            }
+
+        LatLng postion = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+        mark = mMap.addMarker(new MarkerOptions().position(postion).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)));
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 6));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(6), 2000, null);
+        openMarkerView();
+
+
+    }
+
+    public void eventLocOnMap1() {
+        if (mMap != null) {
+            mMap.clear();
+            map.clear();
+            //mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+            // Add a marker in Sydney and move the camera
+            Log.e("event list value1 ",global.getEvent_list().toString());
             for (i = 0; i < global.getEvent_list().size(); i++) {
                 LatLng postion = new LatLng(Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LATITUDE)), Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LONGITUDE)));
                 mark = mMap.addMarker(new MarkerOptions().position(postion).title(global.getEvent_list().get(i).get(GlobalConstants.EVENT_NAME)).icon(BitmapDescriptorFactory.fromResource(R.drawable.red_pin)));
@@ -623,6 +650,7 @@ Log.e("list value",String.valueOf(i));
             openMarkerView();
 
         }
+
     }
 
 

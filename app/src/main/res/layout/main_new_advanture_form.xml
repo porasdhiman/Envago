@@ -56,18 +56,20 @@
             <TextView
 
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Dates and schedules"
                 android:textColor="@color/Black"
+
                 android:layout_toLeftOf="@+id/booking_checkBox"
                 android:layout_centerVertical="true"
                 android:textSize="17sp" />
 
             <ImageView
                 android:id="@+id/booking_checkBox"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/unselected"/>
         </RelativeLayout>
@@ -87,7 +89,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Details"
                 android:textColor="@color/Black"
@@ -97,8 +99,10 @@
 
             <ImageView
                 android:id="@+id/detail_checkBox"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+
                 android:layout_alignParentRight="true"
                 android:src="@drawable/unselected"/>
         </RelativeLayout>
@@ -119,7 +123,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Add Photo"
                 android:textColor="@color/Black"
@@ -129,8 +133,10 @@
 
             <ImageView
                 android:id="@+id/add_photo_checkBox"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+
                 android:layout_alignParentRight="true"
                 android:src="@drawable/unselected"/>
         </RelativeLayout>
@@ -150,7 +156,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Route"
                 android:textColor="@color/Black"
@@ -160,8 +166,10 @@
 
             <ImageView
                 android:id="@+id/route_checkbox"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+
                 android:layout_alignParentRight="true"
                 android:src="@drawable/unselected"/>
         </RelativeLayout>

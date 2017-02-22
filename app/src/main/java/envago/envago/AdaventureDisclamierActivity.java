@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class AdaventureDisclamierActivity extends Activity {
     TextView title;
     SharedPreferences sp;
     SharedPreferences.Editor ed;
+    ImageView back_button_create;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,7 @@ public class AdaventureDisclamierActivity extends Activity {
         }
         sp=getSharedPreferences(GlobalConstants.CREATE_DATA, Context.MODE_PRIVATE);
         ed=sp.edit();
+        back_button_create=(ImageView)findViewById(R.id.back_button_create);
         global=(Global)getApplicationContext();
         title=(TextView)findViewById(R.id.title) ;
         title.setText("Adventure disclaimer");
@@ -43,6 +46,12 @@ public class AdaventureDisclamierActivity extends Activity {
             desc_editText.setHint("Please enter disclaimer");
 
         }
+        back_button_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         submit_button=(Button)findViewById(R.id.submit_button);
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override

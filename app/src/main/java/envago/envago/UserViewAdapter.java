@@ -84,7 +84,7 @@ public class UserViewAdapter extends BaseAdapter {
 // generate random color
                 int color1 = generator.getRandomColor();
                 TextDrawable drawable2 = TextDrawable.builder()
-                        .buildRound(list.get(position).get(GlobalConstants.USERNAME).substring(0, 1), color1);
+                        .buildRound(cap(list.get(position).get(GlobalConstants.USERNAME).substring(0, 1)), color1);
                 url = GlobalConstants.IMAGE_URL + list.get(position).get(GlobalConstants.IMAGE);
                 if (url != null && !url.equalsIgnoreCase("null")
                         && !url.equalsIgnoreCase("")) {
@@ -97,7 +97,7 @@ public class UserViewAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                         Intent about = new Intent(c, AboutPlannerActivity.class);
-                        about.putExtra(GlobalConstants.ID, list.get(position).get(GlobalConstants.ID));
+                        about.putExtra(GlobalConstants.USERID, list.get(position).get(GlobalConstants.ID));
                         about.putExtra(GlobalConstants.EVENT_NAME, event_name);
                         c.startActivity(about);
                     }

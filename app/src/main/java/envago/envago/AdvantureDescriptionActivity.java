@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 /**
@@ -21,6 +22,7 @@ public class AdvantureDescriptionActivity extends Activity {
     Button submit_button;
     SharedPreferences sp;
     SharedPreferences.Editor ed;
+    ImageView back_button_create;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,7 @@ public class AdvantureDescriptionActivity extends Activity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
+        back_button_create=(ImageView)findViewById(R.id.back_button_create);
         sp=getSharedPreferences(GlobalConstants.CREATE_DATA, Context.MODE_PRIVATE);
         ed=sp.edit();
         desc_editText=(EditText)findViewById(R.id.desc_editText);
@@ -36,7 +39,12 @@ public class AdvantureDescriptionActivity extends Activity {
         if(!sp.getString(GlobalConstants.EVENT_DESCRIPTION,"").equalsIgnoreCase("")){
             desc_editText.setText(sp.getString(GlobalConstants.EVENT_DESCRIPTION,""));
         }
-
+        back_button_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         submit_button=(Button)findViewById(R.id.submit_button);
         submit_button.setOnClickListener(new View.OnClickListener() {

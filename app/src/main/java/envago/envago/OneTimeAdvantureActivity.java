@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -175,16 +177,8 @@ RelativeLayout start_end_layout;
                 .setMaximumDate(CalendarDay.from(2023, 12, 31))
 
                 .commit();
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        try {
-            Date convertedDate = inputFormat.parse("2017-02-21");
-            calendarView.setDateSelected(convertedDate,true);
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_RANGE);
         select_date_txtView = (TextView) findViewById(R.id.select_date_txtView);
         end_date_txtView = (TextView) findViewById(R.id.end_date_view);
         submit_button = (Button) findViewById(R.id.submit_button);
@@ -255,6 +249,21 @@ RelativeLayout start_end_layout;
 
             select_date_txtView.setText(formatdate2(sp.getString(GlobalConstants.EVENT_START_DATE, "")));
             end_date_txtView.setText(formatdate2(sp.getString(GlobalConstants.EVENT_END_DATE, "")));
+            DateFormat inputFormat = new SimpleDateFormat("dd MMM yyyy");
+
+
+            Date sDate=null;
+
+            try {
+                sDate = inputFormat.parse(select_date_txtView.getText().toString());
+
+
+
+            } catch (ParseException e) {
+
+            }
+
+            calendarView.setCurrentDate(sDate);
         }
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -265,6 +274,24 @@ RelativeLayout start_end_layout;
             start_end_layout.setVisibility(View.VISIBLE);
 
         }
+        of_days_txtView.addTextChangedListener(new TextWatcher()
+        {
+            public void afterTextChanged(Editable s)
+            {
+                String x = s.toString();
+                if(x.startsWith("0")) {
+                    of_days_txtView.setText("1");
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+        });
     }
 
     @Override
@@ -272,12 +299,14 @@ RelativeLayout start_end_layout;
         // Toast.makeText(OneTimeAdvantureActivity.this,getSelectedDatesString(),Toast.LENGTH_SHORT).show();
         if (of_days_txtView.getText().length() > 0) {
             select_date_txtView.setText(getSelectedDatesString());
-            String endDate = select_date_txtView.getText().toString().split(" ")[0];
-            String endMonthe = select_date_txtView.getText().toString().split(" ")[1];
-            String endYear = select_date_txtView.getText().toString().split(" ")[2];
-            String completeEndDate = String.valueOf(Integer.parseInt(endDate) + Integer.parseInt(of_days_txtView.getText().toString().split(" ")[0]) - 1) + " " + endMonthe + " " + endYear;
-            Log.e("select Date", completeEndDate);
-            end_date_txtView.setText(completeEndDate);
+
+
+            Log.e("select Date", formatdate2(end_date));
+
+
+
+
+            end_date_txtView.setText(formatdate2(end_date));
             calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_NONE);
             calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
         } else {
@@ -417,6 +446,10 @@ RelativeLayout start_end_layout;
     public boolean onTouch(View v, MotionEvent event) {
         calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_NONE);
         calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
+        of_days_txtView.setText("");
+        calendarView.removeDecorators();
+        select_date_txtView.setText("");
+        end_date_txtView.setText("");
         return false;
     }
 
@@ -475,6 +508,10 @@ RelativeLayout start_end_layout;
         public void decorate(DayViewFacade view) {
             view.addSpan(new DotSpan(7, color));
         }
+    }
+    @Override
+    public void onBackPressed() {
+
     }
 
 }

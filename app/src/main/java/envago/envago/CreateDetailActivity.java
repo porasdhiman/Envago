@@ -18,6 +18,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -252,10 +253,8 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                 String x = s.toString();
                 if(x.startsWith("0"))
                 {
-                    place_error_txtView.setText("First digit zero not allowed");
-                    place_error_txtView.setVisibility(View.VISIBLE);
-                }else{
-                    place_error_txtView.setVisibility(View.GONE);
+                    place_editText.setText("1");
+
                 }
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
@@ -265,6 +264,44 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
 
+            }
+        });
+        pricing_editText.addTextChangedListener(new TextWatcher()
+        {
+            public void afterTextChanged(Editable s)
+            {
+                String x = s.toString();
+                if(x.startsWith("0"))
+                {
+                    place_editText.setText("1");
+
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+        });
+        pricing_editText.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
+
+                        case KeyEvent.KEYCODE_ENTER:
+                            if(!pricing_editText.getText().toString().contains("$")){
+                                pricing_editText.setText("$"+pricing_editText.getText().toString());
+
+                            }
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
             }
         });
 
@@ -345,10 +382,10 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                 if (name_editText.getText().toString().length() == 0) {
                     name_error_txtView.setText("Please enter name of advaenture");
                     name_error_txtView.setVisibility(View.VISIBLE);
-                } else if (meeting_time_editText.getText().toString().equalsIgnoreCase("Please Select")) {
+                } else if (meeting_time_editText.getText().toString().equalsIgnoreCase("Please Select")||meeting_time_editText.getText().toString().length()==0) {
                     meeting_time_error_txtView.setText("Please enter time");
                     meeting_time_error_txtView.setVisibility(View.VISIBLE);
-                } else if (desc_editText.getText().toString().equalsIgnoreCase("Write a description")) {
+                } else if (desc_editText.getText().toString().equalsIgnoreCase("Write a description")||desc_editText.getText().toString().length()==0) {
                     desc_error_txtView.setText("Please enter decription");
                     desc_error_txtView.setVisibility(View.VISIBLE);
                 } else if (place_editText.getText().toString().length() == 0) {
@@ -360,10 +397,10 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                 } /*else if (crtieria_editText.getText().toString().length() == 0) {
                     crtieria_error_txtView.setText("Please enter Criteria/eligibility");
                     crtieria_error_txtView.setVisibility(View.VISIBLE);
-                }*/ else if (disclaimer_editText.getText().toString().equalsIgnoreCase("Write something")) {
+                }*/ else if (disclaimer_editText.getText().toString().equalsIgnoreCase("Write something")||disclaimer_editText.getText().toString().length()==0) {
                     disclaimer_error_txtView.setText("Please enter disclaimer");
                     disclaimer_error_txtView.setVisibility(View.VISIBLE);
-                } else if (whts_editText.getText().toString().equalsIgnoreCase("Write something")) {
+                } else if (whts_editText.getText().toString().equalsIgnoreCase("Write something")||whts_editText.getText().toString().length()==0) {
                     whts_error_txtView.setText("Please enter what's included");
                     whts_error_txtView.setVisibility(View.VISIBLE);
                 } else if (catgory.length() == 0) {
@@ -372,7 +409,8 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                 } else if (mAutocompleteView.getText().toString().length() == 0) {
                     meeting_error_txtView.setText("Please enter meeting place");
                     meeting_error_txtView.setVisibility(View.VISIBLE);
-                } else {
+                }
+                else {
                     global.setEvent_name(name_editText.getText().toString());
                     global.setEvent_time(meeting_time_editText.getText().toString());
                     global.setEvent_place(place_editText.getText().toString());

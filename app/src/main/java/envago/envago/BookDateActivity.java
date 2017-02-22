@@ -47,21 +47,26 @@ public class BookDateActivity extends Activity {
         cancel = (ImageView) findViewById(R.id.cancel);
         date_listView = (ListView) findViewById(R.id.date_listView);
         date_listView.setAdapter(new BookDateAdapter(this,global.getBookdateArray()));
-
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
     }
 
 
     class BookDateAdapter extends BaseAdapter {
-        Context c;
+       Context context;
         LayoutInflater inflatore;
         ArrayList<HashMap<String, String>> list = new ArrayList<>();
 
-        BookDateAdapter(Context c, ArrayList<HashMap<String, String>> list) {
-            this.c = c;
+        BookDateAdapter(Context context, ArrayList<HashMap<String, String>> list) {
+            this.context = context;
             this.list = list;
-            inflatore = LayoutInflater.from(c);
+            inflatore = LayoutInflater.from(context);
         }
 
         @Override
@@ -119,11 +124,31 @@ public class BookDateActivity extends Activity {
 
             if(Integer.parseInt(list.get(position).get(GlobalConstants.remaining_places))==0){
                 book_txtView.setText("Sold out");
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat dateFormat = new SimpleDateFormat(
+                        "yyyy-MM-dd");
+                String dateafter = dateFormat.format(c.getTime());
+
+                Date currentDate = new Date();
+                Date eventDate = new Date();
+
+                try {
+                    currentDate = dateFormat.parse(dateafter);
+                    eventDate = dateFormat.parse(list.get(position).get(GlobalConstants.EVENT_END_DATE));
+                } catch (java.text.ParseException e) {
+                    e.printStackTrace();
+                }
+                if (eventDate.equals(currentDate)||eventDate.before(currentDate)) {
+                    book_txtView.setText("Closed");
+                } else {
+
+
+                }
             }else{
                 book_txtView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i=new Intent(c,ConfirmDetailsActivity.class);
+                        Intent i=new Intent(context,ConfirmDetailsActivity.class);
                         i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
                         i.putExtra(GlobalConstants.remaining_places, list.get(position).get(GlobalConstants.remaining_places));
                         i.putExtra("pos", String.valueOf(position));
@@ -131,6 +156,9 @@ public class BookDateActivity extends Activity {
                     }
                 });
             }
+
+
+
 
 
             return convertView;

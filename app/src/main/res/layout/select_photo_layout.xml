@@ -28,7 +28,7 @@ android:padding="15dp"
         <TextView
             android:id="@+id/button1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:text="Done"
             android:textColor="#fff"
@@ -36,6 +36,7 @@ android:padding="15dp"
             android:layout_marginRight="5dp"
             android:onClick="btnChoosePhotosClick"
             android:textSize="16sp"
+            android:gravity="center_vertical"
             android:textStyle="bold" />
 
     </RelativeLayout>

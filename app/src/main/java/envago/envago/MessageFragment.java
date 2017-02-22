@@ -73,6 +73,7 @@ public class MessageFragment extends Activity implements OnClickListener {
     TextView typing_txt;
     int i = 0;
     RelativeLayout main_layout;
+    ImageView search_button;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,7 +92,13 @@ public class MessageFragment extends Activity implements OnClickListener {
         Fonts.overrideFonts(this, main_layout);
         listView = (ListView) findViewById(R.id.msgview);
         typing_txt = (TextView) findViewById(R.id.typing_txt);
-
+        search_button=(ImageView)findViewById(R.id.search_button);
+        search_button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         chatText = (EditText) findViewById(R.id.msg);
         /*chatText.setOnKeyListener(new View.OnKeyListener() {
