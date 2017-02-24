@@ -180,7 +180,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
     TextDrawable drawable;
     SharedPreferences preferences, sp;
     SharedPreferences.Editor ed;
-
+ImageView back_button_create;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -200,7 +200,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         global = (Global) getApplicationContext();
         main_layout = (LinearLayout) findViewById(R.id.main_layout);
         Fonts.overrideFonts(this, main_layout);
-
+        back_button_create=(ImageView)findViewById(R.id.back_button_create);
         desclaimer_layout = (LinearLayout) findViewById(R.id.desclaimer_layout);
         //intro_images = (ViewPager) findViewById(R.id.pager_introduction);
         dumy_imageview = (ImageView) findViewById(R.id.dumy_imageview);
@@ -297,7 +297,12 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
         } else {
             signup_btn.setVisibility(View.VISIBLE);
         }*/
-
+        back_button_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         //------------- map object initilization------------
 
 
@@ -457,7 +462,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
 
         user_grid.setAdapter(new UserViewAdapter(PreviewActivity.this, Integer.parseInt(sp.getString(GlobalConstants.EVENT_PLACE, "")), eventUserList, header_textview.getText().toString()));
         dumy_imageview.setImageURI(Uri.fromFile(new File(global.getListImg().get(0))));
-        price_btn.setText("$" + sp.getString(GlobalConstants.EVENT_PRICE, ""));
+        price_btn.setText("$" + sp.getString(GlobalConstants.EVENT_PRICE, "")+" per person");
         if (sp.getString(GlobalConstants.EVENT_LEVEL, "").equalsIgnoreCase("1")) {
             beginner_txt.setText("Easy");
         } else if (sp.getString(GlobalConstants.EVENT_LEVEL, "").equalsIgnoreCase("2")) {

@@ -2,15 +2,17 @@ package envago.envago;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -36,7 +38,8 @@ public class ForgotPassword extends Activity {
     Button sumbit_mail;
     EditText email;
     Dialog dialog2;
-
+    TextView mail_error_txtView;
+ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +49,34 @@ public class ForgotPassword extends Activity {
 
         sumbit_mail = (Button) findViewById(R.id.forget_sumbit);
         email = (EditText) findViewById(R.id.mail_forgot);
-
+        mail_error_txtView=(TextView)findViewById(R.id.mail_error_txtView);
+        back=(ImageView)findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         sumbit_mail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (email.getText().toString().length() == 0) {
-                    email.setError("Please enter Your Email");
+                    mail_error_txtView.setVisibility(View.VISIBLE);
+                    mail_error_txtView.setText("Please enter Your Email");
                 } else if (!CommonUtils.isEmailValid(email.getText().toString())) {
-                    email.setError("Please enter a Valid Email");
+                    mail_error_txtView.setVisibility(View.VISIBLE);
+                    mail_error_txtView.setText("Please enter a Valid Email");
                 } else {
                     dialogWindow();
                     forgot();
                 }
+            }
+        });
+        email.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mail_error_txtView.setVisibility(View.GONE);
+                return false;
             }
         });
     }
@@ -82,9 +101,7 @@ public class ForgotPassword extends Activity {
                             String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
 
-                                Intent intent = new Intent(ForgotPassword.this, ActivityLogin.class);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_left);
+
                                 finish();
                                 Toast.makeText(ForgotPassword.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
 
@@ -119,7 +136,7 @@ public class ForgotPassword extends Activity {
             }
 
         };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);

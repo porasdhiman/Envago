@@ -254,6 +254,7 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                 if(x.startsWith("0"))
                 {
                     place_editText.setText("1");
+                    place_editText.setSelection(x.length());
 
                 }
             }
@@ -273,7 +274,8 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                 String x = s.toString();
                 if(x.startsWith("0"))
                 {
-                    place_editText.setText("1");
+                    pricing_editText.setText("1");
+                    pricing_editText.setSelection(x.length());
 
                 }
             }
@@ -294,6 +296,7 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                         case KeyEvent.KEYCODE_ENTER:
                             if(!pricing_editText.getText().toString().contains("$")){
                                 pricing_editText.setText("$"+pricing_editText.getText().toString());
+
 
                             }
                             return true;

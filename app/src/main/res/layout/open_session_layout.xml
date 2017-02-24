@@ -91,7 +91,7 @@
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:textColor="@color/Gray"
+                    android:textColor="#373737"
                     android:text="Start Date"
 
                     ></TextView>
@@ -101,6 +101,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="right"
                     android:layout_alignParentRight="true"
+                    android:textColor="#373737"
+
                     android:text="End Date"
 
                     ></TextView>

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -70,9 +71,9 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
     String token;
     Button facebook_btn;
     String username_mString, email_mString, id_mString;
-    Dialog dialog2;
+    Dialog dialog, dialog2;
     Global global;
-
+    String uriPath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +103,7 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
         videoView1 = (VideoView) findViewById(R.id.videoView1);
         slider_sign_up_btn = (TextView) findViewById(R.id.slider_sign_up_btn);
         slider_sign_in_layout = (LinearLayout) findViewById(R.id.slider_sign_in_layout);
-        String uriPath = "android.resource://envago.envago/" + R.raw.envagowalk;
+        uriPath = "android.resource://envago.envago/" + R.raw.envagowalk;
         slider_sign_in_layout.setOnClickListener(this);
         slider_sign_up_btn.setOnClickListener(this);
         Uri uri = Uri.parse(uriPath);
@@ -167,22 +168,34 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.slider_sign_up_btn:
-                Intent j = new Intent(SlidePageActivity.this, ActivityLogin.class);
-                startActivity(j);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-finish();
+                if(global.getLat().length()==0){
+                    Toast.makeText(SlidePageActivity.this,"Your location is not Enabled and restart your app",Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent j = new Intent(SlidePageActivity.this, ActivityLogin.class);
+                    startActivity(j);
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    finish();
+                }
+
 
                 break;
             case R.id.slider_sign_in_layout:
-
-                Intent i = new Intent(SlidePageActivity.this, RegisterActivity.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
+                if(global.getLat().length()==0){
+                    Toast.makeText(SlidePageActivity.this,"Your location is not Enabled and restart your app",Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent i = new Intent(SlidePageActivity.this, RegisterActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    finish();
+                }
                 break;
             case R.id.slider_fb_btn:
-                Login_TV.performClick();
+                if(global.getLat().length()==0){
+                    Toast.makeText(SlidePageActivity.this,"Your location is not Enabled and restart your app",Toast.LENGTH_SHORT).show();
+                }else {
+                    Login_TV.performClick();
 
+                }
                 break;
         }
     }
@@ -202,15 +215,27 @@ finish();
 
 
                         try {
+                            Uri uri = Uri.parse(uriPath);
+                            videoView1.setVideoURI(uri);
+                            videoView1.requestFocus();
+                            videoView1.start();
+                            videoView1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                @Override
+                                public void onPrepared(MediaPlayer mp) {
+                                    mp.setLooping(true);
+                                }
+                            });
                             username_mString = object.getString("name");
+                            id_mString = object.getString("id");
                             if (object.has("email")) {
                                 email_mString = object.getString("email");
+
                             } else {
-                                //  email = "";
+                                email_mString = "";
                             }
-                            id_mString = object.getString("id");
                             dialogWindow();
                             facebookApiMethod();
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -264,16 +289,27 @@ finish();
                             if (status.equalsIgnoreCase("1")) {
                                 JSONObject data = obj.getJSONObject("data");
                                 ed.putString(GlobalConstants.USERID, data.getString(GlobalConstants.USERID));
+                                ed.putString("login type","facebook");
                                 ed.commit();
                                 Intent intent = new Intent(SlidePageActivity.this, Tab_Activity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
                                 startActivity(intent);
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
                                 finish();
 
                             } else {
-                                Toast.makeText(SlidePageActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                                dialogWindow1();
+                                Uri uri = Uri.parse(uriPath);
+                                videoView1.setVideoURI(uri);
+                                videoView1.requestFocus();
+                                videoView1.start();
+                                videoView1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                    @Override
+                                    public void onPrepared(MediaPlayer mp) {
+                                        mp.setLooping(true);
+                                    }
+                                });
                             }
                             dialog2.dismiss();
 
@@ -329,6 +365,49 @@ finish();
 
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
         dialog2.show();
+    }
+
+    public void dialogWindow1() {
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.email_dialog);
+        Button send = (Button) dialog.findViewById(R.id.send);
+        Button cancel = (Button) dialog.findViewById(R.id.cancel);
+        final TextView mail_error = (TextView) dialog.findViewById(R.id.mail_error);
+        final EditText mail = (EditText) dialog.findViewById(R.id.mail);
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mail.length() == 0) {
+                    mail_error.setVisibility(View.VISIBLE);
+                    mail_error.setText("Please enter Email");
+
+                } else if (!CommonUtils.isEmailValid(mail.getText().toString())) {
+                    mail_error.setVisibility(View.VISIBLE);
+                    mail_error.setText("Please enter Valid Email");
+                } else {
+                    if (CommonUtils.getConnectivityStatus(SlidePageActivity.this)) {
+                        email_mString = mail.getText().toString();
+                        dialogWindow();
+                        facebookApiMethod();
+                        dialog.dismiss();
+                    } else {
+                        CommonUtils.openInternetDialog(SlidePageActivity.this);
+                    }
+                }
+
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
 }

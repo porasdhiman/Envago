@@ -42,6 +42,7 @@ public class AdaventureDisclamierActivity extends Activity {
         desc_editText=(EditText)findViewById(R.id.desc_editText);
         if(!sp.getString(GlobalConstants.EVENT_DISCLAIMER,"").equalsIgnoreCase("")){
             desc_editText.setText(sp.getString(GlobalConstants.EVENT_DISCLAIMER,""));
+            desc_editText.setSelection(sp.getString(GlobalConstants.EVENT_DISCLAIMER,"").length());
         }else{
             desc_editText.setHint("Please enter disclaimer");
 

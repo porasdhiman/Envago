@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Envago</string>
     <string name="title_activity_maps">Map</string>
-    <string name="facebook_app_id">514253258762438</string>
+    <string name="facebook_app_id">1003363833060380</string>
 
     <string name="place_details">&lt;b&gt;%1$s&lt;/b&gt;&lt;br/&gt;&lt;i&gt;Place Id: %2$s&lt;/i&gt;&lt;br/&gt;Address: %3$s&lt;br/&gt;Phone: %4$s&lt;br/&gt;Website: %5$s</string>
     <string-array name="level">

@@ -141,7 +141,8 @@ public class FullSessionActivity extends Activity {
     private int year, month, day;
     SharedPreferences sp;
     SharedPreferences.Editor ed;
-    String di,d2;
+    String di, d2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,8 +157,7 @@ public class FullSessionActivity extends Activity {
         ed = sp.edit();
         global = (Global) getApplicationContext();
         back_button_create = (ImageView) findViewById(R.id.back_button_create);
-       // calendarView=(MaterialCalendarView)findViewById(R.id.calendarView);
-
+        // calendarView=(MaterialCalendarView)findViewById(R.id.calendarView);
 
 
         submit_button = (Button) findViewById(R.id.submit_button);
@@ -176,23 +176,21 @@ public class FullSessionActivity extends Activity {
         });
 
 
-
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(no_of_days.length()==0){
-                    Toast.makeText(FullSessionActivity.this,"Please enter number of days adventure",Toast.LENGTH_SHORT).show();
-                }else  if(session_spinner.length()==0){
-                    Toast.makeText(FullSessionActivity.this,"Please enter start date",Toast.LENGTH_SHORT).show();
+                if (no_of_days.length() == 0) {
+                    Toast.makeText(FullSessionActivity.this, "Please enter number of days adventure", Toast.LENGTH_SHORT).show();
+                } else if (session_spinner.length() == 0) {
+                    Toast.makeText(FullSessionActivity.this, "Please enter start date", Toast.LENGTH_SHORT).show();
 
-                }else  if(year_spinner.length()==0){
-                    Toast.makeText(FullSessionActivity.this,"Please enter end date",Toast.LENGTH_SHORT).show();
+                } else if (year_spinner.length() == 0) {
+                    Toast.makeText(FullSessionActivity.this, "Please enter end date", Toast.LENGTH_SHORT).show();
 
-                }else if(getDaysDifference(new Date(session_spinner.getText().toString()),new Date(year_spinner.getText().toString()))+1<Integer.parseInt(no_of_days.getText().toString().split(" ")[0])){
-                    Toast.makeText(FullSessionActivity.this,"Please select date above number of days",Toast.LENGTH_SHORT).show();
+                } else if (getDaysDifference(new Date(session_spinner.getText().toString()), new Date(year_spinner.getText().toString())) + 1 < Integer.parseInt(no_of_days.getText().toString().split(" ")[0])) {
+                    Toast.makeText(FullSessionActivity.this, "You wanted " + no_of_days.getText().toString() + " Select valid Start & End Date", Toast.LENGTH_SHORT).show();
 
-                }
-                else {
+                } else {
                     ed.putString(GlobalConstants.EVENT_START_DATE, formatdate(session_spinner.getText().toString()));
                     ed.putString(GlobalConstants.EVENT_END_DATE, formatdate(year_spinner.getText().toString()));
                     ed.putString(GlobalConstants.NUMBER_OF_DAY, no_of_days.getText().toString().split(" ")[0]);
@@ -229,8 +227,10 @@ public class FullSessionActivity extends Activity {
 
                         case KeyEvent.KEYCODE_ENTER:
 
+                            if (no_of_days.getText().toString().length() > 0) {
+                                no_of_days.setText(no_of_days.getText() + " days adventure");
+                            }
 
-                            no_of_days.setText(no_of_days.getText()+" days adventure");
                             return true;
                         default:
                             break;
@@ -248,127 +248,127 @@ public class FullSessionActivity extends Activity {
         });
         if (sp.getString("date type", "").equalsIgnoreCase("full_season")) {
 
-            no_of_days.setText(sp.getString(GlobalConstants.NUMBER_OF_DAY,"")+" days adventure");
-            session_spinner.setText(formatdate3(sp.getString(GlobalConstants.EVENT_START_DATE,"")));
-            year_spinner.setText(formatdate3(sp.getString(GlobalConstants.EVENT_END_DATE,"")));
-di=session_spinner.getText().toString();
+            no_of_days.setText(sp.getString(GlobalConstants.NUMBER_OF_DAY, "") + " days adventure");
+            session_spinner.setText(formatdate3(sp.getString(GlobalConstants.EVENT_START_DATE, "")));
+            year_spinner.setText(formatdate3(sp.getString(GlobalConstants.EVENT_END_DATE, "")));
+            di = session_spinner.getText().toString();
+            no_of_days.setSelection(sp.getString(GlobalConstants.NUMBER_OF_DAY, "").length() + 15);
+
         }
-        no_of_days.addTextChangedListener(new TextWatcher()
-        {
-            public void afterTextChanged(Editable s)
-            {
+        no_of_days.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
                 String x = s.toString();
-                if(x.startsWith("0")) {
+                if (x.startsWith("0")) {
                     no_of_days.setText("1");
                 }
             }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
         });
 
     }
-    public String formatdate(String fdate)
-    {
-        String datetime=null;
+
+    public String formatdate(String fdate) {
+        String datetime = null;
         DateFormat inputFormat = new SimpleDateFormat("dd MMM yyyy");
 
-        SimpleDateFormat d= new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date convertedDate = inputFormat.parse(fdate);
             datetime = d.format(convertedDate);
 
-        }catch (ParseException e)
-        {
+        } catch (ParseException e) {
 
         }
-        return  datetime;
+        return datetime;
 
 
     }
-    public String formatdate3(String fdate)
-    {
-        String datetime=null;
+
+    public String formatdate3(String fdate) {
+        String datetime = null;
         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        SimpleDateFormat d= new SimpleDateFormat("dd MMM yyyy");
+        SimpleDateFormat d = new SimpleDateFormat("dd MMM yyyy");
         try {
             Date convertedDate = inputFormat.parse(fdate);
             datetime = d.format(convertedDate);
 
-        }catch (ParseException e)
-        {
+        } catch (ParseException e) {
 
         }
-        return  datetime;
+        return datetime;
 
 
     }
-    public String formatdate1(String fdate)
-    {
-        String datetime=null;
+
+    public String formatdate1(String fdate) {
+        String datetime = null;
         DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-        SimpleDateFormat d= new SimpleDateFormat("dd MMM yyyy");
+        SimpleDateFormat d = new SimpleDateFormat("dd MMM yyyy");
         try {
             Date convertedDate = inputFormat.parse(fdate);
             datetime = d.format(convertedDate);
 
-        }catch (ParseException e)
-        {
+        } catch (ParseException e) {
 
         }
-        return  datetime;
+        return datetime;
 
 
     }
-    public String formatdate2(String fdate)
-    {
-        String datetime=null;
+
+    public String formatdate2(String fdate) {
+        String datetime = null;
         DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-        SimpleDateFormat d= new SimpleDateFormat("dd MMM yyyy");
+        SimpleDateFormat d = new SimpleDateFormat("dd MMM yyyy");
         try {
             Date convertedDate = inputFormat.parse(fdate);
             datetime = d.format(convertedDate);
 
-        }catch (ParseException e)
-        {
+        } catch (ParseException e) {
 
         }
-        return  datetime;
+        return datetime;
 
 
     }
-    public static int getDaysDifference(Date fromDate, Date toDate)
-    {
-        if(fromDate==null||toDate==null)
+
+    public static int getDaysDifference(Date fromDate, Date toDate) {
+        if (fromDate == null || toDate == null)
             return 0;
 
-        return (int)( (toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
+        return (int) ((toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
     }
+
     @SuppressWarnings("deprecation")
     public void setDate(View view) {
         showDialog(999);
 
     }
+
     @SuppressWarnings("deprecation")
     public void setDate1(View view) {
         showDialog(1000);
 
     }
+
     @Override
     protected Dialog onCreateDialog(int id) {
         // TODO Auto-generated method stub
         if (id == 999) {
             return new DatePickerDialog(this,
                     myDateListener, year, month, day);
-        }   if (id == 1000) {
+        }
+        if (id == 1000) {
             return new DatePickerDialog(this,
                     myDateListener1, year, month, day);
         }
@@ -384,7 +384,7 @@ di=session_spinner.getText().toString();
                     // arg1 = year
                     // arg2 = month
                     // arg3 = day
-                    showDate(arg1, arg2+1, arg3);
+                    showDate(arg1, arg2 + 1, arg3);
                 }
             };
     private DatePickerDialog.OnDateSetListener myDateListener1 = new
@@ -396,35 +396,36 @@ di=session_spinner.getText().toString();
                     // arg1 = year
                     // arg2 = month
                     // arg3 = day
-                    showDate1(arg1, arg2+1, arg3);
+                    showDate1(arg1, arg2 + 1, arg3);
                 }
             };
 
     private void showDate(int year, int month, int day) {
 
 
-
-        di=new StringBuilder().append(day).append("-")
+        di = new StringBuilder().append(day).append("-")
                 .append(month).append("-").append(year).toString();
-        if(dateMatchMethod(di)){
-            Toast.makeText(FullSessionActivity.this,"Please select date above current date",Toast.LENGTH_SHORT).show();
-        }else{
+        if (dateMatchMethod(di)) {
+            Toast.makeText(FullSessionActivity.this, "Please select date above current date", Toast.LENGTH_SHORT).show();
+        } else {
             session_spinner.setText(formatdate1(di));
         }
 
     }
+
     private void showDate1(int year, int month, int day) {
-        d2=new StringBuilder().append(day).append("-")
+        d2 = new StringBuilder().append(day).append("-")
                 .append(month).append("-").append(year).toString();
-        if(dateMatchMethod1(di,d2)){
-            Toast.makeText(FullSessionActivity.this,"Please select date above start date",Toast.LENGTH_SHORT).show();
-        }else{
-            di=new StringBuilder().append(day).append("-")
+        if (dateMatchMethod1(di, d2)) {
+            Toast.makeText(FullSessionActivity.this, "Please select date above start date", Toast.LENGTH_SHORT).show();
+        } else {
+            di = new StringBuilder().append(day).append("-")
                     .append(month).append("-").append(year).toString();
             year_spinner.setText(formatdate1(di));
         }
 
     }
+
     boolean dateMatchMethod(String selectedDate) {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat(
@@ -448,7 +449,8 @@ di=session_spinner.getText().toString();
 
 
     }
-    boolean dateMatchMethod1(String selectedDate,String endDate) {
+
+    boolean dateMatchMethod1(String selectedDate, String endDate) {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "dd-MM-yyyy");

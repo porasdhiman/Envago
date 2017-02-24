@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
@@ -74,6 +75,9 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
     String lat, lng;
     Dialog dialog2;
     TextView cancel_txtView;
+    boolean isLoading = false;
+    int j = 1, page_value;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +101,7 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
-        cancel_txtView=(TextView)findViewById(R.id.cancel_txtView);
+        cancel_txtView = (TextView) findViewById(R.id.cancel_txtView);
         cancel_txtView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,6 +133,42 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
 
         mAutocompleteView.setAdapter(mAdapter);
         mAutocompleteView.setDropDownWidth(getResources().getDisplayMetrics().widthPixels);
+        search_listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            @Override
+
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                // Ignore this method
+
+            }
+
+
+            @Override
+
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                Log.i("Main", totalItemCount + "");
+
+
+                int lastIndexInScreen = visibleItemCount + firstVisibleItem;
+
+
+                if (lastIndexInScreen >= totalItemCount && !isLoading) {
+
+                    // It is time to load more items
+                    if (page_value >= j) {
+                        isLoading = true;
+                        dialogWindow();
+                        searchMethod();
+                    }
+
+
+                }
+
+            }
+
+        });
 
     }
 
@@ -148,34 +188,51 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
 
                     if (res.equalsIgnoreCase("1")) {
 
-                        // JSONObject data = obj.getJSONObject("data");
-
                         JSONArray events = obj.getJSONArray("data");
-                        for (int i = 0; i < events.length(); i++) {
-                            JSONObject arrobj = events.getJSONObject(i);
+                        if(events.length()==0){
 
-                            HashMap<String, String> details = new HashMap<>();
+                        }else{
+                            j = j + 1;
+                            // JSONObject data = obj.getJSONObject("data");
+                            page_value = Integer.parseInt(obj.getString("next_page"));
+                            for (int i = 0; i < events.length(); i++) {
+                                JSONObject arrobj = events.getJSONObject(i);
 
-                            details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.EVENT_ID));
-                            details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
-                            details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
-                            details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
-                            details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
-                            details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
-                            details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            JSONArray arr = arrobj.getJSONArray("event_dates");
-                            JSONObject objArr = arr.getJSONObject(0);
-                            details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
-                            details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                                HashMap<String, String> details = new HashMap<>();
+
+                                details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.EVENT_ID));
+                                details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
+                                details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
+                                details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
+                                details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                                details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
+                                details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
+                                JSONArray arr = arrobj.getJSONArray("event_dates");
+                                JSONObject objArr = arr.getJSONObject(0);
+                                details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
+                                details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
 
-                            event_list.add(details);
+                                event_list.add(details);
 
+                            }
+                            if(page_value>=j){
+                                isLoading = false;
+                                if(event_list.size()>0) {
+                                    search_listView.setSelection(global.getSearchList().size());
+                                    global.setSearchList(event_list);
+                                    Log.e("list size", String.valueOf(global.getSearchList().size()));
+                                    search_listView.setAdapter(new Adventure_list_adapter(SearchByGoogleApiLocation.this, global.getSearchList()));
+                                }
+                            }else{
+                                if(event_list.size()>0) {
+                                    global.setSearchList(event_list);
+                                    Log.e("list size", String.valueOf(global.getSearchList().size()));
+                                    search_listView.setAdapter(new Adventure_list_adapter(SearchByGoogleApiLocation.this, global.getSearchList()));
+                                }
+                            }
                         }
 
-                        global.setSearchList(event_list);
-                        Log.e("list size",String.valueOf(global.getSearchList().size()));
-                        search_listView.setAdapter(new Adventure_list_adapter(SearchByGoogleApiLocation.this, global.getSearchList()));
 
                     }
                 } catch (JSONException e) {
@@ -201,8 +258,8 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
                 params.put(GlobalConstants.LATITUDE, lat);
                 params.put(GlobalConstants.LONGITUDE, lng);
                 params.put(GlobalConstants.RESPONSE_TYPE, "list");
-                params.put("page", "1");
-                params.put("perpage", "10");
+                params.put("page", String.valueOf(j));
+                params.put("perpage", "15");
                 params.put("action", GlobalConstants.GET_EVENT_FILTER);
 
                 Log.e("paramsssssssss", params.toString());
@@ -284,9 +341,11 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
             String latlong = place.getLatLng().toString().split(":")[1];
             String completeLatLng = latlong.substring(1, latlong.length() - 1);
             // Toast.makeText(MapsActivity.this,completeLatLng,Toast.LENGTH_SHORT).show();
-             lat = completeLatLng.split(",")[0];
+            lat = completeLatLng.split(",")[0];
             lat = lat.substring(1, lat.length());
-             lng = completeLatLng.split(",")[1];
+            lng = completeLatLng.split(",")[1];
+            j=1;
+            page_value=0;
             dialogWindow();
             searchMethod();
             places.release();

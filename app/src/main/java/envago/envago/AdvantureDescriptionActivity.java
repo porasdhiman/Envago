@@ -38,6 +38,7 @@ public class AdvantureDescriptionActivity extends Activity {
         global=(Global)getApplicationContext();
         if(!sp.getString(GlobalConstants.EVENT_DESCRIPTION,"").equalsIgnoreCase("")){
             desc_editText.setText(sp.getString(GlobalConstants.EVENT_DESCRIPTION,""));
+            desc_editText.setSelection(sp.getString(GlobalConstants.EVENT_DESCRIPTION,"").length());
         }
         back_button_create.setOnClickListener(new View.OnClickListener() {
             @Override

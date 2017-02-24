@@ -245,11 +245,13 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
                     {
 
                         case KeyEvent.KEYCODE_ENTER:
-                            calendarView.setVisibility(View.VISIBLE);
-                            submit_button.setVisibility(View.VISIBLE);
-                            clear.setVisibility(View.VISIBLE);
-                            start_end_layout.setVisibility(View.VISIBLE);
-                            no_of_days_txtView.setText(no_of_days_txtView.getText()+" days");
+                            if(no_of_days_txtView.getText().toString().length()>0) {
+                                calendarView.setVisibility(View.VISIBLE);
+                                submit_button.setVisibility(View.VISIBLE);
+                                clear.setVisibility(View.VISIBLE);
+                                start_end_layout.setVisibility(View.VISIBLE);
+                                no_of_days_txtView.setText(no_of_days_txtView.getText() + " days");
+                            }
                             return true;
                         default:
                             break;
@@ -286,6 +288,7 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
 
                 calendarView.setCurrentDate(sDate);
                 i = i + 1;
+                no_of_days_txtView.setSelection(sp.getString(GlobalConstants.NUMBER_OF_DAY, "").length()+5);
             }
         }
         if (no_of_days_txtView.getText().length() != 0) {

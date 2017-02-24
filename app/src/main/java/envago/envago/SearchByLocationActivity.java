@@ -72,6 +72,7 @@ public class SearchByLocationActivity extends FragmentActivity implements Google
     Global global;
     Dialog dialog2;
     TextView cancel_txtView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +119,7 @@ public class SearchByLocationActivity extends FragmentActivity implements Google
                 mAutocompleteView.setText("");
             }
         });
+
     }
 
     private void searchMethod() {

@@ -200,8 +200,7 @@ j.putExtra("user","no user");
     private void initImageLoader() {
         int memoryCacheSize;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-            int memClass = ((ActivityManager)
-                    mContext.getSystemService(Context.ACTIVITY_SERVICE))
+            int memClass = ((ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE))
                     .getMemoryClass();
             memoryCacheSize = (memClass / 8) * 1024 * 1024;
         } else {

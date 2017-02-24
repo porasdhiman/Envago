@@ -214,11 +214,14 @@ RelativeLayout start_end_layout;
                     switch (keyCode) {
 
                         case KeyEvent.KEYCODE_ENTER:
-                            calendarView.setVisibility(View.VISIBLE);
-                            submit_button.setVisibility(View.VISIBLE);
-                            start_end_layout.setVisibility(View.VISIBLE);
-                            of_days_txtView.setText(of_days_txtView.getText()+" days");
+                            if(of_days_txtView.getText().toString().length()>0) {
+                                calendarView.setVisibility(View.VISIBLE);
+                                submit_button.setVisibility(View.VISIBLE);
+                                start_end_layout.setVisibility(View.VISIBLE);
+                                of_days_txtView.setText(of_days_txtView.getText() + " days");
+                            }
                             return true;
+
                         default:
                             break;
                     }
@@ -264,6 +267,7 @@ RelativeLayout start_end_layout;
             }
 
             calendarView.setCurrentDate(sDate);
+            of_days_txtView.setSelection(sp.getString(GlobalConstants.NUMBER_OF_DAY, "").length()+5);
         }
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -292,6 +296,7 @@ RelativeLayout start_end_layout;
 
             }
         });
+
     }
 
     @Override
@@ -509,10 +514,11 @@ RelativeLayout start_end_layout;
             view.addSpan(new DotSpan(7, color));
         }
     }
-    @Override
-    public void onBackPressed() {
 
-    }
+
+    /**
+     * Called when the activity has detected the user's press of the back key
+     */
 
 }
 

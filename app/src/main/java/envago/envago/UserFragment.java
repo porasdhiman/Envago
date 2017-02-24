@@ -26,6 +26,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -50,6 +60,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,20 +73,26 @@ public class UserFragment extends Fragment {
     ImageView profilepic;
     Dialog camgllry;
     TextView settings, pricing_layout, privacy, terms;
-    SharedPreferences preferences,sp;
-    SharedPreferences.Editor editor,ed;
+    SharedPreferences preferences, sp;
+    SharedPreferences.Editor editor, ed;
     TextView username;
     Dialog dialog2;
     String selectedImagePath = "";
-TextView logout_txtView;
+    TextView logout_txtView;
     LinearLayout main_layout;
+    CallbackManager callbackManager;
+    LoginButton Login_TV;
+    RelativeLayout logout_rel;
+    String token;
 
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
 
         // TODO Auto-generated method stub
         View v = inflater.inflate(R.layout.profile, container, false);
 
+        callbackManager = CallbackManager.Factory.create();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -87,28 +104,43 @@ TextView logout_txtView;
         sp = getActivity().getSharedPreferences(GlobalConstants.CREATE_DATA, Context.MODE_PRIVATE);
         ed = sp.edit();
 
-
-        main_layout=(LinearLayout)v.findViewById(R.id.main_layout);
-Fonts.overrideFonts(getActivity(),main_layout);
+        Login_TV = (LoginButton) v.findViewById(R.id.Fb_Login);
+        Login_TV.setReadPermissions(Arrays.asList("public_profile, email"));
+        fbMethod();
+        main_layout = (LinearLayout) v.findViewById(R.id.main_layout);
+        Fonts.overrideFonts(getActivity(), main_layout);
         profilepic = (ImageView) v.findViewById(R.id.profile_img);
         settings = (TextView) v.findViewById(R.id.settings_txtView);
         pricing_layout = (TextView) v.findViewById(R.id.pricing_policy_txtView);
         privacy = (TextView) v.findViewById(R.id.privacy_policy_txtView);
         username = (TextView) v.findViewById(R.id.username);
         terms = (TextView) v.findViewById(R.id.terms_txtView);
-        logout_txtView= (TextView) v.findViewById(R.id.logout_txtView);
+        logout_rel = (RelativeLayout) v.findViewById(R.id.logout_rel);
 
-        logout_txtView.setOnClickListener(new View.OnClickListener() {
+        logout_rel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                editor.clear();
-                editor.commit();
-                ed.clear();
-                ed.commit();
-                Intent intent = new Intent(getActivity(), ActivityLogin.class);
-                startActivity(intent);
-                getActivity().finish();
+
+                if (preferences.getString("login type", "").equalsIgnoreCase("facebook")) {
+
+                    LoginManager.getInstance().logOut();
+                    editor.clear();
+                    editor.commit();
+                    ed.clear();
+                    ed.commit();
+                    Intent intent = new Intent(getActivity(), ActivityLogin.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                } else {
+                    editor.clear();
+                    editor.commit();
+                    ed.clear();
+                    ed.commit();
+                    Intent intent = new Intent(getActivity(), ActivityLogin.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
 
             }
         });
@@ -127,7 +159,7 @@ Fonts.overrideFonts(getActivity(),main_layout);
 
                 anim_frag.replace(R.id.contentintab, new EditProfileActivity()).addToBackStack(null).commit();*/
                 Intent intent = new Intent(getActivity(), EditProfileActivity.class);
-                startActivityForResult(intent,2);
+                startActivityForResult(intent, 2);
 
             }
         });
@@ -172,7 +204,7 @@ Fonts.overrideFonts(getActivity(),main_layout);
 
             } else {
                 TextDrawable drawable = TextDrawable.builder()
-                        .buildRound(username.getText().toString().substring(0,1).toUpperCase(), Color.parseColor("#F94444"));
+                        .buildRound(username.getText().toString().substring(0, 1).toUpperCase(), Color.parseColor("#F94444"));
                 if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
                     Picasso.with(getActivity()).load(preferences.getString(GlobalConstants.IMAGE, "")).placeholder(drawable).transform(new CircleTransform()).into(profilepic);
                 } else {
@@ -186,6 +218,44 @@ Fonts.overrideFonts(getActivity(),main_layout);
         }
         return v;
     }
+
+    //---------------------------facebook method------------------------------
+    public void fbMethod() {
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // App code
+                token = loginResult.getAccessToken().getToken();
+                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object,
+                                            GraphResponse response) {
+                        // Application code
+
+                        Log.e("date", object.toString());
+
+
+                    }
+                });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "picture.type(large),bio,id,name,link,gender,email, birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
+
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+            }
+        });
+    }
+
 
     public void dailog() {
         camgllry = new Dialog(getActivity());
@@ -226,6 +296,7 @@ Fonts.overrideFonts(getActivity(),main_layout);
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
@@ -239,16 +310,16 @@ Fonts.overrideFonts(getActivity(),main_layout);
         } else if (requestCode == 1) {
             onCaptureImageResult(data);
             camgllry.dismiss();
-        }else  {
+        } else if (requestCode == 2) {
             if (preferences.getString(GlobalConstants.IMAGE, "").length() == 0) {
 
             } else {
                 TextDrawable drawable = TextDrawable.builder()
-                        .buildRound(username.getText().toString().substring(0,1).toUpperCase(), Color.parseColor("#F94444"));
+                        .buildRound(username.getText().toString().substring(0, 1).toUpperCase(), Color.parseColor("#F94444"));
                 if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
                     Picasso.with(getActivity()).load(preferences.getString(GlobalConstants.IMAGE, "")).placeholder(drawable).transform(new CircleTransform()).into(profilepic);
                 } else {
-                    if(!preferences.getString(GlobalConstants.IMAGE, "").equalsIgnoreCase("")) {
+                    if (!preferences.getString(GlobalConstants.IMAGE, "").equalsIgnoreCase("")) {
                         Picasso.with(getActivity()).load(new File(preferences.getString(GlobalConstants.IMAGE, ""))).placeholder(drawable).transform(new CircleTransform()).into(profilepic);
 
                         //profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
@@ -257,6 +328,7 @@ Fonts.overrideFonts(getActivity(),main_layout);
             }
             username.setText(preferences.getString(GlobalConstants.USERNAME, ""));
         }
+
 
     }
 
@@ -284,26 +356,24 @@ Fonts.overrideFonts(getActivity(),main_layout);
                         editor.putString(GlobalConstants.ADDRESS, json_data.getString(GlobalConstants.ADDRESS));
                         editor.putString(GlobalConstants.PAYPAL, json_data.getString(GlobalConstants.PAYPAL));
                         editor.putString(GlobalConstants.ABOUT, json_data.getString(GlobalConstants.ABOUT));
-                        editor.putString(GlobalConstants.DOCUMENT, GlobalConstants.IMAGE_URL+json_data.getString(GlobalConstants.DOCUMENT));
-                        editor.putString(GlobalConstants.IMAGE, GlobalConstants.IMAGE_URL+json_data.getString(GlobalConstants.IMAGE));
+                        editor.putString(GlobalConstants.DOCUMENT, GlobalConstants.IMAGE_URL + json_data.getString(GlobalConstants.DOCUMENT));
+                        editor.putString(GlobalConstants.IMAGE, GlobalConstants.IMAGE_URL + json_data.getString(GlobalConstants.IMAGE));
 
-                        String img_url="";
-                        if(!json_data.getString(GlobalConstants.IMAGE).equalsIgnoreCase("")){
+                        String img_url = "";
+                        if (!json_data.getString(GlobalConstants.IMAGE).equalsIgnoreCase("")) {
                             img_url = json_data.getString(GlobalConstants.IMAGE);
                         }
                         editor.commit();
 
                         username.setText(preferences.getString(GlobalConstants.USERNAME, ""));
                         TextDrawable drawable = TextDrawable.builder()
-                                .buildRound(username.getText().toString().substring(0,1).toUpperCase(), Color.parseColor("#F94444"));
+                                .buildRound(username.getText().toString().substring(0, 1).toUpperCase(), Color.parseColor("#F94444"));
                         if (img_url.length() == 0) {
 
                             profilepic.setImageDrawable(drawable);
                         } else {
-                            Picasso.with(getActivity()).load(GlobalConstants.IMAGE_URL+img_url).placeholder(drawable).transform(new CircleTransform()).into(profilepic);
+                            Picasso.with(getActivity()).load(GlobalConstants.IMAGE_URL + img_url).placeholder(drawable).transform(new CircleTransform()).into(profilepic);
                         }
-
-
 
 
                     } else {
@@ -359,7 +429,8 @@ Fonts.overrideFonts(getActivity(),main_layout);
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
         dialog2.show();
     }
-//-------------------------------image-upload-------------------------------------------
+
+    //-------------------------------image-upload-------------------------------------------
     private void onSelectFromGalleryResult(Intent data) {
         Bitmap bm = null;
         if (data != null) {

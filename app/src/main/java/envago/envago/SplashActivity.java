@@ -48,7 +48,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by jhang on 9/18/2016.
  */
 public class SplashActivity extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
-       , ResultCallback<LocationSettingsResult> {
+        , ResultCallback<LocationSettingsResult> {
 
     // --------------code for gcm
     public static final String EXTRA_MESSAGE = "message";
@@ -81,7 +81,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
     protected String mLatitudeLabel;
     protected String mLongitudeLabel;
 
-RelativeLayout splash_img;
+    RelativeLayout splash_img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,9 +92,21 @@ RelativeLayout splash_img;
         sp = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         context = getApplicationContext();
         buildGoogleApiClient();
-        splash_img=(RelativeLayout)findViewById(R.id.splash_img);
+        splash_img = (RelativeLayout) findViewById(R.id.splash_img);
 
         //----------------------------------------Marshmallow Permission-----------------
+
+        if (checkPlayServices()) {
+            gcm = GoogleCloudMessaging.getInstance(this);
+            regId = getRegistrationId(context);
+            Log.e(TAG, " Google Play Services APK found.");
+            if (regId.isEmpty()) {
+
+                registerInBackground();
+            }
+        } else {
+            Log.e(TAG, "No valid Google Play Services APK found.");
+        }
 
         String locationPermission = Manifest.permission.ACCESS_FINE_LOCATION;
         String coarselocationPermission = Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -158,13 +170,13 @@ RelativeLayout splash_img;
 
                                         finish();
                                     } else {
-                                        if(global.getNotifyType().equalsIgnoreCase("0")) {
+                                        if (global.getNotifyType().equalsIgnoreCase("0")) {
                                             Intent intent = new Intent(SplashActivity.this, Tab_Activity.class);
                                             startActivity(intent);
                                             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
                                             finish();
-                                        }else{
+                                        } else {
                                             Intent intent = new Intent(SplashActivity.this, MessageFragment.class);
                                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -182,7 +194,7 @@ RelativeLayout splash_img;
                     }, 2000);
 
                 } else {
-                    Toast.makeText(SplashActivity.this,"Please check your network connection and restart app",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SplashActivity.this, "Please check your network connection and restart app", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 // We already have permission, so handle as norma
@@ -227,27 +239,16 @@ RelativeLayout splash_img;
                 }, 2000);
 
             } else {
-                Toast.makeText(SplashActivity.this,"Please check your network connection and restart app",Toast.LENGTH_SHORT).show();
+                Toast.makeText(SplashActivity.this, "Please check your network connection and restart app", Toast.LENGTH_SHORT).show();
                 finish();
             }
 
             // Toast.makeText(MainActivity.this,gps.getLatitude()+""+   gps.getLongitude(),Toast.LENGTH_SHORT).show();
         }
 
-        if (checkPlayServices()) {
-            gcm = GoogleCloudMessaging.getInstance(this);
-            regId = getRegistrationId(context);
-            Log.e(TAG, " Google Play Services APK found.");
-            if (regId.isEmpty()) {
-
-                registerInBackground();
-            }
-        } else {
-            Log.e(TAG, "No valid Google Play Services APK found.");
-        }
-
-
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -273,21 +274,21 @@ RelativeLayout splash_img;
                         perms.get(Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED) {
                     // All Permissions Granted
 
-                        if (CommonUtils.getConnectivityStatus(SplashActivity.this)) {
+                    if (CommonUtils.getConnectivityStatus(SplashActivity.this)) {
 
 
-                            locatioMethod();
-                            Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        locatioMethod();
+                        Intent intent = new Intent(SplashActivity.this, SlidePageActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
-                            finish();
+                        finish();
 
 
-                        } else {
-                            Toast.makeText(SplashActivity.this,"Please check your network connection and restart app",Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
+                    } else {
+                        Toast.makeText(SplashActivity.this, "Please check your network connection and restart app", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
 
                     // Toast.makeText(MainActivity.this,gps.getLatitude()+""+   gps.getLongitude(),Toast.LENGTH_SHORT).show();
 
@@ -474,7 +475,7 @@ RelativeLayout splash_img;
         }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
-           // Toast.makeText(SplashActivity.this, "" + mLastLocation.getLatitude() + " " + mLastLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(SplashActivity.this, "" + mLastLocation.getLatitude() + " " + mLastLocation.getLongitude(), Toast.LENGTH_SHORT).show();
             global.setLat(String.valueOf(mLastLocation.getLatitude()));
             global.setLong(String.valueOf(mLastLocation.getLongitude()));
 
@@ -497,6 +498,7 @@ RelativeLayout splash_img;
 
         }
     }
+
     @Override
     public void onResult(@NonNull LocationSettingsResult locationSettingsResult) {
         final Status status = locationSettingsResult.getStatus();
@@ -532,6 +534,7 @@ RelativeLayout splash_img;
     public void onConnectionSuspended(int i) {
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -547,11 +550,13 @@ RelativeLayout splash_img;
             }
         }
     }
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         mGoogleApiClient.connect();
     }
-    public void locatioMethod(){
+
+    public void locatioMethod() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions

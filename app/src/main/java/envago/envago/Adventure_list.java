@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -51,6 +52,9 @@ public class Adventure_list extends Activity {
     ImageView back_img;
     ShimmerFrameLayout  shimmer_view_container;
 ImageView search_button,list_back_img;
+    boolean isLoading=false;
+    int j = 1, page_value;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +117,42 @@ else if(headtext.getText().toString().equalsIgnoreCase("Rock & Ice"))
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
+        ad_items.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            @Override
+
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                // Ignore this method
+
+            }
+
+
+            @Override
+
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                Log.i("Main", totalItemCount + "");
+
+
+                int lastIndexInScreen = visibleItemCount + firstVisibleItem;
+
+
+                if (lastIndexInScreen >= totalItemCount && !isLoading) {
+
+                    // It is time to load more items
+                    if (page_value >= j) {
+                        isLoading = true;
+                        dialogWindow();
+                        get_list();
+                    }
+
+
+                }
+
+            }
+
+        });
 
     }
     //--------------------------------List-API----------------------------
@@ -130,40 +170,58 @@ dialog2.dismiss();
                     if (res.equalsIgnoreCase("1")) {
 
                         // JSONObject data = obj.getJSONObject("data");
-
                         JSONArray events = obj.getJSONArray("data");
-                        for (int i = 0; i < events.length(); i++) {
-                            JSONObject arrobj = events.getJSONObject(i);
+                        if (events.length() == 0) {
 
-                            HashMap<String, String> details = new HashMap<>();
+                        } else {
+                            j = j + 1;
 
-                            details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.EVENT_ID));
-                            details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
-                            details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
-                            details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
-                            details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
-                            details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
-                            details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            JSONArray arr=arrobj.getJSONArray("event_dates");
-                            JSONObject objArr=arr.getJSONObject(0);
-                            details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
-                            details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                            for (int i = 0; i < events.length(); i++) {
+                                JSONObject arrobj = events.getJSONObject(i);
+
+                                HashMap<String, String> details = new HashMap<>();
+
+                                details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.EVENT_ID));
+                                details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
+                                details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
+                                details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
+                                details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                                details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
+                                details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
+                                JSONArray arr = arrobj.getJSONArray("event_dates");
+                                JSONObject objArr = arr.getJSONObject(0);
+                                details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
+                                details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
 
-                            event_list.add(details);
+                                event_list.add(details);
+
+
+                            }
+                            Log.e("event list", event_list.toString());
+                            if(page_value>=j){
+                                isLoading = false;
+                                if (event_list.size() > 0) {
+                                    ad_items.setVisibility(View.VISIBLE);
+
+                                    ad_items.setAdapter(new Adventure_list_adapter(getApplicationContext(), event_list));
+
+                                    list_back_img.setVisibility(View.GONE);
+                                }
+
+                            }else{
+
+                                if (event_list.size() > 0) {
+                                    ad_items.setVisibility(View.VISIBLE);
+
+                                    ad_items.setAdapter(new Adventure_list_adapter(getApplicationContext(), event_list));
+
+                                    list_back_img.setVisibility(View.GONE);
+                                }
+                            }
 
 
                         }
-                        Log.e("event list",event_list.toString());
-
-                        if (event_list.size() > 0) {
-                            ad_items.setVisibility(View.VISIBLE);
-
-                            ad_items.setAdapter(new Adventure_list_adapter(getApplicationContext(), event_list));
-
-                            list_back_img.setVisibility(View.GONE);
-                        }
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -192,7 +250,7 @@ dialog2.dismiss();
                 params.put(GlobalConstants.LATITUDE, global.getLat());
                 params.put(GlobalConstants.LONGITUDE, global.getLong());
                 params.put(GlobalConstants.RESPONSE_TYPE, "list");
-                params.put("page", "1");
+                params.put("page", String.valueOf(j));
                 params.put("perpage", "20");
                 params.put("action", GlobalConstants.GET_EVENT_FILTER);
 

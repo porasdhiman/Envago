@@ -85,8 +85,11 @@ ImageView back_from_login;
                 finish();
                 break;
             case R.id.back_from_login:
-
+                Intent k = new Intent(RegisterActivity.this, SlidePageActivity.class);
+                startActivity(k);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
+
                 break;
 
             case R.id.sign_up_button:
@@ -171,6 +174,7 @@ ImageView back_from_login;
                                 JSONObject data = obj.getJSONObject("data");
 
                                 ed.putString(GlobalConstants.USERID, data.getString(GlobalConstants.USERID));
+                                ed.putString("login type","app");
                                 ed.commit();
 
                                 Intent j = new Intent(RegisterActivity.this, Tab_Activity.class);

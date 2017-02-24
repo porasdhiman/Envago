@@ -178,7 +178,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     ScrollView scrollview_main;
     int r_value;
     LinearLayout main_layout;
-    int total;
+    int total,t1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -316,9 +316,9 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         purchase_btn = (Button) findViewById(R.id.purchase_btn);
         if (getIntent().getExtras().getString("user").equalsIgnoreCase("user")) {
             purchase_btn.setVisibility(View.GONE);
-            heart_img.setVisibility(View.GONE);
+            heart_img.setVisibility(View.INVISIBLE);
         } else if (getIntent().getExtras().getString("user").equalsIgnoreCase("no user wish")) {
-            heart_img.setVisibility(View.GONE);
+            heart_img.setVisibility(View.INVISIBLE);
             stars.setOnTouchListener(this);
 
             purchase_btn.setOnClickListener(this);
@@ -373,7 +373,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                 } else if (dateType.equalsIgnoreCase("full_season")) {
                     Intent i = new Intent(DetailsActivity.this, OpenFullsessionActivity.class);
                     i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
-                    i.putExtra(GlobalConstants.NUMBER_OF_DAY, String.valueOf(total));
+                    i.putExtra(GlobalConstants.NUMBER_OF_DAY, String.valueOf(t1));
                     startActivity(i);
                 } else {
                     Intent i = new Intent(DetailsActivity.this, BookDateActivity.class);
@@ -539,6 +539,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         mMap.addMarker(options);
                                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(objArry.getString("latitude")), Double.parseDouble(objArry.getString("longitude"))), 7));
                                         mMap.animateCamera(CameraUpdateFactory.zoomTo(7), 2000, null);
+                                        dialog2.dismiss();
 
                                     } else {
                                         if (location.length() == 1) {
@@ -823,6 +824,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         map.put(GlobalConstants.EVENT_START_DATE, event_datesObj.getString(GlobalConstants.EVENT_START_DATE));
                                         map.put(GlobalConstants.EVENT_END_DATE, event_datesObj.getString(GlobalConstants.EVENT_END_DATE));
                                         map.put(GlobalConstants.remaining_places, event_datesObj.getString(GlobalConstants.remaining_places));
+                                        map.put(GlobalConstants.NUMBER_OF_DAY, objArry.getString("total_no_of_places"));
 
                                         event_date_array.add(map);
                                     }
@@ -846,7 +848,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                             }
 
                                         }
-                                        if(dateMatchMethod(event_date_array.get(0).get(GlobalConstants.EVENT_END_DATE))){
+                                        if(dateMatchMethod(event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE))){
                                             purchase_btn.setText("Closed");
                                             purchase_btn.setOnClickListener(null);
                                         }
@@ -858,33 +860,43 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                             places_txtView.setText(String.valueOf(total) + " Places ");
                                         }
 
-
+                                        global.setEvent_start_date(event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE));
+                                        global.setEvent_end_date(event_date_array.get(0).get(GlobalConstants.EVENT_END_DATE));
                                     } else if (dateType.equalsIgnoreCase("full_season")) {
-                                         total = Integer.parseInt(objArry.getString("total_no_of_places"));
-
-                                        if (Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places)) == 0) {
+                                        t1=Integer.parseInt(objArry.getString("event_no_of_days"));
+                                        total = Integer.parseInt(objArry.getString("total_no_of_places")) * event_date_array.size();
+                                        int l = 0, p = 0;
+                                        for (int k = 0; k < event_date_array.size(); k++) {
+                                            l = Integer.parseInt(event_date_array.get(k).get(GlobalConstants.remaining_places)) + l;
+                                        }
+                                        if (l == 0) {
                                             total = eventUserList.size();
+                                            l=total;
                                             purchase_btn.setText("Sold out");
                                             purchase_btn.setOnClickListener(null);
                                         } else {
-                                            if (total != Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places))) {
-
-                                                total = Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places)) + eventUserList.size();
-
+                                            if (l != total) {
+                                                p = l;
+                                                l = l + eventUserList.size();
+                                            } else {
+                                                p = total;
                                             }
-
                                         }
-                                        if(dateMatchMethod(event_date_array.get(0).get(GlobalConstants.EVENT_END_DATE))){
+
+                                        if(dateMatchMethod(event_date_array.get(event_date_array.size()-1).get(GlobalConstants.EVENT_START_DATE))){
                                             purchase_btn.setText("Closed");
                                             purchase_btn.setOnClickListener(null);
                                         }
 
-                                        user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, total, eventUserList,header_textview.getText().toString()));
+                                        user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, l, eventUserList,header_textview.getText().toString()));
                                         if (eventUserList.size() > 0) {
-                                            places_txtView.setText(Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places)) + "/" + objArry.getString("total_no_of_places") + " Places ");
+                                            places_txtView.setText(String.valueOf(p) + "/" + String.valueOf(total) + " Places ("+objArry.getString("total_no_of_places")+"per day)");
                                         } else {
-                                            places_txtView.setText(String.valueOf(total) + " Places ");
+                                            Log.e("total", String.valueOf(p));
+                                            places_txtView.setText(String.valueOf(p) + " Places ("+objArry.getString("total_no_of_places")+"per day)");
                                         }
+                                        global.setEvent_start_date(event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE));
+                                        global.setEvent_end_date(event_date_array.get(event_date_array.size()-1).get(GlobalConstants.EVENT_END_DATE));
                                     } else {
                                          total = Integer.parseInt(objArry.getString("total_no_of_places")) * event_date_array.size();
                                         int l = 0, p = 0;
@@ -893,6 +905,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         }
                                         if (l == 0) {
                                             total = eventUserList.size();
+                                            l=total;
                                             purchase_btn.setText("Sold out");
                                             purchase_btn.setOnClickListener(null);
                                         } else {
@@ -907,10 +920,10 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
                                         user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, l, eventUserList,header_textview.getText().toString()));
                                         if (eventUserList.size() > 0) {
-                                            places_txtView.setText(String.valueOf(p) + "/" + String.valueOf(total) + " Places ");
+                                            places_txtView.setText(String.valueOf(p) + "/" + String.valueOf(total) + " Places ("+objArry.getString("total_no_of_places")+"per day)");
                                         } else {
                                             Log.e("total", String.valueOf(p));
-                                            places_txtView.setText(String.valueOf(p) + " Places ");
+                                            places_txtView.setText(String.valueOf(p) + " Places ("+objArry.getString("total_no_of_places")+"per day)");
                                         }
 
                                     }
@@ -943,8 +956,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     // date_details.setText(date+" "+months[mm]+" "+split[0]);
 
                                     //days_details.setText(String.valueOf(getDaysDifference(startDate,endDate))+" Days");
-                                    global.setEvent_start_date(event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE));
-                                    global.setEvent_end_date(event_date_array.get(0).get(GlobalConstants.EVENT_END_DATE));
+
 
                                 }
 
@@ -952,7 +964,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                             } else {
                                 Toast.makeText(DetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             }
-                            dialog2.dismiss();
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1076,6 +1088,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                 mMap.addPolyline(polyLineOptions);
 
             }
+            dialog2.dismiss();
 
         }
 

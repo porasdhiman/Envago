@@ -595,6 +595,16 @@ public class Global extends Application {
     }
 
     String notifyType="0";
+
+    public String getTabValue() {
+        return tabValue;
+    }
+
+    public void setTabValue(String tabValue) {
+        this.tabValue = tabValue;
+    }
+
+    String tabValue="0";
     @Override
     public void onCreate() {
         super.onCreate();

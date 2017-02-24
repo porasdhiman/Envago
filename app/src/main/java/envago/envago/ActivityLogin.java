@@ -51,7 +51,7 @@ public class ActivityLogin extends Activity implements View.OnTouchListener,View
     Dialog dialog2;
     Global global;
     RelativeLayout main_layout;
-    TextView mail_error_txtView,password_error_txtView;
+    TextView mail_error_txtView,password_error_txtView,forgot_txtView;
 ImageView back_from_login;
 
     @Override
@@ -70,6 +70,8 @@ ImageView back_from_login;
         mail_error_txtView=(TextView)findViewById(R.id.mail_error_txtView) ;
         password_error_txtView=(TextView)findViewById(R.id.password_error_txtView);
         back_from_login=(ImageView)findViewById(R.id.back_from_login);
+        forgot_txtView=(TextView)findViewById(R.id.forgot_txtView);
+        forgot_txtView.setOnClickListener(this);
         login_button.setOnClickListener(this);
         sign_in_layout.setOnClickListener(this);
         show_txt.setOnClickListener(this);
@@ -135,6 +137,15 @@ ImageView back_from_login;
 
 
                 break;
+
+            case R.id.forgot_txtView:
+                Intent f=new Intent(ActivityLogin.this,ForgotPassword.class);
+                startActivity(f);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+
+
+                break;
             case R.id.show_txt:
                 if(show_txt.getText().toString().equalsIgnoreCase("SHOW")){
                     password_editView.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -168,6 +179,7 @@ ImageView back_from_login;
                                 JSONObject data = obj.getJSONObject("data");
 
                                 ed.putString(GlobalConstants.USERID, data.getString(GlobalConstants.USERID));
+                                ed.putString("login type","app");
                                 ed.commit();
                                 Intent i=new Intent(ActivityLogin.this,Tab_Activity.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

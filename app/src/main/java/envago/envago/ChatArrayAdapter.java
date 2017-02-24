@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -22,7 +21,7 @@ public class ChatArrayAdapter extends BaseAdapter {
     private TextView chatText, created_date;
     private ArrayList<HashMap<String, String>> chatMessageList = new ArrayList<>();
     private Context context;
-    ImageView user_img;
+    TextView user_txt;
 
     Global global;
 String url;
@@ -59,13 +58,13 @@ String url;
 
         } else {
             row = inflater.inflate(R.layout.left, parent, false);
-
+            user_txt = (TextView) row.findViewById(R.id.user_txt);
+            user_txt.setText(chatMessageList.get(position).get("username"));
         }
         chatText = (TextView) row.findViewById(R.id.msgr);
         chatText.setText(chatMessageList.get(position).get("text"));
         created_date = (TextView) row.findViewById(R.id.date_txt);
-        //user_img = (ImageView) row.findViewById(R.id.user_img);
-       // user_img.setVisibility(View.GONE);
+
        /* ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
 // generate random color
         int color1 = generator.getRandomColor();

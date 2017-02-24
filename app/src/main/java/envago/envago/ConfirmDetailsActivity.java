@@ -48,7 +48,7 @@ import java.util.Map;
  * Created by vikas on 10-11-2016.
  */
 public class ConfirmDetailsActivity extends Activity implements View.OnClickListener {
-    TextView person_name, date_details, Time_details, person_count, total_money, location_of_event,duration_txtView;
+    TextView person_name, date_details, Time_details, person_count, total_money, location_of_event, duration_txtView;
     ImageView minus, add;
     Button procced_btn;
     //-----------------------------------Paypal variable
@@ -71,16 +71,17 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
 
     PayPalPayment thingToBuy;
     Global global;
-    int i = 1,total,Change_total;
-    Date startDate,endDate;
+    int i = 1, total, Change_total;
+    Date startDate, endDate;
     Dialog dialog2;
     TextView count_txtView;
-    String months[] = { " ", "Jan", "Feb", "Mar", "Apr", "May",
+    String months[] = {" ", "Jan", "Feb", "Mar", "Apr", "May",
             "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
-            "Dec", };
+            "Dec",};
     ImageView search_button;
     TextView remanning_place_txt;
     int r_place;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,8 +92,8 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
-        duration_txtView=(TextView)findViewById(R.id.duration_txtView);
-        search_button=(ImageView)findViewById(R.id.search_button);
+        duration_txtView = (TextView) findViewById(R.id.duration_txtView);
+        search_button = (ImageView) findViewById(R.id.search_button);
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,21 +102,21 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         });
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy-MM-dd");
-         startDate=new Date();
-         endDate=new Date();
+        startDate = new Date();
+        endDate = new Date();
         try {
-
-            startDate=dateFormat.parse(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_START_DATE));
-            endDate=dateFormat.parse(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_END_DATE));
+Log.e("aaraaaa",global.getBookdateArray().toString());
+            startDate = dateFormat.parse(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_START_DATE));
+            endDate = dateFormat.parse(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_END_DATE));
         } catch (java.text.ParseException e) {
             e.printStackTrace();
         }
 
-        duration_txtView.setText(String.valueOf(getDaysDifference(startDate,endDate))+" Days");
+        duration_txtView.setText(String.valueOf(getDaysDifference(startDate, endDate)) + " Days");
         person_name = (TextView) findViewById(R.id.person_name);
         person_name.setText(global.getEvent_name());
         date_details = (TextView) findViewById(R.id.date_details);
-        remanning_place_txt=(TextView)findViewById(R.id.remanning_place_txt);
+        remanning_place_txt = (TextView) findViewById(R.id.remanning_place_txt);
         String data = global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_END_DATE);
         String split[] = data.split("-");
         String minth = split[1];
@@ -124,13 +125,13 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
 
         date_details.setText(formatdate2(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_START_DATE)) + " to " + formatdate2(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_END_DATE)));
         Time_details = (TextView) findViewById(R.id.Time_details);
-        Time_details.setText(global.getEvent_meetin_point()+"\n"+global.getEvent_time());
+        Time_details.setText(global.getEvent_meetin_point() + "\n" + global.getEvent_time());
         person_count = (TextView) findViewById(R.id.person_count);
-        person_count.setText(String.valueOf(i)+" person");
+        person_count.setText(String.valueOf(i) + " person");
         total_money = (TextView) findViewById(R.id.total_money);
         total_money.setText("$" + global.getEvent_price());
-        total=Integer.parseInt(global.getEvent_price());
-        Change_total=total;
+        total = Integer.parseInt(global.getEvent_price());
+        Change_total = total;
         location_of_event = (TextView) findViewById(R.id.location_of_event);
         location_of_event.setText(global.getEvent_loc());
         minus = (ImageView) findViewById(R.id.minus);
@@ -144,8 +145,8 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);
-        remanning_place_txt.setText("Remaining places "+getIntent().getExtras().getString(GlobalConstants.remaining_places));
-        r_place=Integer.parseInt(getIntent().getExtras().getString(GlobalConstants.remaining_places));
+        remanning_place_txt.setText("Remaining places " + getIntent().getExtras().getString(GlobalConstants.remaining_places));
+        r_place = Integer.parseInt(getIntent().getExtras().getString(GlobalConstants.remaining_places));
     }
 
     //---------------------------------------------Payment method----------------------------------
@@ -155,24 +156,24 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
 
         startActivityForResult(intent, REQUEST_CODE_FUTURE_PAYMENT);
     }
-    public String formatdate2(String fdate)
-    {
-        String datetime=null;
+
+    public String formatdate2(String fdate) {
+        String datetime = null;
         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        SimpleDateFormat d= new SimpleDateFormat("dd MMM yyyy");
+        SimpleDateFormat d = new SimpleDateFormat("dd MMM yyyy");
         try {
             Date convertedDate = inputFormat.parse(fdate);
             datetime = d.format(convertedDate);
 
-        }catch (ParseException e)
-        {
+        } catch (ParseException e) {
 
         }
-        return  datetime;
+        return datetime;
 
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_PAYMENT) {
@@ -259,12 +260,12 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.plus:
-                if(i==r_place){
+                if (i == r_place) {
 
-                }else{
+                } else {
                     i++;
-                    person_count.setText(String.valueOf(i)+" person");
-                    Change_total=Change_total+total;
+                    person_count.setText(String.valueOf(i) + " person");
+                    Change_total = Change_total + total;
                     total_money.setText("$" + String.valueOf(Change_total));
                 }
 
@@ -272,9 +273,9 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
             case R.id.minus:
                 if (i != 1) {
                     i--;
-                    person_count.setText(String.valueOf(i)+" person");
-                    if(total!=Change_total){
-                        Change_total=Change_total-total;
+                    person_count.setText(String.valueOf(i) + " person");
+                    if (total != Change_total) {
+                        Change_total = Change_total - total;
                         total_money.setText("$" + String.valueOf(Change_total));
                     }
                 }
@@ -289,12 +290,12 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         }
 
     }
-    public static int getDaysDifference(Date fromDate, Date toDate)
-    {
-        if(fromDate==null||toDate==null)
+
+    public static int getDaysDifference(Date fromDate, Date toDate) {
+        if (fromDate == null || toDate == null)
             return 0;
 
-        return (int)( (toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
+        return (int) ((toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
     }
 
     //-------------------------------join event api-------------------------------
@@ -306,7 +307,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                     @Override
                     public void onResponse(String response) {
                         dialog2.dismiss();
-                        Log.e("response", response);
+                        Log.e("responseddd", response);
                         try {
                             JSONObject obj = new JSONObject(response);
 
@@ -316,11 +317,13 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                                 SharedPreferences.Editor ed=sp.edit();
                                 ed.putString("chat","chat");
                                 ed.commit();*/
-                                Intent i=new Intent(ConfirmDetailsActivity.this,Tab_Activity.class);
+
+                                Intent i = new Intent(ConfirmDetailsActivity.this, Tab_Activity.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
                                 startActivity(i);
-                                finish();
+
+
                                 Toast.makeText(ConfirmDetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(ConfirmDetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
@@ -361,6 +364,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
     //---------------------------Progrees Dialog-----------------------
     public void dialogWindow() {
         dialog2 = new Dialog(this);

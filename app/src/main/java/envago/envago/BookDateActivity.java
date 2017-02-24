@@ -122,42 +122,42 @@ public class BookDateActivity extends Activity {
 
             date_txtView.setText( days[calendar.get(Calendar.DAY_OF_WEEK)-1]+","+formatdate2(list.get(position).get(GlobalConstants.EVENT_START_DATE))+"-"+ days[calendar2.get(Calendar.DAY_OF_WEEK)-1]+","+formatdate2(list.get(position).get(GlobalConstants.EVENT_END_DATE)));
 
-            if(Integer.parseInt(list.get(position).get(GlobalConstants.remaining_places))==0){
-                book_txtView.setText("Sold out");
-                Calendar c = Calendar.getInstance();
-                SimpleDateFormat dateFormat = new SimpleDateFormat(
-                        "yyyy-MM-dd");
-                String dateafter = dateFormat.format(c.getTime());
-
-                Date currentDate = new Date();
-                Date eventDate = new Date();
-
-                try {
-                    currentDate = dateFormat.parse(dateafter);
-                    eventDate = dateFormat.parse(list.get(position).get(GlobalConstants.EVENT_END_DATE));
-                } catch (java.text.ParseException e) {
-                    e.printStackTrace();
-                }
-                if (eventDate.equals(currentDate)||eventDate.before(currentDate)) {
-                    book_txtView.setText("Closed");
-                } else {
 
 
-                }
-            }else{
-                book_txtView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i=new Intent(context,ConfirmDetailsActivity.class);
-                        i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
-                        i.putExtra(GlobalConstants.remaining_places, list.get(position).get(GlobalConstants.remaining_places));
-                        i.putExtra("pos", String.valueOf(position));
-                        startActivity(i);
-                    }
-                });
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat dateFormat = new SimpleDateFormat(
+                    "yyyy-MM-dd");
+            String dateafter = dateFormat.format(c.getTime());
+
+            Date currentDate = new Date();
+            Date eventDate = new Date();
+
+            try {
+                currentDate = dateFormat.parse(dateafter);
+                eventDate = dateFormat.parse(list.get(position).get(GlobalConstants.EVENT_START_DATE));
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
             }
+            if (eventDate.equals(currentDate)||eventDate.before(currentDate)) {
+                book_txtView.setText("Closed");
+            } else {
+                if(Integer.parseInt(list.get(position).get(GlobalConstants.remaining_places))==0){
+                    book_txtView.setText("Sold out");
 
+                }else{
+                    book_txtView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i=new Intent(context,ConfirmDetailsActivity.class);
+                            i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
+                            i.putExtra(GlobalConstants.remaining_places, list.get(position).get(GlobalConstants.remaining_places));
+                            i.putExtra("pos", String.valueOf(position));
+                            startActivity(i);
+                        }
+                    });
+                }
 
+            }
 
 
 
