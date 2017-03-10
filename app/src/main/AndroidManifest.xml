@@ -32,7 +32,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ConfirmDetailsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait">

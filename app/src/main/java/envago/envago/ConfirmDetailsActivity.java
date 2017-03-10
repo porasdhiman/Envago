@@ -4,16 +4,20 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,7 +84,15 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
             "Dec",};
     ImageView search_button;
     TextView remanning_place_txt;
-    int r_place;
+    int r_place, discount, flat;
+    RelativeLayout coupon_applied_layout;
+    TextView discount_txt, add_coupont_txtView;
+    EditText coupon_edit;
+    ImageView cancel_view_img;
+    String coupon_id = "";
+    TextView dis_money;
+    String discount_type = "";
+    int leftTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +109,13 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if (discount_type.equalsIgnoreCase("")) {
+                    finish();
+                } else {
+                    dialogWindow();
+                    cancelApi();
+                }
+
             }
         });
         SimpleDateFormat dateFormat = new SimpleDateFormat(
@@ -105,7 +123,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         startDate = new Date();
         endDate = new Date();
         try {
-Log.e("aaraaaa",global.getBookdateArray().toString());
+            Log.e("aaraaaa", global.getBookdateArray().toString());
             startDate = dateFormat.parse(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_START_DATE));
             endDate = dateFormat.parse(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_END_DATE));
         } catch (java.text.ParseException e) {
@@ -114,7 +132,7 @@ Log.e("aaraaaa",global.getBookdateArray().toString());
 
         duration_txtView.setText(String.valueOf(getDaysDifference(startDate, endDate)) + " Days");
         person_name = (TextView) findViewById(R.id.person_name);
-        person_name.setText(global.getEvent_name());
+        person_name.setText(cap(global.getEvent_name()));
         date_details = (TextView) findViewById(R.id.date_details);
         remanning_place_txt = (TextView) findViewById(R.id.remanning_place_txt);
         String data = global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_END_DATE);
@@ -140,13 +158,38 @@ Log.e("aaraaaa",global.getBookdateArray().toString());
         procced_btn.setOnClickListener(this);
         add.setOnClickListener(this);
         minus.setOnClickListener(this);
-
+        coupon_applied_layout = (RelativeLayout) findViewById(R.id.coupon_applied_layout);
+        discount_txt = (TextView) findViewById(R.id.discount_txt);
+        add_coupont_txtView = (TextView) findViewById(R.id.add_coupon_txtView);
+        coupon_edit = (EditText) findViewById(R.id.coupon_edit);
+        cancel_view_img = (ImageView) findViewById(R.id.cancel_view_img);
+        add_coupont_txtView.setOnClickListener(this);
+        cancel_view_img.setOnClickListener(this);
+        dis_money = (TextView) findViewById(R.id.dis_money);
+        coupon_edit.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                coupon_applied_layout.setVisibility(View.GONE);
+                cancel_view_img.setVisibility(View.VISIBLE);
+                total_money.setTextColor(Color.parseColor("#000000"));
+                add_coupont_txtView.setVisibility(View.VISIBLE);
+                dis_money.setText("");
+                total_money.setPaintFlags(0);
+                return false;
+            }
+        });
         //------------------------------Intent for call paypal service----------------------
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);
         remanning_place_txt.setText("Remaining places " + getIntent().getExtras().getString(GlobalConstants.remaining_places));
         r_place = Integer.parseInt(getIntent().getExtras().getString(GlobalConstants.remaining_places));
+    }
+
+    public String cap(String name) {
+        StringBuilder sb = new StringBuilder(name);
+        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+        return sb.toString();
     }
 
     //---------------------------------------------Payment method----------------------------------
@@ -171,6 +214,11 @@ Log.e("aaraaaa",global.getBookdateArray().toString());
         }
         return datetime;
 
+
+    }
+
+    @Override
+    public void onBackPressed() {
 
     }
 
@@ -267,6 +315,25 @@ Log.e("aaraaaa",global.getBookdateArray().toString());
                     person_count.setText(String.valueOf(i) + " person");
                     Change_total = Change_total + total;
                     total_money.setText("$" + String.valueOf(Change_total));
+                    if (!discount_type.equalsIgnoreCase("")) {
+                        if (discount_type.equalsIgnoreCase("percentage")) {
+
+                            int t = Change_total * discount / 100;
+                            dis_money.setText("$" + String.valueOf(t));
+
+
+                        } else {
+                            if (flat > Change_total) {
+
+                                dis_money.setText("$0");
+                                total_money.setTextColor(getResources().getColor(R.color.textcolor));
+                            } else {
+                                int t = Change_total - flat;
+                                dis_money.setText("$" + String.valueOf(t));
+                            }
+
+                        }
+                    }
                 }
 
                 break;
@@ -278,14 +345,56 @@ Log.e("aaraaaa",global.getBookdateArray().toString());
                         Change_total = Change_total - total;
                         total_money.setText("$" + String.valueOf(Change_total));
                     }
+                    if (!discount_type.equalsIgnoreCase("")) {
+                        if (discount_type.equalsIgnoreCase("percentage")) {
+
+                            int t = Change_total * discount / 100;
+                            dis_money.setText("$" + String.valueOf(t));
+
+
+                        } else {
+                            if (flat > Change_total) {
+
+                                dis_money.setText("$0");
+                                total_money.setTextColor(getResources().getColor(R.color.textcolor));
+                            } else {
+                                int t = Change_total - flat;
+                                dis_money.setText("$" + String.valueOf(t));
+                            }
+
+                        }
+                    }
                 }
                 break;
             case R.id.procced_btn:
-                thingToBuy = new PayPalPayment(new BigDecimal(String.valueOf(Change_total)), "USD",
-                        "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
-                Intent intent = new Intent(ConfirmDetailsActivity.this, PaymentActivity.class);
-                intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
-                startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+                if (discount_type.equalsIgnoreCase("")) {
+                    thingToBuy = new PayPalPayment(new BigDecimal(String.valueOf(Change_total)), "USD",
+                            "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
+                    Intent intent = new Intent(ConfirmDetailsActivity.this, PaymentActivity.class);
+                    intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+                    startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+                } else {
+                    dialogWindow();
+                    addCouponWithPaymentApi();
+
+                }
+
+                break;
+            case R.id.add_coupon_txtView:
+                if (coupon_edit.getText().length() == 0 || coupon_edit.getText().toString().equalsIgnoreCase("")) {
+                    coupon_edit.setError("Please enter coupon/voucher code");
+                } else {
+                    dialogWindow();
+                    coponApplyApi();
+                }
+                /*add_coupont_txtView.setVisibility(View.GONE);
+                coupon_applied_layout.setVisibility(View.VISIBLE);*/
+                break;
+            case R.id.cancel_view_img:
+                dis_money.setText("");
+                total_money.setTextColor(Color.parseColor("#000000"));
+                add_coupont_txtView.setVisibility(View.VISIBLE);
+                coupon_applied_layout.setVisibility(View.GONE);
                 break;
         }
 
@@ -355,6 +464,243 @@ Log.e("aaraaaa",global.getBookdateArray().toString());
 
                 params.put("action", "join_event");
                 Log.e("join_event", params.toString());
+                return params;
+            }
+
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    //-------------------------------cancel  api-------------------------------
+    private void coponApplyApi() {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GlobalConstants.URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        dialog2.dismiss();
+                        Log.e("responseddd", response);
+                        try {
+                            JSONObject obj = new JSONObject(response);
+
+                            String status = obj.getString("success");
+                            if (status.equalsIgnoreCase("1")) {
+                                JSONObject data = obj.getJSONObject("data");
+
+                                JSONObject coupon = data.getJSONObject("coupon");
+                                coupon_id = coupon.getString("id");
+                                if (Change_total > Integer.parseInt(coupon.getString("min_order_value"))) {
+
+                                    discount_type = coupon.getString("discount_type");
+                                    if (discount_type.equalsIgnoreCase("percentage")) {
+
+                                        discount = Integer.parseInt(coupon.getString("discount_value"));
+                                        discount_txt.setText(coupon_edit.getText().toString() + " applied sucessfully, " + coupon.getString("discount_value") + "% discount");
+
+
+                                        int t = Change_total * discount / 100;
+                                        dis_money.setText("$" + String.valueOf(t));
+                                        total_money.setTextColor(getResources().getColor(R.color.textcolor));
+                                        total_money.setPaintFlags(total_money.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+
+                                    } else {
+                                        flat = Integer.parseInt(coupon.getString("discount_value"));
+                                        discount_txt.setText(coupon_edit.getText().toString() + " applied sucessfully, flat $" + coupon.getString("discount_value") + " discount");
+
+                                        if (flat > Change_total) {
+
+                                            dis_money.setText("$0");
+                                            total_money.setTextColor(getResources().getColor(R.color.textcolor));
+                                            total_money.setPaintFlags(total_money.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                                        } else {
+                                            int t = Change_total - flat;
+                                            dis_money.setText("$" + String.valueOf(t));
+                                            total_money.setTextColor(getResources().getColor(R.color.textcolor));
+                                            total_money.setPaintFlags(total_money.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                        }
+
+                                    }
+
+                                    add_coupont_txtView.setVisibility(View.GONE);
+                                    coupon_applied_layout.setVisibility(View.VISIBLE);
+                                } else {
+
+                                    coupon_applied_layout.setVisibility(View.VISIBLE);
+                                    discount_txt.setText("Coupon not valid");
+                                    cancel_view_img.setVisibility(View.GONE);
+                                }
+                            } else {
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        dialog2.dismiss();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("coupon_code", coupon_edit.getText().toString());
+                params.put("user_id", CommonUtils.UserID(ConfirmDetailsActivity.this));
+
+
+                params.put("action", "get_coupon_detail");
+                Log.e("get_coupon_detail", params.toString());
+                return params;
+            }
+
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    //-------------------------------cancel  api-------------------------------
+    private void cancelApi() {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GlobalConstants.URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        dialog2.dismiss();
+                        Log.e("responseddd", response);
+                        try {
+                            JSONObject obj = new JSONObject(response);
+
+                            String status = obj.getString("success");
+                            if (status.equalsIgnoreCase("1")) {
+                                finish();
+
+                            } else {
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        dialog2.dismiss();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+
+                params.put("user_coupon_id", String.valueOf(coupon_id));
+
+
+                params.put("action", "cancel_applied_coupon");
+                Log.e("cancel_applied_coupon", params.toString());
+                return params;
+            }
+
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    //-------------------------------cancel  api-------------------------------
+    private void addCouponWithPaymentApi() {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GlobalConstants.URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        dialog2.dismiss();
+                        Log.e("responseddd", response);
+                        try {
+                            JSONObject obj = new JSONObject(response);
+
+                            String status = obj.getString("success");
+                            if (status.equalsIgnoreCase("1")) {
+                                if (discount_type.equalsIgnoreCase("")) {
+                                    thingToBuy = new PayPalPayment(new BigDecimal(String.valueOf(Change_total)), "USD",
+                                            "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
+                                } else {
+                                    leftTotal = Integer.parseInt(dis_money.getText().toString().replace("$", "").trim());
+                                    Log.e("total", String.valueOf(leftTotal));
+                                    if(leftTotal==0){
+                                        thingToBuy = new PayPalPayment(new BigDecimal("0.01"), "USD",
+                                                "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
+                                    }else{
+                                        thingToBuy = new PayPalPayment(new BigDecimal(String.valueOf(leftTotal)), "USD",
+                                                "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
+                                    }
+
+                                }
+                                Intent intent = new Intent(ConfirmDetailsActivity.this, PaymentActivity.class);
+                                intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+                                startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+
+                            } else {
+                                Toast.makeText(ConfirmDetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        dialog2.dismiss();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("user_id", CommonUtils.UserID(ConfirmDetailsActivity.this));
+                params.put("coupon_id", String.valueOf(coupon_id));
+                params.put("actual_price", total_money.getText().toString().replace("$", "").trim());
+                params.put("discounted_price", dis_money.getText().toString().replace("$", "").trim());
+
+                if (discount_type.equalsIgnoreCase("percentage")) {
+                    params.put("discount", String.valueOf(discount));
+
+
+                } else {
+                    params.put("discount", String.valueOf(flat));
+
+
+                }
+
+
+                params.put("action", "apply_coupon");
+                Log.e("apply_coupon", params.toString());
                 return params;
             }
 
