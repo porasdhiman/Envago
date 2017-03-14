@@ -39,11 +39,11 @@ import java.util.Map;
  * Created by vikas on 27-12-2016.
  */
 
-public class ActivityLogin extends Activity implements View.OnTouchListener,View.OnClickListener {
+public class ActivityLogin extends Activity implements View.OnTouchListener, View.OnClickListener {
 
 
     TextView show_txt;
-    EditText password_editView,email_editText;
+    EditText password_editView, email_editText;
     LinearLayout sign_in_layout;
     TextView login_button;
     SharedPreferences sp;
@@ -51,35 +51,37 @@ public class ActivityLogin extends Activity implements View.OnTouchListener,View
     Dialog dialog2;
     Global global;
     RelativeLayout main_layout;
-    TextView mail_error_txtView,password_error_txtView,forgot_txtView;
-ImageView back_from_login;
+    TextView mail_error_txtView, password_error_txtView, forgot_txtView;
+    ImageView back_from_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
-        global=(Global)getApplicationContext();
+        global = (Global) getApplicationContext();
         sp = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         ed = sp.edit();
-        show_txt=(TextView)findViewById(R.id.show_txt);
-        password_editView=(EditText)findViewById(R.id.password);
-        email_editText=(EditText)findViewById(R.id.mail_editText);
-        main_layout=(RelativeLayout)findViewById(R.id.main_layout);
-        sign_in_layout=(LinearLayout)findViewById(R.id.sign_in_layout);
-        login_button=(TextView)findViewById(R.id.login_button);
-        mail_error_txtView=(TextView)findViewById(R.id.mail_error_txtView) ;
-        password_error_txtView=(TextView)findViewById(R.id.password_error_txtView);
-        back_from_login=(ImageView)findViewById(R.id.back_from_login);
-        forgot_txtView=(TextView)findViewById(R.id.forgot_txtView);
+        show_txt = (TextView) findViewById(R.id.show_txt);
+        password_editView = (EditText) findViewById(R.id.password);
+        email_editText = (EditText) findViewById(R.id.mail_editText);
+        main_layout = (RelativeLayout) findViewById(R.id.main_layout);
+        sign_in_layout = (LinearLayout) findViewById(R.id.sign_in_layout);
+        login_button = (TextView) findViewById(R.id.login_button);
+        mail_error_txtView = (TextView) findViewById(R.id.mail_error_txtView);
+        password_error_txtView = (TextView) findViewById(R.id.password_error_txtView);
+        back_from_login = (ImageView) findViewById(R.id.back_from_login);
+        forgot_txtView = (TextView) findViewById(R.id.forgot_txtView);
         forgot_txtView.setOnClickListener(this);
         login_button.setOnClickListener(this);
         sign_in_layout.setOnClickListener(this);
         show_txt.setOnClickListener(this);
         email_editText.setOnTouchListener(this);
+        password_editView.setOnTouchListener(this);
         password_editView.setOnClickListener(this);
         back_from_login.setOnClickListener(this);
 
     }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         int id = v.getId();
@@ -95,9 +97,10 @@ ImageView back_from_login;
         }
         return false;
     }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.login_button:
 
                 if (email_editText.length() == 0) {
@@ -122,10 +125,9 @@ ImageView back_from_login;
 
                 break;
             case R.id.sign_in_layout:
-                Intent j=new Intent(ActivityLogin.this,RegisterActivity.class);
+                Intent j = new Intent(ActivityLogin.this, RegisterActivity.class);
                 startActivity(j);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
 
 
                 break;
@@ -139,20 +141,19 @@ ImageView back_from_login;
                 break;
 
             case R.id.forgot_txtView:
-                Intent f=new Intent(ActivityLogin.this,ForgotPassword.class);
+                Intent f = new Intent(ActivityLogin.this, ForgotPassword.class);
                 startActivity(f);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
 
-
                 break;
             case R.id.show_txt:
-                if(show_txt.getText().toString().equalsIgnoreCase("SHOW")){
+                if (show_txt.getText().toString().equalsIgnoreCase("SHOW")) {
                     password_editView.setInputType(InputType.TYPE_CLASS_TEXT);
                     password_editView.refreshDrawableState();
                     show_txt.setText("HIDE");
-                }else{
-                    password_editView.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                } else {
+                    password_editView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
                     show_txt.setText("SHOW");
                 }
@@ -179,9 +180,9 @@ ImageView back_from_login;
                                 JSONObject data = obj.getJSONObject("data");
 
                                 ed.putString(GlobalConstants.USERID, data.getString(GlobalConstants.USERID));
-                                ed.putString("login type","app");
+                                ed.putString("login type", "app");
                                 ed.commit();
-                                Intent i=new Intent(ActivityLogin.this,Tab_Activity.class);
+                                Intent i = new Intent(ActivityLogin.this, Tab_Activity.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
                                 startActivity(i);
@@ -226,6 +227,7 @@ ImageView back_from_login;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
     //---------------------------Progrees Dialog-----------------------
     public void dialogWindow() {
         dialog2 = new Dialog(this);

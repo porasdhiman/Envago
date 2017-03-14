@@ -170,21 +170,24 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
             case R.id.slider_sign_up_btn:
                 if(global.getLat().length()==0){
                     Toast.makeText(SlidePageActivity.this,"Your location is not Enabled and restart your app",Toast.LENGTH_SHORT).show();
-                }else{
-                    Intent j = new Intent(SlidePageActivity.this, ActivityLogin.class);
-                    startActivity(j);
+                }else {
+                    Intent i = new Intent(SlidePageActivity.this, RegisterActivity.class);
+                    startActivity(i);
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     finish();
                 }
+
+
+
 
 
                 break;
             case R.id.slider_sign_in_layout:
                 if(global.getLat().length()==0){
                     Toast.makeText(SlidePageActivity.this,"Your location is not Enabled and restart your app",Toast.LENGTH_SHORT).show();
-                }else {
-                    Intent i = new Intent(SlidePageActivity.this, RegisterActivity.class);
-                    startActivity(i);
+                }else{
+                    Intent j = new Intent(SlidePageActivity.this, ActivityLogin.class);
+                    startActivity(j);
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     finish();
                 }

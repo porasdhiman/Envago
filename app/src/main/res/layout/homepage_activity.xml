@@ -231,7 +231,7 @@
                     android:layout_marginTop="10dp"
                     android:text="All Categories"
                     android:textColor="@color/textcolor"
-                    android:textSize="18sp" />
+                    android:textSize="17sp" />
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/cat_pager"
@@ -270,7 +270,7 @@
                     android:layout_marginTop="10dp"
                     android:text="Featured Adventures"
                     android:textColor="@color/textcolor"
-                    android:textSize="18sp" />
+                    android:textSize="17sp" />
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/view_item_pager1"
@@ -303,7 +303,7 @@
                     android:layout_marginLeft="8dp"
                     android:text=" Suggested Adventures"
                     android:textColor="@color/textcolor"
-                    android:textSize="18sp" />
+                    android:textSize="17sp" />
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/view_item_pager2"
@@ -337,7 +337,7 @@
                     android:layout_marginLeft="8dp"
                     android:text="Featured Planners"
                     android:textColor="@color/textcolor"
-                    android:textSize="18sp" />
+                    android:textSize="17sp" />
 
                 <ListView
                     android:id="@+id/main_list"

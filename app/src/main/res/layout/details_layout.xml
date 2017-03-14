@@ -564,7 +564,7 @@ android:gravity="center"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
                 android:background="@null"
-                android:text="Write something"
+                android:hint="Please select"
                 android:textColor="@color/Black"
 
                 android:inputType="textEmailAddress"

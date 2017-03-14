@@ -605,6 +605,16 @@ public class Global extends Application {
     }
 
     String tabValue="0";
+
+    public String getSelectedPath() {
+        return selectedPath;
+    }
+
+    public void setSelectedPath(String selectedPath) {
+        this.selectedPath = selectedPath;
+    }
+
+    String selectedPath="";
     @Override
     public void onCreate() {
         super.onCreate();

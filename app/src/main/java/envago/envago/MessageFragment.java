@@ -96,6 +96,7 @@ public class MessageFragment extends Activity implements OnClickListener {
         search_button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                global.setNotifyType("0");
                 finish();
             }
         });
@@ -147,6 +148,11 @@ public class MessageFragment extends Activity implements OnClickListener {
             }
         });
 
+
+    }
+
+    @Override
+    public void onBackPressed() {
 
     }
 

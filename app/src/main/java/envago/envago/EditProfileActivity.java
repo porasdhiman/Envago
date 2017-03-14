@@ -75,90 +75,7 @@ public class EditProfileActivity extends Activity {
 
     String username_var, email_var, name_var, phone_var, paypal_var, document_var, about_var;
 
-    /*public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
-        // TODO Auto-generated method stub
-        View v = inflater.inflate(R.layout.edit_profile, container, false);
-       *//* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getActivity().setStatusBarColor(getResources().getColor(R.color.textcolor));
-        }*//*
-
-        preferences =  getSharedPreferences(GlobalConstants.PREFNAME, MODE_PRIVATE);
-        editor = preferences.edit();
-
-
-        profileimg = (ImageView)v. findViewById(R.id.profile_img_editprofile);
-        camera_icon_img=(ImageView)v. findViewById(R.id.camera_icon_img);
-        //  change_pass = (LinearLayout) findViewById(R.id.body_phone_changepass);
-        username_edit = (TextView) v.findViewById(R.id.username_edit);
-        email_edit = (TextView) v.findViewById(R.id.email_edit);
-        name_edit = (TextView)v. findViewById(R.id.name_edit);
-        phone_edit = (TextView) v.findViewById(R.id.phone_edit);
-        paypal_edit = (TextView)v. findViewById(R.id.paypal_edit);
-        document_edit = (TextView)v. findViewById(R.id.document_edit);
-        about_edit = (TextView) v.findViewById(R.id.about_edit);
-        done=(TextView)v.findViewById(R.id.done);
-        // sumbit = (Button) findViewById(R.id.edit_sumbit_buttn);
-
-      *//*  user_tick = (ImageView) findViewById(R.id.right_img);
-        email_tick = (ImageView) findViewById(R.id.right_img_email);
-        name_tick = (ImageView) findViewById(R.id.right_img_name);
-        phone_tick = (ImageView) findViewById(R.id.right_img_phone);
-        paypal_tick = (ImageView) findViewById(R.id.right_img_paypal);
-        document_tick = (ImageView) findViewById(R.id.right_img_id);
-        about_tick = (ImageView) findViewById(R.id.right_img_about);
-        back_button = (ImageView) findViewById(R.id.back_editprofile);
-*//*
-        getinfo();
-        getvalues();
-
-      *//*  change_pass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(EditProfileActivity.this, ChangePassword.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-            }
-        });
-*//**//*
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-*//*
-       *//* sumbit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getvalues();
-                dialogWindow();
-                editprofile();
-
-            }
-        });*//*
-
-        camera_icon_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dailog();
-            }
-        });
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getvalues();
-                dialogWindow();
-                //editprofile();
-                new Thread(null, address_request, "")
-                        .start();
-            }
-        });
-return v;
-    }*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -187,17 +104,7 @@ return v;
         about_edit = (TextView) findViewById(R.id.about_edit);
         done = (TextView) findViewById(R.id.done);
         back_button = (ImageView) findViewById(R.id.back_editprofile);
-        // sumbit = (Button) findViewById(R.id.edit_sumbit_buttn);
 
-      /*  user_tick = (ImageView) findViewById(R.id.right_img);
-        email_tick = (ImageView) findViewById(R.id.right_img_email);
-        name_tick = (ImageView) findViewById(R.id.right_img_name);
-        phone_tick = (ImageView) findViewById(R.id.right_img_phone);
-        paypal_tick = (ImageView) findViewById(R.id.right_img_paypal);
-        document_tick = (ImageView) findViewById(R.id.right_img_id);
-        about_tick = (ImageView) findViewById(R.id.right_img_about);
-        back_button = (ImageView) findViewById(R.id.back_editprofile);
-*/
         getinfo();
         getvalues();
 
@@ -216,15 +123,6 @@ return v;
                 finish();
             }
         });
-       /* sumbit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getvalues();
-                dialogWindow();
-                editprofile();
-
-            }
-        });*/
 
         camera_icon_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -332,9 +230,9 @@ return v;
                 TextDrawable drawable = TextDrawable.builder()
                         .buildRect("U", Color.parseColor("#F94444"));
                 if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
-                    Picasso.with(EditProfileActivity.this).load(preferences.getString(GlobalConstants.IMAGE, "")).placeholder(drawable).transform(new CircleTransform()).into(profileimg);
+                    Picasso.with(EditProfileActivity.this).load(preferences.getString(GlobalConstants.IMAGE, "")).placeholder(drawable).into(profileimg);
                 } else {
-                    Picasso.with(EditProfileActivity.this).load(new File(preferences.getString(GlobalConstants.IMAGE, ""))).placeholder(drawable).transform(new CircleTransform()).into(profileimg);
+                    Picasso.with(EditProfileActivity.this).load(new File(preferences.getString(GlobalConstants.IMAGE, ""))).placeholder(drawable).into(profileimg);
 
                     //profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
                 }
@@ -342,9 +240,9 @@ return v;
                 TextDrawable drawable = TextDrawable.builder()
                         .buildRect(username_edit.getText().toString().substring(0, 1).toUpperCase(), Color.parseColor("#F94444"));
                 if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
-                    Picasso.with(EditProfileActivity.this).load(preferences.getString(GlobalConstants.IMAGE, "")).placeholder(drawable).transform(new CircleTransform()).into(profileimg);
+                    Picasso.with(EditProfileActivity.this).load(preferences.getString(GlobalConstants.IMAGE, "")).placeholder(drawable).into(profileimg);
                 } else {
-                    Picasso.with(EditProfileActivity.this).load(new File(preferences.getString(GlobalConstants.IMAGE, ""))).placeholder(drawable).transform(new CircleTransform()).into(profileimg);
+                    Picasso.with(EditProfileActivity.this).load(new File(preferences.getString(GlobalConstants.IMAGE, ""))).placeholder(drawable).into(profileimg);
 
                     //profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
                 }
@@ -362,64 +260,7 @@ return v;
     }
 
 
-    //----------------------------Edit-Profile-API--------------------------------------------
 
-
-  /*  public void editprofile() {
-        StringRequest edit_profile = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                dialog2.dismiss();
-                try {
-                    JSONObject response_obj = new JSONObject(s);
-
-                    String msg = response_obj.getString("success");
-                    if (msg.equalsIgnoreCase("1")) {
-                        String msg_response = response_obj.getString("msg");
-
-
-                        Toast.makeText(getActivity(), msg_response, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity(), response_obj.getString("msg"), Toast.LENGTH_SHORT).show();
-
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                dialog2.dismiss();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                params.put(GlobalConstants.USERID, CommonUtils.UserID(getActivity()));
-                params.put(GlobalConstants.USERNAME, username_var);
-                params.put(GlobalConstants.EMAIL, email_var);
-                params.put(GlobalConstants.CONTACT, phone_var);
-                params.put(GlobalConstants.FIRST_NAME.concat(GlobalConstants.LAST_NAME), name_var);
-                params.put(GlobalConstants.PAYPAL, paypal_var);
-                params.put(GlobalConstants.DOCUMENT, document_var);
-                params.put(GlobalConstants.ABOUT, about_var);
-                params.put("action", GlobalConstants.EDIT_PROFILE_ACTION);
-
-                Log.e("Edit profile", params.toString());
-                return params;
-            }
-        };
-
-        edit_profile.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(edit_profile);
-    }
-*/
 
     // ------------------------------------------------------upload
     // method---------------
@@ -500,19 +341,6 @@ return v;
                     message = obj.getString("msg");
                 }
 
-                /*JSONObject resp = new JSONObject(response_str);
-                String status = resp.getString("status");
-                String message = resp.getString("message");
-                if (status.equals("1")) {
-
-                    success = "true";
-
-                } else {
-
-                    success = "false";
-
-                }
-*/
             }
         } catch (Exception ex) {
         }

@@ -223,7 +223,7 @@ SharedPreferences sp;
 
                     is_gear = false;
                     gear_checkBox.setImageResource(R.drawable.unselected);
-                    value=value.replace("Tent", "");
+                    value=value.replace("Gear", "");
                 }
                 break;
             case R.id.meal_layout:
@@ -247,7 +247,13 @@ SharedPreferences sp;
                 }
                 break;
             case R.id.submit_button:
-                global.setWhtsicludedString(value);
+                if(value.startsWith("")){
+                    value=value.trim();
+                    global.setWhtsicludedString(value);
+                }else{
+                    global.setWhtsicludedString(value);
+                }
+
                 ed.putString("trans",String.valueOf(global.getTransportataion()));
                 ed.putString("flight",String.valueOf(global.getFlight()));
                 ed.putString("Accomodation",String.valueOf(global.getAccomodation()));

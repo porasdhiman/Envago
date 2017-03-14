@@ -43,18 +43,19 @@ import java.util.Map;
  */
 public class Adventure_list_adapter extends BaseAdapter {
 
-    ArrayList<HashMap<String, String>> images=new ArrayList<>();
+    ArrayList<HashMap<String, String>> images = new ArrayList<>();
     LayoutInflater inflater;
     Context applicationContext;
     Adventure_holder holder = null;
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
     String url;
-    String months[] = { " ", "Jan", "Feb", "Mar", "Apr", "May",
+    String months[] = {" ", "Jan", "Feb", "Mar", "Apr", "May",
             "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
-            "Dec", };
+            "Dec",};
     SharedPreferences sp;
     SharedPreferences.Editor ed;
+
     public Adventure_list_adapter(Context applicationContext, ArrayList<HashMap<String, String>> images) {
         this.images = images;
         this.applicationContext = applicationContext;
@@ -68,8 +69,8 @@ public class Adventure_list_adapter extends BaseAdapter {
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
-        sp=applicationContext.getSharedPreferences("message",Context.MODE_PRIVATE);
-        ed=sp.edit();
+        sp = applicationContext.getSharedPreferences("message", Context.MODE_PRIVATE);
+        ed = sp.edit();
     }
 
     @Override
@@ -114,7 +115,7 @@ public class Adventure_list_adapter extends BaseAdapter {
             holder.advanture_location = (TextView) view.findViewById(R.id.view_advanture_location_txt);
             holder.heart_img = (ImageView) view.findViewById(R.id.heart_img);
             holder.start_event_txtView = (TextView) view.findViewById(R.id.start_event_txtView);
-            holder.main_layout=(LinearLayout)view.findViewById(R.id.main_layout);
+            holder.main_layout = (LinearLayout) view.findViewById(R.id.main_layout);
             view.setTag(holder);
             holder.heart_img.setTag(holder);
 
@@ -122,10 +123,10 @@ public class Adventure_list_adapter extends BaseAdapter {
         } else {
             holder = (Adventure_holder) view.getTag();
         }
-Fonts.overrideFonts(applicationContext,holder.main_layout);
+        Fonts.overrideFonts(applicationContext, holder.main_layout);
         url = GlobalConstants.IMAGE_URL + images.get(i).get(GlobalConstants.EVENT_IMAGES);
         holder.ad_name.setText(images.get(i).get(GlobalConstants.EVENT_NAME));
-        holder.price .setText("$" + images.get(i).get(GlobalConstants.EVENT_PRICE));
+        holder.price.setText("$" + images.get(i).get(GlobalConstants.EVENT_PRICE));
         String data = images.get(i).get(GlobalConstants.EVENT_START_DATE);
         String split[] = data.split("-");
         String minth = split[1];
@@ -137,7 +138,7 @@ Fonts.overrideFonts(applicationContext,holder.main_layout);
 
         holder.advanture_location.setText(images.get(i).get(GlobalConstants.EVENT_LOC));
         holder.advanture_location.setTextColor(Color.GRAY);
-        Log.e("location text ",holder.advanture_location.getText().toString());
+        Log.e("location text ", holder.advanture_location.getText().toString());
 
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
@@ -169,13 +170,13 @@ Fonts.overrideFonts(applicationContext,holder.main_layout);
                     images.get(i).put(GlobalConstants.EVENT_FAV, "1");
                     holder.heart_img.setImageResource(R.drawable.heart_field);
                     favoriteMethod(images.get(i).get(GlobalConstants.EVENT_ID), "1");
-                    ed.putString("message","wish");
+                    ed.putString("message", "wish");
                     ed.commit();
                 } else {
                     holder.heart_img.setImageResource(R.drawable.heart);
                     images.get(i).put(GlobalConstants.EVENT_FAV, "0");
                     favoriteMethod(images.get(i).get(GlobalConstants.EVENT_ID), "0");
-                    ed.putString("message","not wish");
+                    ed.putString("message", "not wish");
                     ed.commit();
                 }
 

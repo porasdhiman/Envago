@@ -315,18 +315,24 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                     person_count.setText(String.valueOf(i) + " person");
                     Change_total = Change_total + total;
                     total_money.setText("$" + String.valueOf(Change_total));
+
+
                     if (!discount_type.equalsIgnoreCase("")) {
                         if (discount_type.equalsIgnoreCase("percentage")) {
+                            if (discount == 100) {
 
-                            int t = Change_total * discount / 100;
-                            dis_money.setText("$" + String.valueOf(t));
+                                dis_money.setText("$0");
+                            } else {
+                                int t = Change_total - (Change_total * discount / 100);
+                                dis_money.setText("$" + String.valueOf(t));
+                            }
 
 
                         } else {
                             if (flat > Change_total) {
 
                                 dis_money.setText("$0");
-                                total_money.setTextColor(getResources().getColor(R.color.textcolor));
+
                             } else {
                                 int t = Change_total - flat;
                                 dis_money.setText("$" + String.valueOf(t));
@@ -344,19 +350,25 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                     if (total != Change_total) {
                         Change_total = Change_total - total;
                         total_money.setText("$" + String.valueOf(Change_total));
+
                     }
                     if (!discount_type.equalsIgnoreCase("")) {
                         if (discount_type.equalsIgnoreCase("percentage")) {
 
-                            int t = Change_total * discount / 100;
-                            dis_money.setText("$" + String.valueOf(t));
+                            if (discount == 100) {
+
+                                dis_money.setText("$0");
+                            } else {
+                                int t = Change_total - (Change_total * discount / 100);
+                                dis_money.setText("$" + String.valueOf(t));
+                            }
 
 
                         } else {
                             if (flat > Change_total) {
 
                                 dis_money.setText("$0");
-                                total_money.setTextColor(getResources().getColor(R.color.textcolor));
+
                             } else {
                                 int t = Change_total - flat;
                                 dis_money.setText("$" + String.valueOf(t));
@@ -395,6 +407,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                 total_money.setTextColor(Color.parseColor("#000000"));
                 add_coupont_txtView.setVisibility(View.VISIBLE);
                 coupon_applied_layout.setVisibility(View.GONE);
+                total_money.setPaintFlags(0);
                 break;
         }
 
@@ -458,7 +471,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                 params.put(GlobalConstants.USERID, CommonUtils.UserID(ConfirmDetailsActivity.this));
                 params.put(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
                 params.put("no_of_tickets", String.valueOf(i));
-                params.put("total_price", total_money.getText().toString());
+                params.put("total_price", String.valueOf(leftTotal));
                 params.put("event_date_id", global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.ID));
 
 
@@ -501,11 +514,17 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                                         discount = Integer.parseInt(coupon.getString("discount_value"));
                                         discount_txt.setText(coupon_edit.getText().toString() + " applied sucessfully, " + coupon.getString("discount_value") + "% discount");
 
-
-                                        int t = Change_total * discount / 100;
-                                        dis_money.setText("$" + String.valueOf(t));
-                                        total_money.setTextColor(getResources().getColor(R.color.textcolor));
-                                        total_money.setPaintFlags(total_money.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                        if (discount == 100) {
+                                            
+                                            dis_money.setText("$0");
+                                            total_money.setTextColor(getResources().getColor(R.color.textcolor));
+                                            total_money.setPaintFlags(total_money.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                        } else {
+                                            int t = Change_total - (Change_total * discount / 100);
+                                            dis_money.setText("$" + String.valueOf(t));
+                                            total_money.setTextColor(getResources().getColor(R.color.textcolor));
+                                            total_money.setPaintFlags(total_money.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                        }
 
 
                                     } else {
@@ -645,21 +664,26 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                                 if (discount_type.equalsIgnoreCase("")) {
                                     thingToBuy = new PayPalPayment(new BigDecimal(String.valueOf(Change_total)), "USD",
                                             "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
+                                    Intent intent = new Intent(ConfirmDetailsActivity.this, PaymentActivity.class);
+                                    intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+                                    startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+                                    leftTotal = Change_total;
                                 } else {
                                     leftTotal = Integer.parseInt(dis_money.getText().toString().replace("$", "").trim());
                                     Log.e("total", String.valueOf(leftTotal));
-                                    if(leftTotal==0){
-                                        thingToBuy = new PayPalPayment(new BigDecimal("0.01"), "USD",
-                                                "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
-                                    }else{
+                                    if (leftTotal == 0) {
+                                        dialogWindow();
+                                        joinEventApi();
+                                    } else {
                                         thingToBuy = new PayPalPayment(new BigDecimal(String.valueOf(leftTotal)), "USD",
                                                 "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
+                                        Intent intent = new Intent(ConfirmDetailsActivity.this, PaymentActivity.class);
+                                        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+                                        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
                                     }
 
                                 }
-                                Intent intent = new Intent(ConfirmDetailsActivity.this, PaymentActivity.class);
-                                intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
-                                startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+
 
                             } else {
                                 Toast.makeText(ConfirmDetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
@@ -700,7 +724,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
 
 
                 params.put("action", "apply_coupon");
-                Log.e("apply_coupon", params.toString());
+                Log.e("apply_coupon", params.toString() + " " + String.valueOf(discount));
                 return params;
             }
 

@@ -60,7 +60,7 @@ android:padding="8dp"
             android:layout_alignParentRight="true"
             android:text="$30"
             android:textColor="@color/textcolor"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/view_txt"
@@ -73,7 +73,7 @@ android:padding="8dp"
             android:text="A Time Travel Postcard"
             android:singleLine="true"
             android:textColor="@color/Black"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:layout_marginRight="30dp"
             android:textAllCaps="true"/>
 

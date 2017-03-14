@@ -50,7 +50,8 @@ public class RegisterActivity extends Activity implements View.OnTouchListener, 
     SharedPreferences sp;
     SharedPreferences.Editor ed;
     Dialog dialog2;
-ImageView back_from_login;
+    ImageView back_from_login;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +68,7 @@ ImageView back_from_login;
         password_error_txtView = (TextView) findViewById(R.id.password_error_txtView);
         name_error_txtView = (TextView) findViewById(R.id.name_error_txtView);
         mail_error_txtView = (TextView) findViewById(R.id.mail_error_txtView);
-        back_from_login=(ImageView)findViewById(R.id.back_from_login);
+        back_from_login = (ImageView) findViewById(R.id.back_from_login);
         show_txt.setOnClickListener(this);
         sign_up_button.setOnClickListener(this);
         sign_up_layout.setOnClickListener(this);
@@ -81,12 +82,14 @@ ImageView back_from_login;
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sign_up_layout:
-
+                Intent k = new Intent(RegisterActivity.this, ActivityLogin.class);
+                startActivity(k);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
                 break;
             case R.id.back_from_login:
-                Intent k = new Intent(RegisterActivity.this, SlidePageActivity.class);
-                startActivity(k);
+                Intent a = new Intent(RegisterActivity.this, ActivityLogin.class);
+                startActivity(a);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
 
@@ -102,8 +105,7 @@ ImageView back_from_login;
                     mail_error_txtView.setText("Please enter email");
 
 
-                }
-                else if (password_editText.getText().length() == 0) {
+                } else if (password_editText.getText().length() == 0) {
                     password_error_txtView.setVisibility(View.VISIBLE);
                     password_error_txtView.setText("Please enter password");
 
@@ -116,43 +118,40 @@ ImageView back_from_login;
                     dialogWindow();
 
 
+                }
 
+                break;
+            case R.id.show_txt:
+                if (show_txt.getText().toString().equalsIgnoreCase("SHOW")) {
+                    password_editText.setInputType(InputType.TYPE_CLASS_TEXT);
+                    password_editText.refreshDrawableState();
+                    show_txt.setText("HIDE");
+                } else {
+                    password_editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+                    show_txt.setText("SHOW");
+                }
+
+                break;
         }
 
-        break;
-        case R.id.show_txt:
-        if (show_txt.getText().toString().equalsIgnoreCase("SHOW")) {
-            password_editText.setInputType(InputType.TYPE_CLASS_TEXT);
-            password_editText.refreshDrawableState();
-            show_txt.setText("HIDE");
-        } else {
-            password_editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
-            show_txt.setText("SHOW");
-        }
-
-        break;
     }
-
-}
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        int id = v.getId();
-
-
-        if (id == R.id.mail_editText) {
-            mail_error_txtView.setVisibility(View.GONE);
-
-        } else if (id == R.id.password) {
-            password_error_txtView.setVisibility(View.GONE);
-
-
-        }else if (id == R.id.name_edit_TxtView) {
-            name_error_txtView.setVisibility(View.GONE);
-
-
+        switch (v.getId()) {
+            case R.id.mail:
+                mail_error_txtView.setVisibility(View.GONE);
+                break;
+            case R.id.password:
+                password_error_txtView.setVisibility(View.GONE);
+                break;
+            case R.id.name_edit_TxtView:
+                name_error_txtView.setVisibility(View.GONE);
+                break;
         }
+
+
         return false;
     }
     //------------------------------------Register Api Method------------------------------
@@ -174,7 +173,7 @@ ImageView back_from_login;
                                 JSONObject data = obj.getJSONObject("data");
 
                                 ed.putString(GlobalConstants.USERID, data.getString(GlobalConstants.USERID));
-                                ed.putString("login type","app");
+                                ed.putString("login type", "app");
                                 ed.commit();
 
                                 Intent j = new Intent(RegisterActivity.this, Tab_Activity.class);

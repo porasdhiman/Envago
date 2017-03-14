@@ -159,7 +159,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Not Registered Yet ?"
+            android:text="Don't have an account ?"
             android:textColor="@android:color/darker_gray"
             android:textSize="14dp" />
 

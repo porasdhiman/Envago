@@ -129,7 +129,7 @@ public class UserFragment extends Fragment {
                     editor.commit();
                     ed.clear();
                     ed.commit();
-                    Intent intent = new Intent(getActivity(), ActivityLogin.class);
+                    Intent intent = new Intent(getActivity(), SlidePageActivity.class);
                     startActivity(intent);
                     getActivity().finish();
                 } else {
@@ -137,7 +137,7 @@ public class UserFragment extends Fragment {
                     editor.commit();
                     ed.clear();
                     ed.commit();
-                    Intent intent = new Intent(getActivity(), ActivityLogin.class);
+                    Intent intent = new Intent(getActivity(), SlidePageActivity.class);
                     startActivity(intent);
                     getActivity().finish();
                 }
@@ -145,7 +145,12 @@ public class UserFragment extends Fragment {
             }
         });
 
-
+        profilepic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dailog();
+            }
+        });
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -440,10 +445,12 @@ public class UserFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-        profilepic.setImageBitmap(bm);
+        //profilepic.setImageBitmap(bm);
         Uri uri = getImageUri(getActivity(), bm);
         try {
             selectedImagePath = getFilePath(getActivity(), uri);
+            Picasso.with(getActivity()).load(new File(selectedImagePath)).transform(new CircleTransform()).into(profilepic);
+
             editor.putString(GlobalConstants.IMAGE, selectedImagePath);
             editor.commit();
         } catch (URISyntaxException e) {
@@ -471,10 +478,12 @@ public class UserFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        profilepic.setImageBitmap(thumbnail);
+       // profilepic.setImageBitmap(thumbnail);
         Uri uri = getImageUri(getActivity(), thumbnail);
         try {
             selectedImagePath = getFilePath(getActivity(), uri);
+            Picasso.with(getActivity()).load(new File(selectedImagePath)).transform(new CircleTransform()).into(profilepic);
+
             editor.putString(GlobalConstants.IMAGE, selectedImagePath);
             editor.commit();
         } catch (URISyntaxException e) {

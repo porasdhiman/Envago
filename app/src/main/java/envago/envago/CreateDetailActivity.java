@@ -403,7 +403,7 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                 }*/ else if (disclaimer_editText.getText().toString().equalsIgnoreCase("Write something")||disclaimer_editText.getText().toString().length()==0) {
                     disclaimer_error_txtView.setText("Please enter disclaimer");
                     disclaimer_error_txtView.setVisibility(View.VISIBLE);
-                } else if (whts_editText.getText().toString().equalsIgnoreCase("Write something")||whts_editText.getText().toString().length()==0) {
+                } else if (whts_editText.getText().toString().equalsIgnoreCase("Please select")||whts_editText.getText().toString().length()==0) {
                     whts_error_txtView.setText("Please enter what's included");
                     whts_error_txtView.setVisibility(View.VISIBLE);
                 } else if (catgory.length() == 0) {
@@ -448,14 +448,22 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
         if (requestCode == 1) {
             if (!sp.getString(GlobalConstants.EVENT_DESCRIPTION,"").equalsIgnoreCase("")) {
                 desc_editText.setText(sp.getString(GlobalConstants.EVENT_DESCRIPTION,""));
+            }else{
+                desc_editText.setText("");
             }
         } else if (requestCode == 2) {
             if (!sp.getString(GlobalConstants.WHATS_INCLUDED,"").equalsIgnoreCase("")) {
                 whts_editText.setText(sp.getString(GlobalConstants.WHATS_INCLUDED,""));
+            }else{
+                whts_editText.setText("");
+
             }
         } else if (requestCode == 3) {
             if (!sp.getString(GlobalConstants.EVENT_DISCLAIMER,"").equalsIgnoreCase("")) {
                 disclaimer_editText.setText(sp.getString(GlobalConstants.EVENT_DISCLAIMER,""));
+            }else{
+                disclaimer_editText.setText("");
+
             }
         }
     }

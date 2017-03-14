@@ -32,6 +32,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.apache.http.HttpEntity;
@@ -43,6 +50,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -51,6 +59,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -284,12 +294,73 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
                 dialogWindow();
                 new Thread(null, address_request, "")
                         .start();
+
             }
 
 
         }
 
     }
+    private void VerifiedMethod() {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GlobalConstants.URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("response", response);
+                        try {
+                            JSONObject obj = new JSONObject(response);
+
+                            String status = obj.getString("success");
+                            if (status.equalsIgnoreCase("1")) {
+                                if (obj.getString("doc_status").equalsIgnoreCase("0")) {
+                                    global.setIsVerified("0");
+                                } else if (obj.getString("doc_status").equalsIgnoreCase("1")) {
+                                    global.setIsVerified("1");
+                                } else if (obj.getString("doc_status").equalsIgnoreCase("2")) {
+                                    global.setIsVerified("2");
+                                } else {
+                                    global.setIsVerified("3");
+                                }
+
+
+                            } else {
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(CreateAdventuresActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(GlobalConstants.USERID, CommonUtils.UserID(CreateAdventuresActivity.this));
+
+                params.put("action", GlobalConstants.VERIFIED_ACTION);
+                Log.e("facebook login", params.toString());
+                return params;
+            }
+
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
 
 
     public void dailog() {
@@ -439,6 +510,7 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
                 if (status.equalsIgnoreCase("1")) {
                     success = "true";
                     message = obj.getString("msg");
+                    VerifiedMethod();
                 } else {
                     success = "false";
                     message = obj.getString("msg");
