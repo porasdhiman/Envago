@@ -184,34 +184,36 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:id="@+id/preview_button"
                 android:layout_width="match_parent"
                 android:layout_height="43dp"
                 android:layout_marginBottom="20dp"
-                android:layout_marginTop="10dp"
                 android:text="Preview"
-                android:textColor="@color/textcolor"
+                android:textColor="@color/Gray"
                 android:gravity="center"
 
-             android:layout_alignParentBottom="true"
                 android:textAllCaps="false"
-                android:background="@drawable/red_border_button"
-                android:textSize="14sp" />
 
-        <!--    <Button
-                android:id="@+id/submit_button_create_advanture"
-                android:layout_width="match_parent"
-                android:layout_height="43dp"
+                android:textSize="14sp"
                 android:layout_alignParentBottom="true"
-                android:layout_below="@+id/id_text"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/button_dark"
-                android:text="Submit"
-                android:textAllCaps="false"
-                android:textColor="#fff"
-                android:textSize="14sp" />-->
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <!--    <Button
+                    android:id="@+id/submit_button_create_advanture"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/id_text"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button_dark"
+                    android:text="Submit"
+                    android:textAllCaps="false"
+                    android:textColor="#fff"
+                    android:textSize="14sp" />-->
         </RelativeLayout>
 
     </LinearLayout>

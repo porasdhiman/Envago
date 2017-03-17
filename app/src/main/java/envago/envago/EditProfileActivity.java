@@ -201,7 +201,7 @@ public class EditProfileActivity extends Activity {
             Log.e("about",about_edit.getText().toString());
 
         }
-        if (document.length() == 0) {
+        if (document.equalsIgnoreCase("")) {
             document_edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

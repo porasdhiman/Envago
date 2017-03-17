@@ -153,7 +153,7 @@ public class HomeFragment extends Fragment {
                         }
 
                         global.setEvent_list(event_list);
-                        Log.e("sie of map data",String.valueOf(global.getEvent_list().size()));
+                        Log.e("sie of map data", String.valueOf(global.getEvent_list().size()));
                         map_button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -311,13 +311,19 @@ public class HomeFragment extends Fragment {
                             all_linear_layout.setVisibility(View.VISIBLE);
                             shimmer_view_container.setVisibility(View.GONE);
                             cat_pager.setAdapter(new CatPagerAdapter(getActivity(), catgory_list));
-                            /*cat_pager.setClipToPadding(false);
-                            cat_pager.setPadding(0, 0, 40, 0);*/
+                            cat_pager.setClipToPadding(false);
+                            cat_pager.setPadding(0, 0, 40, 0);
+
+                            catgoryPagerMethod();
                         }
                         if (suggested_event_list.size() != 0) {
                             suggested_linear_layout.setVisibility(View.VISIBLE);
                             view_item_pager2.setAdapter(new AllAdapter(getActivity(), suggested_event_list));
-
+                            if (suggested_event_list.size() > 1) {
+                                view_item_pager2.setClipToPadding(false);
+                                view_item_pager2.setPadding(0, 0, 40, 0);
+                                suggestedMethod();
+                            }
                         }
                         if (featured_planner_list.size() != 0) {
                             featured_planners_linear_layout.setVisibility(View.VISIBLE);
@@ -326,8 +332,12 @@ public class HomeFragment extends Fragment {
                         }
                         if (featured_event_list.size() != 0) {
                             featured_linear_layout.setVisibility(View.VISIBLE);
-                            view_item_pager1.setAdapter(new AllAdapter(getActivity(), suggested_event_list));
-
+                            view_item_pager1.setAdapter(new AllAdapter(getActivity(), featured_event_list));
+                            if (featured_event_list.size() > 1) {
+                                view_item_pager1.setClipToPadding(false);
+                                view_item_pager1.setPadding(0, 0, 40, 0);
+                                featuredMethod();
+                            }
                         }
 
 
@@ -365,6 +375,78 @@ public class HomeFragment extends Fragment {
         requestQueue.add(cat_request);
     }
 
+    public void catgoryPagerMethod() {
+        cat_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == catgory_list.size() - 1) {
+                    cat_pager.setClipToPadding(false);
+                    cat_pager.setPadding(40, 0, 0, 0);
+                } else {
+                    cat_pager.setClipToPadding(false);
+                    cat_pager.setPadding(0, 0, 40, 0);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+    public void featuredMethod() {
+        view_item_pager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == featured_event_list.size() - 1) {
+                    view_item_pager1.setClipToPadding(false);
+                    view_item_pager1.setPadding(40, 0, 0, 0);
+                } else {
+                    view_item_pager1.setClipToPadding(false);
+                    view_item_pager1.setPadding(0, 0, 40, 0);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+    public void suggestedMethod() {
+        view_item_pager2.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == suggested_event_list.size() - 1) {
+                    view_item_pager2.setClipToPadding(false);
+                    view_item_pager2.setPadding(40, 0, 0, 0);
+                } else {
+                    view_item_pager2.setClipToPadding(false);
+                    view_item_pager2.setPadding(0, 0, 40, 0);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
     public void dialogWindow() {
         dialog2 = new Dialog(getActivity());
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);

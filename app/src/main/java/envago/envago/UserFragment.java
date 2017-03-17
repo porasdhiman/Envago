@@ -148,7 +148,7 @@ public class UserFragment extends Fragment {
         profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dailog();
+               // dailog();
             }
         });
         settings.setOnClickListener(new View.OnClickListener() {

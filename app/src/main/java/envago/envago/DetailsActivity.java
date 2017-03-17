@@ -670,7 +670,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     id = objArry.getString(GlobalConstants.USERID);
 
                                     admin_description.setText(objArry.getString("description"));
-                                    if (objArry.getString("description").length() > 200) {
+                                    if (objArry.getString("description").length() > 150) {
 
                                         more_txtView.setVisibility(View.VISIBLE);
                                     }
@@ -795,13 +795,13 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     } else {
                                         flight.setImageResource(R.drawable.flight);
                                     }
-                                    if (objArry.getString("disclaimer").equalsIgnoreCase(null) || objArry.getString("disclaimer").equalsIgnoreCase("")) {
+                                    if (objArry.getString("disclaimer").equalsIgnoreCase(null) || objArry.getString("disclaimer").equalsIgnoreCase("")|| objArry.getString("disclaimer").equalsIgnoreCase(" ")) {
                                         desclaimer_layout.setVisibility(view.GONE);
                                     } else {
                                         desclaimer_layout.setVisibility(view.VISIBLE);
 
                                         Disclaimer_txtView.setText(objArry.getString("disclaimer"));
-                                        if (objArry.getString("disclaimer").length() > 200) {
+                                        if (objArry.getString("disclaimer").length() > 150) {
 
                                             more_dis_txtView.setVisibility(View.VISIBLE);
                                         }

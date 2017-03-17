@@ -9,7 +9,9 @@
         android:id="@+id/cancel"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:padding="13dp"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
+        android:paddingRight="13dp"
         android:src="@drawable/multiply"
         android:layout_marginTop="20dp"
         />

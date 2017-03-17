@@ -59,7 +59,7 @@
                 android:background="@null"
                 android:hint="Name"
                 android:inputType="text"
-android:textColor="@color/Black"
+                android:textColor="@color/Black"
                 android:textSize="14sp" />
 
             <TextView
@@ -91,8 +91,8 @@ android:textColor="@color/Black"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="Difficulty"
-                android:textSize="14sp"
                 android:textAllCaps="true"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <SeekBar
@@ -100,8 +100,8 @@ android:textColor="@color/Black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:max="3"
                 android:maxHeight="5dp"
@@ -129,18 +129,19 @@ android:textColor="@color/Black"
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:paddingLeft="3dp"
                     android:text="Easy"
-android:layout_weight="1"
-android:gravity="center"
                     android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
-                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="left"
                     android:text="Moderate"
-                    android:layout_weight="1"
                     android:textSize="14sp" />
 
                 <TextView
@@ -148,16 +149,16 @@ android:gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="right"
                     android:text="Difficult"
                     android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:text="Extreme"
-                    android:gravity="center"
                     android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Extreme"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -185,13 +186,13 @@ android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_below="@+id/email_txtView"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="11dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
                 android:background="@null"
 
                 android:entries="@array/event_cat"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/cat_error_txtView"
@@ -236,9 +237,9 @@ android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@null"
                 android:hint="Please Select"
-                android:textColor="@color/Black"
-
                 android:inputType="textEmailAddress"
+
+                android:textColor="@color/Black"
                 android:textSize="14sp" />
 
             <TextView
@@ -281,8 +282,8 @@ android:gravity="center"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
-             android:gravity="center_vertical"
                 android:background="@null"
+                android:gravity="center_vertical"
                 android:hint="Please Select"
                 android:textColor="@color/Black"
 
@@ -329,12 +330,12 @@ android:gravity="center"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
                 android:background="@null"
+                android:gravity="center_vertical"
                 android:hint="Write a description"
                 android:inputType="textEmailAddress"
-                android:gravity="center_vertical"
-                android:textColor="@color/Black"
-
                 android:singleLine="true"
+
+                android:textColor="@color/Black"
                 android:textSize="14sp" />
 
             <TextView
@@ -425,10 +426,10 @@ android:gravity="center"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"
                 android:background="@null"
-                android:textColor="@color/Black"
-
                 android:hint="$"
+
                 android:inputType="number"
+                android:textColor="@color/Black"
                 android:textSize="14sp" />
 
             <TextView
@@ -454,50 +455,50 @@ android:gravity="center"
 
                 android:background="@color/LightGrey" />
 
-           <!-- <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="10dp"
-                android:text="CRITERIA/ELIGIBILITY"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+            <!-- <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginLeft="16dp"
+                 android:layout_marginTop="10dp"
+                 android:text="CRITERIA/ELIGIBILITY"
+                 android:textSize="14sp"
+                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/crtieria_editText"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/email_txtView"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="10dp"
-                android:background="@null"
-                android:hint="Write something"
-                android:inputType="textEmailAddress"
-                android:textSize="16sp" />
+             <EditText
+                 android:id="@+id/crtieria_editText"
+                 android:layout_width="match_parent"
+                 android:layout_height="40dp"
+                 android:layout_below="@+id/email_txtView"
+                 android:layout_marginLeft="16dp"
+                 android:layout_marginRight="16dp"
+                 android:layout_marginTop="10dp"
+                 android:background="@null"
+                 android:hint="Write something"
+                 android:inputType="textEmailAddress"
+                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/crtieria_error_txtView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+             <TextView
+                 android:id="@+id/crtieria_error_txtView"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
 
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@null"
-                android:inputType="textEmailAddress"
-                android:textColor="#ff0000"
-                android:textSize="12sp"
-                android:visibility="gone" />
+                 android:layout_marginLeft="16dp"
+                 android:layout_marginRight="16dp"
+                 android:background="@null"
+                 android:inputType="textEmailAddress"
+                 android:textColor="#ff0000"
+                 android:textSize="12sp"
+                 android:visibility="gone" />
 
-            <View
+             <View
 
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="10dp"
+                 android:layout_width="match_parent"
+                 android:layout_height="1dp"
+                 android:layout_marginLeft="16dp"
+                 android:layout_marginRight="16dp"
+                 android:layout_marginTop="10dp"
 
-                android:background="@android:color/darker_gray" />-->
+                 android:background="@android:color/darker_gray" />-->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -518,9 +519,9 @@ android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@null"
                 android:hint="Write something"
-                android:textColor="@color/Black"
-
                 android:inputType="textEmailAddress"
+android:textAllCaps="true"
+                android:textColor="@color/Black"
                 android:textSize="14sp" />
 
             <TextView
@@ -565,9 +566,9 @@ android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@null"
                 android:hint="Please select"
-                android:textColor="@color/Black"
-
                 android:inputType="textEmailAddress"
+
+                android:textColor="@color/Black"
                 android:textSize="14sp" />
 
             <TextView
@@ -586,9 +587,9 @@ android:gravity="center"
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp">
+                android:layout_marginTop="10dp">
 
                 <Button
                     android:id="@+id/submit_button"
@@ -604,9 +605,10 @@ android:gravity="center"
                     android:textColor="#fff"
                     android:textSize="14sp" />
             </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="10dp"/>
+                android:layout_height="10dp" />
 
         </LinearLayout>
     </ScrollView>

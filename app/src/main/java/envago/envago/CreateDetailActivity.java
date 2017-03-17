@@ -127,11 +127,13 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
         cat_editText.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+
                 if (position == 0) {
-
+                    ((TextView) parent.getChildAt(0)).setTextColor(Color.GRAY);
+                    ((TextView) parent.getChildAt(0)).setTextSize(14);
                 } else {
-
+                    ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+                    ((TextView) parent.getChildAt(0)).setTextSize(14);
                     global.setEvent_cat_id(String.valueOf(position));
                     catgory = cat_editText.getSelectedItem().toString();
                 }

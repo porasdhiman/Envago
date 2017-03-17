@@ -130,7 +130,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
             e.printStackTrace();
         }
 
-        duration_txtView.setText(String.valueOf(getDaysDifference(startDate, endDate)) + " Days");
+        duration_txtView.setText("("+String.valueOf(getDaysDifference(startDate, endDate)) + " Days)");
         person_name = (TextView) findViewById(R.id.person_name);
         person_name.setText(cap(global.getEvent_name()));
         date_details = (TextView) findViewById(R.id.date_details);
@@ -515,7 +515,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                                         discount_txt.setText(coupon_edit.getText().toString() + " applied sucessfully, " + coupon.getString("discount_value") + "% discount");
 
                                         if (discount == 100) {
-                                            
+
                                             dis_money.setText("$0");
                                             total_money.setTextColor(getResources().getColor(R.color.textcolor));
                                             total_money.setPaintFlags(total_money.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -555,7 +555,9 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                                     cancel_view_img.setVisibility(View.GONE);
                                 }
                             } else {
-
+                                coupon_applied_layout.setVisibility(View.VISIBLE);
+                                discount_txt.setText("Coupon not valid");
+                                cancel_view_img.setVisibility(View.GONE);
                             }
 
 

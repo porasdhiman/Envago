@@ -758,6 +758,7 @@ android:id="@+id/whts_txt"
                         app:numRows="2"
                         app:rowHeight="50dp"
                         app:scrollDirectionPortrait="horizontal"
+
                         app:stretchMode="spacingWidthUniform"
                         app:verticalSpacing="7dp">
 
@@ -900,7 +901,6 @@ android:id="@+id/whts_txt"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/red_border_button"
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/Black" />

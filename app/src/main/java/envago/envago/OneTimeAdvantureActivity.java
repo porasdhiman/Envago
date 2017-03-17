@@ -171,6 +171,7 @@ RelativeLayout start_end_layout;
         String year = formattedDate.split("-")[2];
         // Toast.makeText(this,date+"-"+month+"-"+year,Toast.LENGTH_SHORT).show();
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+
         calendarView.state().edit()
 
                 .setMinimumDate(CalendarDay.from(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(date)))

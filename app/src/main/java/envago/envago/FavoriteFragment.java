@@ -43,7 +43,7 @@ import java.util.Map;
  */
 public class FavoriteFragment extends Fragment {
     ListView ad_items;
-    LinearLayout ging_to_linear_layout, planning_linear_layout, wish_linear_layout,main_layout,message_linear_layout;
+    LinearLayout ging_to_linear_layout, planning_linear_layout, wish_linear_layout, main_layout, message_linear_layout;
     public int[] images = {R.drawable.air, R.drawable.earth, R.drawable.water, R.drawable.rockice, R.drawable.volunteer, R.drawable.all};
     TextView headtext;
     ArrayList<HashMap<String, String>> event_list = new ArrayList<>();
@@ -55,21 +55,21 @@ public class FavoriteFragment extends Fragment {
 
 
     ScrollView scroll_view;
-TextView start_btn;
-SharedPreferences sp;
+    TextView start_btn;
+    SharedPreferences sp;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
 
         View v = inflater.inflate(R.layout.adventure_list, container, false);
-        main_layout= (LinearLayout) v.findViewById(R.id.main_layout);
-        Fonts.overrideFonts(getActivity(),main_layout);
+        main_layout = (LinearLayout) v.findViewById(R.id.main_layout);
+        Fonts.overrideFonts(getActivity(), main_layout);
         headtext = (TextView) v.findViewById(R.id.header_text_adv);
 
         headtext.setText("My adventures");
-        sp=getActivity().getSharedPreferences("message", Context.MODE_PRIVATE);
+        sp = getActivity().getSharedPreferences("message", Context.MODE_PRIVATE);
         message_linear_layout = (LinearLayout) v.findViewById(R.id.message_linear_layout);
-        scroll_view=(ScrollView)v.findViewById(R.id.scroll_view);
+        scroll_view = (ScrollView) v.findViewById(R.id.scroll_view);
 
 
         //start_btn=(TextView)v.findViewById(R.id.start_btn);
@@ -81,13 +81,12 @@ SharedPreferences sp;
         cat_pager = (ViewPager) v.findViewById(R.id.cat_pager);
 
 
-
         // back_img=(ImageView)v.findViewById(R.id.back_img);
         // ad_items = (ListView)v.findViewById(R.id.ad_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
         // ad_items.setAdapter(new FavoriteAdvantureAdapter(getActivity()));
 
-dialogWindow();
+        dialogWindow();
         get_list();
         //get_list_goingto();
         //get_planning_list();
@@ -113,7 +112,7 @@ dialogWindow();
         StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-dialog2.dismiss();
+                dialog2.dismiss();
                 Log.e("wish list", s);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -121,7 +120,7 @@ dialog2.dismiss();
 
                     if (res.equalsIgnoreCase("1")) {
 
-                         JSONObject data = obj.getJSONObject("data");
+                        JSONObject data = obj.getJSONObject("data");
 
                         JSONArray liked_events = data.getJSONArray("liked_events");
                         for (int i = 0; i < liked_events.length(); i++) {
@@ -136,8 +135,8 @@ dialog2.dismiss();
                             details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LATITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            JSONArray arr=arrobj.getJSONArray("event_dates");
-                            JSONObject objArr=arr.getJSONObject(0);
+                            JSONArray arr = arrobj.getJSONArray("event_dates");
+                            JSONObject objArr = arr.getJSONObject(0);
                             details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
@@ -150,12 +149,13 @@ dialog2.dismiss();
 
                             view_item_pager2.setAdapter(new Favorite_list_Adapter(getActivity(), event_list));
 
-
-                            /*view_item_pager2.setClipToPadding(false);
-                            view_item_pager2.setPadding(0, 0, 40, 0);*/
+                            if (event_list.size() > 1) {
+                                view_item_pager2.setClipToPadding(false);
+                                view_item_pager2.setPadding(0, 0, 40, 0);
+                                wishMethod();
+                            }
 
                         }
-
 
 
                         JSONArray my_events = data.getJSONArray("my_events");
@@ -171,8 +171,8 @@ dialog2.dismiss();
                             details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            JSONArray arr=arrobj.getJSONArray("event_dates");
-                            JSONObject objArr=arr.getJSONObject(0);
+                            JSONArray arr = arrobj.getJSONArray("event_dates");
+                            JSONObject objArr = arr.getJSONObject(0);
                             details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
@@ -185,12 +185,11 @@ dialog2.dismiss();
                             planning_linear_layout.setVisibility(View.VISIBLE);
 
                             cat_pager.setAdapter(new AdvantureFeatureAdapter(getActivity(), planning_event_list));
-                            /*cat_pager.setClipToPadding(false);
-                            cat_pager.setPadding(0, 0, 40, 0);
-*/
-
-                            //view_item_pager1.setClipToPadding(false);
-                            // view_item_pager1.setPadding(0,0,40,0);
+                            if (planning_event_list.size() > 1) {
+                                cat_pager.setClipToPadding(false);
+                                cat_pager.setPadding(0, 0, 40, 0);
+                                plannerPagerMethod();
+                            }
 
                         }
                         JSONArray joined_events = data.getJSONArray("joined_events");
@@ -206,8 +205,8 @@ dialog2.dismiss();
                             details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            JSONArray arr=arrobj.getJSONArray("event_dates");
-                            JSONObject objArr=arr.getJSONObject(0);
+                            JSONArray arr = arrobj.getJSONArray("event_dates");
+                            JSONObject objArr = arr.getJSONObject(0);
                             details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
@@ -220,9 +219,11 @@ dialog2.dismiss();
 
                             view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(), goint_to_event_list));
 
-
-                          /*  view_item_pager1.setClipToPadding(false);
-                            view_item_pager1.setPadding(0, 0, 40, 0);*/
+                            if (goint_to_event_list.size() > 1) {
+                                view_item_pager1.setClipToPadding(false);
+                                view_item_pager1.setPadding(0, 0, 40, 0);
+                                goingMethod();
+                            }
                         }
 
                         message_linear_layout.setVisibility(View.GONE);
@@ -261,7 +262,78 @@ dialog2.dismiss();
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(cat_request);
     }
+    public void plannerPagerMethod() {
+        cat_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == planning_event_list.size() - 1) {
+                    cat_pager.setClipToPadding(false);
+                    cat_pager.setPadding(40, 0, 0, 0);
+                } else {
+                    cat_pager.setClipToPadding(false);
+                    cat_pager.setPadding(0, 0, 40, 0);
+                }
+            }
 
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+    public void goingMethod() {
+        view_item_pager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == goint_to_event_list.size() - 1) {
+                    view_item_pager1.setClipToPadding(false);
+                    view_item_pager1.setPadding(40, 0, 0, 0);
+                } else {
+                    view_item_pager1.setClipToPadding(false);
+                    view_item_pager1.setPadding(0, 0, 40, 0);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+    public void wishMethod() {
+        view_item_pager2.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == event_list.size() - 1) {
+                    view_item_pager2.setClipToPadding(false);
+                    view_item_pager2.setPadding(40, 0, 0, 0);
+                } else {
+                    view_item_pager2.setClipToPadding(false);
+                    view_item_pager2.setPadding(0, 0, 40, 0);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
     //---------------------------Progrees Dialog-----------------------
     public void dialogWindow() {
         dialog2 = new Dialog(getActivity());
@@ -307,8 +379,8 @@ dialog2.dismiss();
                             details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            JSONArray arr=arrobj.getJSONArray("event_dates");
-                            JSONObject objArr=arr.getJSONObject(0);
+                            JSONArray arr = arrobj.getJSONArray("event_dates");
+                            JSONObject objArr = arr.getJSONObject(0);
                             details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
@@ -404,8 +476,8 @@ dialog2.dismiss();
                             details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            JSONArray arr=arrobj.getJSONArray("event_dates");
-                            JSONObject objArr=arr.getJSONObject(0);
+                            JSONArray arr = arrobj.getJSONArray("event_dates");
+                            JSONObject objArr = arr.getJSONObject(0);
                             details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 

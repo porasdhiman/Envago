@@ -181,6 +181,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
     SharedPreferences preferences, sp;
     SharedPreferences.Editor ed;
 ImageView back_button_create;
+    TextView header_title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -200,6 +201,7 @@ ImageView back_button_create;
         global = (Global) getApplicationContext();
         main_layout = (LinearLayout) findViewById(R.id.main_layout);
         Fonts.overrideFonts(this, main_layout);
+        header_title=(TextView)findViewById(R.id.title) ;
         back_button_create=(ImageView)findViewById(R.id.back_button_create);
         desclaimer_layout = (LinearLayout) findViewById(R.id.desclaimer_layout);
         //intro_images = (ViewPager) findViewById(R.id.pager_introduction);
@@ -378,7 +380,7 @@ ImageView back_button_create;
         admin_name.setText(preferences.getString(GlobalConstants.USERNAME, ""));
         header_textview.setText(sp.getString(GlobalConstants.EVENT_NAME, ""));
 
-
+        header_title.setText(sp.getString(GlobalConstants.EVENT_NAME, ""));
         admin_description.setText(sp.getString(GlobalConstants.EVENT_DESCRIPTION, ""));
 
         if (sp.getString(GlobalConstants.EVENT_DESCRIPTION, "").length() > 200) {
