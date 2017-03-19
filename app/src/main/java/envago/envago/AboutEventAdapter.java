@@ -94,6 +94,7 @@ public class AboutEventAdapter extends BaseAdapter {
         }
 
 Fonts.overrideFonts(context,holder.main_layout);
+        Fonts.overrideFonts1(context,holder.event_name_txt);
         url = GlobalConstants.IMAGE_URL + list.get(position).get(GlobalConstants.IMAGE);
         Log.e("urle",url);
         holder.event_price_txt.setText("$"+list.get(position).get(GlobalConstants.EVENT_PRICE));

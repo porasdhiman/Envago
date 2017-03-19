@@ -32,7 +32,7 @@ public class BookingDateActivity extends Activity implements View.OnClickListene
             "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
             "Dec",};
     LinearLayout main_layout;
-
+TextView date_txtView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +47,8 @@ public class BookingDateActivity extends Activity implements View.OnClickListene
         global=(Global)getApplicationContext();
         main_layout=(LinearLayout)findViewById(R.id.main_layout);
         Fonts.overrideFonts(this,main_layout);
+        date_txtView=(TextView)findViewById(R.id.date_txtView);
+        Fonts.overrideFonts1(this,date_txtView);
         one_time_advanture_layout=(RelativeLayout)findViewById(R.id.one_time_advanture_layout);
         full_session_layout=(RelativeLayout)findViewById(R.id.full_season_layout);
         repeated_dates_adventure_layout=(RelativeLayout)findViewById(R.id.repeated_dates_adventure_layout);

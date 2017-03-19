@@ -39,12 +39,13 @@ public class AddPhotoActivity extends BaseActivity {
     Global global;
     TextView button1;
     boolean iSEdit = false;
-    int i=1,size;
-ImageView back_button_create;
+    int i = 1, size;
+    ImageView back_button_create;
     Button submit_button;
     SharedPreferences sp;
     SharedPreferences.Editor ed;
     ArrayList<String> sharedData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +54,11 @@ ImageView back_button_create;
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
-        sp=getSharedPreferences(GlobalConstants.CREATE_DATA,Context.MODE_PRIVATE);
-        ed=sp.edit();
+        sp = getSharedPreferences(GlobalConstants.CREATE_DATA, Context.MODE_PRIVATE);
+        ed = sp.edit();
         global = (Global) getApplicationContext();
-        submit_button=(Button)findViewById(R.id.submit_button);
-        back_button_create=(ImageView)findViewById(R.id.back_button_create);
+        submit_button = (Button) findViewById(R.id.submit_button);
+        back_button_create = (ImageView) findViewById(R.id.back_button_create);
         button1 = (TextView) findViewById(R.id.button1);
         view_photo_layout = (RelativeLayout) findViewById(R.id.view_photo_layout);
         img = (ImageView) findViewById(R.id.img);
@@ -78,22 +79,32 @@ ImageView back_button_create;
         });
 
         options = new DisplayImageOptions.Builder()
-                .showStubImage(R.drawable.ic_launcher)
-                .showImageForEmptyUri(R.drawable.ic_launcher)
+                .showStubImage(0)
+                .showImageForEmptyUri(0)
                 .cacheInMemory()
                 .cacheOnDisc()
                 .build();
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (button1.getText().toString().equalsIgnoreCase("edit")) {
+                if (button1.getText().toString().equalsIgnoreCase("Edit")) {
                     button1.setText("Done");
-                    cancel_icon_img.setVisibility(View.VISIBLE);
-                    iSEdit=true;
-                    size=global.getListImg().size();
-                    selected_img_grid.setAdapter(new SelectedImgAdapter(AddPhotoActivity.this, global.getListImg()));
-CommonUtils.setGridViewHeightBasedOnChildren(selected_img_grid,3);
+                    cancel_icon_img.setVisibility(View.GONE);
+                    iSEdit = true;
+                    size = global.getListImg().size();
+                    if (global.getListImg().size() != 0) {
+                        selected_img_grid.setAdapter(new SelectedImgAdapter(AddPhotoActivity.this, global.getListImg()));
+                        CommonUtils.setGridViewHeightBasedOnChildren(selected_img_grid, 3);
+                    }
                 } else {
+                    button1.setText("Edit");
+                    cancel_icon_img.setVisibility(View.GONE);
+                    iSEdit = false;
+                    size = global.getListImg().size();
+                    if (global.getListImg().size() != 0) {
+                        selected_img_grid.setAdapter(new SelectedImgAdapter(AddPhotoActivity.this, global.getListImg()));
+                        CommonUtils.setGridViewHeightBasedOnChildren(selected_img_grid, 3);
+                    }
 
                 }
             }
@@ -103,29 +114,30 @@ CommonUtils.setGridViewHeightBasedOnChildren(selected_img_grid,3);
             public void onClick(View v) {
 
 
-               if(global.getListImg().size() != 0) {
-                   global.getListImg().remove(0);
-                   if (global.getListImg().size() == 0) {
+                if (global.getListImg().size() != 0) {
+                    global.getListImg().remove(0);
+                    if (global.getListImg().size() == 0) {
 
-                       img.setImageResource(R.drawable.add_photo);
-                       iSEdit = false;
-                       cancel_icon_img.setVisibility(View.GONE);
-                   } else {
-                       imageLoader.displayImage("file://" + global.getListImg().get(0), img, options, new SimpleImageLoadingListener() {
-                           public void onLoadingComplete(Bitmap loadedImage) {
-                               Animation anim = AnimationUtils.loadAnimation(AddPhotoActivity.this, R.anim.fade_in);
-                               img.setAnimation(anim);
-                               anim.start();
-                           }
-                       });
-                       selected_img_grid.setAdapter(new SelectedImgAdapter(AddPhotoActivity.this, global.getListImg()));
-                       CommonUtils.setGridViewHeightBasedOnChildren(selected_img_grid,3);
-                   }
-               }else{
-                   img.setImageResource(R.drawable.add_photo);
-                   iSEdit = false;
-                   cancel_icon_img.setVisibility(View.GONE);
-               }
+                        img.setImageResource(R.drawable.add_photo);
+                        iSEdit = false;
+                        cancel_icon_img.setVisibility(View.GONE);
+
+                    } else {
+                        imageLoader.displayImage("file://" + global.getListImg().get(0), img, options, new SimpleImageLoadingListener() {
+                            public void onLoadingComplete(Bitmap loadedImage) {
+                                Animation anim = AnimationUtils.loadAnimation(AddPhotoActivity.this, R.anim.fade_in);
+                                img.setAnimation(anim);
+                                anim.start();
+                            }
+                        });
+                        selected_img_grid.setAdapter(new SelectedImgAdapter(AddPhotoActivity.this, global.getListImg()));
+                        CommonUtils.setGridViewHeightBasedOnChildren(selected_img_grid, 3);
+                    }
+                } else {
+                    img.setImageResource(R.drawable.add_photo);
+                    iSEdit = false;
+                    cancel_icon_img.setVisibility(View.GONE);
+                }
             }
         });
         submit_button.setOnClickListener(new View.OnClickListener() {
@@ -134,9 +146,9 @@ CommonUtils.setGridViewHeightBasedOnChildren(selected_img_grid,3);
                 finish();
             }
         });
-        if(!sp.getString(GlobalConstants.IMAGEDATA,"").equalsIgnoreCase("")){
-            sharedData= new ArrayList<String>(Arrays.asList(sp.getString(GlobalConstants.IMAGEDATA,"").substring(1,sp.getString(GlobalConstants.IMAGEDATA,"").length()-1).split(","))) ;
-            Log.e("shared data",sharedData.toString());
+        if (!sp.getString(GlobalConstants.IMAGEDATA, "").equalsIgnoreCase("")) {
+            sharedData = new ArrayList<String>(Arrays.asList(sp.getString(GlobalConstants.IMAGEDATA, "").substring(1, sp.getString(GlobalConstants.IMAGEDATA, "").length() - 1).split(",")));
+            Log.e("shared data", sharedData.toString());
             global.setListImg(sharedData);
             button1.setVisibility(View.VISIBLE);
             imageLoader.displayImage("file://" + global.getListImg().get(0), img, options, new SimpleImageLoadingListener() {
@@ -146,7 +158,7 @@ CommonUtils.setGridViewHeightBasedOnChildren(selected_img_grid,3);
             });
 
             selected_img_grid.setAdapter(new SelectedImgAdapter(AddPhotoActivity.this, global.getListImg()));
-            CommonUtils.setGridViewHeightBasedOnChildren(selected_img_grid,3);
+            CommonUtils.setGridViewHeightBasedOnChildren(selected_img_grid, 3);
         }
 
     }
@@ -172,7 +184,7 @@ CommonUtils.setGridViewHeightBasedOnChildren(selected_img_grid,3);
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            if(global.getListImg().size()>0) {
+            if (global.getListImg().size() > 0) {
                 button1.setVisibility(View.VISIBLE);
                 imageLoader.displayImage("file://" + global.getListImg().get(0), img, options, new SimpleImageLoadingListener() {
                     public void onLoadingComplete(Bitmap loadedImage) {
@@ -259,7 +271,7 @@ CommonUtils.setGridViewHeightBasedOnChildren(selected_img_grid,3);
                             public void onLoadingComplete(Bitmap loadedImage) {
                             }
                         });
-                    }else{
+                    } else {
                         img.setImageResource(R.drawable.add_photo);
                         iSEdit = false;
                         cancel_icon_img.setVisibility(View.GONE);

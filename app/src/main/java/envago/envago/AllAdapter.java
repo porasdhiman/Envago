@@ -99,6 +99,7 @@ public class AllAdapter extends PagerAdapter {
         final ImageView heart_img = (ImageView) itemView.findViewById(R.id.heart_img);
         TextView start_event_txtView = (TextView) itemView.findViewById(R.id.start_event_txtView);
         Fonts.overrideFonts(mContext,main_layout);
+        Fonts.overrideFonts1(mContext,view_text);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

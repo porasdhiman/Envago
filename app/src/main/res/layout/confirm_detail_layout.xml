@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/main_layout">
 
 
     <ScrollView
@@ -51,7 +52,8 @@
                     android:singleLine="true"
                     android:text=""
                     android:textColor="#000"
-                    android:textSize="20sp" />
+
+                    android:textSize="22sp" />
 
             </RelativeLayout>
 
@@ -72,8 +74,8 @@
 
                 <ImageView
                     android:id="@+id/date"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/clock" />
@@ -89,7 +91,7 @@
 
                     android:text=""
                     android:textColor="#000"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/duration_txtView"
@@ -101,7 +103,7 @@
                     android:layout_toRightOf="@+id/date_details"
                     android:text=""
                     android:textColor="#000"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
                 <!-- <TextView
                      android:id="@+id/txtView"
@@ -139,7 +141,7 @@
                     android:layout_gravity="center_horizontal"
                     android:text="Location:"
                     android:textColor="#000"
-                    android:textSize="16sp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/location_of_event"
@@ -152,7 +154,7 @@
                     android:layout_toRightOf="@+id/location_txt"
                     android:singleLine="true"
                     android:textColor="#000"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
 
                     />
             </RelativeLayout>
@@ -181,7 +183,7 @@
                     android:layout_gravity="center_horizontal"
                     android:text="Meeting:"
                     android:textColor="#000"
-                    android:textSize="16sp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/Time_details"
@@ -195,7 +197,7 @@
 
                     android:text=""
                     android:textColor="#000"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
             </RelativeLayout>
 
@@ -223,7 +225,7 @@
                     android:layout_gravity="center_horizontal"
                     android:text="Person:"
                     android:textColor="#000"
-                    android:textSize="16sp" />
+                    android:textSize="17sp" />
 
 
                 <RelativeLayout
@@ -264,7 +266,7 @@
                         android:gravity="center"
                         android:text="1 person"
                         android:textColor="@color/Gray"
-                        android:textSize="14sp" />
+                        android:textSize="17sp" />
 
                     <View
                         android:id="@+id/view2"
@@ -312,7 +314,8 @@
                     android:layout_marginLeft="16dp"
                     android:text="Total:"
                     android:textColor="#000"
-                    android:textSize="16sp" />
+
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/total_money"
@@ -324,7 +327,7 @@
                     android:layout_toRightOf="@+id/total"
                     android:text=""
                     android:textColor="#000"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
                 <TextView
                     android:id="@+id/dis_money"
                     android:layout_width="wrap_content"
@@ -335,7 +338,7 @@
                     android:layout_toRightOf="@+id/total_money"
                     android:text=""
                     android:textColor="#000"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
             </RelativeLayout>
 
@@ -356,7 +359,7 @@
                 android:layout_marginTop="10dp"
                 android:textColor="#000"
 
-                android:textSize="14sp" />
+                android:textSize="17sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -446,12 +449,12 @@ android:src="@drawable/cancel_view_img"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="10dp"
                     android:text="Pay via Paypal; you can pay with your credit card if you don't have a PayPal account..."
-                    android:textColor="#000"
-                    android:textSize="12sp" />
+                    android:textColor="#373737"
+                    android:textSize="13sp" />
 
             </RelativeLayout>
 
-            <Button
+            <TextView
                 android:id="@+id/procced_btn"
                 android:layout_width="match_parent"
                 android:layout_height="43dp"
@@ -462,6 +465,7 @@ android:src="@drawable/cancel_view_img"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/red_button_back"
                 android:text="Procced to Payment"
+                android:gravity="center"
                 android:textColor="#fff" />
 
             <View

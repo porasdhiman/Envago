@@ -406,7 +406,7 @@ public class FullSessionActivity extends Activity {
         di = new StringBuilder().append(day).append("-")
                 .append(month).append("-").append(year).toString();
         if (dateMatchMethod(di)) {
-            Toast.makeText(FullSessionActivity.this, "Please select date above current date", Toast.LENGTH_SHORT).show();
+            Toast.makeText(FullSessionActivity.this, "Please select date greater than current date", Toast.LENGTH_SHORT).show();
         } else {
             session_spinner.setText(formatdate1(di));
         }
@@ -417,7 +417,7 @@ public class FullSessionActivity extends Activity {
         d2 = new StringBuilder().append(day).append("-")
                 .append(month).append("-").append(year).toString();
         if (dateMatchMethod1(di, d2)) {
-            Toast.makeText(FullSessionActivity.this, "Please select date above start date", Toast.LENGTH_SHORT).show();
+            Toast.makeText(FullSessionActivity.this, "Please select end date greater than start date", Toast.LENGTH_SHORT).show();
         } else {
             di = new StringBuilder().append(day).append("-")
                     .append(month).append("-").append(year).toString();

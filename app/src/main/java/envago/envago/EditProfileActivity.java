@@ -72,9 +72,9 @@ public class EditProfileActivity extends Activity {
     TextView done;
     HttpEntity resEntity;
     String message;
-
+    LinearLayout main_layout;
     String username_var, email_var, name_var, phone_var, paypal_var, document_var, about_var;
-
+    TextView user_textview, name_textview, email_textview, phone_textview, forgot_txtView, paypal_textview, id_textview, about_textview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +90,35 @@ public class EditProfileActivity extends Activity {
 
         preferences = getSharedPreferences(GlobalConstants.PREFNAME, MODE_PRIVATE);
         editor = preferences.edit();
+        main_layout = (LinearLayout) findViewById(R.id.main_layout);
+        Fonts.overrideFonts(this, main_layout);
+        user_textview = (TextView) findViewById(R.id.user_textview);
+        name_textview = (TextView) findViewById(R.id.name_textview);
+
+        email_textview = (TextView) findViewById(R.id.email_textview);
+
+        phone_textview = (TextView) findViewById(R.id.phone_textview);
+
+        forgot_txtView = (TextView) findViewById(R.id.forgot_txtView);
+
+        paypal_textview = (TextView) findViewById(R.id.paypal_textview);
+
+        id_textview = (TextView) findViewById(R.id.id_textview);
+        about_textview = (TextView) findViewById(R.id.about_textview);
+        Fonts.overrideFonts1(this, user_textview);
+        Fonts.overrideFonts1(this, name_textview);
+
+        Fonts.overrideFonts1(this, user_textview);
+
+        Fonts.overrideFonts1(this, email_textview);
+
+        Fonts.overrideFonts1(this, phone_textview);
+
+        Fonts.overrideFonts1(this, forgot_txtView);
+        Fonts.overrideFonts1(this, paypal_textview);
+
+        Fonts.overrideFonts1(this, id_textview);
+        Fonts.overrideFonts1(this, about_textview);
 
 
         profileimg = (ImageView) findViewById(R.id.profile_img_editprofile);
@@ -104,6 +133,7 @@ public class EditProfileActivity extends Activity {
         about_edit = (TextView) findViewById(R.id.about_edit);
         done = (TextView) findViewById(R.id.done);
         back_button = (ImageView) findViewById(R.id.back_editprofile);
+
 
         getinfo();
         getvalues();
@@ -156,7 +186,6 @@ public class EditProfileActivity extends Activity {
         String about = preferences.getString(GlobalConstants.ABOUT, "");
 
 
-
         if (username.length() == 0) {
 
         } else {
@@ -198,15 +227,16 @@ public class EditProfileActivity extends Activity {
         } else {
 
             about_edit.setText(about);
-            Log.e("about",about_edit.getText().toString());
+            Log.e("about", about_edit.getText().toString());
 
         }
-        if (document.equalsIgnoreCase("")) {
+
+        if (document.length() == 36) {
             document_edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                        Toast.makeText(EditProfileActivity.this, "Document image not available", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfileActivity.this, "Document image not available", Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -216,8 +246,8 @@ public class EditProfileActivity extends Activity {
                 public void onClick(View v) {
 
 
-                        Intent i = new Intent(EditProfileActivity.this, DocumentImgActivity.class);
-                        startActivity(i);
+                    Intent i = new Intent(EditProfileActivity.this, DocumentImgActivity.class);
+                    startActivity(i);
 
                 }
             });
@@ -226,7 +256,7 @@ public class EditProfileActivity extends Activity {
         if (preferences.getString(GlobalConstants.IMAGE, "").length() == 0) {
 
         } else {
-            if(username_edit.getText().length()==0){
+            if (username_edit.getText().length() == 0) {
                 TextDrawable drawable = TextDrawable.builder()
                         .buildRect("U", Color.parseColor("#F94444"));
                 if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
@@ -236,7 +266,7 @@ public class EditProfileActivity extends Activity {
 
                     //profilepic.setImageURI(Uri.fromFile(new File(preferences.getString(GlobalConstants.IMAGE, ""))));
                 }
-            }else {
+            } else {
                 TextDrawable drawable = TextDrawable.builder()
                         .buildRect(username_edit.getText().toString().substring(0, 1).toUpperCase(), Color.parseColor("#F94444"));
                 if (preferences.getString(GlobalConstants.IMAGE, "").contains("http")) {
@@ -258,8 +288,6 @@ public class EditProfileActivity extends Activity {
         }
 
     }
-
-
 
 
     // ------------------------------------------------------upload

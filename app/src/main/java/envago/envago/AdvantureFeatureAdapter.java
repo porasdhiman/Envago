@@ -80,6 +80,7 @@ public class AdvantureFeatureAdapter extends PagerAdapter {
         TextView start_event_txtView = (TextView) itemView.findViewById(R.id.start_event_txtView);
         LinearLayout maain_layout=(LinearLayout)itemView.findViewById(R.id.main_layout);
         Fonts.overrideFonts(mContext,maain_layout);
+        Fonts.overrideFonts1(mContext,view_text);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

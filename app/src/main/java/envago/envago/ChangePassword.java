@@ -10,9 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -37,7 +37,7 @@ import java.util.Map;
 public class ChangePassword extends Activity {
 
     EditText password, new_password, re_new_password;
-    Button change_pass;
+    TextView change_pass;
     ImageView back;
     Dialog dialog2;
 
@@ -54,7 +54,7 @@ public class ChangePassword extends Activity {
         }
 
         back = (ImageView) findViewById(R.id.changepass_back);
-        change_pass = (Button) findViewById(R.id.change_pass_button);
+        change_pass = (TextView) findViewById(R.id.change_pass_button);
         password = (EditText) findViewById(R.id.pass_edittext);
         new_password = (EditText) findViewById(R.id.new_pass_edit);
         re_new_password = (EditText) findViewById(R.id.new_pass_re_edit);

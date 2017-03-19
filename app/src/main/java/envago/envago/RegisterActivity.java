@@ -8,7 +8,9 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,8 +18,8 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -51,6 +53,8 @@ public class RegisterActivity extends Activity implements View.OnTouchListener, 
     SharedPreferences.Editor ed;
     Dialog dialog2;
     ImageView back_from_login;
+    RelativeLayout main_layout;
+    TextView sign_up_name_txtView,email_txtView,password_txtView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,16 @@ public class RegisterActivity extends Activity implements View.OnTouchListener, 
         sp = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         ed = sp.edit();
         global = (Global) getApplicationContext();
+        main_layout=(RelativeLayout)findViewById(R.id.main_layout);
+        Fonts.overrideFonts1(this,main_layout);
+        sign_up_name_txtView = (TextView) findViewById(R.id.sign_up_name_txtView);
+        email_txtView = (TextView) findViewById(R.id.email_txtView);
+        password_txtView = (TextView) findViewById(R.id.password_txtView);
+        Fonts.overrideFontHeavy(this,sign_up_name_txtView);
+        Fonts.overrideFontHeavy(this,email_txtView);
+        Fonts.overrideFontHeavy(this,password_txtView);
+
+
         sign_up_layout = (LinearLayout) findViewById(R.id.sign_up_layout);
         sign_up_button = (TextView) findViewById(R.id.sign_up_button);
         show_txt = (TextView) findViewById(R.id.show_txt);
@@ -76,6 +90,70 @@ public class RegisterActivity extends Activity implements View.OnTouchListener, 
         name_editText.setOnTouchListener(this);
         mail_editText.setOnTouchListener(this);
         back_from_login.setOnClickListener(this);
+        name_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(mail_editText.getText().length()>0 && name_editText.getText().length()>0 && password_editText.getText().length()>0){
+                    sign_up_button.setBackgroundResource(R.drawable.red_button_back);
+                }else{
+                    sign_up_button.setBackgroundResource(R.drawable.login_btn_back);
+
+                }
+
+            }
+        });
+        mail_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(mail_editText.getText().length()>0 && name_editText.getText().length()>0 && password_editText.getText().length()>0){
+                    sign_up_button.setBackgroundResource(R.drawable.red_button_back);
+                }else{
+                    sign_up_button.setBackgroundResource(R.drawable.login_btn_back);
+
+                }
+            }
+        });
+        password_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(mail_editText.getText().length()>0 && name_editText.getText().length()>0 && password_editText.getText().length()>0){
+                    sign_up_button.setBackgroundResource(R.drawable.red_button_back);
+                }else{
+                    sign_up_button.setBackgroundResource(R.drawable.login_btn_back);
+
+                }
+            }
+        });
     }
 
     @Override
@@ -98,21 +176,25 @@ public class RegisterActivity extends Activity implements View.OnTouchListener, 
             case R.id.sign_up_button:
                 if (name_editText.getText().length() == 0) {
                     name_error_txtView.setVisibility(View.VISIBLE);
-                    name_error_txtView.setText("Please enter username");
+                    name_error_txtView.setText("Please enter a username");
 
                 } else if (mail_editText.getText().length() == 0) {
                     mail_error_txtView.setVisibility(View.VISIBLE);
-                    mail_error_txtView.setText("Please enter email");
+                    mail_error_txtView.setText("Please enter a email address");
 
 
                 } else if (password_editText.getText().length() == 0) {
                     password_error_txtView.setVisibility(View.VISIBLE);
-                    password_error_txtView.setText("Please enter password");
+                    password_error_txtView.setText("Please enter a correct password");
 
 
-                } else if (!CommonUtils.isEmailValid(mail_editText.getText().toString())) {
+                }else if (password_editText.getText().length()<6) {
+                    password_error_txtView.setVisibility(View.VISIBLE);
+                    password_error_txtView.setText("Password length must be atleast 6");
+                }
+                else if (!CommonUtils.isEmailValid(mail_editText.getText().toString())) {
                     mail_error_txtView.setVisibility(View.VISIBLE);
-                    mail_error_txtView.setText("Please enter Valid Email");
+                    mail_error_txtView.setText("Please enter a valid Email");
                 } else {
                     registerMethod();
                     dialogWindow();
@@ -136,6 +218,7 @@ public class RegisterActivity extends Activity implements View.OnTouchListener, 
         }
 
     }
+
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -185,7 +268,10 @@ public class RegisterActivity extends Activity implements View.OnTouchListener, 
                                 finish();
 
                             } else {
-                                Toast.makeText(RegisterActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                                mail_error_txtView.setVisibility(View.VISIBLE);
+                                mail_error_txtView.setText(obj.getString("msg"));
+
+
                             }
                             dialog2.dismiss();
 

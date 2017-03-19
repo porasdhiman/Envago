@@ -44,14 +44,15 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/tran_txtView"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Transportation"
-                android:textColor="@color/Black"
+                android:textColor="#373737"
                 android:layout_toLeftOf="@+id/booking_checkBox"
                 android:layout_centerVertical="true"
-                android:textSize="17sp" />
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/trans_checkBox"
@@ -77,14 +78,15 @@
             android:layout_marginTop="10dp">
 
             <TextView
+                android:id="@+id/flight_txtView"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Flight"
-                android:textColor="@color/Black"
+                android:textColor="#373737"
                 android:layout_toLeftOf="@+id/route_checkbox"
                 android:layout_centerVertical="true"
-                android:textSize="17sp" />
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/flight_checkbox"
@@ -111,14 +113,15 @@
             android:layout_marginTop="10dp">
 
             <TextView
+                android:id="@+id/acco_txtView"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Accomodation"
-                android:textColor="@color/Black"
+                android:textColor="#373737"
                 android:layout_toLeftOf="@+id/add_photo_checkBox"
                 android:layout_centerVertical="true"
-                android:textSize="17sp" />
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/acc_checkBox"
@@ -144,14 +147,15 @@
             android:layout_marginTop="10dp">
 
             <TextView
+                android:id="@+id/tent_txtView"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Tent"
-                android:textColor="@color/Black"
+                android:textColor="#373737"
                 android:layout_toLeftOf="@+id/detail_checkBox"
                 android:layout_centerVertical="true"
-                android:textSize="17sp" />
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/tent_checkBox"
@@ -177,14 +181,15 @@
             android:layout_marginTop="10dp">
 
             <TextView
+                android:id="@+id/gear_txtView"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Gear"
-                android:textColor="@color/Black"
+                android:textColor="#373737"
                 android:layout_toLeftOf="@+id/detail_checkBox"
                 android:layout_centerVertical="true"
-                android:textSize="17sp" />
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/gear_checkBox"
@@ -210,14 +215,15 @@
             android:layout_marginTop="10dp">
 
             <TextView
+                android:id="@+id/meal_txtView"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Meal"
-                android:textColor="@color/Black"
+                android:textColor="#373737"
                 android:layout_toLeftOf="@+id/detail_checkBox"
                 android:layout_centerVertical="true"
-                android:textSize="17sp" />
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/meals_checkBox"

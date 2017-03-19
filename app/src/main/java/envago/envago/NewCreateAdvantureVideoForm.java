@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -51,7 +52,7 @@ public class NewCreateAdvantureVideoForm extends FragmentActivity implements Vie
     private MediaPlayer player;
     private Timer updateTimer;
     String uriPath;
-
+RelativeLayout main_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +65,8 @@ public class NewCreateAdvantureVideoForm extends FragmentActivity implements Vie
         setContentView(R.layout.new_create_advanture_vidwo_layout);
         // bottom_txt = (TextView) findViewById(R.id.bottom_txt);
         global = (Global) getApplicationContext();
-
+        main_layout=(RelativeLayout)findViewById(R.id.main_layout);
+        Fonts.overrideFonts(this,main_layout);
         document_status_txt = (TextView) findViewById(R.id.document_status_txt);
 
         //---------------------------------
@@ -106,7 +108,8 @@ public class NewCreateAdvantureVideoForm extends FragmentActivity implements Vie
 
         slider_upper_txt = getResources().getStringArray(R.array.slide1_txt);
         slider_bottom_txt = getResources().getStringArray(R.array.slide1_bottom_txt);
-        slider_txt.setText(slider_upper_txt[0]);
+        slider_txt.setText("Become an \nAdventure Planner");
+        Fonts.overrideFontHeavy(NewCreateAdvantureVideoForm.this,slider_txt);
         slider_txt_bottom.setText(slider_bottom_txt[0]);
        /* pager.setAdapter(new CutomePagerAdapter(NewCreateAdvantureVideoForm.this, slider_upper_txt, slider_bottom_txt));
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

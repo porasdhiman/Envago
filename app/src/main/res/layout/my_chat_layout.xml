@@ -28,13 +28,14 @@
         android:id="@+id/message_linear_layout"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/caht_txtView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:text="Your Chats"
             android:textColor="#000"
-            android:textSize="30sp" />
+            android:textSize="26sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -42,8 +43,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:lineSpacingExtra="1.1mm"
-            android:text="No message here,Book your adventure and \n start chatting and planning with other \nadvanture"
-            android:textColor="#000"
+            android:text="No message here, Book your adventure and \nstart chatting and planning with other \nadventures."
+            android:textColor="#373737"
             android:textSize="14sp" />
 
         <RelativeLayout

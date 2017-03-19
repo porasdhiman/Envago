@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment {
         shimmer_view_container = (ShimmerFrameLayout) v.findViewById(R.id.shimmer_view_container);
         shimmer_view_container.setVisibility(View.GONE);
         main_layout = (LinearLayout) v.findViewById(R.id.main_layout);
-        Fonts.overrideFonts(getActivity(), main_layout);
+        Fonts.overrideFonts1(getActivity(), main_layout);
         plus_button = (ImageView) v.findViewById(R.id.plus_button);
         featured_planners_linear_layout = (LinearLayout) v.findViewById(R.id.featured_planners_linear_layout);
         suggested_linear_layout = (LinearLayout) v.findViewById(R.id.suggested_linear_layout);
@@ -139,7 +139,7 @@ public class HomeFragment extends Fragment {
                             details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
                             details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
                             details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
-                            details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                            details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LATITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
                             JSONArray arr = arrobj.getJSONArray("event_dates");
@@ -312,7 +312,7 @@ public class HomeFragment extends Fragment {
                             shimmer_view_container.setVisibility(View.GONE);
                             cat_pager.setAdapter(new CatPagerAdapter(getActivity(), catgory_list));
                             cat_pager.setClipToPadding(false);
-                            cat_pager.setPadding(0, 0, 40, 0);
+                            cat_pager.setPadding(0, 0, 30, 0);
 
                             catgoryPagerMethod();
                         }
@@ -321,7 +321,7 @@ public class HomeFragment extends Fragment {
                             view_item_pager2.setAdapter(new AllAdapter(getActivity(), suggested_event_list));
                             if (suggested_event_list.size() > 1) {
                                 view_item_pager2.setClipToPadding(false);
-                                view_item_pager2.setPadding(0, 0, 40, 0);
+                                view_item_pager2.setPadding(0, 0, 30, 0);
                                 suggestedMethod();
                             }
                         }
@@ -335,7 +335,7 @@ public class HomeFragment extends Fragment {
                             view_item_pager1.setAdapter(new AllAdapter(getActivity(), featured_event_list));
                             if (featured_event_list.size() > 1) {
                                 view_item_pager1.setClipToPadding(false);
-                                view_item_pager1.setPadding(0, 0, 40, 0);
+                                view_item_pager1.setPadding(0, 0, 30, 0);
                                 featuredMethod();
                             }
                         }
@@ -381,10 +381,10 @@ public class HomeFragment extends Fragment {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == catgory_list.size() - 1) {
                     cat_pager.setClipToPadding(false);
-                    cat_pager.setPadding(40, 0, 0, 0);
+                    cat_pager.setPadding(30, 0, 0, 0);
                 } else {
                     cat_pager.setClipToPadding(false);
-                    cat_pager.setPadding(0, 0, 40, 0);
+                    cat_pager.setPadding(0, 0, 30, 0);
                 }
             }
 
@@ -405,10 +405,10 @@ public class HomeFragment extends Fragment {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == featured_event_list.size() - 1) {
                     view_item_pager1.setClipToPadding(false);
-                    view_item_pager1.setPadding(40, 0, 0, 0);
+                    view_item_pager1.setPadding(30, 0, 0, 0);
                 } else {
                     view_item_pager1.setClipToPadding(false);
-                    view_item_pager1.setPadding(0, 0, 40, 0);
+                    view_item_pager1.setPadding(0, 0, 30, 0);
                 }
             }
 
@@ -429,10 +429,10 @@ public class HomeFragment extends Fragment {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == suggested_event_list.size() - 1) {
                     view_item_pager2.setClipToPadding(false);
-                    view_item_pager2.setPadding(40, 0, 0, 0);
+                    view_item_pager2.setPadding(30, 0, 0, 0);
                 } else {
                     view_item_pager2.setClipToPadding(false);
-                    view_item_pager2.setPadding(0, 0, 40, 0);
+                    view_item_pager2.setPadding(0, 0, 30, 0);
                 }
             }
 

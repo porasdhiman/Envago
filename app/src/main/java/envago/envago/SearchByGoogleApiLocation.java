@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentActivity;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -102,10 +103,12 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
             }
         });
         cancel_txtView = (TextView) findViewById(R.id.cancel_txtView);
+        cancel_txtView.setVisibility(View.VISIBLE);
         cancel_txtView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAutocompleteView.setText("");
+                cancel_txtView.setVisibility(View.GONE);
             }
         });
         //-------------------------------Call AutocompleteTxtView-----------------
@@ -169,7 +172,13 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
             }
 
         });
-
+        mAutocompleteView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                cancel_txtView.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
     }
 
     private void searchMethod() {

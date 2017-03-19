@@ -17,8 +17,8 @@
             android:id="@+id/back_button_create"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:padding="15dp"
             android:layout_centerVertical="true"
+            android:padding="15dp"
             android:src="@drawable/back_button" />
 
         <TextView
@@ -26,16 +26,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/heart_img"
             android:layout_toRightOf="@+id/back_button_create"
             android:gravity="center"
+
             android:singleLine="true"
             android:text="Adventures"
-            android:textAllCaps="true"
             android:textColor="#fff"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:textSize="17sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <ImageView
@@ -212,8 +212,8 @@
 
                     <ImageView
                         android:id="@+id/orginiser_img"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
 
 
                         android:src="@drawable/user_back" />
@@ -230,7 +230,7 @@
 
                         android:textColor="#000"
 
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/about_planner"
@@ -243,25 +243,72 @@
                         android:text="About planner"
                         android:textColor="@color/textcolor"
 
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
 
-                    <RatingBar
+                    <LinearLayout
                         android:id="@+id/stars"
-                        style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:layout_below="@+id/event_name"
 
                         android:layout_marginLeft="19dp"
-                        android:layout_marginTop="1dp"
+                        android:layout_marginTop="2dp"
                         android:layout_toRightOf="@+id/orginiser_img"
-                        android:clickable="false"
-                        android:focusableInTouchMode="false"
-                        android:isIndicator="true"
-                        android:numStars="5"
-                        android:progressTint="@android:color/holo_red_light"
-                        android:stepSize="1.0" />
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/star1"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@drawable/star_blank" />
+
+                        <ImageView
+                            android:id="@+id/star2"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_marginLeft="3dp"
+                            android:src="@drawable/star_blank" />
+
+                        <ImageView
+                            android:id="@+id/star3"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_marginLeft="3dp"
+                            android:src="@drawable/star_blank" />
+
+                        <ImageView
+                            android:id="@+id/star4"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_marginLeft="3dp"
+                            android:src="@drawable/star_blank" />
+
+                        <ImageView
+                            android:id="@+id/star5"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_marginLeft="3dp"
+                            android:src="@drawable/star_blank" />
+
+                    </LinearLayout>
+
+                    <!--  <RatingBar
+                          android:id="@+id/stars"
+                          style="?android:attr/ratingBarStyleSmall"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+
+                          android:layout_below="@+id/event_name"
+
+                          android:layout_marginLeft="19dp"
+                          android:layout_marginTop="1dp"
+                          android:layout_toRightOf="@+id/orginiser_img"
+                          android:clickable="false"
+                          android:focusableInTouchMode="false"
+                          android:isIndicator="true"
+                          android:numStars="5"
+                          android:progressTint="@android:color/holo_red_light"
+                          android:stepSize="1.0" />-->
 
 
                 </RelativeLayout>
@@ -288,7 +335,7 @@
                     android:text="More..."
                     android:textColor="@color/textcolor"
                     android:textSize="14sp"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <View
                     android:layout_width="match_parent"
@@ -358,13 +405,13 @@
 
                     <TextView
                         android:id="@+id/location_txt"
-                        android:layout_width="100dp"
+                        android:layout_width="75dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:textSize="15sp"
                         android:gravity="start"
                         android:text="Location"
-                        android:textColor="#000" />
+                        android:textColor="#000"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/location_name"
@@ -389,13 +436,13 @@
 
                     <TextView
                         android:id="@+id/levl_txt"
-                        android:layout_width="100dp"
+                        android:layout_width="75dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:textSize="15sp"
                         android:gravity="start"
                         android:text="Difficulty"
-                        android:textColor="#000" />
+                        android:textColor="#000"
+                        android:textSize="15sp" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -482,15 +529,15 @@
 
                     <TextView
                         android:id="@+id/meeting_text"
-                        android:layout_width="100dp"
+                        android:layout_width="75dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:gravity="start"
                         android:text="Meeting"
-                        android:textSize="15sp"
+                        android:textColor="#000"
 
-                        android:textColor="#000" />
+                        android:textSize="15sp" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -574,8 +621,7 @@
 
                         android:text="Disclaimer"
                         android:textColor="#000"
-                        android:textSize="15sp"
-                        />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/Disclaimer_txtView"
@@ -588,6 +634,7 @@
 
 
                         android:textSize="14sp" />
+
                     <TextView
                         android:id="@+id/more_dis_txtView"
                         android:layout_width="wrap_content"
@@ -598,7 +645,8 @@
                         android:text="More..."
                         android:textColor="@color/textcolor"
                         android:textSize="14sp"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
@@ -608,7 +656,7 @@
                 </LinearLayout>
 
                 <TextView
-android:id="@+id/whts_txt"
+                    android:id="@+id/whts_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -616,9 +664,9 @@ android:id="@+id/whts_txt"
                     android:layout_marginTop="20dp"
                     android:gravity="start"
                     android:text="What's Included"
-                    android:textSize="15sp"
+                    android:textColor="#000"
 
-                    android:textColor="#000" />
+                    android:textSize="15sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -715,9 +763,9 @@ android:id="@+id/whts_txt"
                         android:layout_alignParentLeft="true"
                         android:text="Who's going?"
                         android:textColor="#000"
-                        android:textStyle="bold"
+                        android:textSize="15sp"
 
-                        android:textSize="15sp" />
+                        android:textStyle="bold" />
 
 
                     <TextView
@@ -728,10 +776,10 @@ android:id="@+id/whts_txt"
 
                         android:layout_toRightOf="@+id/who_txt"
                         android:text=""
-                        android:textStyle="bold"
-
                         android:textColor="#000"
-                        android:textSize="15sp" />
+
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
                 </RelativeLayout>
 
 
@@ -896,7 +944,7 @@ android:id="@+id/whts_txt"
                 <TextView
                     android:id="@+id/price_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="43dp"
+                    android:layout_height="20dp"
                     android:layout_marginBottom="15dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"

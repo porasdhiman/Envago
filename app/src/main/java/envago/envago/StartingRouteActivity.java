@@ -53,8 +53,9 @@ public class StartingRouteActivity extends FragmentActivity implements GoogleApi
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
     Global global;
-ImageView back_button_create;
+    ImageView back_button_create;
     LinearLayout main_layout;
+    TextView where_txtView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +68,10 @@ ImageView back_button_create;
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
-        main_layout=(LinearLayout)findViewById(R.id.main_layout);
-        Fonts.overrideFonts(this,main_layout);
+        main_layout = (LinearLayout) findViewById(R.id.main_layout);
+        Fonts.overrideFonts(this, main_layout);
+        where_txtView = (TextView) findViewById(R.id.where_txtView);
+        Fonts.overrideFonts1(this, where_txtView);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -78,7 +81,7 @@ ImageView back_button_create;
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();*/
         mapFragment.getMapAsync(this);
-        back_button_create=(ImageView)findViewById(R.id.back_button_create);
+        back_button_create = (ImageView) findViewById(R.id.back_button_create);
         back_button_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,7 +182,7 @@ ImageView back_button_create;
             global.setStarting_lat(lat);
             global.setStarting_lng(lng);
             global.setStartingPoint(mAutocompleteView.getText().toString());
-            Intent i=new Intent(StartingRouteActivity.this,SecondRouteActivity.class);
+            Intent i = new Intent(StartingRouteActivity.this, SecondRouteActivity.class);
             startActivity(i);
             finish();
             places.release();

@@ -31,10 +31,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="hello"
                 android:singleLine="true"
-                android:textColor="@color/Black"
-                android:textSize="17sp" />
+                android:text=""
+                android:textColor="#373737"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/planner_address_txt"
@@ -42,12 +42,54 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:text="Dominica"
-                android:textColor="@color/Black"
-                android:textSize="13sp" />
+                android:text=""
+                android:textColor="#373737"
+                android:textSize="12sp" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-            <RatingBar
+                <ImageView
+                    android:id="@+id/star1"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/star_blank" />
+
+                <ImageView
+                    android:id="@+id/star2"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/star_blank" />
+
+                <ImageView
+                    android:id="@+id/star3"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/star_blank" />
+
+                <ImageView
+                    android:id="@+id/star4"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/star_blank" />
+
+                <ImageView
+                    android:id="@+id/star5"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/star_blank" />
+
+            </LinearLayout>
+            <!--<RatingBar
                 android:id="@+id/planer_stars"
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
@@ -64,9 +106,10 @@
                 android:progressTint="@color/textcolor"
 
                 android:stepSize="1.0" />
-
+-->
 
         </LinearLayout>
+        w
 
     </RelativeLayout>
 

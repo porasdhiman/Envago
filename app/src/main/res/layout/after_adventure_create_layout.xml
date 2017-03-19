@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/main_layout">
+    <RelativeLayout
+        android:id="@+id/main_heading"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/textcolor">
+
+
+
+        <!-- <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginRight="15dp"
+             android:text="Edit"
+             android:textColor="#fff"
+             android:textSize="18sp"
+             android:layout_alignTop="@+id/title"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentEnd="true"
+             android:layout_marginEnd="15dp"
+             android:id="@+id/textView" />-->
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/let_txtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Let the adventure begin!"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="80dp"
+        android:textColor="#373737"
+        android:textSize="20sp"/>
+    <TextView
+       android:id="@+id/you_can_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You can view all your planned adventures \nunder My Adventure."
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#373737"
+        android:textSize="17sp"/>
+    <TextView
+        android:id="@+id/you_chat_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Chat Room is also ready for this \nadventure group"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#373737"
+        android:textSize="17sp"/>
+    <TextView
+        android:id="@+id/note_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Note: you will not be able to see your \nplanned adventure in Home page"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#373737"
+        android:textSize="17sp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/go_to_txt"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+       android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/red_button_back"
+        android:text="Go to My Adventure"
+        android:textColor="#fff"
+        android:gravity="center"
+        android:textSize="14sp"/>
+    </RelativeLayout>
+</LinearLayout>

@@ -14,9 +14,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +54,7 @@ import java.util.Map;
 public class ConfirmDetailsActivity extends Activity implements View.OnClickListener {
     TextView person_name, date_details, Time_details, person_count, total_money, location_of_event, duration_txtView;
     ImageView minus, add;
-    Button procced_btn;
+    TextView procced_btn;
     //-----------------------------------Paypal variable
 
     private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
@@ -89,11 +89,13 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
     TextView discount_txt, add_coupont_txtView;
     EditText coupon_edit;
     ImageView cancel_view_img;
-    String coupon_id = "";
+    String coupon_id = "", user_coupon_id = "";
     TextView dis_money;
     String discount_type = "";
     int leftTotal;
-
+    TextView location_txt, time_txt, persone, total_txt;
+    LinearLayout main_layout;
+int l;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +106,8 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
             getWindow().setStatusBarColor(getResources().getColor(R.color.textcolor));
         }
         global = (Global) getApplicationContext();
+        main_layout = (LinearLayout) findViewById(R.id.main_layout);
+        Fonts.overrideFonts(this, main_layout);
         duration_txtView = (TextView) findViewById(R.id.duration_txtView);
         search_button = (ImageView) findViewById(R.id.search_button);
         search_button.setOnClickListener(new View.OnClickListener() {
@@ -130,11 +134,22 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
             e.printStackTrace();
         }
 
-        duration_txtView.setText("("+String.valueOf(getDaysDifference(startDate, endDate)) + " Days)");
+        location_txt = (TextView) findViewById(R.id.location_txt);
+        time_txt = (TextView) findViewById(R.id.time);
+        persone = (TextView) findViewById(R.id.person);
+        total_txt = (TextView) findViewById(R.id.total);
+        Fonts.overrideFonts1(this, time_txt);
+        Fonts.overrideFonts1(this, persone);
+        Fonts.overrideFonts1(this, total_txt);
+        Fonts.overrideFonts1(this, location_txt);
+        l=getDaysDifference(startDate, endDate)+1;
+        duration_txtView.setText("(" + String.valueOf(l) + " Days)");
         person_name = (TextView) findViewById(R.id.person_name);
         person_name.setText(cap(global.getEvent_name()));
         date_details = (TextView) findViewById(R.id.date_details);
         remanning_place_txt = (TextView) findViewById(R.id.remanning_place_txt);
+        Fonts.overrideFonts1(this, remanning_place_txt);
+
         String data = global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_END_DATE);
         String split[] = data.split("-");
         String minth = split[1];
@@ -154,7 +169,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         location_of_event.setText(global.getEvent_loc());
         minus = (ImageView) findViewById(R.id.minus);
         add = (ImageView) findViewById(R.id.plus);
-        procced_btn = (Button) findViewById(R.id.procced_btn);
+        procced_btn = (TextView) findViewById(R.id.procced_btn);
         procced_btn.setOnClickListener(this);
         add.setOnClickListener(this);
         minus.setOnClickListener(this);
@@ -175,6 +190,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                 add_coupont_txtView.setVisibility(View.VISIBLE);
                 dis_money.setText("");
                 total_money.setPaintFlags(0);
+                coupon_edit.setText("");
                 return false;
             }
         });
@@ -380,7 +396,8 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                 break;
             case R.id.procced_btn:
                 if (discount_type.equalsIgnoreCase("")) {
-                    thingToBuy = new PayPalPayment(new BigDecimal(String.valueOf(Change_total)), "USD",
+                    leftTotal = Change_total;
+                    thingToBuy = new PayPalPayment(new BigDecimal(String.valueOf(leftTotal)), "USD",
                             "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
                     Intent intent = new Intent(ConfirmDetailsActivity.this, PaymentActivity.class);
                     intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
@@ -439,7 +456,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                                 SharedPreferences.Editor ed=sp.edit();
                                 ed.putString("chat","chat");
                                 ed.commit();*/
-
+                                global.setCurrent_tab(1);
                                 Intent i = new Intent(ConfirmDetailsActivity.this, Tab_Activity.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -473,6 +490,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                 params.put("no_of_tickets", String.valueOf(i));
                 params.put("total_price", String.valueOf(leftTotal));
                 params.put("event_date_id", global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.ID));
+                params.put("user_coupon_id", String.valueOf(user_coupon_id));
 
 
                 params.put("action", "join_event");
@@ -506,7 +524,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
 
                                 JSONObject coupon = data.getJSONObject("coupon");
                                 coupon_id = coupon.getString("id");
-                                if (Change_total > Integer.parseInt(coupon.getString("min_order_value"))) {
+                                if (Change_total >= Integer.parseInt(coupon.getString("min_order_value"))) {
 
                                     discount_type = coupon.getString("discount_type");
                                     if (discount_type.equalsIgnoreCase("percentage")) {
@@ -633,7 +651,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                 Map<String, String> params = new HashMap<String, String>();
 
 
-                params.put("user_coupon_id", String.valueOf(coupon_id));
+                params.put("user_coupon_id", String.valueOf(user_coupon_id));
 
 
                 params.put("action", "cancel_applied_coupon");
@@ -685,6 +703,8 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                                     }
 
                                 }
+                                JSONObject data = obj.getJSONObject("data");
+                                user_coupon_id = data.getString("user_coupon_id");
 
 
                             } else {

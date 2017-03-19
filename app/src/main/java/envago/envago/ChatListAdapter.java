@@ -98,8 +98,8 @@ public class ChatListAdapter extends BaseAdapter {
             holder.chat_img = (ImageView) view.findViewById(R.id.chat_img);
             holder.chat_name = (TextView) view.findViewById(R.id.chat_name);
             holder.chat_address_name = (TextView) view.findViewById(R.id.chat_address_name);
-            holder.chat_txt=(TextView)view.findViewById(R.id.chat_txt) ;
-            holder.main_layout=(RelativeLayout)view.findViewById(R.id.main_layout);
+            holder.chat_txt = (TextView) view.findViewById(R.id.chat_txt);
+            holder.main_layout = (RelativeLayout) view.findViewById(R.id.main_layout);
             view.setTag(holder);
             holder.chat_img.setTag(holder);
 
@@ -107,11 +107,11 @@ public class ChatListAdapter extends BaseAdapter {
         } else {
             holder = (Holder) view.getTag();
         }
-Fonts.overrideFonts(applicationContext,holder.main_layout);
+        Fonts.overrideFonts(applicationContext, holder.main_layout);
         url = GlobalConstants.IMAGE_URL + images.get(i).get("image");
         holder.chat_txt.setText(images.get(i).get("message"));
         holder.chat_name.setText(images.get(i).get(GlobalConstants.EVENT_NAME));
-        holder.chat_address_name.setText(images.get(i).get("planner_name"));
+        holder.chat_address_name.setText(cap(images.get(i).get("planner_name")));
 
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
@@ -133,10 +133,16 @@ Fonts.overrideFonts(applicationContext,holder.main_layout);
     }
 
     public class Holder {
-        ImageView chat_img ;
-        TextView chat_name,chat_address_name,chat_txt;
+        ImageView chat_img;
+        TextView chat_name, chat_address_name, chat_txt;
 
-RelativeLayout main_layout;
+        RelativeLayout main_layout;
+    }
+
+    public String cap(String name) {
+        StringBuilder sb = new StringBuilder(name);
+        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+        return sb.toString();
     }
 
     private void initImageLoader() {

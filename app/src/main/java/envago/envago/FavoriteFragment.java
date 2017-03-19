@@ -57,6 +57,7 @@ public class FavoriteFragment extends Fragment {
     ScrollView scroll_view;
     TextView start_btn;
     SharedPreferences sp;
+    Global global;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -65,13 +66,13 @@ public class FavoriteFragment extends Fragment {
         main_layout = (LinearLayout) v.findViewById(R.id.main_layout);
         Fonts.overrideFonts(getActivity(), main_layout);
         headtext = (TextView) v.findViewById(R.id.header_text_adv);
-
-        headtext.setText("My adventures");
+        global = (Global) getActivity().getApplicationContext();
+        headtext.setText("My Adventures");
         sp = getActivity().getSharedPreferences("message", Context.MODE_PRIVATE);
         message_linear_layout = (LinearLayout) v.findViewById(R.id.message_linear_layout);
         scroll_view = (ScrollView) v.findViewById(R.id.scroll_view);
 
-
+        global.setCurrent_tab(0);
         //start_btn=(TextView)v.findViewById(R.id.start_btn);
         ging_to_linear_layout = (LinearLayout) v.findViewById(R.id.goint_to_linear_layout);
         planning_linear_layout = (LinearLayout) v.findViewById(R.id.planning_linear_layout);
@@ -151,7 +152,7 @@ public class FavoriteFragment extends Fragment {
 
                             if (event_list.size() > 1) {
                                 view_item_pager2.setClipToPadding(false);
-                                view_item_pager2.setPadding(0, 0, 40, 0);
+                                view_item_pager2.setPadding(0, 0, 30, 0);
                                 wishMethod();
                             }
 
@@ -187,7 +188,7 @@ public class FavoriteFragment extends Fragment {
                             cat_pager.setAdapter(new AdvantureFeatureAdapter(getActivity(), planning_event_list));
                             if (planning_event_list.size() > 1) {
                                 cat_pager.setClipToPadding(false);
-                                cat_pager.setPadding(0, 0, 40, 0);
+                                cat_pager.setPadding(0, 0, 30, 0);
                                 plannerPagerMethod();
                             }
 
@@ -221,13 +222,18 @@ public class FavoriteFragment extends Fragment {
 
                             if (goint_to_event_list.size() > 1) {
                                 view_item_pager1.setClipToPadding(false);
-                                view_item_pager1.setPadding(0, 0, 40, 0);
+                                view_item_pager1.setPadding(0, 0, 30, 0);
                                 goingMethod();
                             }
                         }
+                        if (goint_to_event_list.size() != 0 || planning_event_list.size() != 0 || event_list.size() != 0) {
+                            message_linear_layout.setVisibility(View.GONE);
+                            scroll_view.setVisibility(View.VISIBLE);
+                        } else {
+                            message_linear_layout.setVisibility(View.VISIBLE);
+                            scroll_view.setVisibility(View.GONE);
+                        }
 
-                        message_linear_layout.setVisibility(View.GONE);
-                        scroll_view.setVisibility(View.VISIBLE);
 
                     }
                 } catch (JSONException e) {
@@ -262,16 +268,17 @@ public class FavoriteFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(cat_request);
     }
+
     public void plannerPagerMethod() {
         cat_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == planning_event_list.size() - 1) {
                     cat_pager.setClipToPadding(false);
-                    cat_pager.setPadding(40, 0, 0, 0);
+                    cat_pager.setPadding(30, 0, 0, 0);
                 } else {
                     cat_pager.setClipToPadding(false);
-                    cat_pager.setPadding(0, 0, 40, 0);
+                    cat_pager.setPadding(0, 0, 30, 0);
                 }
             }
 
@@ -286,16 +293,17 @@ public class FavoriteFragment extends Fragment {
             }
         });
     }
+
     public void goingMethod() {
         view_item_pager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == goint_to_event_list.size() - 1) {
                     view_item_pager1.setClipToPadding(false);
-                    view_item_pager1.setPadding(40, 0, 0, 0);
+                    view_item_pager1.setPadding(30, 0, 0, 0);
                 } else {
                     view_item_pager1.setClipToPadding(false);
-                    view_item_pager1.setPadding(0, 0, 40, 0);
+                    view_item_pager1.setPadding(0, 0, 30, 0);
                 }
             }
 
@@ -310,16 +318,17 @@ public class FavoriteFragment extends Fragment {
             }
         });
     }
+
     public void wishMethod() {
         view_item_pager2.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == event_list.size() - 1) {
                     view_item_pager2.setClipToPadding(false);
-                    view_item_pager2.setPadding(40, 0, 0, 0);
+                    view_item_pager2.setPadding(30, 0, 0, 0);
                 } else {
                     view_item_pager2.setClipToPadding(false);
-                    view_item_pager2.setPadding(0, 0, 40, 0);
+                    view_item_pager2.setPadding(0, 0, 30, 0);
                 }
             }
 
@@ -334,6 +343,7 @@ public class FavoriteFragment extends Fragment {
             }
         });
     }
+
     //---------------------------Progrees Dialog-----------------------
     public void dialogWindow() {
         dialog2 = new Dialog(getActivity());

@@ -41,6 +41,7 @@ public class Tab_Activity extends TabActivity {
     Editor mEditor;
     ProgressDialog progressDialog;
     Global global;
+    int l = 0;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -56,12 +57,19 @@ public class Tab_Activity extends TabActivity {
         tabHost = getTabHost();
 
         setTabs();
+
+/*if(global.getCurrent_tab()==0) {
+    tabHost.setCurrentTab(0);
+}else{
+    tabHost.setCurrentTab(1);
+
+}*/
         tabHost.setCurrentTab(0);
-        for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+        for (int j = 0; j < tabHost.getTabWidget().getChildCount(); j++) {
             // tabhost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.action_back);
 
 
-            ViewGroup vg = (ViewGroup) tabHost.getTabWidget().getChildAt(i);
+            ViewGroup vg = (ViewGroup) tabHost.getTabWidget().getChildAt(j);
             //vg.setBackgroundColor(Color.TRANSPARENT);
 
             //TextView tv1 = (TextView) vg.getChildAt(1);
@@ -110,7 +118,8 @@ public class Tab_Activity extends TabActivity {
         });
 
     }
-    public void callHome(){
+
+    public void callHome() {
         tabHost.setCurrentTab(0);
     }
 

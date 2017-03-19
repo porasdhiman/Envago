@@ -121,7 +121,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     ImageView orginiser_img;
     ArrayList<String> list = new ArrayList<>();
     Button purchase_btn;
-    RatingBar stars;
+    LinearLayout stars;
     String meeting_loc, meeting_lat, meeting_long, ending_loc, ending_lat, ending_long;
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
@@ -178,7 +178,9 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     ScrollView scrollview_main;
     int r_value;
     LinearLayout main_layout;
-    int total,t1;
+    int total, t1;
+    ImageView star1, star2, star3, star4, star5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -195,9 +197,14 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         //  review_layout = (LinearLayout) findViewById(R.id.review_layout);
         // review_list = (ListView) findViewById(R.id.review_list);
         // pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
-        stars = (RatingBar) findViewById(R.id.stars);
-        LayerDrawable star_draw = (LayerDrawable) stars.getProgressDrawable();
-        star_draw.getDrawable(2).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+        stars = (LinearLayout) findViewById(R.id.stars);
+        star1 = (ImageView) findViewById(R.id.star1);
+        star2 = (ImageView) findViewById(R.id.star2);
+
+        star3 = (ImageView) findViewById(R.id.star3);
+        star4 = (ImageView) findViewById(R.id.star4);
+
+        star5 = (ImageView) findViewById(R.id.star5);
         scrollview_main = (ScrollView) findViewById(R.id.scrollview_main);
         locatio_txt = (TextView) findViewById(R.id.location_txt);
         level_txt = (TextView) findViewById(R.id.levl_txt);
@@ -207,6 +214,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         places_txtView = (TextView) findViewById(R.id.places_count_txtView);
 
         desclaimer_txt_show = (TextView) findViewById(R.id.desclaimer_txt_show);
+        price_btn = (TextView) findViewById(R.id.price_btn);
         Fonts.overrideFonts1(this, locatio_txt);
         Fonts.overrideFonts1(this, meeting_txt);
 
@@ -251,7 +259,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         //rating = (TextView) findViewById(R.id.counter);
         //lower_description_txtView = (TextView) findViewById(R.id.lower_description);
         beginner_txt = (TextView) findViewById(R.id.beginner_txt);
-        price_btn = (TextView) findViewById(R.id.price_btn);
+
+
         Disclaimer_txtView = (TextView) findViewById(R.id.Disclaimer_txtView);
 
         accomodation_txtView = (ImageView) findViewById(R.id.accomodation);
@@ -309,7 +318,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(DetailsActivity.this, FullViewImage.class);
-                i.putExtra("image_url","1");
+                i.putExtra("image_url", "1");
                 startActivity(i);
             }
         });
@@ -665,14 +674,17 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
                                     admin_name.setText(cap(adminobj.getString(GlobalConstants.ADMIN_NAME)));
                                     global.setAdminName(cap(adminobj.getString(GlobalConstants.ADMIN_NAME)));
-                                    header_textview.setText(objArry.getString(GlobalConstants.EVENT_NAME));
+                                    header_textview.setText(cap(objArry.getString(GlobalConstants.EVENT_NAME)));
                                     global.setEvent_name(objArry.getString(GlobalConstants.EVENT_NAME));
                                     id = objArry.getString(GlobalConstants.USERID);
 
                                     admin_description.setText(objArry.getString("description"));
-                                    if (objArry.getString("description").length() > 150) {
+                                    if (objArry.getString("description").length() > 80) {
 
                                         more_txtView.setVisibility(View.VISIBLE);
+                                    } else if (objArry.getString("disclaimer").length() < 30) {
+                                        ViewGroup.LayoutParams params = more_txtView.getLayoutParams();
+                                        params.height = 10;
                                     }
                                     JSONArray event_users = objArry.getJSONArray("event_users");
                                     for (int i = 0; i < event_users.length(); i++) {
@@ -739,10 +751,46 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", "")));
                                     } else {*/
                                     // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
-                                    stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING)));
+                                    //stars.setRating(Float.parseFloat(objArry.getString(GlobalConstants.ADMIN_RATING)));
                                     //       }
-
-
+                                    String starValue = objArry.getString(GlobalConstants.ADMIN_RATING);
+                                    if (starValue.contains("1")) {
+                                        star1.setImageResource(R.drawable.star);
+                                        star2.setImageResource(R.drawable.star_blank);
+                                        star3.setImageResource(R.drawable.star_blank);
+                                        star4.setImageResource(R.drawable.star_blank);
+                                        star5.setImageResource(R.drawable.star_blank);
+                                    } else if (starValue.contains("2")) {
+                                        star1.setImageResource(R.drawable.star);
+                                        star2.setImageResource(R.drawable.star);
+                                        star3.setImageResource(R.drawable.star_blank);
+                                        star4.setImageResource(R.drawable.star_blank);
+                                        star5.setImageResource(R.drawable.star_blank);
+                                    } else if (starValue.contains("3")) {
+                                        star1.setImageResource(R.drawable.star);
+                                        star2.setImageResource(R.drawable.star);
+                                        star3.setImageResource(R.drawable.star);
+                                        star4.setImageResource(R.drawable.star_blank);
+                                        star5.setImageResource(R.drawable.star_blank);
+                                    } else if (starValue.contains("4")) {
+                                        star1.setImageResource(R.drawable.star);
+                                        star2.setImageResource(R.drawable.star);
+                                        star3.setImageResource(R.drawable.star);
+                                        star4.setImageResource(R.drawable.star);
+                                        star5.setImageResource(R.drawable.star_blank);
+                                    } else if (starValue.contains("5")) {
+                                        star1.setImageResource(R.drawable.star);
+                                        star2.setImageResource(R.drawable.star);
+                                        star3.setImageResource(R.drawable.star);
+                                        star4.setImageResource(R.drawable.star);
+                                        star5.setImageResource(R.drawable.star);
+                                    } else {
+                                        star1.setImageResource(R.drawable.star_blank);
+                                        star2.setImageResource(R.drawable.star_blank);
+                                        star3.setImageResource(R.drawable.star_blank);
+                                        star4.setImageResource(R.drawable.star_blank);
+                                        star5.setImageResource(R.drawable.star_blank);
+                                    }
                                     location_name_txtView.setText(objArry.getString(GlobalConstants.LOCATION));
                                     global.setEvent_loc(objArry.getString(GlobalConstants.LOCATION));
                                     if (objArry.getString(GlobalConstants.EVENT_LEVEL).equalsIgnoreCase("1")) {
@@ -795,20 +843,24 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     } else {
                                         flight.setImageResource(R.drawable.flight);
                                     }
-                                    if (objArry.getString("disclaimer").equalsIgnoreCase(null) || objArry.getString("disclaimer").equalsIgnoreCase("")|| objArry.getString("disclaimer").equalsIgnoreCase(" ")) {
+                                    if (objArry.getString("disclaimer").equalsIgnoreCase(null) || objArry.getString("disclaimer").equalsIgnoreCase("") || objArry.getString("disclaimer").equalsIgnoreCase(" ")) {
                                         desclaimer_layout.setVisibility(view.GONE);
                                     } else {
                                         desclaimer_layout.setVisibility(view.VISIBLE);
 
                                         Disclaimer_txtView.setText(objArry.getString("disclaimer"));
-                                        if (objArry.getString("disclaimer").length() > 150) {
+                                        if (objArry.getString("disclaimer").length() > 80) {
 
                                             more_dis_txtView.setVisibility(View.VISIBLE);
+                                        } else if (objArry.getString("disclaimer").length() < 30) {
+                                            ViewGroup.LayoutParams params = Disclaimer_txtView.getLayoutParams();
+                                            params.height = 10;
                                         }
                                     }
 
 
                                     price_btn.setText("$" + objArry.getString("price") + " per person");
+                                    Fonts.overrideFonts1(DetailsActivity.this, price_btn);
                                     purchase_btn.setText("Book");
                                     global.setEvent_price(objArry.getString(GlobalConstants.EVENT_PRICE));
                                     scrollview_main.smoothScrollTo(0, 0);
@@ -833,7 +885,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
 
                                     if (dateType.equalsIgnoreCase("one_time")) {
-                                         total = Integer.parseInt(objArry.getString("total_no_of_places"));
+                                        total = Integer.parseInt(objArry.getString("total_no_of_places"));
 
                                         if (Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places)) == 0) {
                                             total = eventUserList.size();
@@ -848,14 +900,14 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                             }
 
                                         }
-                                        if(dateMatchMethod(event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE))){
+                                        if (dateMatchMethod(event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE))) {
                                             purchase_btn.setText("Closed");
                                             purchase_btn.setOnClickListener(null);
                                         }
 
-                                        user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, total, eventUserList,header_textview.getText().toString()));
+                                        user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, total, eventUserList, header_textview.getText().toString()));
                                         if (eventUserList.size() > 0) {
-                                            places_txtView.setText(Integer.parseInt(event_date_array.get(0).get(GlobalConstants.remaining_places)) + "/" + objArry.getString("total_no_of_places") + " Places ");
+                                            places_txtView.setText(objArry.getString("total_no_of_places") + " Places ");
                                         } else {
                                             places_txtView.setText(String.valueOf(total) + " Places ");
                                         }
@@ -863,7 +915,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         global.setEvent_start_date(event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE));
                                         global.setEvent_end_date(event_date_array.get(0).get(GlobalConstants.EVENT_END_DATE));
                                     } else if (dateType.equalsIgnoreCase("full_season")) {
-                                        t1=Integer.parseInt(objArry.getString("event_no_of_days"));
+                                        t1 = Integer.parseInt(objArry.getString("event_no_of_days"));
                                         total = Integer.parseInt(objArry.getString("total_no_of_places")) * event_date_array.size();
                                         int l = 0, p = 0;
                                         for (int k = 0; k < event_date_array.size(); k++) {
@@ -871,7 +923,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         }
                                         if (l == 0) {
                                             total = eventUserList.size();
-                                            l=total;
+                                            l = total;
                                             purchase_btn.setText("Sold out");
                                             purchase_btn.setOnClickListener(null);
                                         } else {
@@ -883,29 +935,29 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                             }
                                         }
 
-                                        if(dateMatchMethod(event_date_array.get(event_date_array.size()-1).get(GlobalConstants.EVENT_START_DATE))){
+                                        if (dateMatchMethod(event_date_array.get(event_date_array.size() - 1).get(GlobalConstants.EVENT_START_DATE))) {
                                             purchase_btn.setText("Closed");
                                             purchase_btn.setOnClickListener(null);
                                         }
 
-                                        user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, l, eventUserList,header_textview.getText().toString()));
+                                        user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, l, eventUserList, header_textview.getText().toString()));
                                         if (eventUserList.size() > 0) {
-                                            places_txtView.setText(String.valueOf(p) + "/" + String.valueOf(total) + " Places ("+objArry.getString("total_no_of_places")+"per day)");
+                                            places_txtView.setText(/*String.valueOf(p) + "/" + String.valueOf(total) + */" Places (" + objArry.getString("total_no_of_places") + " per day)");
                                         } else {
                                             Log.e("total", String.valueOf(p));
-                                            places_txtView.setText(String.valueOf(p) + " Places ("+objArry.getString("total_no_of_places")+"per day)");
+                                            places_txtView.setText(/*String.valueOf(p) +*/ " Places (" + objArry.getString("total_no_of_places") + " per day)");
                                         }
                                         global.setEvent_start_date(event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE));
-                                        global.setEvent_end_date(event_date_array.get(event_date_array.size()-1).get(GlobalConstants.EVENT_END_DATE));
+                                        global.setEvent_end_date(event_date_array.get(event_date_array.size() - 1).get(GlobalConstants.EVENT_END_DATE));
                                     } else {
-                                         total = Integer.parseInt(objArry.getString("total_no_of_places")) * event_date_array.size();
+                                        total = Integer.parseInt(objArry.getString("total_no_of_places")) * event_date_array.size();
                                         int l = 0, p = 0;
                                         for (int k = 0; k < event_date_array.size(); k++) {
                                             l = Integer.parseInt(event_date_array.get(k).get(GlobalConstants.remaining_places)) + l;
                                         }
                                         if (l == 0) {
                                             total = eventUserList.size();
-                                            l=total;
+                                            l = total;
                                             purchase_btn.setText("Sold out");
                                             purchase_btn.setOnClickListener(null);
                                         } else {
@@ -918,12 +970,12 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                         }
 
 
-                                        user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, l, eventUserList,header_textview.getText().toString()));
+                                        user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, l, eventUserList, header_textview.getText().toString()));
                                         if (eventUserList.size() > 0) {
-                                            places_txtView.setText(String.valueOf(p) + "/" + String.valueOf(total) + " Places ("+objArry.getString("total_no_of_places")+"per day)");
+                                            places_txtView.setText(/*String.valueOf(p) + "/" + String.valueOf(total) */ " Places (" + objArry.getString("total_no_of_places") + " per event)");
                                         } else {
                                             Log.e("total", String.valueOf(p));
-                                            places_txtView.setText(String.valueOf(p) + " Places ("+objArry.getString("total_no_of_places")+"per day)");
+                                            places_txtView.setText(/*String.valueOf(p) + */" Places (" + objArry.getString("total_no_of_places") + " per event)");
                                         }
 
                                     }
@@ -1434,7 +1486,47 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                             if (status.equalsIgnoreCase("1")) {
                                 rating_dialog.dismiss();
                                 Toast.makeText(DetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
-                                stars.setRating(ratingValue);
+                                String value = String.valueOf(ratingValue);
+                                Log.e("value",value);
+
+                                if (value.contains("1")) {
+                                    star1.setImageResource(R.drawable.star);
+                                    star2.setImageResource(R.drawable.star_blank);
+                                    star3.setImageResource(R.drawable.star_blank);
+                                    star4.setImageResource(R.drawable.star_blank);
+                                    star5.setImageResource(R.drawable.star_blank);
+                                } else if (value.contains("2")) {
+                                    star1.setImageResource(R.drawable.star);
+                                    star2.setImageResource(R.drawable.star);
+                                    star3.setImageResource(R.drawable.star_blank);
+                                    star4.setImageResource(R.drawable.star_blank);
+                                    star5.setImageResource(R.drawable.star_blank);
+                                } else if (value.contains("3")) {
+                                    star1.setImageResource(R.drawable.star);
+                                    star2.setImageResource(R.drawable.star);
+                                    star3.setImageResource(R.drawable.star);
+                                    star4.setImageResource(R.drawable.star_blank);
+                                    star5.setImageResource(R.drawable.star_blank);
+                                } else if (value.contains("4")) {
+                                    star1.setImageResource(R.drawable.star);
+                                    star2.setImageResource(R.drawable.star);
+                                    star3.setImageResource(R.drawable.star);
+                                    star4.setImageResource(R.drawable.star);
+                                    star5.setImageResource(R.drawable.star_blank);
+                                } else if (value.contains("5")) {
+                                    star1.setImageResource(R.drawable.star);
+                                    star2.setImageResource(R.drawable.star);
+                                    star3.setImageResource(R.drawable.star);
+                                    star4.setImageResource(R.drawable.star);
+                                    star5.setImageResource(R.drawable.star);
+                                } else {
+                                    star1.setImageResource(R.drawable.star_blank);
+                                    star2.setImageResource(R.drawable.star_blank);
+                                    star3.setImageResource(R.drawable.star_blank);
+                                    star4.setImageResource(R.drawable.star_blank);
+                                    star5.setImageResource(R.drawable.star_blank);
+                                }
+
                             } else {
                                 Toast.makeText(DetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             }

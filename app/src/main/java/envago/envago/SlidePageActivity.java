@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -74,6 +75,7 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
     Dialog dialog, dialog2;
     Global global;
     String uriPath;
+    RelativeLayout main_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +86,8 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
         FacebookSdk.sdkInitialize(this.getApplicationContext());
 
         setContentView(R.layout.slider_pager_layout);
+        main_layout=(RelativeLayout)findViewById(R.id.main_layout) ;
+        Fonts.overrideFonts1(this,main_layout);
         sp = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         ed = sp.edit();
         // bottom_txt = (TextView) findViewById(R.id.bottom_txt);
@@ -103,19 +107,10 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
         videoView1 = (VideoView) findViewById(R.id.videoView1);
         slider_sign_up_btn = (TextView) findViewById(R.id.slider_sign_up_btn);
         slider_sign_in_layout = (LinearLayout) findViewById(R.id.slider_sign_in_layout);
-        uriPath = "android.resource://envago.envago/" + R.raw.envagowalk;
+
         slider_sign_in_layout.setOnClickListener(this);
         slider_sign_up_btn.setOnClickListener(this);
-        Uri uri = Uri.parse(uriPath);
-        videoView1.setVideoURI(uri);
-        videoView1.requestFocus();
-        videoView1.start();
-        videoView1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setLooping(true);
-            }
-        });
+
         slider_upper_txt = getResources().getStringArray(R.array.slide1_txt);
         slider_bottom_txt = getResources().getStringArray(R.array.slide1_bottom_txt);
 
@@ -163,6 +158,21 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        uriPath = "android.resource://envago.envago/" + R.raw.envagowalk;
+        Uri uri = Uri.parse(uriPath);
+        videoView1.setVideoURI(uri);
+        videoView1.requestFocus();
+        videoView1.start();
+        videoView1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+            }
+        });
+    }
 
     @Override
     public void onClick(View v) {

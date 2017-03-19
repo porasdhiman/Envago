@@ -16,7 +16,7 @@
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/cancel_txtView"
 
-            android:background="#DD1111">
+            android:background="@drawable/search_loc_back">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
 
                 android:textColor="#fff"
                 android:textColorHint="#fff"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
             </RelativeLayout>
 
         </RelativeLayout>
@@ -59,11 +59,12 @@
             android:id="@+id/cancel_txtView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="cancel"
+            android:text="Cancel"
             android:textColor="#fff"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:visibility="gone"/>
     </RelativeLayout>
     <TextView
         android:id="@+id/trending_txt"
@@ -73,7 +74,7 @@
         android:layout_marginTop="10dp"
         android:text="Trending"
         android:textColor="#000"
-        android:textSize="30sp" />
+        android:textSize="26sp" />
 
     <ListView
         android:id="@+id/search_list"
@@ -84,6 +85,7 @@
         android:paddingTop="10dp"
         android:divider="@color/White"
         android:scrollbars="none"
+
         android:paddingBottom="10dp"></ListView>
 
 

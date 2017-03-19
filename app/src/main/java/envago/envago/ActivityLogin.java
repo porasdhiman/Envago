@@ -8,7 +8,9 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -35,6 +36,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static envago.envago.R.id.mail_editText;
+
 /**
  * Created by vikas on 27-12-2016.
  */
@@ -50,10 +53,10 @@ public class ActivityLogin extends Activity implements View.OnTouchListener, Vie
     SharedPreferences.Editor ed;
     Dialog dialog2;
     Global global;
-    RelativeLayout main_layout;
-    TextView mail_error_txtView, password_error_txtView, forgot_txtView;
-    ImageView back_from_login;
 
+    TextView mail_error_txtView, password_error_txtView, forgot_txtView,email_txtView,password_txtView;
+    ImageView back_from_login;
+RelativeLayout main_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +64,15 @@ public class ActivityLogin extends Activity implements View.OnTouchListener, Vie
         global = (Global) getApplicationContext();
         sp = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         ed = sp.edit();
+        main_layout=(RelativeLayout)findViewById(R.id.main_layout);
+        Fonts.overrideFonts1(this,main_layout);
+        email_txtView = (TextView) findViewById(R.id.email_txtView);
+        password_txtView = (TextView) findViewById(R.id.password_txtView);
+        Fonts.overrideFontHeavy(this,email_txtView);
+        Fonts.overrideFontHeavy(this,password_txtView);
         show_txt = (TextView) findViewById(R.id.show_txt);
         password_editView = (EditText) findViewById(R.id.password);
-        email_editText = (EditText) findViewById(R.id.mail_editText);
+        email_editText = (EditText) findViewById(mail_editText);
         main_layout = (RelativeLayout) findViewById(R.id.main_layout);
         sign_in_layout = (LinearLayout) findViewById(R.id.sign_in_layout);
         login_button = (TextView) findViewById(R.id.login_button);
@@ -79,7 +88,48 @@ public class ActivityLogin extends Activity implements View.OnTouchListener, Vie
         password_editView.setOnTouchListener(this);
         password_editView.setOnClickListener(this);
         back_from_login.setOnClickListener(this);
+        email_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(email_editText.getText().length()>0 && password_editView.getText().length()>0){
+                    login_button.setBackgroundResource(R.drawable.red_button_back);
+                }else{
+                    login_button.setBackgroundResource(R.drawable.login_btn_back);
+
+                }
+            }
+        });
+        password_editView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(email_editText.getText().length()>0 &&  password_editView.getText().length()>0){
+                    login_button.setBackgroundResource(R.drawable.red_button_back);
+                }else{
+                    login_button.setBackgroundResource(R.drawable.login_btn_back);
+
+                }
+            }
+        });
     }
 
     @Override
@@ -87,7 +137,7 @@ public class ActivityLogin extends Activity implements View.OnTouchListener, Vie
         int id = v.getId();
 
 
-        if (id == R.id.mail_editText) {
+        if (id == mail_editText) {
             mail_error_txtView.setVisibility(View.GONE);
 
         } else if (id == R.id.password) {
@@ -105,15 +155,20 @@ public class ActivityLogin extends Activity implements View.OnTouchListener, Vie
 
                 if (email_editText.length() == 0) {
                     mail_error_txtView.setVisibility(View.VISIBLE);
-                    mail_error_txtView.setText("Please enter Email");
+                    mail_error_txtView.setText("Please enter a email address");
 
                 } else if (password_editView.length() == 0) {
                     password_error_txtView.setVisibility(View.VISIBLE);
-                    password_error_txtView.setText("Please enter Password");
+                    password_error_txtView.setText("Please enter a correct Password");
 
-                } else if (!CommonUtils.isEmailValid(email_editText.getText().toString())) {
+                }else if (password_editView.getText().length()<6) {
+                    password_error_txtView.setVisibility(View.VISIBLE);
+                    password_error_txtView.setText("Password length must be atleast 6");
+
+                }
+                else if (!CommonUtils.isEmailValid(email_editText.getText().toString())) {
                     mail_error_txtView.setVisibility(View.VISIBLE);
-                    mail_error_txtView.setText("Please enter Valid Email");
+                    mail_error_txtView.setText("Please enter a valid email address");
                 } else {
                     if (CommonUtils.getConnectivityStatus(ActivityLogin.this)) {
                         dialogWindow();
@@ -162,6 +217,8 @@ public class ActivityLogin extends Activity implements View.OnTouchListener, Vie
         }
     }
 
+
+
     private void loginMethod() {
 
 
@@ -189,7 +246,8 @@ public class ActivityLogin extends Activity implements View.OnTouchListener, Vie
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 finish();
                             } else {
-                                Toast.makeText(ActivityLogin.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                                mail_error_txtView.setVisibility(View.VISIBLE);
+                                mail_error_txtView.setText(obj.getString("msg"));
                             }
 
 

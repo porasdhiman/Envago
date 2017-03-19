@@ -30,8 +30,52 @@
             android:textColor="@color/Gray"
             android:textSize="12sp" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_below="@+id/review_list_username"
+            android:layout_toRightOf="@+id/review_user_img"
+            android:orientation="horizontal">
 
-        <RatingBar
+            <ImageView
+                android:id="@+id/star1"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/star_blank" />
+
+            <ImageView
+                android:id="@+id/star2"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="3dp"
+                android:src="@drawable/star_blank" />
+
+            <ImageView
+                android:id="@+id/star3"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="3dp"
+                android:src="@drawable/star_blank" />
+
+            <ImageView
+                android:id="@+id/star4"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="3dp"
+                android:src="@drawable/star_blank" />
+
+            <ImageView
+                android:id="@+id/star5"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="3dp"
+                android:src="@drawable/star_blank" />
+
+        </LinearLayout>
+       <!-- <RatingBar
             android:id="@+id/stars_review_list"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
@@ -48,7 +92,7 @@
             android:isIndicator="true"
             android:numStars="5"
             android:progressTint="@android:color/holo_red_light"
-            android:stepSize="1.0" />
+            android:stepSize="1.0" />-->
         <TextView
             android:id="@+id/comment"
             android:layout_width="wrap_content"

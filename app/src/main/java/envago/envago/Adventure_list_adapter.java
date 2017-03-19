@@ -124,6 +124,7 @@ public class Adventure_list_adapter extends BaseAdapter {
             holder = (Adventure_holder) view.getTag();
         }
         Fonts.overrideFonts(applicationContext, holder.main_layout);
+        Fonts.overrideFonts1(applicationContext, holder.ad_name);
         url = GlobalConstants.IMAGE_URL + images.get(i).get(GlobalConstants.EVENT_IMAGES);
         holder.ad_name.setText(images.get(i).get(GlobalConstants.EVENT_NAME));
         holder.price.setText("$" + images.get(i).get(GlobalConstants.EVENT_PRICE));

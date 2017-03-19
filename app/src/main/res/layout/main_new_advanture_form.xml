@@ -32,13 +32,14 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/make_txtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="Make your adventure"
         android:textColor="#000"
-        android:textSize="28sp" />
+        android:textSize="26sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,10 +60,11 @@
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Dates and schedules"
-                android:textColor="@color/Black"
+                android:textColor="#373737"
 
                 android:layout_toLeftOf="@+id/booking_checkBox"
                 android:layout_centerVertical="true"
+                android:gravity="center_vertical"
                 android:textSize="17sp" />
 
             <ImageView
@@ -92,9 +94,10 @@
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Details"
-                android:textColor="@color/Black"
+                android:textColor="#373737"
                 android:layout_toLeftOf="@+id/detail_checkBox"
                 android:layout_centerVertical="true"
+                android:gravity="center_vertical"
                 android:textSize="17sp" />
 
             <ImageView
@@ -126,8 +129,10 @@
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Add Photo"
-                android:textColor="@color/Black"
+                android:textColor="#373737"
                 android:layout_toLeftOf="@+id/add_photo_checkBox"
+                android:gravity="center_vertical"
+
                 android:layout_centerVertical="true"
                 android:textSize="17sp" />
 
@@ -159,9 +164,11 @@
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:text="Route"
-                android:textColor="@color/Black"
+                android:textColor="#373737"
                 android:layout_toLeftOf="@+id/route_checkbox"
                 android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+
                 android:textSize="17sp" />
 
             <ImageView
@@ -195,7 +202,7 @@
                 android:gravity="center"
 
                 android:textAllCaps="false"
-
+android:background="@drawable/gray_boarder_button"
                 android:textSize="14sp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"

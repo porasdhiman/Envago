@@ -85,6 +85,7 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
     SharedPreferences sp;
     SharedPreferences.Editor ed;
     String[] catArray = {"Select", "Air", "Earth", "Water", "Rock &amp; Ice ", "Go Volunteer"};
+    TextView name_txtView,diff_txtView,cat_txtView,meeting_txtView,meeting_time_txtView,adventure_txtView,place_txtView,prcie_txtView,whts_txtView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,10 +130,10 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if (position == 0) {
-                    ((TextView) parent.getChildAt(0)).setTextColor(Color.GRAY);
+                    ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.LightGrey));
                     ((TextView) parent.getChildAt(0)).setTextSize(14);
                 } else {
-                    ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+                    ((TextView) parent.getChildAt(0)).setTextColor(Color.parseColor("#373737"));
                     ((TextView) parent.getChildAt(0)).setTextSize(14);
                     global.setEvent_cat_id(String.valueOf(position));
                     catgory = cat_editText.getSelectedItem().toString();
@@ -175,6 +176,27 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
     }
 
     public void init() {
+
+
+        name_txtView=(TextView)findViewById(R.id.name_txtView);
+        diff_txtView=(TextView)findViewById(R.id.diff_txtView);
+        cat_txtView=(TextView)findViewById(R.id.cat_txtView);
+        meeting_txtView=(TextView)findViewById(R.id.meeting_txtView);
+        meeting_time_txtView=(TextView)findViewById(R.id.meeting_time_txtView);
+        adventure_txtView=(TextView)findViewById(R.id.adventure_txtView);
+        place_txtView=(TextView)findViewById(R.id.place_txtView);
+        prcie_txtView=(TextView)findViewById(R.id.prcie_txtView);
+        whts_txtView=(TextView)findViewById(R.id.whts_txtView);
+
+        Fonts.overrideFontHeavy(CreateDetailActivity.this,name_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this,diff_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this,cat_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this,meeting_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this,meeting_time_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this,adventure_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this,place_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this,whts_txtView);
+
         seekBar = (SeekBar) findViewById(R.id.seekBar);
         name_editText = (EditText) findViewById(R.id.name_editText);
         meeting_time_editText = (TextView) findViewById(R.id.meeting_time_editText);
@@ -234,7 +256,7 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
             desc_editText.setText(sp.getString(GlobalConstants.EVENT_DESCRIPTION, ""));
         }
         if (!sp.getString(GlobalConstants.EVENT_DISCLAIMER, "").equalsIgnoreCase("")) {
-            disclaimer_editText.setText("$" + sp.getString(GlobalConstants.EVENT_DISCLAIMER, ""));
+            disclaimer_editText.setText(sp.getString(GlobalConstants.EVENT_DISCLAIMER, ""));
         }
         if (!sp.getString(GlobalConstants.EVENT_CAT_NAME, "").equalsIgnoreCase("")) {
             selectSpinnerValue(cat_editText, sp.getString(GlobalConstants.EVENT_CAT_NAME, ""));
@@ -385,7 +407,7 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                 break;
             case R.id.submit_button:
                 if (name_editText.getText().toString().length() == 0) {
-                    name_error_txtView.setText("Please enter name of advaenture");
+                    name_error_txtView.setText("Please enter name of adventure");
                     name_error_txtView.setVisibility(View.VISIBLE);
                 } else if (meeting_time_editText.getText().toString().equalsIgnoreCase("Please Select")||meeting_time_editText.getText().toString().length()==0) {
                     meeting_time_error_txtView.setText("Please enter time");

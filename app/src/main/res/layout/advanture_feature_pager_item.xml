@@ -72,8 +72,8 @@ android:padding="8dp"
             android:layout_toLeftOf="@+id/view_price_txt"
             android:text="A Time Travel Postcard"
             android:singleLine="true"
-            android:textColor="@color/Black"
-            android:textSize="17sp"
+            android:textColor="#373737"
+            android:textSize="16sp"
             android:layout_marginRight="30dp"
             android:textAllCaps="true"/>
 

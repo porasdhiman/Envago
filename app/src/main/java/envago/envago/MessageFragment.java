@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -131,8 +132,9 @@ public class MessageFragment extends Activity implements OnClickListener {
                     global.setListing(Demolisting);
                     chatArrayAdapter = new ChatArrayAdapter(MessageFragment.this, global.getListing());
                     listView.setAdapter(chatArrayAdapter);
+
                     listView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-                    listView.setAdapter(chatArrayAdapter);
+
 
                     // to scroll the list view to bottom on data change
                     chatArrayAdapter.registerDataSetObserver(new DataSetObserver() {
@@ -142,8 +144,11 @@ public class MessageFragment extends Activity implements OnClickListener {
                             listView.setSelection(chatArrayAdapter.getCount() - 1);
                         }
                     });
+                    chatArrayAdapter.notifyDataSetChanged();
                     chatText.setText("");
                     get_message();
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(buttonSend.getWindowToken(), 0);
                 }
             }
         });
@@ -192,6 +197,7 @@ public class MessageFragment extends Activity implements OnClickListener {
         public void onReceive(Context context, Intent intent) {
             //typing_txt.setVisibility(View.VISIBLE);
             i = 1;
+            Demolisting.clear();
             get_list();
             // do other stuff here
         }
@@ -272,6 +278,7 @@ public class MessageFragment extends Activity implements OnClickListener {
                             chatArrayAdapter = new ChatArrayAdapter(MessageFragment.this, global.getListing());
 
                             listView.setAdapter(chatArrayAdapter);
+
                             listView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 
 
@@ -283,8 +290,12 @@ public class MessageFragment extends Activity implements OnClickListener {
                                     listView.setSelection(chatArrayAdapter.getCount() - 1);
                                 }
                             });
+                            chatArrayAdapter.notifyDataSetChanged();
                             i = 0;
                             //typing_txt.setVisibility(View.GONE);
+
+
+
                         }
 
                     }
@@ -357,7 +368,7 @@ public class MessageFragment extends Activity implements OnClickListener {
 
                     if (res.equalsIgnoreCase("1")) {
 
-                        Demolisting.clear();
+
 
 
                     }

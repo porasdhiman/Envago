@@ -7,9 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -72,6 +70,7 @@ public class AboutPlannerActivity extends Activity {
     TextView no_review_txt, About_me_txt;
     ScrollView main_scrollview;
     LinearLayout main_layout;
+    ImageView star1, star2, star3, star4, star5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,19 +78,27 @@ public class AboutPlannerActivity extends Activity {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         setContentView(R.layout.about_planner_layout);
         global = (Global) getApplicationContext();
-        main_layout=(LinearLayout)findViewById(R.id.main_layout);
-        Fonts.overrideFonts(this,main_layout);
+        main_layout = (LinearLayout) findViewById(R.id.main_layout);
+        Fonts.overrideFonts(this, main_layout);
         review_layout = (RelativeLayout) findViewById(R.id.review_layout);
         cancel_button = (ImageView) findViewById(R.id.cancel_button);
         admin_name = (TextView) findViewById(R.id.admin_name);
+        Fonts.overrideFonts1(this, admin_name);
         main_scrollview = (ScrollView) findViewById(R.id.main_scrollview);
         textWithUserName = (TextView) findViewById(R.id.textWithUserName);
+        Fonts.overrideFonts1(this, textWithUserName);
         star = (TextView) findViewById(stars);
-        star.setVisibility(View.GONE);
+        //star.setVisibility(View.GONE);
         admin_image = (ImageView) findViewById(R.id.admin_img);
-        stars_review_list = (RatingBar) findViewById(R.id.stars_review_list);
-        LayerDrawable star_draw = (LayerDrawable)stars_review_list.getProgressDrawable();
-        star_draw.getDrawable(2).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+       // stars_review_list = (RatingBar) findViewById(R.id.stars_review_list);
+        star1 = (ImageView) findViewById(R.id.star1);
+        star2 = (ImageView)findViewById(R.id.star2);
+
+       star3 = (ImageView)findViewById(R.id.star3);
+        star4 = (ImageView)findViewById(R.id.star4);
+
+        star5 = (ImageView)findViewById(R.id.star5);
+
         review_user_name = (TextView) findViewById(R.id.review_list_username);
         review_user_img = (ImageView) findViewById(R.id.review_user_img);
         show_all_txtView = (TextView) findViewById(R.id.show_all_txtView);
@@ -105,6 +112,8 @@ public class AboutPlannerActivity extends Activity {
         });
         main_list = (ListView) findViewById(R.id.main_list);
         no_review_txt = (TextView) findViewById(R.id.no_review_txt);
+        Fonts.overrideFonts1(this, no_review_txt);
+        Fonts.overrideFonts1(this, star);
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
                 .showStubImage(0)        //	Display Stub Image
@@ -217,8 +226,12 @@ public class AboutPlannerActivity extends Activity {
                                         }
                                     });
                                     global.setReviewList(reviewList);
-                                    star.setVisibility(View.GONE);
-                                    // star.setText(reviewList.size()+" Reviews");
+                                    if (reviewList.size() == 0) {
+                                        star.setText("Reviews");
+                                    } else {
+                                        star.setText(reviewList.size() + " Reviews");
+                                    }
+
                                     no_review_txt.setText(reviewList.size() + " Reviews");
                                     review_layout.setVisibility(View.VISIBLE);
                                     review_user_name.setText(cap(reviewList.get(0).get("username")));
@@ -229,7 +242,46 @@ public class AboutPlannerActivity extends Activity {
                                             stars_review_list.setRating(Float.parseFloat(reviewList.get(0).get("rating").split("0")[0].replace(".", "")));
                                         } else {*/
                                     // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
-                                    stars_review_list.setRating(Float.parseFloat(reviewList.get(0).get("rating")));
+                                   // stars_review_list.setRating(Float.parseFloat(reviewList.get(0).get("rating")));
+                                    Log.e("value",reviewList.get(0).get("rating"));
+                                    String value=reviewList.get(0).get("rating");
+                                    if (value.contains("1")) {
+                                        star1.setImageResource(R.drawable.star);
+                                        star2.setImageResource(R.drawable.star_blank);
+                                        star3.setImageResource(R.drawable.star_blank);
+                                        star4.setImageResource(R.drawable.star_blank);
+                                        star5.setImageResource(R.drawable.star_blank);
+                                    } else if (value.contains("2")) {
+                                        star1.setImageResource(R.drawable.star);
+                                        star2.setImageResource(R.drawable.star);
+                                        star3.setImageResource(R.drawable.star_blank);
+                                        star4.setImageResource(R.drawable.star_blank);
+                                        star5.setImageResource(R.drawable.star_blank);
+                                    } else if (value.contains("3")) {
+                                        star1.setImageResource(R.drawable.star);
+                                        star2.setImageResource(R.drawable.star);
+                                        star3.setImageResource(R.drawable.star);
+                                        star4.setImageResource(R.drawable.star_blank);
+                                        star5.setImageResource(R.drawable.star_blank);
+                                    } else if (value.contains("4")) {
+                                        star1.setImageResource(R.drawable.star);
+                                        star2.setImageResource(R.drawable.star);
+                                        star3.setImageResource(R.drawable.star);
+                                        star4.setImageResource(R.drawable.star);
+                                        star5.setImageResource(R.drawable.star_blank);
+                                    } else if (value.contains("5")) {
+                                        star1.setImageResource(R.drawable.star);
+                                        star2.setImageResource(R.drawable.star);
+                                        star3.setImageResource(R.drawable.star);
+                                        star4.setImageResource(R.drawable.star);
+                                        star5.setImageResource(R.drawable.star);
+                                    }else{
+                                       star1.setImageResource(R.drawable.star_blank);
+                                        star2.setImageResource(R.drawable.star_blank);
+                                        star3.setImageResource(R.drawable.star_blank);
+                                        star4.setImageResource(R.drawable.star_blank);
+                                        star5.setImageResource(R.drawable.star_blank);
+                                    }
                                     //}
                                     TextDrawable drawable = TextDrawable.builder()
                                             .buildRound(review_user_name.getText().toString().substring(0, 1).toUpperCase(), Color.parseColor("#d1d1d1"));
@@ -266,7 +318,7 @@ public class AboutPlannerActivity extends Activity {
                                     main_list.setAdapter(new AboutEventAdapter(AboutPlannerActivity.this, eventList));
                                     CommonUtils.getListViewSize(main_list);
 
-                                }else{
+                                } else {
                                     textWithUserName.setVisibility(View.GONE);
                                 }
                                 main_scrollview.smoothScrollTo(0, 0);

@@ -84,6 +84,7 @@ public class UserFragment extends Fragment {
     LoginButton Login_TV;
     RelativeLayout logout_rel;
     String token;
+    TextView share_txtView;
 
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -107,8 +108,10 @@ public class UserFragment extends Fragment {
         Login_TV = (LoginButton) v.findViewById(R.id.Fb_Login);
         Login_TV.setReadPermissions(Arrays.asList("public_profile, email"));
         fbMethod();
+
         main_layout = (LinearLayout) v.findViewById(R.id.main_layout);
         Fonts.overrideFonts(getActivity(), main_layout);
+        share_txtView = (TextView) v.findViewById(R.id.share_txtView);
         profilepic = (ImageView) v.findViewById(R.id.profile_img);
         settings = (TextView) v.findViewById(R.id.settings_txtView);
         pricing_layout = (TextView) v.findViewById(R.id.pricing_policy_txtView);
@@ -144,11 +147,20 @@ public class UserFragment extends Fragment {
 
             }
         });
-
+        share_txtView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Hey, download this app!");
+                startActivity(shareIntent);
+            }
+        });
         profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // dailog();
+                dailog();
             }
         });
         settings.setOnClickListener(new View.OnClickListener() {
@@ -203,7 +215,7 @@ public class UserFragment extends Fragment {
             profile_api();
         } else {
 
-            username.setText(preferences.getString(GlobalConstants.USERNAME, ""));
+            username.setText(cap(preferences.getString(GlobalConstants.USERNAME, "")));
             //  String img_url = preferences.getString(GlobalConstants.IMAGE, "");
             if (preferences.getString(GlobalConstants.IMAGE, "").length() == 0) {
 
@@ -370,7 +382,7 @@ public class UserFragment extends Fragment {
                         }
                         editor.commit();
 
-                        username.setText(preferences.getString(GlobalConstants.USERNAME, ""));
+                        username.setText(cap(preferences.getString(GlobalConstants.USERNAME, "")));
                         TextDrawable drawable = TextDrawable.builder()
                                 .buildRound(username.getText().toString().substring(0, 1).toUpperCase(), Color.parseColor("#F94444"));
                         if (img_url.length() == 0) {
@@ -419,6 +431,12 @@ public class UserFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(request);
 
+    }
+
+    public String cap(String name) {
+        StringBuilder sb = new StringBuilder(name);
+        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+        return sb.toString();
     }
 
     public void dialogWindow() {
@@ -478,7 +496,7 @@ public class UserFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-       // profilepic.setImageBitmap(thumbnail);
+        // profilepic.setImageBitmap(thumbnail);
         Uri uri = getImageUri(getActivity(), thumbnail);
         try {
             selectedImagePath = getFilePath(getActivity(), uri);

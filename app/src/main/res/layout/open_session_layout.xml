@@ -66,15 +66,15 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/Black"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:background="@null"
 
                     android:text="1 day adventure"/>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/Gray"
-                    android:layout_marginTop="5dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/LightGrey"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"/>
             </LinearLayout>
@@ -90,11 +90,11 @@
                     android:id="@+id/session_spinner"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:textColor="#373737"
                     android:text="Start Date"
 
-                    ></TextView>
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"></TextView>
                 <TextView
                     android:id="@+id/year_spinner"
                     android:layout_width="140dp"

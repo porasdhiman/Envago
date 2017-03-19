@@ -40,13 +40,16 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/name_txtView"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="NAME OF ADVENTURE"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="13sp"
+                android:textColorHint="@color/mainTextColor"
+                 />
 
             <EditText
                 android:id="@+id/name_editText"
@@ -59,7 +62,8 @@
                 android:background="@null"
                 android:hint="Name"
                 android:inputType="text"
-                android:textColor="@color/Black"
+                android:textColorHint="@color/LightGrey"
+                android:textColor="#373737"
                 android:textSize="14sp" />
 
             <TextView
@@ -86,14 +90,16 @@
                 android:background="@color/LightGrey" />
 
             <TextView
+                android:id="@+id/diff_txtView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="Difficulty"
                 android:textAllCaps="true"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="13sp"
+                android:textColorHint="@color/mainTextColor"
+                 />
 
             <SeekBar
                 android:id="@+id/seekBar"
@@ -133,7 +139,7 @@
                     android:gravity="left"
                     android:paddingLeft="3dp"
                     android:text="Easy"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="65dp"
@@ -142,7 +148,7 @@
                     android:layout_weight="1"
                     android:gravity="left"
                     android:text="Moderate"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="65dp"
@@ -151,7 +157,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="Difficult"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="65dp"
@@ -159,7 +165,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="Extreme"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
             </LinearLayout>
 
             <View
@@ -173,13 +179,15 @@
                 android:background="@color/LightGrey" />
 
             <TextView
+                android:id="@+id/cat_txtView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="CATEGORY"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="13sp"
+                android:textColorHint="@color/mainTextColor"
+                />
 
             <Spinner
                 android:id="@+id/cat_editText"
@@ -219,13 +227,15 @@
 
 
             <TextView
+                android:id="@+id/meeting_txtView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="MEETING POINT"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="13sp"
+                android:textColorHint="@color/mainTextColor"
+               />
 
             <AutoCompleteTextView
                 android:id="@+id/meeting_editText"
@@ -239,7 +249,8 @@
                 android:hint="Please Select"
                 android:inputType="textEmailAddress"
 
-                android:textColor="@color/Black"
+                android:textColorHint="@color/LightGrey"
+                android:textColor="#373737"
                 android:textSize="14sp" />
 
             <TextView
@@ -266,13 +277,15 @@
                 android:background="@color/LightGrey" />
 
             <TextView
+                android:id="@+id/meeting_time_txtView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="MEETING TIME"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="13sp"
+                android:textColorHint="@color/mainTextColor"
+                 />
 
             <TextView
                 android:id="@+id/meeting_time_editText"
@@ -285,7 +298,8 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="Please Select"
-                android:textColor="@color/Black"
+                android:textColorHint="@color/LightGrey"
+                android:textColor="#373737"
 
                 android:textSize="14sp" />
 
@@ -313,13 +327,15 @@
                 android:background="@color/LightGrey" />
 
             <TextView
+                android:id="@+id/adventure_txtView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="ADVENTURE DESCRIPTION"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="13sp"
+                android:textColorHint="@color/mainTextColor"
+             />
 
             <TextView
                 android:id="@+id/desc_editText"
@@ -335,7 +351,8 @@
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
 
-                android:textColor="@color/Black"
+                android:textColorHint="@color/LightGrey"
+                android:textColor="#373737"
                 android:textSize="14sp" />
 
             <TextView
@@ -362,13 +379,14 @@
                 android:background="@color/LightGrey" />
 
             <TextView
+                android:id="@+id/place_txtView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="PLACES/EVENT"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="13sp"
+                android:textColorHint="@color/mainTextColor" />
 
             <EditText
                 android:id="@+id/place_editText"
@@ -381,7 +399,8 @@
                 android:background="@null"
                 android:hint="Please Select"
                 android:inputType="number"
-                android:textColor="@color/Black"
+                android:textColorHint="@color/LightGrey"
+                android:textColor="#373737"
 
                 android:textSize="14sp" />
 
@@ -409,13 +428,14 @@
                 android:background="@color/LightGrey" />
 
             <TextView
+                android:id="@+id/prcie_txtView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="PRICE"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="13sp"
+                android:textColorHint="@color/mainTextColor" />
 
             <EditText
                 android:id="@+id/pricing_editText"
@@ -429,7 +449,8 @@
                 android:hint="$"
 
                 android:inputType="number"
-                android:textColor="@color/Black"
+                android:textColorHint="@color/LightGrey"
+                android:textColor="#373737"
                 android:textSize="14sp" />
 
             <TextView
@@ -501,13 +522,15 @@
                  android:background="@android:color/darker_gray" />-->
 
             <TextView
+                android:id="@+id/disclaimer_txtView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="Disclaimer"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textAllCaps="true"
+                android:textColorHint="@color/mainTextColor" />
 
             <TextView
                 android:id="@+id/disclaimer_editText"
@@ -520,8 +543,9 @@
                 android:background="@null"
                 android:hint="Write something"
                 android:inputType="textEmailAddress"
-android:textAllCaps="true"
-                android:textColor="@color/Black"
+
+                android:textColorHint="@color/LightGrey"
+                android:textColor="#373737"
                 android:textSize="14sp" />
 
             <TextView
@@ -548,13 +572,15 @@ android:textAllCaps="true"
                 android:background="@color/LightGrey" />
 
             <TextView
+                android:id="@+id/whts_txtView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="WHAT'S INCLUDED"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textAllCaps="true"
+                android:textColorHint="@color/mainTextColor"/>
 
             <TextView
                 android:id="@+id/whts_editText"
@@ -567,7 +593,7 @@ android:textAllCaps="true"
                 android:background="@null"
                 android:hint="Please select"
                 android:inputType="textEmailAddress"
-
+                android:textColorHint="@color/LightGrey"
                 android:textColor="@color/Black"
                 android:textSize="14sp" />
 

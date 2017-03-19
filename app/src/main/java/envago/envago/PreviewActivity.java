@@ -9,9 +9,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -40,7 +38,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -126,7 +123,7 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
     ImageView orginiser_img;
     ArrayList<String> list = new ArrayList<>();
     Button purchase_btn;
-    RatingBar stars;
+    LinearLayout stars;
     String meeting_loc, meeting_lat, meeting_long, ending_loc, ending_lat, ending_long;
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
@@ -182,6 +179,8 @@ public class PreviewActivity extends FragmentActivity implements View.OnClickLis
     SharedPreferences.Editor ed;
 ImageView back_button_create;
     TextView header_title;
+    ImageView star1, star2, star3, star4, star5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -210,10 +209,16 @@ ImageView back_button_create;
         // review_layout = (LinearLayout) findViewById(R.id.review_layout);
         // review_list = (ListView) findViewById(R.id.review_list);
         //pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
-        stars = (RatingBar) findViewById(R.id.stars);
-        LayerDrawable star = (LayerDrawable) stars.getProgressDrawable();
-        star.getDrawable(2).setColorFilter(getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+        stars = (LinearLayout) findViewById(R.id.stars);
 
+
+        star1 = (ImageView)findViewById(R.id.star1);
+        star2 = (ImageView)findViewById(R.id.star2);
+
+        star3 = (ImageView) findViewById(R.id.star3);
+        star4 = (ImageView) findViewById(R.id.star4);
+
+        star5 = (ImageView)findViewById(R.id.star5);
         stars.setOnTouchListener(null);
         more_txtView = (TextView) findViewById(R.id.more_txtView);
         more_dis_txtView = (TextView) findViewById(R.id.more_dis_txtView);
@@ -377,10 +382,10 @@ ImageView back_button_create;
         //--------------------------------end-map-location-variable---------------------------------------------
 
 
-        admin_name.setText(preferences.getString(GlobalConstants.USERNAME, ""));
-        header_textview.setText(sp.getString(GlobalConstants.EVENT_NAME, ""));
+        admin_name.setText(cap(preferences.getString(GlobalConstants.USERNAME, "")));
+        header_textview.setText(cap(sp.getString(GlobalConstants.EVENT_NAME, "")));
 
-        header_title.setText(sp.getString(GlobalConstants.EVENT_NAME, ""));
+        header_title.setText(cap(sp.getString(GlobalConstants.EVENT_NAME, "")));
         admin_description.setText(sp.getString(GlobalConstants.EVENT_DESCRIPTION, ""));
 
         if (sp.getString(GlobalConstants.EVENT_DESCRIPTION, "").length() > 200) {
@@ -1038,7 +1043,7 @@ ImageView back_button_create;
                     ed.clear();
                     ed.commit();
 
-                    Intent i = new Intent(PreviewActivity.this, Tab_Activity.class);
+                    Intent i = new Intent(PreviewActivity.this, AfterCreateEventActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
 

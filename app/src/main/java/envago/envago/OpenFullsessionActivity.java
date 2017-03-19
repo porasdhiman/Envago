@@ -131,7 +131,7 @@ MaterialCalendarView calendarView;
             return null;
         }
     };
-    String start_date, end_date;
+    String start_date="", end_date="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,6 +211,7 @@ MaterialCalendarView calendarView;
         back_button_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 finish();
             }
         });
@@ -230,13 +231,15 @@ MaterialCalendarView calendarView;
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                global.getBookdateArray().get(0).put(GlobalConstants.EVENT_START_DATE,start_date);
-                global.getBookdateArray().get(0).put(GlobalConstants.EVENT_END_DATE,end_date);
-                Intent i = new Intent(OpenFullsessionActivity.this, ConfirmDetailsActivity.class);
-                i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
-                i.putExtra(GlobalConstants.remaining_places,global.getBookdateArray().get(0).get(GlobalConstants.NUMBER_OF_DAY));
-                i.putExtra("pos", String.valueOf(0));
-                startActivity(i);
+                if(!start_date.equalsIgnoreCase("") ) {
+                    global.getBookdateArray().get(0).put(GlobalConstants.EVENT_START_DATE, start_date);
+                    global.getBookdateArray().get(0).put(GlobalConstants.EVENT_END_DATE, end_date);
+                    Intent i = new Intent(OpenFullsessionActivity.this, ConfirmDetailsActivity.class);
+                    i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
+                    i.putExtra(GlobalConstants.remaining_places, global.getBookdateArray().get(0).get(GlobalConstants.NUMBER_OF_DAY));
+                    i.putExtra("pos", String.valueOf(0));
+                    startActivity(i);
+                }
             }
         });
 
@@ -296,14 +299,14 @@ MaterialCalendarView calendarView;
             String date = start_date.split("-")[2];
             start_date = year + "-" + months + "-" + date;
             Log.e("start date", start_date);
-            global.setEvent_start_date(start_date);
+           // global.setEvent_start_date(start_date);
             end_date = list.get(valye - 1).toString().substring(12, list.get(valye - 1).toString().length() - 1);
             String year_end = end_date.split("-")[0];
             String months_end = String.valueOf(Integer.parseInt(end_date.split("-")[1]) + 1);
             String date_end = end_date.split("-")[2];
             end_date = year_end + "-" + months_end + "-" + date_end;
             Log.e("end date", end_date);
-            global.setEvent_end_date(end_date);
+           // global.setEvent_end_date(end_date);
 
             if (date1 == null) {
                 return "No Selection";
@@ -330,14 +333,14 @@ MaterialCalendarView calendarView;
             String date = start_date.split("-")[2];
             start_date = year + "-" + months + "-" + date;
             Log.e("start date", start_date);
-            global.setEvent_start_date(start_date);
+           // global.setEvent_start_date(start_date);
             end_date = list.get(valye - 1).toString().substring(12, list.get(valye - 1).toString().length() - 1);
             String year_end = end_date.split("-")[0];
             String months_end = String.valueOf(Integer.parseInt(end_date.split("-")[1]) + 1);
             String date_end = end_date.split("-")[2];
             end_date = year_end + "-" + months_end + "-" + date_end;
             Log.e("end date", end_date);
-            global.setEvent_end_date(end_date);
+            //global.setEvent_end_date(end_date);
 
             if (date1 == null) {
                 return "No Selection";

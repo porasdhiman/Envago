@@ -15,7 +15,7 @@ import java.util.HashMap;
  * Created by jhang on 9/27/2016.
  */
 public class Global extends Application {
-
+public int current_tab=0;
     public String getDeviceToken() {
         return deviceToken;
     }
@@ -28,6 +28,14 @@ public class Global extends Application {
 
     public String getLat() {
         return Lat;
+    }
+
+    public int getCurrent_tab() {
+        return current_tab;
+    }
+
+    public void setCurrent_tab(int current_tab) {
+        this.current_tab = current_tab;
     }
 
     public void setLat(String lat) {

@@ -3,8 +3,6 @@ package envago.envago;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -83,10 +81,20 @@ public class FeaturedPlannerAdapter extends BaseAdapter {
             holder.planner_img = (ImageView) convertView.findViewById(R.id.planer_img);
             holder.Planner_name = (TextView) convertView.findViewById(R.id.planner_txt);
             holder.planner_address = (TextView) convertView.findViewById(R.id.planner_address_txt);
-            holder.planer_stars = (RatingBar) convertView.findViewById(R.id.planer_stars);
+            // holder.planer_stars = (RatingBar) convertView.findViewById(R.id.planer_stars);
             holder.main_layout = (RelativeLayout) convertView.findViewById(R.id.main_layout);
-            LayerDrawable stars = (LayerDrawable) holder.planer_stars.getProgressDrawable();
-            stars.getDrawable(2).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
+            holder.star1 = (ImageView) convertView.findViewById(R.id.star1);
+            holder.star2 = (ImageView) convertView.findViewById(R.id.star2);
+
+            holder.star3 = (ImageView) convertView.findViewById(R.id.star3);
+            holder.star4 = (ImageView) convertView.findViewById(R.id.star4);
+
+            holder.star5 = (ImageView) convertView.findViewById(R.id.star5);
+
+
+
+           /* LayerDrawable stars = (LayerDrawable) holder.planer_stars.getProgressDrawable();
+            stars.getDrawable(2).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);*/
           /*  stars.getDrawable(0).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);
             stars.getDrawable(1).setColorFilter(context.getResources().getColor(R.color.textcolor), PorterDuff.Mode.SRC_ATOP);*/
             convertView.setTag(holder);
@@ -96,15 +104,55 @@ public class FeaturedPlannerAdapter extends BaseAdapter {
             holder = (Holder) convertView.getTag();
         }
 
-Fonts.overrideFonts(context,holder.main_layout);
+        Fonts.overrideFonts(context, holder.main_layout);
+        Fonts.overrideFonts1(context, holder.Planner_name);
+
             /*if (list.get(position).get("rating").contains(".")) {
                 // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
                 holder.planer_stars.setRating(Float.parseFloat(list.get(position).get("rating").split("0")[1].replace(".", "")));
             } else {*/
         // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
-        holder.planer_stars.setRating(Float.parseFloat(list.get(position).get("rating")));
+        //  holder.planer_stars.setRating(Float.parseFloat(list.get(position).get("rating")));
         //}
 
+
+        if (list.get(position).get("rating").equalsIgnoreCase("1.00")) {
+            holder.star1.setImageResource(R.drawable.star);
+            holder.star2.setImageResource(R.drawable.star_blank);
+            holder.star3.setImageResource(R.drawable.star_blank);
+            holder.star4.setImageResource(R.drawable.star_blank);
+            holder.star5.setImageResource(R.drawable.star_blank);
+        } else if (list.get(position).get("rating").equalsIgnoreCase("2.00")) {
+            holder.star1.setImageResource(R.drawable.star);
+            holder.star2.setImageResource(R.drawable.star);
+            holder.star3.setImageResource(R.drawable.star_blank);
+            holder.star4.setImageResource(R.drawable.star_blank);
+            holder.star5.setImageResource(R.drawable.star_blank);
+        } else if (list.get(position).get("rating").equalsIgnoreCase("3.00")) {
+            holder.star1.setImageResource(R.drawable.star);
+            holder.star2.setImageResource(R.drawable.star);
+            holder.star3.setImageResource(R.drawable.star);
+            holder.star4.setImageResource(R.drawable.star_blank);
+            holder.star5.setImageResource(R.drawable.star_blank);
+        } else if (list.get(position).get("rating").equalsIgnoreCase("4.00")) {
+            holder.star1.setImageResource(R.drawable.star);
+            holder.star2.setImageResource(R.drawable.star);
+            holder.star3.setImageResource(R.drawable.star);
+            holder.star4.setImageResource(R.drawable.star);
+            holder.star5.setImageResource(R.drawable.star_blank);
+        } else if (list.get(position).get("rating").equalsIgnoreCase("5.00")) {
+            holder.star1.setImageResource(R.drawable.star);
+            holder.star2.setImageResource(R.drawable.star);
+            holder.star3.setImageResource(R.drawable.star);
+            holder.star4.setImageResource(R.drawable.star);
+            holder.star5.setImageResource(R.drawable.star);
+        }else{
+            holder.star1.setImageResource(R.drawable.star_blank);
+            holder.star2.setImageResource(R.drawable.star_blank);
+            holder.star3.setImageResource(R.drawable.star_blank);
+            holder.star4.setImageResource(R.drawable.star_blank);
+            holder.star5.setImageResource(R.drawable.star_blank);
+        }
         url = GlobalConstants.IMAGE_URL + list.get(position).get(GlobalConstants.IMAGE);
         Log.e("urle", url);
         holder.Planner_name.setText(cap(list.get(position).get(GlobalConstants.USERNAME)));
@@ -116,7 +164,7 @@ Fonts.overrideFonts(context,holder.main_layout);
                 .buildRect(holder.Planner_name.getText().toString().substring(0, 1), color1);
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
-            Picasso.with(context).load(url).placeholder(drawable2).centerCrop().resize(80,80).into(holder.planner_img);
+            Picasso.with(context).load(url).placeholder(drawable2).centerCrop().resize(80, 80).into(holder.planner_img);
            /* imageLoader.displayImage(url, holder.planner_img, options,
                     new SimpleImageLoadingListener() {
                         @Override
@@ -138,6 +186,7 @@ Fonts.overrideFonts(context,holder.main_layout);
         TextView Planner_name, planner_address;
         RatingBar planer_stars;
         RelativeLayout main_layout;
+        ImageView star1, star2, star3, star4, star5;
     }
 
     private void initImageLoader() {

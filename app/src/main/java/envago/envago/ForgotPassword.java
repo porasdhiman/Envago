@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,15 +41,18 @@ public class ForgotPassword extends Activity {
     Button sumbit_mail;
     EditText email;
     Dialog dialog2;
-    TextView mail_error_txtView;
+    TextView mail_error_txtView,email_txtView;
 ImageView back;
-
+RelativeLayout main_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.forgot_password);
-
+        main_layout=(RelativeLayout)findViewById(R.id.main_layout);
+        Fonts.overrideFonts(this,main_layout);
+        email_txtView=(TextView)findViewById(R.id.mail_txtView);
+        Fonts.overrideFontHeavy(this,email_txtView);
         sumbit_mail = (Button) findViewById(R.id.forget_sumbit);
         email = (EditText) findViewById(R.id.mail_forgot);
         mail_error_txtView=(TextView)findViewById(R.id.mail_error_txtView);
@@ -79,6 +85,22 @@ ImageView back;
                 return false;
             }
         });
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                sumbit_mail.setBackgroundResource(R.drawable.red_button_back);
+            }
+        });
     }
 
     //-------------------------------Forgot-Api--------------
@@ -103,11 +125,12 @@ ImageView back;
 
 
                                 finish();
-                                Toast.makeText(ForgotPassword.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ForgotPassword.this, obj.getString("A resent link has been sent to your email"), Toast.LENGTH_SHORT).show();
 
 
                             } else {
-                                Toast.makeText(ForgotPassword.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                                mail_error_txtView.setVisibility(View.VISIBLE);
+                                mail_error_txtView.setText(obj.getString("msg"));
                             }
 
 

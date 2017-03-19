@@ -62,6 +62,7 @@ public class NewAdvantureForm extends Activity implements View.OnClickListener {
 SharedPreferences sp;
     RelativeLayout date_layout,detail_layout,add_layout,route_layout;
     LinearLayout main_layout;
+    TextView make_txtView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +75,11 @@ SharedPreferences sp;
         sp=getSharedPreferences(GlobalConstants.CREATE_DATA, Context.MODE_PRIVATE);
         global = (Global) getApplicationContext();
         global.setEvent_start_date("");
+
         main_layout=(LinearLayout)findViewById(R.id.main_layout);
         Fonts.overrideFonts(this,main_layout);
+        make_txtView=(TextView)findViewById(R.id.make_txtView);
+        Fonts.overrideFonts1(this,make_txtView);
         back_button_create=(ImageView) findViewById(R.id.back_button_create);
         booking_checkBox = (ImageView) findViewById(R.id.booking_checkBox);
         date_layout=(RelativeLayout)findViewById(R.id.date_layout);

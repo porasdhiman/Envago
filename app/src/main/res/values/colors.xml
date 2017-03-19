@@ -7,4 +7,6 @@
     <color name="textcolor">#F94444</color>
     <color name="transparent">#00ffffff</color>
     <color name="addcolor">#171E27</color>
+    <color name="mainTextColor">#767676</color>
+
 </resources>

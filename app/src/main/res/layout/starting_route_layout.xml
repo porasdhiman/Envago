@@ -30,22 +30,23 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/where_txtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:text="Where?"
         android:textColor="#000"
-        android:textSize="30sp" />
+        android:textSize="26sp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
 
-        android:text="Adventurers are excited about the trip \n and want to know more about the route \n you are taking. Select your route on \n map."
-        android:textColor="#000"
-        android:textSize="15sp" />
+        android:text="Adventurers are excited about the trip \nand want to know more about the route \nyou are taking. Select your route on \nmap."
+        android:textColor="#373737"
+        android:textSize="14sp" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

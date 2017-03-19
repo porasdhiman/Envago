@@ -84,7 +84,8 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
     Global global;
     LinearLayout individual_layout, group_layout, licence_layout, not_liscence_layout;
     TextView paypal_error_txtView, name_error_txtView, address_error_txtView, about_error_txtView;
-
+LinearLayout main_layout;
+    TextView name_txtView,paypal_txtView,about_me_txtView,address_txtView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +98,19 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
         }
 
         // message_dialog();
+        main_layout=(LinearLayout)findViewById(R.id.main_layout) ;
+        Fonts.overrideFonts(this,main_layout);
+        name_txtView = (TextView) findViewById(R.id.name_txtView);
+        paypal_txtView = (TextView) findViewById(R.id.paypal_txtView);
+        about_me_txtView = (TextView) findViewById(R.id.about_me_txtView);
+        address_txtView = (TextView) findViewById(R.id.address_txtView);
+
+        Fonts.overrideFonts1(this,name_txtView);
+        Fonts.overrideFonts1(this,paypal_txtView);
+        Fonts.overrideFonts1(this,about_me_txtView);
+        Fonts.overrideFonts1(this,address_txtView);
+
+
         name = (EditText) findViewById(R.id.name_create);
         address = (EditText) findViewById(R.id.address_create);
         about = (EditText) findViewById(R.id.about_create);
@@ -200,14 +214,14 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
 
         if (id == R.id.individual_layout) {
             individual.setTextColor(getResources().getColor(R.color.White));
-            group.setTextColor(getResources().getColor(R.color.Black));
+            group.setTextColor(getResources().getColor(R.color.textcolor));
             usertype = "Individual";
             individual_layout.setBackgroundResource(R.drawable.red_button_back);
             group_layout.setBackgroundResource(R.drawable.red_border_button);
         }
 
         if (id == R.id.group_layout) {
-            individual.setTextColor(getResources().getColor(R.color.Black));
+            individual.setTextColor(getResources().getColor(R.color.textcolor));
             group.setTextColor(getResources().getColor(R.color.White));
             usertype = "Group";
             individual_layout.setBackgroundResource(R.drawable.red_border_button);
@@ -217,13 +231,13 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
 
         if (id == R.id.license_layout) {
             licensed.setTextColor(getResources().getColor(R.color.White));
-            nlicensed.setTextColor(getResources().getColor(R.color.Black));
+            nlicensed.setTextColor(getResources().getColor(R.color.textcolor));
             license = "Licensed";
             licence_layout.setBackgroundResource(R.drawable.red_button_back);
             not_liscence_layout.setBackgroundResource(R.drawable.red_border_button);
         }
         if (id == R.id.not_license_layout) {
-            licensed.setTextColor(getResources().getColor(R.color.Black));
+            licensed.setTextColor(getResources().getColor(R.color.textcolor));
             nlicensed.setTextColor(getResources().getColor(R.color.White));
             license = "Not Licensed";
             licence_layout.setBackgroundResource(R.drawable.red_border_button);
@@ -231,14 +245,14 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
         }
         if (id == R.id.ind_txtView) {
             individual.setTextColor(getResources().getColor(R.color.White));
-            group.setTextColor(getResources().getColor(R.color.Black));
+            group.setTextColor(getResources().getColor(R.color.textcolor));
             usertype = "Individual";
             individual_layout.setBackgroundResource(R.drawable.red_button_back);
             group_layout.setBackgroundResource(R.drawable.red_border_button);
         }
 
         if (id == R.id.gp_txtView) {
-            individual.setTextColor(getResources().getColor(R.color.Black));
+            individual.setTextColor(getResources().getColor(R.color.textcolor));
             group.setTextColor(getResources().getColor(R.color.White));
             usertype = "Group";
             individual_layout.setBackgroundResource(R.drawable.red_border_button);
@@ -248,13 +262,13 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
 
         if (id == R.id.li_txtView) {
             licensed.setTextColor(getResources().getColor(R.color.White));
-            nlicensed.setTextColor(getResources().getColor(R.color.Black));
+            nlicensed.setTextColor(getResources().getColor(R.color.textcolor));
             license = "Licensed";
             licence_layout.setBackgroundResource(R.drawable.red_button_back);
             not_liscence_layout.setBackgroundResource(R.drawable.red_border_button);
         }
         if (id == R.id.nl_txtView) {
-            licensed.setTextColor(getResources().getColor(R.color.Black));
+            licensed.setTextColor(getResources().getColor(R.color.textcolor));
             nlicensed.setTextColor(getResources().getColor(R.color.White));
             license = "Not Licensed";
             licence_layout.setBackgroundResource(R.drawable.red_border_button);

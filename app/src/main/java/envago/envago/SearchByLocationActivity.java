@@ -15,6 +15,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -68,25 +69,27 @@ public class SearchByLocationActivity extends FragmentActivity implements Google
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
     ListView search_listView;
-    ArrayList<HashMap<String,String>> countryList=new ArrayList<>();
+    ArrayList<HashMap<String, String>> countryList = new ArrayList<>();
     Global global;
     Dialog dialog2;
-    TextView cancel_txtView;
+    TextView cancel_txtView,trending_txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_by_location_layout);
-        global=(Global)getApplicationContext();
-        search_listView=(ListView)findViewById(R.id.search_list);
+        global = (Global) getApplicationContext();
+        trending_txt=(TextView)findViewById(R.id.trending_txt);
+        Fonts.overrideFonts1(this,trending_txt);
+        search_listView = (ListView) findViewById(R.id.search_list);
         dialogWindow();
         searchMethod();
         search_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i=new Intent(SearchByLocationActivity.this,AccordingToCountry.class);
-                i.putExtra(GlobalConstants.ID,countryList.get(position).get(GlobalConstants.ID));
-                i.putExtra(GlobalConstants.EVENT_NAME,countryList.get(position).get(GlobalConstants.EVENT_NAME));
+                Intent i = new Intent(SearchByLocationActivity.this, AccordingToCountry.class);
+                i.putExtra(GlobalConstants.ID, countryList.get(position).get(GlobalConstants.ID));
+                i.putExtra(GlobalConstants.EVENT_NAME, countryList.get(position).get(GlobalConstants.EVENT_NAME));
                 startActivity(i);
             }
         });
@@ -112,14 +115,22 @@ public class SearchByLocationActivity extends FragmentActivity implements Google
         mAutocompleteView.setAdapter(mAdapter);
         mAutocompleteView.setDropDownWidth(getResources().getDisplayMetrics().widthPixels);
 
-        cancel_txtView=(TextView)findViewById(R.id.cancel_txtView);
+        cancel_txtView = (TextView) findViewById(R.id.cancel_txtView);
         cancel_txtView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAutocompleteView.setText("");
+                cancel_txtView.setVisibility(View.GONE);
             }
         });
+        mAutocompleteView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
+                cancel_txtView.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
     }
 
     private void searchMethod() {
@@ -129,7 +140,7 @@ public class SearchByLocationActivity extends FragmentActivity implements Google
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-dialog2.dismiss();
+                        dialog2.dismiss();
 
                         Log.e("response", response);
                         try {
@@ -138,18 +149,18 @@ dialog2.dismiss();
                             String status = obj.getString("success");
                             if (status.equalsIgnoreCase("1")) {
                                 JSONArray data = obj.getJSONArray("data");
-                                for(int i=0;i<data.length();i++){
-                                    JSONObject objData=data.getJSONObject(i);
-                                    HashMap<String,String> map=new HashMap<>();
-                                    map.put(GlobalConstants.ID,objData.getString(GlobalConstants.ID));
-                                    map.put(GlobalConstants.EVENT_NAME,objData.getString(GlobalConstants.EVENT_NAME));
-                                    map.put(GlobalConstants.CODE,objData.getString(GlobalConstants.CODE));
-                                    map.put(GlobalConstants.TREANDING_COUNT,objData.getString(GlobalConstants.TREANDING_COUNT));
+                                for (int i = 0; i < data.length(); i++) {
+                                    JSONObject objData = data.getJSONObject(i);
+                                    HashMap<String, String> map = new HashMap<>();
+                                    map.put(GlobalConstants.ID, objData.getString(GlobalConstants.ID));
+                                    map.put(GlobalConstants.EVENT_NAME, objData.getString(GlobalConstants.EVENT_NAME));
+                                    map.put(GlobalConstants.CODE, objData.getString(GlobalConstants.CODE));
+                                    map.put(GlobalConstants.TREANDING_COUNT, objData.getString(GlobalConstants.TREANDING_COUNT));
                                     countryList.add(map);
                                 }
-global.setCountryList(countryList);
+                                global.setCountryList(countryList);
 
-                                search_listView.setAdapter(new CountryAdapter(SearchByLocationActivity.this,countryList));
+                                search_listView.setAdapter(new CountryAdapter(SearchByLocationActivity.this, countryList));
                             } else {
                                 Toast.makeText(SearchByLocationActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                             }
@@ -182,6 +193,7 @@ global.setCountryList(countryList);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
     //-------------------------------Autolocation Method------------------------
     private AdapterView.OnItemClickListener mAutocompleteClickListener = new AdapterView.OnItemClickListener() {
         @Override
@@ -238,10 +250,10 @@ global.setCountryList(countryList);
             String lat = completeLatLng.split(",")[0];
             lat = lat.substring(1, lat.length());
             String lng = completeLatLng.split(",")[1];
-Intent i=new Intent(SearchByLocationActivity.this,SearchByGoogleApiLocation.class);
-            i.putExtra("lat",lat);
-            i.putExtra("lng",lng);
-            i.putExtra("loc",mAutocompleteView.getText().toString());
+            Intent i = new Intent(SearchByLocationActivity.this, SearchByGoogleApiLocation.class);
+            i.putExtra("lat", lat);
+            i.putExtra("lng", lng);
+            i.putExtra("loc", mAutocompleteView.getText().toString());
             startActivity(i);
             places.release();
         }
@@ -301,14 +313,15 @@ Intent i=new Intent(SearchByLocationActivity.this,SearchByGoogleApiLocation.clas
                 .build();
     }
 
-    public class CountryAdapter extends BaseAdapter{
+    public class CountryAdapter extends BaseAdapter {
         Context mContext;
-        ArrayList<HashMap<String,String>> list =new ArrayList<>();
+        ArrayList<HashMap<String, String>> list = new ArrayList<>();
         LayoutInflater inflatore;
-        CountryAdapter(Context mContext,ArrayList<HashMap<String,String>> list ){
-            this.mContext=mContext;
-            this.list=list;
-            inflatore=LayoutInflater.from(mContext);
+
+        CountryAdapter(Context mContext, ArrayList<HashMap<String, String>> list) {
+            this.mContext = mContext;
+            this.list = list;
+            inflatore = LayoutInflater.from(mContext);
 
         }
 
@@ -330,12 +343,14 @@ Intent i=new Intent(SearchByLocationActivity.this,SearchByGoogleApiLocation.clas
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView=inflatore.inflate(R.layout.search_list_item,null);
-            TextView product_name=(TextView)convertView.findViewById(R.id.product_name);
+            convertView = inflatore.inflate(R.layout.search_list_item, null);
+            TextView product_name = (TextView) convertView.findViewById(R.id.product_name);
             product_name.setText(list.get(position).get(GlobalConstants.EVENT_NAME));
+            Fonts.overrideFonts(mContext,product_name);
             return convertView;
         }
     }
+
     //---------------------------Progrees Dialog-----------------------
     public void dialogWindow() {
         dialog2 = new Dialog(SearchByLocationActivity.this);

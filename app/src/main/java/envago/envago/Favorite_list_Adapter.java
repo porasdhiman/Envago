@@ -80,6 +80,7 @@ public class Favorite_list_Adapter extends PagerAdapter {
         TextView start_event_txtView = (TextView) itemView.findViewById(R.id.start_event_txtView);
         LinearLayout main_layout=(LinearLayout)itemView.findViewById(R.id.main_layout);
         Fonts.overrideFonts(mContext,main_layout);
+        Fonts.overrideFonts1(mContext,view_text);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

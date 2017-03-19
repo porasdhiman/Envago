@@ -80,6 +80,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
+import static java.lang.Double.parseDouble;
+
 public class MapsActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback {
     Marker marker;
@@ -185,6 +187,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
                 return false;
             }
         });
+        Log.e("map size", String.valueOf(global.getEvent_list().size()));
     }
 
 
@@ -261,9 +264,9 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             lat = lat.substring(1, lat.length());
             lng = completeLatLng.split(",")[1];
 
-if(event_list.size()>0){
-    event_list.clear();
-}
+            if (event_list.size() > 0) {
+                event_list.clear();
+            }
             dialogWindow();
             get_list();
             places.release();
@@ -544,7 +547,7 @@ if(event_list.size()>0){
                             details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
                             details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
                             details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
-                            details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                            details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LATITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
                             JSONArray arr = arrobj.getJSONArray("event_dates");
@@ -602,24 +605,28 @@ if(event_list.size()>0){
     public void eventLocOnMap() {
 
 
-            //mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
-            // Add a marker in Sydney and move the camera
-        Log.e("event list value ",global.getEvent_list().toString());
-            for (i = 0; i < global.getEvent_list().size(); i++) {
-                LatLng postion = new LatLng(Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LATITUDE)), Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LONGITUDE)));
-                mark = mMap.addMarker(new MarkerOptions().position(postion).title(global.getEvent_list().get(i).get(GlobalConstants.EVENT_NAME)).icon(BitmapDescriptorFactory.fromResource(R.drawable.red_pin)));
+        //mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+        // Add a marker in Sydney and move the camera
+        Log.e("event list value ", global.getEvent_list().toString());
+        for (i = 0; i < global.getEvent_list().size(); i++) {
+            Log.e("lat long in string", global.getEvent_list().get(i).get(GlobalConstants.LATITUDE) + global.getEvent_list().get(i).get(GlobalConstants.LONGITUDE));
+            Double lat = Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LATITUDE));
+            Double longt = Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LONGITUDE));
+            LatLng postion = new LatLng(lat, longt);
+            Log.e("lat long in double", String.valueOf(lat) + String.valueOf(longt));
+            mark = mMap.addMarker(new MarkerOptions().position(postion).title(global.getEvent_list().get(i).get(GlobalConstants.EVENT_NAME)).icon(BitmapDescriptorFactory.fromResource(R.drawable.red_pin)));
 
-                // markers.put(mark.getId(), "http://envagoapp.com/uploads/" + global.getEvent_list().get(i).get(GlobalConstants.EVENT_IMAGES));
-                map.put(mark.getId(), i);
-                //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            // markers.put(mark.getId(), "http://envagoapp.com/uploads/" + global.getEvent_list().get(i).get(GlobalConstants.EVENT_IMAGES));
+            map.put(mark.getId(), i);
+            //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
-            }
+        }
 
-        LatLng postion = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-        mark = mMap.addMarker(new MarkerOptions().position(postion).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)));
+        LatLng postion = new LatLng(parseDouble(lat), parseDouble(lng));
+        // mark = mMap.addMarker(new MarkerOptions().position(postion).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 6));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(6), 2000, null);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 3));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(3), 2000, null);
         openMarkerView();
 
 
@@ -631,9 +638,9 @@ if(event_list.size()>0){
             map.clear();
             //mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
             // Add a marker in Sydney and move the camera
-            Log.e("event list value1 ",global.getEvent_list().toString());
+            Log.e("event list value1 ", global.getEvent_list().toString());
             for (i = 0; i < global.getEvent_list().size(); i++) {
-                LatLng postion = new LatLng(Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LATITUDE)), Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LONGITUDE)));
+                LatLng postion = new LatLng(parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LATITUDE)), parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LONGITUDE)));
                 mark = mMap.addMarker(new MarkerOptions().position(postion).title(global.getEvent_list().get(i).get(GlobalConstants.EVENT_NAME)).icon(BitmapDescriptorFactory.fromResource(R.drawable.red_pin)));
 
                 // markers.put(mark.getId(), "http://envagoapp.com/uploads/" + global.getEvent_list().get(i).get(GlobalConstants.EVENT_IMAGES));
@@ -642,11 +649,11 @@ if(event_list.size()>0){
 
             }
 
-            LatLng postion = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-            mark = mMap.addMarker(new MarkerOptions().position(postion).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)));
+            LatLng postion = new LatLng(parseDouble(lat), parseDouble(lng));
+            //  mark = mMap.addMarker(new MarkerOptions().position(postion).icon(BitmapDescriptorFactory.fromResource(R.drawable.oval)));
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 6));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(6), 2000, null);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(postion, 3));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(3), 2000, null);
             openMarkerView();
 
         }

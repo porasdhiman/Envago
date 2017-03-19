@@ -46,7 +46,7 @@ public class MyChatActivity extends Activity {
     Global global;
 
     LinearLayout message_linear_layout, main_layout;
-    TextView start_btn;
+    TextView start_btn,caht_txtView;
     SharedPreferences sp;
 
     @Override
@@ -65,7 +65,8 @@ public class MyChatActivity extends Activity {
         main_layout = (LinearLayout) findViewById(R.id.main_layout);
 
         Fonts.overrideFonts(this, main_layout);
-
+        caht_txtView=(TextView)findViewById(R.id.caht_txtView);
+        Fonts.overrideFonts1(this, caht_txtView);
         chat_list = (ListView) findViewById(R.id.chat_list);
 
 
@@ -115,7 +116,7 @@ public class MyChatActivity extends Activity {
                                 JSONObject last_msg = arrobj.getJSONObject("last_msg");
                                 details.put("message", last_msg.getString("message"));
                             }else{
-                                details.put("message", "No message");
+                                details.put("message", "");
                             }
 
                             details.put("image", arrobj.getString("image"));
