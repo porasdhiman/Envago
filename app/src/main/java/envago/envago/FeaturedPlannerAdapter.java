@@ -26,6 +26,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static envago.envago.R.id.main_layout;
+
 /**
  * Created by vikas on 28-12-2016.
  */
@@ -33,7 +35,7 @@ import java.util.HashMap;
 public class FeaturedPlannerAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
-
+Global global;
     com.nostra13.universalimageloader.core.ImageLoader imageLoader;
     DisplayImageOptions options;
     String url;
@@ -50,6 +52,7 @@ public class FeaturedPlannerAdapter extends BaseAdapter {
                 .showImageForEmptyUri(0)    //	If Empty image found
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
+        global=(Global)context.getApplicationContext();
         initImageLoader();
     }
 
@@ -82,7 +85,7 @@ public class FeaturedPlannerAdapter extends BaseAdapter {
             holder.Planner_name = (TextView) convertView.findViewById(R.id.planner_txt);
             holder.planner_address = (TextView) convertView.findViewById(R.id.planner_address_txt);
             // holder.planer_stars = (RatingBar) convertView.findViewById(R.id.planer_stars);
-            holder.main_layout = (RelativeLayout) convertView.findViewById(R.id.main_layout);
+            holder.main_layout = (RelativeLayout) convertView.findViewById(main_layout);
             holder.star1 = (ImageView) convertView.findViewById(R.id.star1);
             holder.star2 = (ImageView) convertView.findViewById(R.id.star2);
 
@@ -106,6 +109,21 @@ public class FeaturedPlannerAdapter extends BaseAdapter {
 
         Fonts.overrideFonts(context, holder.main_layout);
         Fonts.overrideFonts1(context, holder.Planner_name);
+      /*  holder.main_layout.setDrawingCacheEnabled(true);
+
+        Bitmap bitmap = holder.main_layout.getDrawingCache();
+        File root = Environment.getExternalStorageDirectory();
+        File cachePath = new File(root.getAbsolutePath() + "/DCIM/Camera/image.jpg");
+        try {
+            cachePath.createNewFile();
+            FileOutputStream ostream = new FileOutputStream(cachePath);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+            ostream.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        global.setF(cachePath);*/
 
             /*if (list.get(position).get("rating").contains(".")) {
                 // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));

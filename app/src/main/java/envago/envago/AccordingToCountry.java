@@ -69,6 +69,7 @@ public class AccordingToCountry extends Activity{
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
         // Log.e("Status", getIntent().getExtras().getString("status"));
         list_back_img=(ImageView)findViewById(R.id.list_back_img);
+        list_back_img.setImageResource(0);
         search_btn=(ImageView)findViewById(R.id.search_button);
         String category_name = getIntent().getExtras().getString(GlobalConstants.EVENT_NAME);
 

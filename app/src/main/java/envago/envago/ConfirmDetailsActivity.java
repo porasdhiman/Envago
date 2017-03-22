@@ -77,7 +77,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
     Global global;
     int i = 1, total, Change_total;
     Date startDate, endDate;
-    Dialog dialog2;
+    Dialog dialog2,cancel_dialog;
     TextView count_txtView;
     String months[] = {" ", "Jan", "Feb", "Mar", "Apr", "May",
             "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
@@ -113,7 +113,7 @@ int l;
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (discount_type.equalsIgnoreCase("")) {
+                if (user_coupon_id.equalsIgnoreCase("")) {
                     finish();
                 } else {
                     dialogWindow();
@@ -184,13 +184,13 @@ int l;
         coupon_edit.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                coupon_applied_layout.setVisibility(View.GONE);
+              /*  coupon_applied_layout.setVisibility(View.GONE);
                 cancel_view_img.setVisibility(View.VISIBLE);
                 total_money.setTextColor(Color.parseColor("#000000"));
                 add_coupont_txtView.setVisibility(View.VISIBLE);
                 dis_money.setText("");
                 total_money.setPaintFlags(0);
-                coupon_edit.setText("");
+                coupon_edit.setText("");*/
                 return false;
             }
         });
@@ -420,11 +420,8 @@ int l;
                 coupon_applied_layout.setVisibility(View.VISIBLE);*/
                 break;
             case R.id.cancel_view_img:
-                dis_money.setText("");
-                total_money.setTextColor(Color.parseColor("#000000"));
-                add_coupont_txtView.setVisibility(View.VISIBLE);
-                coupon_applied_layout.setVisibility(View.GONE);
-                total_money.setPaintFlags(0);
+                cancel_dialog();
+
                 break;
         }
 
@@ -537,11 +534,13 @@ int l;
                                             dis_money.setText("$0");
                                             total_money.setTextColor(getResources().getColor(R.color.textcolor));
                                             total_money.setPaintFlags(total_money.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                            coupon_edit.setText("");
                                         } else {
                                             int t = Change_total - (Change_total * discount / 100);
                                             dis_money.setText("$" + String.valueOf(t));
                                             total_money.setTextColor(getResources().getColor(R.color.textcolor));
                                             total_money.setPaintFlags(total_money.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                            coupon_edit.setText("");
                                         }
 
 
@@ -554,18 +553,21 @@ int l;
                                             dis_money.setText("$0");
                                             total_money.setTextColor(getResources().getColor(R.color.textcolor));
                                             total_money.setPaintFlags(total_money.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                            coupon_edit.setText("");
 
                                         } else {
                                             int t = Change_total - flat;
                                             dis_money.setText("$" + String.valueOf(t));
                                             total_money.setTextColor(getResources().getColor(R.color.textcolor));
                                             total_money.setPaintFlags(total_money.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                            coupon_edit.setText("");
                                         }
 
                                     }
 
                                     add_coupont_txtView.setVisibility(View.GONE);
                                     coupon_applied_layout.setVisibility(View.VISIBLE);
+                                    cancel_view_img.setVisibility(View.VISIBLE);
                                 } else {
 
                                     coupon_applied_layout.setVisibility(View.VISIBLE);
@@ -771,4 +773,45 @@ int l;
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
         dialog2.show();
     }
+
+    //-------------------------------cancel_coupon-Dailog--------------------------------
+
+
+    public void cancel_dialog() {
+        cancel_dialog = new Dialog(this);
+        cancel_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //rating_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.w));
+        cancel_dialog.setCanceledOnTouchOutside(false);
+        cancel_dialog.setCancelable(false);
+        cancel_dialog.setContentView(R.layout.after_cance_dialog_layout);
+       /* AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
+        loaderView.show();*/
+
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        cancel_dialog.show();
+
+       TextView ok_button = (TextView) cancel_dialog.findViewById(R.id.ok_button);
+        TextView cancel_button = (TextView) cancel_dialog.findViewById(R.id.cancel_button);
+
+
+        ok_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dis_money.setText("");
+                total_money.setTextColor(Color.parseColor("#000000"));
+                add_coupont_txtView.setVisibility(View.VISIBLE);
+                coupon_applied_layout.setVisibility(View.GONE);
+                total_money.setPaintFlags(0);
+                cancel_dialog.dismiss();
+            }
+        });
+
+        cancel_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancel_dialog.dismiss();
+            }
+        });
+    }
+
 }

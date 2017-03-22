@@ -179,7 +179,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
     int r_value;
     LinearLayout main_layout;
     int total, t1;
-    ImageView star1, star2, star3, star4, star5;
+    ImageView star1, star2, star3, star4, star5,share_img;
+//---------------------- Facebook share -----------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,6 +215,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
         places_txtView = (TextView) findViewById(R.id.places_count_txtView);
 
         desclaimer_txt_show = (TextView) findViewById(R.id.desclaimer_txt_show);
+        share_img = (ImageView) findViewById(R.id.share_img);
         price_btn = (TextView) findViewById(R.id.price_btn);
         Fonts.overrideFonts1(this, locatio_txt);
         Fonts.overrideFonts1(this, meeting_txt);
@@ -323,19 +325,48 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
             }
         });
         purchase_btn = (Button) findViewById(R.id.purchase_btn);
-        if (getIntent().getExtras().getString("user").equalsIgnoreCase("user")) {
-            purchase_btn.setVisibility(View.GONE);
-            heart_img.setVisibility(View.INVISIBLE);
-        } else if (getIntent().getExtras().getString("user").equalsIgnoreCase("no user wish")) {
-            heart_img.setVisibility(View.INVISIBLE);
-            stars.setOnTouchListener(this);
 
-            purchase_btn.setOnClickListener(this);
-        } else {
-            stars.setOnTouchListener(this);
+        share_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "I'm using Envago Adventures to go on \n" + header_textview.getText().toString()+ "\nhttps://itunes.apple.com/in/app/envago-adventures/id1140098064?mt=8");
+                startActivity(shareIntent);
+                /*Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("image*//*");
 
-            purchase_btn.setOnClickListener(this);
-        }
+
+                String urlToShare = header_textview.getText().toString();
+
+
+
+                // See if official Facebook app is found
+
+                List<ResolveInfo> matches = getPackageManager()
+                        .queryIntentActivities(share, 0);
+                for (ResolveInfo info : matches) {
+                    if (info.activityInfo.packageName.toLowerCase()
+                            .startsWith("com.facebook.katana")) {
+                        share.setPackage(info.activityInfo.packageName);
+                        share.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        share.putExtra(Intent.EXTRA_TITLE, "Hey, download this app! https://itunes.apple.com/in/app/envago-adventures/id1140098064?mt=8 for join event with me");
+                        share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(global.getF()));
+                        startActivity(Intent.createChooser(share,"Share via"));
+                        break;
+                    }
+                }
+*/
+                // As fallback, launch sharer.php in a browser
+
+
+
+
+
+            }
+        });
+
     }
 
     /*   private void setUiPageViewController() {
@@ -523,6 +554,28 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                 for (int j = 0; j < data.length(); j++) {
                                     JSONObject objArry = data.getJSONObject(j);
                                     JSONObject adminobj = objArry.getJSONObject("event_admin");
+                                    if (CommonUtils.UserID(DetailsActivity.this).equalsIgnoreCase(objArry.getString(GlobalConstants.USERID))) {
+                                        purchase_btn.setVisibility(View.GONE);
+                                        heart_img.setVisibility(View.VISIBLE);
+                                        heart_img.setOnClickListener(null);
+                                    } else {
+                                        purchase_btn.setVisibility(View.VISIBLE);
+                                        heart_img.setVisibility(View.VISIBLE);
+                                    }
+                                    /*if (getIntent().getExtras().getString("user").equalsIgnoreCase("user")) {
+                                        purchase_btn.setVisibility(View.GONE);
+                                        heart_img.setVisibility(View.INVISIBLE);
+                                    } else*/ if (getIntent().getExtras().getString("user").equalsIgnoreCase("no user wish")) {
+                                        heart_img.setVisibility(View.VISIBLE);
+                                        heart_img.setOnClickListener(null);
+                                        stars.setOnTouchListener(DetailsActivity.this);
+
+                                        purchase_btn.setOnClickListener(DetailsActivity.this);
+                                    } else {
+                                        stars.setOnTouchListener(DetailsActivity.this);
+
+                                        purchase_btn.setOnClickListener(DetailsActivity.this);
+                                    }
 
                                     JSONArray images = objArry.getJSONArray(GlobalConstants.EVENT_IMAGES);
                                     for (int i = 0; i < images.length(); i++) {
@@ -942,10 +995,10 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
                                         user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, l, eventUserList, header_textview.getText().toString()));
                                         if (eventUserList.size() > 0) {
-                                            places_txtView.setText(/*String.valueOf(p) + "/" + String.valueOf(total) + */" Places (" + objArry.getString("total_no_of_places") + " per day)");
+                                            places_txtView.setText(/*String.valueOf(p) + "/" + String.valueOf(total) + */" Places (" + objArry.getString("total_no_of_places") + " per trip)");
                                         } else {
                                             Log.e("total", String.valueOf(p));
-                                            places_txtView.setText(/*String.valueOf(p) +*/ " Places (" + objArry.getString("total_no_of_places") + " per day)");
+                                            places_txtView.setText(/*String.valueOf(p) +*/ " Places (" + objArry.getString("total_no_of_places") + " per trip)");
                                         }
                                         global.setEvent_start_date(event_date_array.get(0).get(GlobalConstants.EVENT_START_DATE));
                                         global.setEvent_end_date(event_date_array.get(event_date_array.size() - 1).get(GlobalConstants.EVENT_END_DATE));
@@ -972,10 +1025,10 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
                                         user_grid.setAdapter(new UserViewAdapter(DetailsActivity.this, l, eventUserList, header_textview.getText().toString()));
                                         if (eventUserList.size() > 0) {
-                                            places_txtView.setText(/*String.valueOf(p) + "/" + String.valueOf(total) */ " Places (" + objArry.getString("total_no_of_places") + " per event)");
+                                            places_txtView.setText(/*String.valueOf(p) + "/" + String.valueOf(total) */ " Places (" + objArry.getString("total_no_of_places") + " per trip)");
                                         } else {
                                             Log.e("total", String.valueOf(p));
-                                            places_txtView.setText(/*String.valueOf(p) + */" Places (" + objArry.getString("total_no_of_places") + " per event)");
+                                            places_txtView.setText(/*String.valueOf(p) + */" Places (" + objArry.getString("total_no_of_places") + " per trip)");
                                         }
 
                                     }
@@ -1487,7 +1540,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                 rating_dialog.dismiss();
                                 Toast.makeText(DetailsActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                                 String value = String.valueOf(ratingValue);
-                                Log.e("value",value);
+                                Log.e("value", value);
 
                                 if (value.contains("1")) {
                                     star1.setImageResource(R.drawable.star);

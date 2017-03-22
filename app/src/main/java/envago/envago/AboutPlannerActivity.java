@@ -128,6 +128,7 @@ public class AboutPlannerActivity extends Activity {
                 Intent i = new Intent(AboutPlannerActivity.this, DetailsActivity.class);
                 i.putExtra(GlobalConstants.EVENT_ID, eventList.get(position).get(GlobalConstants.EVENT_ID));
                 i.putExtra("user", "non user");
+
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }

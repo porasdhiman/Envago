@@ -2,10 +2,12 @@ package envago.envago;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +36,8 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,6 +59,7 @@ public class Adventure_list_adapter extends BaseAdapter {
             "Dec",};
     SharedPreferences sp;
     SharedPreferences.Editor ed;
+    Global global;
 
     public Adventure_list_adapter(Context applicationContext, ArrayList<HashMap<String, String>> images) {
         this.images = images;
@@ -71,6 +76,7 @@ public class Adventure_list_adapter extends BaseAdapter {
         initImageLoader();
         sp = applicationContext.getSharedPreferences("message", Context.MODE_PRIVATE);
         ed = sp.edit();
+        global=(Global)applicationContext.getApplicationContext();
     }
 
     @Override
@@ -118,13 +124,42 @@ public class Adventure_list_adapter extends BaseAdapter {
             holder.main_layout = (LinearLayout) view.findViewById(R.id.main_layout);
             view.setTag(holder);
             holder.heart_img.setTag(holder);
-
+            holder.backimg.setTag(holder);
 
         } else {
             holder = (Adventure_holder) view.getTag();
         }
         Fonts.overrideFonts(applicationContext, holder.main_layout);
         Fonts.overrideFonts1(applicationContext, holder.ad_name);
+        holder.backimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder = (Adventure_holder) v.getTag();
+
+                holder.main_layout.setDrawingCacheEnabled(true);
+
+                Bitmap bitmap = holder.main_layout.getDrawingCache();
+                File root = Environment.getExternalStorageDirectory();
+                File cachePath = new File(root.getAbsolutePath() + "/DCIM/Camera/image.jpg");
+                try {
+                    cachePath.createNewFile();
+                    FileOutputStream ostream = new FileOutputStream(cachePath);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+                    ostream.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                global.setF(cachePath);
+                Intent j = new Intent(applicationContext, DetailsActivity.class);
+                j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                j.putExtra(GlobalConstants.EVENT_ID, images.get(i).get(GlobalConstants.EVENT_ID));
+                j.putExtra("user", "non user");
+                applicationContext.startActivity(j);
+
+            }
+        });
+
         url = GlobalConstants.IMAGE_URL + images.get(i).get(GlobalConstants.EVENT_IMAGES);
         holder.ad_name.setText(images.get(i).get(GlobalConstants.EVENT_NAME));
         holder.price.setText("$" + images.get(i).get(GlobalConstants.EVENT_PRICE));

@@ -50,9 +50,9 @@ public class Adventure_list extends Activity {
     Dialog dialog2;
 
     ImageView back_img;
-    ShimmerFrameLayout  shimmer_view_container;
-ImageView search_button,list_back_img;
-    boolean isLoading=false;
+    ShimmerFrameLayout shimmer_view_container;
+    ImageView search_button, list_back_img;
+    boolean isLoading = false;
     int j = 1, page_value;
 
     @Override
@@ -67,7 +67,7 @@ ImageView search_button,list_back_img;
         }
 
         global = (Global) getApplicationContext();
-        search_button=(ImageView)findViewById(R.id.search_button);
+        search_button = (ImageView) findViewById(R.id.search_button);
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,42 +77,37 @@ ImageView search_button,list_back_img;
         headtext = (TextView) findViewById(R.id.header_text_adv);
        /* shimmer_view_container=(ShimmerFrameLayout) findViewById(R.id.shimmer_view_container);
         shimmer_view_container.startShimmerAnimation();*/
-        list_back_img=(ImageView)findViewById(R.id.list_back_img);
+        list_back_img = (ImageView) findViewById(R.id.list_back_img);
         ad_items = (ListView) findViewById(R.id.ad_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
-       // Log.e("Status", getIntent().getExtras().getString("status"));
+        // Log.e("Status", getIntent().getExtras().getString("status"));
 
         String category_name = getIntent().getExtras().getString(GlobalConstants.EVENT_CAT_NAME);
 
 
-            headtext.setText(category_name);
+        headtext.setText(category_name);
 
-        cat_id=getIntent().getExtras().getString(GlobalConstants.CAT_ID);
+        cat_id = getIntent().getExtras().getString(GlobalConstants.CAT_ID);
 
-if(headtext.getText().toString().equalsIgnoreCase("Air"))
-{
-    list_back_img.setImageResource(R.drawable.air_back);
-}else if(headtext.getText().toString().equalsIgnoreCase("Earth"))
-{
-    list_back_img.setImageResource(R.drawable.earth_back);
-}else if(headtext.getText().toString().equalsIgnoreCase("Water"))
-{
-    list_back_img.setImageResource(R.drawable.watering_back);
-}
-else if(headtext.getText().toString().equalsIgnoreCase("Rock & Ice"))
-{
-    list_back_img.setImageResource(R.drawable.rock_back);
-}else{
-    list_back_img.setImageResource(R.drawable.favourites_back);
-}
+        if (headtext.getText().toString().equalsIgnoreCase("Air")) {
+            list_back_img.setImageResource(R.drawable.air_back);
+        } else if (headtext.getText().toString().equalsIgnoreCase("Earth")) {
+            list_back_img.setImageResource(R.drawable.earth_back);
+        } else if (headtext.getText().toString().equalsIgnoreCase("Water")) {
+            list_back_img.setImageResource(R.drawable.watering_back);
+        } else if (headtext.getText().toString().equalsIgnoreCase("Rock & Ice")) {
+            list_back_img.setImageResource(R.drawable.rock_back);
+        } else {
+            list_back_img.setImageResource(R.drawable.go_volunter);
+        }
         dialogWindow();
         get_list();
         ad_items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i=new Intent(Adventure_list.this,DetailsActivity.class);
-                i.putExtra(GlobalConstants.EVENT_ID,event_list.get(position).get(GlobalConstants.EVENT_ID));
-                i.putExtra("user","non user");
+                Intent i = new Intent(Adventure_list.this, DetailsActivity.class);
+                i.putExtra(GlobalConstants.EVENT_ID, event_list.get(position).get(GlobalConstants.EVENT_ID));
+                i.putExtra("user", "non user");
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
@@ -161,7 +156,7 @@ else if(headtext.getText().toString().equalsIgnoreCase("Rock & Ice"))
         StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-dialog2.dismiss();
+                dialog2.dismiss();
                 Log.e("Categoryyyy", s);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -199,7 +194,7 @@ dialog2.dismiss();
 
                             }
                             Log.e("event list", event_list.toString());
-                            if(page_value>=j){
+                            if (page_value >= j) {
                                 isLoading = false;
                                 if (event_list.size() > 0) {
                                     ad_items.setVisibility(View.VISIBLE);
@@ -209,7 +204,7 @@ dialog2.dismiss();
                                     list_back_img.setVisibility(View.GONE);
                                 }
 
-                            }else{
+                            } else {
 
                                 if (event_list.size() > 0) {
                                     ad_items.setVisibility(View.VISIBLE);
@@ -243,8 +238,8 @@ dialog2.dismiss();
                 params.put(GlobalConstants.USERID, CommonUtils.UserID(Adventure_list.this));
 
 
-                    params.put(GlobalConstants.MAIN_CAT_ID, "1");
-                    params.put(GlobalConstants.EVENT_CAT_ID, cat_id);
+                params.put(GlobalConstants.MAIN_CAT_ID, "1");
+                params.put(GlobalConstants.EVENT_CAT_ID, cat_id);
 
 
                 params.put(GlobalConstants.LATITUDE, global.getLat());

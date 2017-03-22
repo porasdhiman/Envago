@@ -41,5 +41,15 @@
         <item>Spring</item>
         <item>monsoon</item>
     </string-array>
+    <string name="title_activity_facebook_share">Facebook</string>
+    <string name="facebook_default_text">Please enter your text here</string>
+    <string name="title_post_text">Write Post</string>
+    <string name="post_button_text">Post</string>
+    <string name="title_facebook_login">Facebook Login</string>
 
+
+    <!--LIVE APP ID-->
+
+    <string name="facebook_post_content_desc">Image to share</string>
+    <string name="app_package_name">envago.envago</string>
 </resources>

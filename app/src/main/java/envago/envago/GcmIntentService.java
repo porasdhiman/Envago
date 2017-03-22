@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
@@ -99,8 +100,8 @@ public class GcmIntentService extends IntentService {
 
         }
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.app_name).setContentTitle(notificationTitle).setAutoCancel(true)
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+        mBuilder .setSmallIcon(getNotificationIcon(mBuilder)).setContentTitle(notificationTitle).setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(notificationMessage))
                 .setContentText(notificationMessage);
@@ -111,5 +112,15 @@ public class GcmIntentService extends IntentService {
 
     }
 
+    private int getNotificationIcon(NotificationCompat.Builder notificationBuilder) {
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int color = 0x008000;
+            notificationBuilder.setColor(color);
+            return R.mipmap.notification_icon;
+
+        } else {
+            return R.mipmap.notification_icon;
+        }
+    }
 }

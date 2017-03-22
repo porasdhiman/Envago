@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-android:id="@+id/main_layout"
-android:padding="8dp"
-    >
+    android:padding="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="200dp">
-        <ImageView
-            android:id="@+id/view_img"
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
-             />
-</FrameLayout>
+            android:layout_height="200dp">
+
+            <ImageView
+                android:id="@+id/view_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop" />
+        </FrameLayout>
+
         <TextView
             android:id="@+id/start_event_txtView"
             android:layout_width="wrap_content"
@@ -69,13 +70,13 @@ android:padding="8dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/view_price_txt"
-            android:text="A Time Travel Postcard"
-            android:singleLine="true"
-            android:textColor="#373737"
-            android:textSize="16sp"
             android:layout_marginRight="30dp"
-            android:textAllCaps="true"/>
+            android:layout_toLeftOf="@+id/view_price_txt"
+            android:singleLine="true"
+            android:text="A Time Travel Postcard"
+            android:textAllCaps="true"
+            android:textColor="#373737"
+            android:textSize="16sp" />
 
 
     </RelativeLayout>
@@ -94,8 +95,8 @@ android:padding="8dp"
                 android:id="@+id/view_date_img"
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:src="@drawable/clock" />
 
             <TextView
@@ -112,16 +113,15 @@ android:layout_centerVertical="true"
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="35dp"
-            >
+            android:layout_marginLeft="35dp">
 
             <ImageView
                 android:id="@+id/view_location_img"
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-                android:layout_centerVertical="true"
-
                 android:layout_alignParentLeft="true"
+
+                android:layout_centerVertical="true"
                 android:src="@drawable/location" />
 
             <TextView
@@ -131,8 +131,8 @@ android:layout_centerVertical="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="12dp"
                 android:layout_toRightOf="@+id/view_location_img"
-                android:text="Bosnia and Herzegovina"
                 android:singleLine="true"
+                android:text="Bosnia and Herzegovina"
                 android:textSize="13dp" />
         </RelativeLayout>
 

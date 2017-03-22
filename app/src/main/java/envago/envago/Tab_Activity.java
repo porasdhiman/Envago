@@ -57,13 +57,13 @@ public class Tab_Activity extends TabActivity {
         tabHost = getTabHost();
 
         setTabs();
+/*
+        if (global.getCurrent_tab() == 0) {
+            tabHost.setCurrentTab(0);
+        } else {
+            tabHost.setCurrentTab(1);
 
-/*if(global.getCurrent_tab()==0) {
-    tabHost.setCurrentTab(0);
-}else{
-    tabHost.setCurrentTab(1);
-
-}*/
+        }*/
         tabHost.setCurrentTab(0);
         for (int j = 0; j < tabHost.getTabWidget().getChildCount(); j++) {
             // tabhost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.action_back);
@@ -120,6 +120,7 @@ public class Tab_Activity extends TabActivity {
     }
 
     public void callHome() {
+
         tabHost.setCurrentTab(0);
     }
 

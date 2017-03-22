@@ -8,22 +8,25 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/main_heading">
-
-        <VideoView
+        android:layout_below="@+id/main_heading"
+        >
+        <envago.envago.TextureVideoView
             android:id="@+id/videoView1"
-
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:layout_centerInParent="true" />
+        <!--<VideoView
+            android:id="@+id/videoView1"
+
+
 
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true" />
-        <!--  android:layout_alignParentTop="true"
-          android:layout_alignParentBottom="true"
-          android:layout_alignParentLeft="true"
-          android:layout_alignParentRight="true"-->
+            android:layout_alignParentTop="true"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+         />-->
 
     </RelativeLayout>
 

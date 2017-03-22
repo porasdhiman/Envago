@@ -3,13 +3,16 @@ package envago.envago;
 import android.app.Dialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.media.session.MediaController;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -18,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import java.util.Timer;
 
@@ -34,7 +36,7 @@ public class NewCreateAdvantureVideoForm extends FragmentActivity implements Vie
     ImageView img1, img2, img3, back_button_create;
     String slider_upper_txt[];
     String slider_bottom_txt[];
-    VideoView videoView1;
+    TextureVideoView videoView1;
     TextView slider_sign_up_btn, slider_fb_btn, document_status_txt;
     LinearLayout slider_sign_in_layout;
 
@@ -53,6 +55,9 @@ public class NewCreateAdvantureVideoForm extends FragmentActivity implements Vie
     private Timer updateTimer;
     String uriPath;
 RelativeLayout main_layout;
+    DisplayMetrics dm;
+    SurfaceView sur_View;
+    MediaController media_Controller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,10 +80,13 @@ RelativeLayout main_layout;
         img2 = (ImageView) findViewById(R.id.img2);
         img3 = (ImageView) findViewById(R.id.img3);*/
         back_button_create = (ImageView) findViewById(R.id.back_view);
-        videoView1 = (VideoView) findViewById(R.id.videoView1);
+        videoView1 = (TextureVideoView) findViewById(R.id.videoView1);
+
         slider_sign_up_btn = (TextView) findViewById(R.id.slider_sign_up_btn);
         slider_sign_in_layout = (LinearLayout) findViewById(R.id.slider_sign_in_layout);
-        uriPath = "android.resource://envago.envago/" + R.raw.envagowalk;
+
+
+        uriPath = "android.resource://envago.envago/" + R.raw.dd;
         TextView slider_txt = (TextView) findViewById(R.id.slider_txt);
         TextView slider_txt_bottom = (TextView) findViewById(R.id.slider_bottom_txt);
 
@@ -95,16 +103,11 @@ RelativeLayout main_layout;
 
         Uri uri = Uri.parse(uriPath);
 
-        videoView1.setVideoURI(uri);
-        videoView1.requestFocus();
-        videoView1.start();
 
-        videoView1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setLooping(true);
-            }
-        });
+        videoView1.setScaleType(TextureVideoView.ScaleType.CENTER_CROP);
+        videoView1.setDataSource(this,uri);
+        videoView1.setLooping(true);
+        videoView1.play();
 
         slider_upper_txt = getResources().getStringArray(R.array.slide1_txt);
         slider_bottom_txt = getResources().getStringArray(R.array.slide1_bottom_txt);

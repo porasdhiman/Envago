@@ -19,6 +19,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -80,12 +82,13 @@ public class CreateAdventuresActivity extends Activity implements View.OnTouchLi
     SharedPreferences.Editor editor;
     HttpEntity resEntity;
     String message;
-    Dialog dialog2, message_dialog;
+    Dialog dialog2, message_dialog, info_message;
     Global global;
     LinearLayout individual_layout, group_layout, licence_layout, not_liscence_layout;
     TextView paypal_error_txtView, name_error_txtView, address_error_txtView, about_error_txtView;
-LinearLayout main_layout;
-    TextView name_txtView,paypal_txtView,about_me_txtView,address_txtView;
+    LinearLayout main_layout;
+    TextView name_txtView, paypal_txtView, about_me_txtView, address_txtView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,17 +101,17 @@ LinearLayout main_layout;
         }
 
         // message_dialog();
-        main_layout=(LinearLayout)findViewById(R.id.main_layout) ;
-        Fonts.overrideFonts(this,main_layout);
+        main_layout = (LinearLayout) findViewById(R.id.main_layout);
+        Fonts.overrideFonts(this, main_layout);
         name_txtView = (TextView) findViewById(R.id.name_txtView);
         paypal_txtView = (TextView) findViewById(R.id.paypal_txtView);
         about_me_txtView = (TextView) findViewById(R.id.about_me_txtView);
         address_txtView = (TextView) findViewById(R.id.address_txtView);
 
-        Fonts.overrideFonts1(this,name_txtView);
-        Fonts.overrideFonts1(this,paypal_txtView);
-        Fonts.overrideFonts1(this,about_me_txtView);
-        Fonts.overrideFonts1(this,address_txtView);
+        Fonts.overrideFonts1(this, name_txtView);
+        Fonts.overrideFonts1(this, paypal_txtView);
+        Fonts.overrideFonts1(this, about_me_txtView);
+        Fonts.overrideFonts1(this, address_txtView);
 
 
         name = (EditText) findViewById(R.id.name_create);
@@ -154,6 +157,88 @@ LinearLayout main_layout;
         about.setOnTouchListener(this);
         paypal.setOnTouchListener(this);
         back_button.setOnClickListener(this);
+
+        name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (name.getText().toString().length() != 0 && address.getText().toString().length() != 0 && paypal.getText().toString().length() != 0 && about.getText().toString().length() != 0) {
+                    submit.setBackgroundResource(R.drawable.red_button_back);
+                } else {
+                    submit.setBackgroundResource(R.drawable.button_dark);
+                }
+            }
+        });
+        address.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (name.getText().toString().length() != 0 && address.getText().toString().length() != 0 && paypal.getText().toString().length() != 0 && about.getText().toString().length() != 0) {
+                    submit.setBackgroundResource(R.drawable.red_button_back);
+                } else {
+                    submit.setBackgroundResource(R.drawable.button_dark);
+                }
+            }
+        });
+        paypal.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (name.getText().toString().length() != 0 && address.getText().toString().length() != 0 && paypal.getText().toString().length() != 0 && about.getText().toString().length() != 0) {
+                    submit.setBackgroundResource(R.drawable.red_button_back);
+                } else {
+                    submit.setBackgroundResource(R.drawable.button_dark);
+                }
+            }
+        });
+        about.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (name.getText().toString().length() != 0 && address.getText().toString().length() != 0 && paypal.getText().toString().length() != 0 && about.getText().toString().length() != 0) {
+                    submit.setBackgroundResource(R.drawable.red_button_back);
+                } else {
+                    submit.setBackgroundResource(R.drawable.button_dark);
+                }
+            }
+        });
 
     }
 
@@ -315,6 +400,7 @@ LinearLayout main_layout;
         }
 
     }
+
     private void VerifiedMethod() {
 
 
@@ -374,7 +460,6 @@ LinearLayout main_layout;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
-
 
 
     public void dailog() {
@@ -467,8 +552,8 @@ LinearLayout main_layout;
             dialog2.dismiss();
             if (res.equalsIgnoreCase("true")) {
                 // terms_dialog.dismiss();
-                Toast.makeText(CreateAdventuresActivity.this, message,
-                        Toast.LENGTH_SHORT).show();
+                info_dialog();
+
               /*  Intent sign = new Intent(CallVolunteers.this, LoginActivity.class);
 
                 startActivity(sign);
@@ -633,6 +718,7 @@ LinearLayout main_layout;
         }
         return uri;
     }
+
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
@@ -717,5 +803,37 @@ LinearLayout main_layout;
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
         dialog2.show();
     }
+
+    public void info_dialog() {
+        info_message = new Dialog(this);
+        info_message.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //rating_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.w));
+        info_message.setCanceledOnTouchOutside(false);
+        info_message.setCancelable(false);
+        info_message.setContentView(R.layout.after_create_dialog_layout);
+       /* AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
+        loaderView.show();*/
+
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        info_message.show();
+        TextView dear_txt = (TextView) info_message.findViewById(R.id.dear_txt);
+        TextView we_txt = (TextView) info_message.findViewById(R.id.we_txt);
+        TextView ok_button = (TextView) info_message.findViewById(R.id.ok_button);
+        Fonts.overrideFontHeavy(this, dear_txt);
+        Fonts.overrideFontHeavy(this, ok_button);
+        Fonts.overrideFonts1(this, we_txt);
+
+        ok_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                info_message.dismiss();
+                finish();
+            }
+        });
+
+
+    }
+
 }
 

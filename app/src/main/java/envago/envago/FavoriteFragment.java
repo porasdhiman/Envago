@@ -87,8 +87,10 @@ public class FavoriteFragment extends Fragment {
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
         // ad_items.setAdapter(new FavoriteAdvantureAdapter(getActivity()));
 
-        dialogWindow();
-        get_list();
+    dialogWindow();
+    get_list();
+
+
         //get_list_goingto();
         //get_planning_list();
         // back_img.setImageResource(R.drawable.favourites_back);
@@ -146,7 +148,7 @@ public class FavoriteFragment extends Fragment {
 
                         }
                         if (event_list.size() > 0) {
-                            wish_linear_layout.setVisibility(View.VISIBLE);
+                           // wish_linear_layout.setVisibility(View.VISIBLE);
 
                             view_item_pager2.setAdapter(new Favorite_list_Adapter(getActivity(), event_list));
 
@@ -183,7 +185,7 @@ public class FavoriteFragment extends Fragment {
                         }
                         if (planning_event_list.size() > 0) {
                             // view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(),event_list));
-                            planning_linear_layout.setVisibility(View.VISIBLE);
+                            //planning_linear_layout.setVisibility(View.VISIBLE);
 
                             cat_pager.setAdapter(new AdvantureFeatureAdapter(getActivity(), planning_event_list));
                             if (planning_event_list.size() > 1) {
@@ -216,7 +218,7 @@ public class FavoriteFragment extends Fragment {
 
                         }
                         if (goint_to_event_list.size() > 0) {
-                            ging_to_linear_layout.setVisibility(View.VISIBLE);
+                           // ging_to_linear_layout.setVisibility(View.VISIBLE);
 
                             view_item_pager1.setAdapter(new AdvantureFeatureAdapter(getActivity(), goint_to_event_list));
 
@@ -226,13 +228,7 @@ public class FavoriteFragment extends Fragment {
                                 goingMethod();
                             }
                         }
-                        if (goint_to_event_list.size() != 0 || planning_event_list.size() != 0 || event_list.size() != 0) {
-                            message_linear_layout.setVisibility(View.GONE);
-                            scroll_view.setVisibility(View.VISIBLE);
-                        } else {
-                            message_linear_layout.setVisibility(View.VISIBLE);
-                            scroll_view.setVisibility(View.GONE);
-                        }
+
 
 
                     }

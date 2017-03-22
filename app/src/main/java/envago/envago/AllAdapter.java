@@ -45,7 +45,7 @@ import java.util.Map;
 public class AllAdapter extends PagerAdapter {
 
     private Context mContext;
-
+Global global;
     ArrayList<HashMap<String, String>> mResources = new ArrayList<>();
     /*  com.nostra13.universalimageloader.core.ImageLoader imageLoader;
       DisplayImageOptions options;*/
@@ -61,10 +61,11 @@ public class AllAdapter extends PagerAdapter {
             "Dec",};
     SharedPreferences sp;
     SharedPreferences.Editor ed;
+
     public AllAdapter(Context mContext, ArrayList<HashMap<String, String>> mResources) {
         this.mContext = mContext;
         this.mResources = mResources;
-
+global=(Global)mContext.getApplicationContext();
         imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
                 .imageScaleType(ImageScaleType.EXACTLY)
@@ -73,8 +74,8 @@ public class AllAdapter extends PagerAdapter {
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
         initImageLoader();
-        sp=mContext.getSharedPreferences("message",Context.MODE_PRIVATE);
-        ed=sp.edit();
+        sp = mContext.getSharedPreferences("message", Context.MODE_PRIVATE);
+        ed = sp.edit();
     }
 
     @Override
@@ -95,41 +96,55 @@ public class AllAdapter extends PagerAdapter {
         TextView view_date_text = (TextView) itemView.findViewById(R.id.view_advanture_date_txt);
         TextView view_location_txt = (TextView) itemView.findViewById(R.id.view_advanture_location_txt);
         ImageView view_img = (ImageView) itemView.findViewById(R.id.view_img);
-        LinearLayout main_layout=(LinearLayout)itemView.findViewById(R.id.main_layout);
+        final LinearLayout main_layout = (LinearLayout) itemView.findViewById(R.id.main_layout);
         final ImageView heart_img = (ImageView) itemView.findViewById(R.id.heart_img);
         TextView start_event_txtView = (TextView) itemView.findViewById(R.id.start_event_txtView);
-        Fonts.overrideFonts(mContext,main_layout);
-        Fonts.overrideFonts1(mContext,view_text);
+        Fonts.overrideFonts(mContext, main_layout);
+        Fonts.overrideFonts1(mContext, view_text);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent j=new Intent(mContext,DetailsActivity.class);
-                j.putExtra(GlobalConstants.EVENT_ID,mResources.get(i).get(GlobalConstants.EVENT_ID));
-j.putExtra("user","no user");
+                /*main_layout.setDrawingCacheEnabled(true);
+
+                Bitmap bitmap = main_layout.getDrawingCache();
+                File root = Environment.getExternalStorageDirectory();
+                File cachePath = new File(root.getAbsolutePath() + "/DCIM/Camera/image.jpg");
+                try {
+                    cachePath.createNewFile();
+                    FileOutputStream ostream = new FileOutputStream(cachePath);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+                    ostream.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                global.setF(cachePath);*/
+                Intent j = new Intent(mContext, DetailsActivity.class);
+                j.putExtra(GlobalConstants.EVENT_ID, mResources.get(i).get(GlobalConstants.EVENT_ID));
+                j.putExtra("user", "no user");
                 mContext.startActivity(j);
 
             }
         });
 
 
-            url = GlobalConstants.IMAGE_URL + mResources.get(i).get(GlobalConstants.IMAGE);
+        url = GlobalConstants.IMAGE_URL + mResources.get(i).get(GlobalConstants.IMAGE);
 
-            if (url != null && !url.equalsIgnoreCase("null")
-                    && !url.equalsIgnoreCase("")) {
-                imageLoader.displayImage(url, view_img, options,
-                        new SimpleImageLoadingListener() {
-                            @Override
-                            public void onLoadingComplete(String imageUri,
-                                                          View view, Bitmap loadedImage) {
-                                super.onLoadingComplete(imageUri, view,
-                                        loadedImage);
+        if (url != null && !url.equalsIgnoreCase("null")
+                && !url.equalsIgnoreCase("")) {
+            imageLoader.displayImage(url, view_img, options,
+                    new SimpleImageLoadingListener() {
+                        @Override
+                        public void onLoadingComplete(String imageUri,
+                                                      View view, Bitmap loadedImage) {
+                            super.onLoadingComplete(imageUri, view,
+                                    loadedImage);
 
-                            }
-                        });
-            } else {
-                view_img.setImageResource(0);
-            }
-
+                        }
+                    });
+        } else {
+            view_img.setImageResource(0);
+        }
 
 
         view_text.setText(mResources.get(i).get(GlobalConstants.EVENT_NAME));
@@ -156,13 +171,13 @@ j.putExtra("user","no user");
                     mResources.get(i).put(GlobalConstants.EVENT_FAV, "1");
                     heart_img.setImageResource(R.drawable.heart_field);
                     favoriteMethod(mResources.get(i).get(GlobalConstants.EVENT_ID), "1");
-                    ed.putString("message","wish");
+                    ed.putString("message", "wish");
                     ed.commit();
                 } else {
                     heart_img.setImageResource(R.drawable.heart);
                     mResources.get(i).put(GlobalConstants.EVENT_FAV, "0");
                     favoriteMethod(mResources.get(i).get(GlobalConstants.EVENT_ID), "0");
-                    ed.putString("message","not wish");
+                    ed.putString("message", "not wish");
                     ed.commit();
                 }
 
@@ -220,6 +235,7 @@ j.putExtra("user","no user");
 
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
     }
+
     private void favoriteMethod(final String event_id, final String like_status) {
 
 

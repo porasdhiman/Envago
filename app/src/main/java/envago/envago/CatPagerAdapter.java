@@ -59,19 +59,21 @@ public class CatPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
         View itemView = LayoutInflater.from(mContext).inflate(R.layout.advanture_pager_item_for_cat, container, false);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if(!list.get(position).get(GlobalConstants.EVENT_CAT_COUNT).equalsIgnoreCase("0")) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
 
-                Intent intent = new Intent(mContext, Adventure_list.class);
-                intent.putExtra(GlobalConstants.CAT_ID,list.get(position).get(GlobalConstants.CAT_ID));
-                intent.putExtra(GlobalConstants.EVENT_CAT_NAME,list.get(position).get(GlobalConstants.EVENT_CAT_NAME));
-                mContext.startActivity(intent);
+                    Intent intent = new Intent(mContext, Adventure_list.class);
+                    intent.putExtra(GlobalConstants.CAT_ID, list.get(position).get(GlobalConstants.CAT_ID));
+                    intent.putExtra(GlobalConstants.EVENT_CAT_NAME, list.get(position).get(GlobalConstants.EVENT_CAT_NAME));
+                    mContext.startActivity(intent);
 
 
-            }
-        });
+                }
+            });
+        }
         TextView cat_name_txtView = (TextView) itemView.findViewById(R.id.cat_name_txtView);
         TextView count_value = (TextView) itemView.findViewById(R.id.count_value);
         ImageView cat_pager_img = (ImageView) itemView.findViewById(R.id.cat_pager_img);

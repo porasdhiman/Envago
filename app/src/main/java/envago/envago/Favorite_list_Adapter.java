@@ -34,7 +34,7 @@ public class Favorite_list_Adapter extends PagerAdapter {
     ArrayList<HashMap<String, String>> mResources = new ArrayList<>();
     /*  com.nostra13.universalimageloader.core.ImageLoader imageLoader;
       DisplayImageOptions options;*/
-
+Global global;
     int img[];
     String arr[] = {"Water", "Air", "Rock & Ice"};
     ArrayList<HashMap<String, String>> images;
@@ -55,6 +55,7 @@ public class Favorite_list_Adapter extends PagerAdapter {
                 .showImageForEmptyUri(0)    //	If Empty image found
                 .cacheInMemory()
                 .cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
+        global=(Global)mContext.getApplicationContext();
         initImageLoader();
     }
 
@@ -78,12 +79,27 @@ public class Favorite_list_Adapter extends PagerAdapter {
         ImageView view_img = (ImageView) itemView.findViewById(R.id.view_img);
         ImageView heart_img = (ImageView) itemView.findViewById(R.id.heart_img);
         TextView start_event_txtView = (TextView) itemView.findViewById(R.id.start_event_txtView);
-        LinearLayout main_layout=(LinearLayout)itemView.findViewById(R.id.main_layout);
+        final LinearLayout main_layout=(LinearLayout)itemView.findViewById(R.id.main_layout);
         Fonts.overrideFonts(mContext,main_layout);
         Fonts.overrideFonts1(mContext,view_text);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               /* main_layout.setDrawingCacheEnabled(true);
+
+                Bitmap bitmap = main_layout.getDrawingCache();
+                File root = Environment.getExternalStorageDirectory();
+                File cachePath = new File(root.getAbsolutePath() + "/DCIM/Camera/image.jpg");
+                try {
+                    cachePath.createNewFile();
+                    FileOutputStream ostream = new FileOutputStream(cachePath);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+                    ostream.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                global.setF(cachePath);*/
                 Intent j=new Intent(mContext,DetailsActivity.class);
                 j.putExtra(GlobalConstants.EVENT_ID,mResources.get(i).get(GlobalConstants.EVENT_ID));
                 j.putExtra("user","no user wish");
