@@ -120,7 +120,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(String s) {
 
-                Log.e("map data", s);
+
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
@@ -153,7 +153,7 @@ public class HomeFragment extends Fragment {
                         }
 
                         global.setEvent_list(event_list);
-                        Log.e("sie of map data", String.valueOf(global.getEvent_list().size()));
+
                         map_button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -190,7 +190,7 @@ public class HomeFragment extends Fragment {
 
                 params.put("action", GlobalConstants.GET_EVENT_FILTER);
 
-                Log.e("paramsssssssss", params.toString());
+
                 return params;
             }
         };
@@ -209,7 +209,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(String s) {
                 dialog2.dismiss();
-                Log.e("Categoryyyy", s);
+
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
@@ -244,7 +244,7 @@ public class HomeFragment extends Fragment {
 
                             }
                         }
-                        Log.e("suggested_event_list", suggested_event_list.toString());
+
                         if (data.has("featured_events")) {
                             JSONArray fet_events = data.getJSONArray("featured_events");
                             for (int i = 0; i < fet_events.length(); i++) {
@@ -270,7 +270,7 @@ public class HomeFragment extends Fragment {
 
                             }
                         }
-                        Log.e("featured event", featured_event_list.toString());
+
                         if (data.has("featured_users")) {
                             JSONArray featured_users = data.getJSONArray("featured_users");
                             for (int i = 0; i < featured_users.length(); i++) {
@@ -289,7 +289,7 @@ public class HomeFragment extends Fragment {
 
                             }
                         }
-                        Log.e("featured_planner_list", featured_planner_list.toString());
+
                         if (data.has("categories")) {
                             JSONArray categories = data.getJSONArray("categories");
                             for (int i = 0; i < categories.length(); i++) {
@@ -306,7 +306,7 @@ public class HomeFragment extends Fragment {
 
                             }
                         }
-                        Log.e("catgory_list", catgory_list.toString());
+
                         if (catgory_list.size() != 0) {
                             all_linear_layout.setVisibility(View.VISIBLE);
                             shimmer_view_container.setVisibility(View.GONE);
@@ -364,7 +364,7 @@ public class HomeFragment extends Fragment {
 
                 params.put("action", "get_featured_entities");
 
-                Log.e("paramsssssssss", params.toString());
+
                 return params;
             }
         };
@@ -467,7 +467,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(String s) {
 
-                Log.e("hahahahahahaha", s);
+
                 try {
                     JSONObject respose_obj = new JSONObject(s);
                     String obj = respose_obj.getString("success");
@@ -516,7 +516,7 @@ public class HomeFragment extends Fragment {
 
                 params.put(GlobalConstants.USERID, CommonUtils.UserID(getActivity()));
                 params.put("action", GlobalConstants.GETPROFILE_ACTION);
-                Log.e("heheheheheheheh", params.toString());
+
 
 
                 return params;

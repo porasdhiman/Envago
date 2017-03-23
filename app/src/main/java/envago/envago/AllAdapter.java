@@ -244,7 +244,7 @@ global=(Global)mContext.getApplicationContext();
                     @Override
                     public void onResponse(String response) {
 
-                        Log.e("response", response);
+
                         try {
                             JSONObject obj = new JSONObject(response);
 

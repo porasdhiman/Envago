@@ -376,7 +376,6 @@ ImageView back_button_create;
         meeting_loc = global.getStartingPoint();
         meeting_lat = global.getStarting_lat();
         meeting_long = global.getStarting_lng();
-        Log.e("lat long value", meeting_lat + meeting_long);
 
 
         //--------------------------------end-map-location-variable---------------------------------------------
@@ -648,7 +647,6 @@ ImageView back_button_create;
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.e("TAG", "onConnectionFailed: ConnectionResult.getErrorCode() = " + connectionResult.getErrorCode());
 
         // TODO(Developer): Check error code and notify the user of error state
         // and resolution.

@@ -148,7 +148,7 @@ public class AddPhotoActivity extends BaseActivity {
         });
         if (!sp.getString(GlobalConstants.IMAGEDATA, "").equalsIgnoreCase("")) {
             sharedData = new ArrayList<String>(Arrays.asList(sp.getString(GlobalConstants.IMAGEDATA, "").substring(1, sp.getString(GlobalConstants.IMAGEDATA, "").length() - 1).split(",")));
-            Log.e("shared data", sharedData.toString());
+
             global.setListImg(sharedData);
             button1.setVisibility(View.VISIBLE);
             imageLoader.displayImage("file://" + global.getListImg().get(0), img, options, new SimpleImageLoadingListener() {

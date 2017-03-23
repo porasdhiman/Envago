@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -247,7 +246,7 @@ public class RegisterActivity extends Activity implements View.OnTouchListener, 
                     @Override
                     public void onResponse(String response) {
 
-                        Log.e("response", response);
+
                         try {
                             JSONObject obj = new JSONObject(response);
 
@@ -304,7 +303,6 @@ public class RegisterActivity extends Activity implements View.OnTouchListener, 
 
                 params.put(GlobalConstants.DEVICEID, global.getDeviceToken());
                 params.put("action", GlobalConstants.REGISTER_ACTION);
-                Log.e("Parameter for Register", params.toString());
                 return params;
             }
 

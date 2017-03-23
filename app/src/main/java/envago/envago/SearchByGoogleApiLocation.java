@@ -190,7 +190,6 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
                 dialog2.dismiss();
 
 
-                Log.e("all data", s);
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
@@ -230,13 +229,11 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
                                 if(event_list.size()>0) {
                                     search_listView.setSelection(global.getSearchList().size());
                                     global.setSearchList(event_list);
-                                    Log.e("list size", String.valueOf(global.getSearchList().size()));
                                     search_listView.setAdapter(new Adventure_list_adapter(SearchByGoogleApiLocation.this, global.getSearchList()));
                                 }
                             }else{
                                 if(event_list.size()>0) {
                                     global.setSearchList(event_list);
-                                    Log.e("list size", String.valueOf(global.getSearchList().size()));
                                     search_listView.setAdapter(new Adventure_list_adapter(SearchByGoogleApiLocation.this, global.getSearchList()));
                                 }
                             }
@@ -271,7 +268,6 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
                 params.put("perpage", "15");
                 params.put("action", GlobalConstants.GET_EVENT_FILTER);
 
-                Log.e("paramsssssssss", params.toString());
                 return params;
             }
         };

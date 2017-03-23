@@ -1,7 +1,5 @@
 package envago.envago;
 
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
@@ -9,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.text.Html;
 import android.text.Spanned;
@@ -32,7 +29,6 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
@@ -130,7 +126,6 @@ public class LocationActivity extends FragmentActivity implements GoogleApiClien
         public void onResult(PlaceBuffer places) {
             if (!places.getStatus().isSuccess()) {
 
-                Log.e("Tag", "Place query did not complete. Error: " + places.getStatus().toString());
                 places.release();
                 return;
             }
@@ -159,14 +154,12 @@ public class LocationActivity extends FragmentActivity implements GoogleApiClien
 
     private static Spanned formatPlaceDetails(Resources res, CharSequence name, String id, CharSequence address,
                                               CharSequence phoneNumber, Uri websiteUri) {
-        Log.e("Tag", res.getString(R.string.place_details, name, id, address, phoneNumber, websiteUri));
         return Html.fromHtml(res.getString(R.string.place_details, name, id, address, phoneNumber, websiteUri));
 
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.e("TAG", "onConnectionFailed: ConnectionResult.getErrorCode() = " + connectionResult.getErrorCode());
 
         // TODO(Developer): Check error code and notify the user of error state
         // and resolution.
@@ -197,7 +190,6 @@ public class LocationActivity extends FragmentActivity implements GoogleApiClien
     @Override
     public void onConnectionSuspended(int i) {
         mAdapter.setGoogleApiClient(null);
-        Log.e("search", "Google Places API connection suspended.");
     }
 
 

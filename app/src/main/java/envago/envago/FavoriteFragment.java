@@ -9,7 +9,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,7 +115,7 @@ public class FavoriteFragment extends Fragment {
             @Override
             public void onResponse(String s) {
                 dialog2.dismiss();
-                Log.e("wish list", s);
+
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
@@ -254,7 +253,7 @@ public class FavoriteFragment extends Fragment {
 
                 params.put("action", "get_entities");
 
-                Log.e("paramsssssssss", params.toString());
+
                 return params;
             }
         };
@@ -363,7 +362,7 @@ public class FavoriteFragment extends Fragment {
             @Override
             public void onResponse(String s) {
 
-                Log.e("planning list", s);
+
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
@@ -441,7 +440,7 @@ public class FavoriteFragment extends Fragment {
                 params.put("perpage", "20");
                 params.put("action", "get_my_events");
 
-                Log.e("paramsssssssss", params.toString());
+
                 return params;
             }
         };
@@ -460,7 +459,7 @@ public class FavoriteFragment extends Fragment {
             @Override
             public void onResponse(String s) {
 
-                Log.e("list going to", s);
+
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
@@ -534,7 +533,7 @@ public class FavoriteFragment extends Fragment {
                 params.put("perpage", "20");
                 params.put("action", "get_events_joined_by_me");
 
-                Log.e("paramsssssssss", params.toString());
+
                 return params;
             }
         };

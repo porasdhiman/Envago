@@ -18,7 +18,6 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,7 +107,6 @@ public class UserFragment extends Fragment {
         Login_TV = (LoginButton) v.findViewById(R.id.Fb_Login);
         Login_TV.setReadPermissions(Arrays.asList("public_profile, email"));
         fbMethod();
-
         main_layout = (LinearLayout) v.findViewById(R.id.main_layout);
         Fonts.overrideFonts(getActivity(), main_layout);
         share_txtView = (TextView) v.findViewById(R.id.share_txtView);
@@ -249,7 +247,7 @@ public class UserFragment extends Fragment {
                                             GraphResponse response) {
                         // Application code
 
-                        Log.e("date", object.toString());
+
 
 
                     }
@@ -358,7 +356,6 @@ public class UserFragment extends Fragment {
             @Override
             public void onResponse(String s) {
                 dialog2.dismiss();
-                Log.e("hahahahahahaha", s);
                 try {
                     JSONObject respose_obj = new JSONObject(s);
                     String obj = respose_obj.getString("success");
@@ -417,7 +414,6 @@ public class UserFragment extends Fragment {
 
                 params.put(GlobalConstants.USERID, CommonUtils.UserID(getActivity()));
                 params.put("action", GlobalConstants.GETPROFILE_ACTION);
-                Log.e("heheheheheheheh", params.toString());
 
 
                 return params;

@@ -92,7 +92,7 @@ public class MyChatActivity extends Activity {
             @Override
             public void onResponse(String s) {
                 dialog2.dismiss();
-                Log.e("Categoryyyy", s);
+
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");

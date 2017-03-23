@@ -475,7 +475,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                     @Override
                     public void onResponse(String response) {
 
-                        Log.e("response", response);
+
                         try {
                             JSONObject obj = new JSONObject(response);
 
@@ -510,7 +510,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                 params.put(GlobalConstants.LIKE_STATUS, like_status);
 
                 params.put("action", GlobalConstants.ACTION_LIKE_EVENT);
-                Log.e("favorite param", params.toString());
+
                 return params;
             }
 

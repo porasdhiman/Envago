@@ -227,7 +227,7 @@ public class EditProfileActivity extends Activity {
         } else {
 
             about_edit.setText(about);
-            Log.e("about", about_edit.getText().toString());
+
 
         }
 

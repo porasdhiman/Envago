@@ -238,13 +238,7 @@ public class AboutPlannerActivity extends Activity {
                                     review_user_name.setText(cap(reviewList.get(0).get("username")));
                                     comment.setText(reviewList.get(0).get("text"));
 
-                                     /*   if (reviewList.get(0).get("rating").contains(".")) {
-                                            // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING).split("0")[0].replace(".", ""));
-                                            stars_review_list.setRating(Float.parseFloat(reviewList.get(0).get("rating").split("0")[0].replace(".", "")));
-                                        } else {*/
-                                    // rating.setText(objArry.getString(GlobalConstants.ADMIN_RATING));
-                                   // stars_review_list.setRating(Float.parseFloat(reviewList.get(0).get("rating")));
-                                    Log.e("value",reviewList.get(0).get("rating"));
+
                                     String value=reviewList.get(0).get("rating");
                                     if (value.contains("1")) {
                                         star1.setImageResource(R.drawable.star);

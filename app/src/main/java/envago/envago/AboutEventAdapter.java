@@ -4,7 +4,6 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +95,7 @@ public class AboutEventAdapter extends BaseAdapter {
 Fonts.overrideFonts(context,holder.main_layout);
         Fonts.overrideFonts1(context,holder.event_name_txt);
         url = GlobalConstants.IMAGE_URL + list.get(position).get(GlobalConstants.IMAGE);
-        Log.e("urle",url);
+
         holder.event_price_txt.setText("$"+list.get(position).get(GlobalConstants.EVENT_PRICE));
         holder.event_name_txt.setText(cap(list.get(position).get(GlobalConstants.EVENT_NAME)));
 

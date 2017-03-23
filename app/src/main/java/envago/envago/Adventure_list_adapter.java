@@ -174,7 +174,7 @@ public class Adventure_list_adapter extends BaseAdapter {
 
         holder.advanture_location.setText(images.get(i).get(GlobalConstants.EVENT_LOC));
         holder.advanture_location.setTextColor(Color.GRAY);
-        Log.e("location text ", holder.advanture_location.getText().toString());
+
 
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
@@ -285,7 +285,7 @@ public class Adventure_list_adapter extends BaseAdapter {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.e("response", response);
+
                         try {
                             JSONObject obj = new JSONObject(response);
 

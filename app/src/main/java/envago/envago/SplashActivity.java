@@ -55,7 +55,7 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    String SENDER_ID = "407984051965";
+    String SENDER_ID = "513380904305";
     GoogleCloudMessaging gcm;
     AtomicInteger msgId = new AtomicInteger();
     String regId;

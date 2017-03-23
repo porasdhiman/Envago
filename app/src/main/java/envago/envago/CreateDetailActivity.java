@@ -138,7 +138,7 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                     global.setEvent_cat_id(String.valueOf(11));
 
                     catgory = cat_editText.getSelectedItem().toString();
-                    Log.e("catgory_id",global.getEvent_cat_id());
+
                 }
 
 
@@ -148,7 +148,7 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                     global.setEvent_cat_id(String.valueOf(position));
 
                     catgory = cat_editText.getSelectedItem().toString();
-                    Log.e("catgory_id",global.getEvent_cat_id());
+
                 }
 
             }

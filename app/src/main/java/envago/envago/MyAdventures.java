@@ -129,7 +129,6 @@ public class MyAdventures extends Activity implements View.OnTouchListener {
             @Override
             public void onResponse(String s) {
                 dialog2.dismiss();
-                Log.e("Categoryyyy", s);
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
@@ -195,7 +194,6 @@ public class MyAdventures extends Activity implements View.OnTouchListener {
                 params.put("perpage", "20");
                 params.put("action", "get_my_events");
 
-                Log.e("paramsssssssss", params.toString());
                 return params;
             }
         };

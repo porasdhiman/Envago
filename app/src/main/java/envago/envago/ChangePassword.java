@@ -107,7 +107,7 @@ public class ChangePassword extends Activity {
             @Override
             public void onResponse(String s) {
                 dialog2.dismiss();
-                Log.e("hulalalalalala", s);
+
                 try {
                     JSONObject obj = new JSONObject(s);
                     String response = obj.getString("success");

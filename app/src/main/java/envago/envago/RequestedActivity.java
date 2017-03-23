@@ -319,7 +319,6 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
         if (no_of_days_txtView.getText().length() > 0) {
             if (i == 0) {
                 start_txtView.setText(getSelectedDatesString());
-                Log.e("select Date", formatdate2(end_date));
 
 
 
@@ -377,25 +376,21 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
             String months = String.valueOf(Integer.parseInt(start_date.split("-")[1]) + 1);
             String date = start_date.split("-")[2];
             start_date = year + "-" + months + "-" + date;
-            Log.e("start date", start_date);
             global.setEvent_start_date(start_date);
             end_date = list.get(valye - 1).toString().substring(12, list.get(valye - 1).toString().length() - 1);
             String year_end = end_date.split("-")[0];
             String months_end = String.valueOf(Integer.parseInt(end_date.split("-")[1]) + 1);
             String date_end = end_date.split("-")[2];
             end_date = year_end + "-" + months_end + "-" + date_end;
-            Log.e("end date", end_date);
 
 
             map = new HashMap<>();
             map.put(GlobalConstants.EVENT_START_DATE, start_date);
             map.put(GlobalConstants.EVENT_END_DATE, end_date);
             dateArray.add(map);
-            Log.e("value array", dateArray.toString());
             if (date1 == null) {
                 return "No Selection";
             }
-            Log.e("calender day value", calendarDays.toString());
             global.setDateArray(dateArray);
         } else {
             list.clear();
@@ -416,23 +411,19 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
             String months = String.valueOf(Integer.parseInt(start_date.split("-")[1]) + 1);
             String date = start_date.split("-")[2];
             start_date = year + "-" + months + "-" + date;
-            Log.e("start date", start_date);
 
             end_date = list.get(valye - 1).toString().substring(12, list.get(valye - 1).toString().length() - 1);
             String year_end = end_date.split("-")[0];
             String months_end = String.valueOf(Integer.parseInt(end_date.split("-")[1]) + 1);
             String date_end = end_date.split("-")[2];
             end_date = year_end + "-" + months_end + "-" + date_end;
-            Log.e("end date", end_date);
             map = new HashMap<>();
             map.put(GlobalConstants.EVENT_START_DATE, start_date);
             map.put(GlobalConstants.EVENT_END_DATE, end_date);
             dateArray.add(map);
-            Log.e("value array", dateArray.toString());
             if (date1 == null) {
                 return "No Selection";
             }
-            Log.e("calender day value1", calendarDays.toString());
             global.setDateArray(dateArray);
         }
 

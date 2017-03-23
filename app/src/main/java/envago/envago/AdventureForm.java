@@ -391,8 +391,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         try {
             selectedImagePath = getFilePath(AdventureForm.this, uri);
             list_image.add(selectedImagePath);
-            Log.e("image Array", "" + list_image.size());
-            Log.e("bitmap Array", "" + list_bitmap.size());
+
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -425,8 +424,7 @@ public class AdventureForm extends FragmentActivity implements ViewPager.OnPageC
         try {
             selectedImagePath = getFilePath(AdventureForm.this, uri);
             list_image.add(selectedImagePath);
-            Log.e("image Array", "" + list_image.size());
-            Log.e("bitmap Array", "" + list_bitmap.size());
+           
 
         } catch (URISyntaxException e) {
             e.printStackTrace();

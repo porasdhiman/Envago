@@ -54,9 +54,10 @@ public class ActivityLogin extends Activity implements View.OnTouchListener, Vie
     Dialog dialog2;
     Global global;
 
-    TextView mail_error_txtView, password_error_txtView, forgot_txtView,email_txtView,password_txtView;
+    TextView mail_error_txtView, password_error_txtView, forgot_txtView, email_txtView, password_txtView;
     ImageView back_from_login;
-RelativeLayout main_layout;
+    RelativeLayout main_layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,12 +65,12 @@ RelativeLayout main_layout;
         global = (Global) getApplicationContext();
         sp = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         ed = sp.edit();
-        main_layout=(RelativeLayout)findViewById(R.id.main_layout);
-        Fonts.overrideFonts1(this,main_layout);
+        main_layout = (RelativeLayout) findViewById(R.id.main_layout);
+        Fonts.overrideFonts1(this, main_layout);
         email_txtView = (TextView) findViewById(R.id.email_txtView);
         password_txtView = (TextView) findViewById(R.id.password_txtView);
-        Fonts.overrideFontHeavy(this,email_txtView);
-        Fonts.overrideFontHeavy(this,password_txtView);
+        Fonts.overrideFontHeavy(this, email_txtView);
+        Fonts.overrideFontHeavy(this, password_txtView);
         show_txt = (TextView) findViewById(R.id.show_txt);
         password_editView = (EditText) findViewById(R.id.password);
         email_editText = (EditText) findViewById(mail_editText);
@@ -101,9 +102,9 @@ RelativeLayout main_layout;
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(email_editText.getText().length()>0 && password_editView.getText().length()>0){
+                if (email_editText.getText().length() > 0 && password_editView.getText().length() > 0) {
                     login_button.setBackgroundResource(R.drawable.red_button_back);
-                }else{
+                } else {
                     login_button.setBackgroundResource(R.drawable.login_btn_back);
 
                 }
@@ -122,9 +123,9 @@ RelativeLayout main_layout;
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(email_editText.getText().length()>0 &&  password_editView.getText().length()>0){
+                if (email_editText.getText().length() > 0 && password_editView.getText().length() > 0) {
                     login_button.setBackgroundResource(R.drawable.red_button_back);
-                }else{
+                } else {
                     login_button.setBackgroundResource(R.drawable.login_btn_back);
 
                 }
@@ -161,12 +162,11 @@ RelativeLayout main_layout;
                     password_error_txtView.setVisibility(View.VISIBLE);
                     password_error_txtView.setText("Please enter a correct Password");
 
-                }else if (password_editView.getText().length()<6) {
+                } else if (password_editView.getText().length() < 6) {
                     password_error_txtView.setVisibility(View.VISIBLE);
                     password_error_txtView.setText("Password length must be atleast 6");
 
-                }
-                else if (!CommonUtils.isEmailValid(email_editText.getText().toString())) {
+                } else if (!CommonUtils.isEmailValid(email_editText.getText().toString())) {
                     mail_error_txtView.setVisibility(View.VISIBLE);
                     mail_error_txtView.setText("Please enter a valid email address");
                 } else {
@@ -218,7 +218,6 @@ RelativeLayout main_layout;
     }
 
 
-
     private void loginMethod() {
 
 
@@ -228,7 +227,7 @@ RelativeLayout main_layout;
                     public void onResponse(String response) {
                         dialog2.dismiss();
 
-                        Log.e("response", response);
+
                         try {
                             JSONObject obj = new JSONObject(response);
 
@@ -270,7 +269,7 @@ RelativeLayout main_layout;
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(GlobalConstants.EMAIL, email_editText.getText().toString());
                 params.put(GlobalConstants.PASSWORD, password_editView.getText().toString());
-                Log.e("lat long", global.getLat());
+
                 params.put(GlobalConstants.LATITUDE, global.getLat());
                 params.put(GlobalConstants.LONGITUDE, global.getLong());
                 params.put(GlobalConstants.DEVICEID, global.getDeviceToken());

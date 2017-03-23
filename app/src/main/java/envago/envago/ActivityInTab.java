@@ -13,7 +13,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ActivityInTab extends FragmentActivity {
@@ -92,7 +91,7 @@ public class ActivityInTab extends FragmentActivity {
 
     }*/
     public void progress() {
-        Log.e("dddddddddddd", "open");
+
         progressDialog = ProgressDialog.show(ActivityInTab.this, "", "Sending Fax...");
     }
 

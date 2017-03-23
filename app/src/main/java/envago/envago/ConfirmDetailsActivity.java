@@ -77,7 +77,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
     Global global;
     int i = 1, total, Change_total;
     Date startDate, endDate;
-    Dialog dialog2,cancel_dialog;
+    Dialog dialog2, cancel_dialog;
     TextView count_txtView;
     String months[] = {" ", "Jan", "Feb", "Mar", "Apr", "May",
             "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
@@ -95,7 +95,8 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
     int leftTotal;
     TextView location_txt, time_txt, persone, total_txt;
     LinearLayout main_layout;
-int l;
+    int l;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,7 +128,7 @@ int l;
         startDate = new Date();
         endDate = new Date();
         try {
-            Log.e("aaraaaa", global.getBookdateArray().toString());
+
             startDate = dateFormat.parse(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_START_DATE));
             endDate = dateFormat.parse(global.getBookdateArray().get(Integer.parseInt(getIntent().getExtras().getString("pos"))).get(GlobalConstants.EVENT_END_DATE));
         } catch (java.text.ParseException e) {
@@ -142,7 +143,7 @@ int l;
         Fonts.overrideFonts1(this, persone);
         Fonts.overrideFonts1(this, total_txt);
         Fonts.overrideFonts1(this, location_txt);
-        l=getDaysDifference(startDate, endDate)+1;
+        l = getDaysDifference(startDate, endDate) + 1;
         duration_txtView.setText("(" + String.valueOf(l) + " Days)");
         person_name = (TextView) findViewById(R.id.person_name);
         person_name.setText(cap(global.getEvent_name()));
@@ -790,7 +791,7 @@ int l;
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
         cancel_dialog.show();
 
-       TextView ok_button = (TextView) cancel_dialog.findViewById(R.id.ok_button);
+        TextView ok_button = (TextView) cancel_dialog.findViewById(R.id.ok_button);
         TextView cancel_button = (TextView) cancel_dialog.findViewById(R.id.cancel_button);
 
 

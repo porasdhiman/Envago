@@ -187,7 +187,6 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
                 return false;
             }
         });
-        Log.e("map size", String.valueOf(global.getEvent_list().size()));
     }
 
 
@@ -245,7 +244,6 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
         public void onResult(PlaceBuffer places) {
             if (!places.getStatus().isSuccess()) {
 
-                Log.e("Tag", "Place query did not complete. Error: " + places.getStatus().toString());
                 places.release();
                 return;
             }
@@ -344,14 +342,12 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
 
     private static Spanned formatPlaceDetails(Resources res, CharSequence name, String id, CharSequence address,
                                               CharSequence phoneNumber, Uri websiteUri) {
-        Log.e("Tag", res.getString(R.string.place_details, name, id, address, phoneNumber, websiteUri));
         return Html.fromHtml(res.getString(R.string.place_details, name, id, address, phoneNumber, websiteUri));
 
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.e("TAG", "onConnectionFailed: ConnectionResult.getErrorCode() = " + connectionResult.getErrorCode());
 
         // TODO(Developer): Check error code and notify the user of error state
         // and resolution.
@@ -400,7 +396,6 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
     @Override
     public void onConnectionSuspended(int i) {
         mAdapter.setGoogleApiClient(null);
-        Log.e("search", "Google Places API connection suspended.");
     }
 
     //------------------------Adapter for info window--------------------------------
@@ -528,7 +523,6 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             @Override
             public void onResponse(String s) {
                 dialog2.dismiss();
-                Log.e("map data", s);
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
@@ -554,14 +548,12 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
                             JSONObject objArr = arr.getJSONObject(0);
                             details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
-                            Log.e("list value", String.valueOf(i));
 
                             event_list.add(details);
 
                         }
 
                         global.setEvent_list(event_list);
-                        Log.e("sie of map data", String.valueOf(global.getEvent_list().size()));
 
                         eventLocOnMap1();
                     }
@@ -591,7 +583,6 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
 
                 params.put("action", GlobalConstants.GET_EVENT_FILTER);
 
-                Log.e("paramsssssssss", params.toString());
                 return params;
             }
         };
@@ -607,13 +598,10 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
 
         //mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
         // Add a marker in Sydney and move the camera
-        Log.e("event list value ", global.getEvent_list().toString());
         for (i = 0; i < global.getEvent_list().size(); i++) {
-            Log.e("lat long in string", global.getEvent_list().get(i).get(GlobalConstants.LATITUDE) + global.getEvent_list().get(i).get(GlobalConstants.LONGITUDE));
             Double lat = Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LATITUDE));
             Double longt = Double.parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LONGITUDE));
             LatLng postion = new LatLng(lat, longt);
-            Log.e("lat long in double", String.valueOf(lat) + String.valueOf(longt));
             mark = mMap.addMarker(new MarkerOptions().position(postion).title(global.getEvent_list().get(i).get(GlobalConstants.EVENT_NAME)).icon(BitmapDescriptorFactory.fromResource(R.drawable.red_pin)));
 
             // markers.put(mark.getId(), "http://envagoapp.com/uploads/" + global.getEvent_list().get(i).get(GlobalConstants.EVENT_IMAGES));
@@ -638,7 +626,6 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             map.clear();
             //mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
             // Add a marker in Sydney and move the camera
-            Log.e("event list value1 ", global.getEvent_list().toString());
             for (i = 0; i < global.getEvent_list().size(); i++) {
                 LatLng postion = new LatLng(parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LATITUDE)), parseDouble(global.getEvent_list().get(i).get(GlobalConstants.LONGITUDE)));
                 mark = mMap.addMarker(new MarkerOptions().position(postion).title(global.getEvent_list().get(i).get(GlobalConstants.EVENT_NAME)).icon(BitmapDescriptorFactory.fromResource(R.drawable.red_pin)));

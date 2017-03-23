@@ -1,7 +1,6 @@
 package envago.envago;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +50,7 @@ String url;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         String user_id = chatMessageList.get(position).get("id");
 
-        Log.e("user id", user_id);
+
         if (user_id.equalsIgnoreCase(CommonUtils.UserID(context))) {
             row = inflater.inflate(R.layout.right, parent, false);
             global.setUser_url(chatMessageList.get(position).get("image"));

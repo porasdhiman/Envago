@@ -124,7 +124,7 @@ public class AddFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         dialog2.dismiss();
-                        Log.e("response", response);
+
                         try {
                             JSONObject obj = new JSONObject(response);
 

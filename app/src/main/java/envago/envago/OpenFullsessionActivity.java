@@ -281,7 +281,6 @@ MaterialCalendarView calendarView;
         if (list.size() == 0) {
             date1 = calendarView.getSelectedDate();
 
-            Log.e("share date array", date1.toString());
             int valye = Integer.parseInt(no_of_days.getText().toString().split(" ")[0]);
             //calendarView.setSelectedDate(incrementDateByOne(new Date(FORMATTER.format(date.getDate()).toString())));
             for (int i = 0; i < valye; i++) {
@@ -290,7 +289,6 @@ MaterialCalendarView calendarView;
                 list.add(date);
             }
             calendarDays = list;
-            Log.e("share date array", list.toString());
 
             calendarView.addDecorators(new EventDecorator(getResources().getColor(R.color.textcolor), calendarDays));
             start_date = list.get(0).toString().substring(12, list.get(0).toString().length() - 1);
@@ -298,20 +296,17 @@ MaterialCalendarView calendarView;
             String months = String.valueOf(Integer.parseInt(start_date.split("-")[1]) + 1);
             String date = start_date.split("-")[2];
             start_date = year + "-" + months + "-" + date;
-            Log.e("start date", start_date);
            // global.setEvent_start_date(start_date);
             end_date = list.get(valye - 1).toString().substring(12, list.get(valye - 1).toString().length() - 1);
             String year_end = end_date.split("-")[0];
             String months_end = String.valueOf(Integer.parseInt(end_date.split("-")[1]) + 1);
             String date_end = end_date.split("-")[2];
             end_date = year_end + "-" + months_end + "-" + date_end;
-            Log.e("end date", end_date);
            // global.setEvent_end_date(end_date);
 
             if (date1 == null) {
                 return "No Selection";
             }
-            Log.e("calender day value", calendarDays.toString());
         } else {
 
 
@@ -332,20 +327,17 @@ MaterialCalendarView calendarView;
             String months = String.valueOf(Integer.parseInt(start_date.split("-")[1]) + 1);
             String date = start_date.split("-")[2];
             start_date = year + "-" + months + "-" + date;
-            Log.e("start date", start_date);
            // global.setEvent_start_date(start_date);
             end_date = list.get(valye - 1).toString().substring(12, list.get(valye - 1).toString().length() - 1);
             String year_end = end_date.split("-")[0];
             String months_end = String.valueOf(Integer.parseInt(end_date.split("-")[1]) + 1);
             String date_end = end_date.split("-")[2];
             end_date = year_end + "-" + months_end + "-" + date_end;
-            Log.e("end date", end_date);
             //global.setEvent_end_date(end_date);
 
             if (date1 == null) {
                 return "No Selection";
             }
-            Log.e("calender day value1", calendarDays.toString());
         }
 //end_date_txtView.setText(incrementDateByOne(new Date(FORMATTER.format(date1.getDate()).toString()), Integer.parseInt(of_days_txtView.getText().toString())).toString());
         return FORMATTER.format(date1.getDate());

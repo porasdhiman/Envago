@@ -3,7 +3,6 @@ package envago.envago;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,7 +120,7 @@ public class AllReviewActivity extends Activity {
             Fonts.overrideFonts(context, holder.main_layout);
 
             url = GlobalConstants.IMAGE_URL + list.get(position).get(GlobalConstants.IMAGE);
-            Log.e("urle", url);
+
             holder.event_price_txt.setText(list.get(position).get("text"));
             holder.event_name_txt.setText(cap(list.get(position).get("username")));
             //holder.star.setRating(Float.parseFloat(list.get(position).get("rating")));

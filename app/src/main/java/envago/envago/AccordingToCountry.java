@@ -41,7 +41,6 @@ import java.util.Map;
 
 public class AccordingToCountry extends Activity{
     ListView ad_items;
-    //  public int[] images = {R.drawable.air, R.drawable.earth, R.drawable.water, R.drawable.rockice, R.drawable.volunteer, R.drawable.all};
     TextView headtext;
     ArrayList<HashMap<String, String>> event_list = new ArrayList<>();
     String main_id, id;
@@ -66,8 +65,7 @@ public class AccordingToCountry extends Activity{
         headtext = (TextView) findViewById(R.id.header_text_adv);
 
         ad_items = (ListView) findViewById(R.id.ad_list);
-        //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
-        // Log.e("Status", getIntent().getExtras().getString("status"));
+
         list_back_img=(ImageView)findViewById(R.id.list_back_img);
         list_back_img.setImageResource(0);
         search_btn=(ImageView)findViewById(R.id.search_button);
@@ -107,7 +105,7 @@ public class AccordingToCountry extends Activity{
             @Override
             public void onResponse(String s) {
 
-                Log.e("Categoryyyy", s);
+
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
