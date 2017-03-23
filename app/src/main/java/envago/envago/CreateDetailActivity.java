@@ -132,11 +132,23 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                 if (position == 0) {
                     ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.LightGrey));
                     ((TextView) parent.getChildAt(0)).setTextSize(14);
-                } else {
+                }else if(position == 5) {
+                    ((TextView) parent.getChildAt(0)).setTextColor(Color.parseColor("#373737"));
+                    ((TextView) parent.getChildAt(0)).setTextSize(14);
+                    global.setEvent_cat_id(String.valueOf(11));
+
+                    catgory = cat_editText.getSelectedItem().toString();
+                    Log.e("catgory_id",global.getEvent_cat_id());
+                }
+
+
+                else {
                     ((TextView) parent.getChildAt(0)).setTextColor(Color.parseColor("#373737"));
                     ((TextView) parent.getChildAt(0)).setTextSize(14);
                     global.setEvent_cat_id(String.valueOf(position));
+
                     catgory = cat_editText.getSelectedItem().toString();
+                    Log.e("catgory_id",global.getEvent_cat_id());
                 }
 
             }
