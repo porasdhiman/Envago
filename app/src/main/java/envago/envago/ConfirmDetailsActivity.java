@@ -57,21 +57,26 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
     TextView procced_btn;
     //-----------------------------------Paypal variable
 
-    private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
-    private static final String CONFIG_CLIENT_ID = "ATu7TrT4HhoSprVHhzQYVhVoI_QrBo_-vUDqSMPWnrGJqvOtSyo4rJ-3mAVn-iaW5EyN7oeI3OjG09Jt";
+    private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_PRODUCTION;
+    //private static final String CONFIG_CLIENT_ID = "ATu7TrT4HhoSprVHhzQYVhVoI_QrBo_-vUDqSMPWnrGJqvOtSyo4rJ-3mAVn-iaW5EyN7oeI3OjG09Jt";
+    private static final String CONFIG_CLIENT_ID = "AeVIdBo3Xom815-pzUShWlXQdr3c-SUyfQPvdTwycWJpzSSbD-Mu3DbkybQqmpnjfb7Cy0AwRSJq9o3G";
+
 
     private static final int REQUEST_CODE_PAYMENT = 1;
     private static final int REQUEST_CODE_FUTURE_PAYMENT = 2;
 
     private static PayPalConfiguration config = new PayPalConfiguration()
+            .acceptCreditCards(false)
             .environment(CONFIG_ENVIRONMENT)
             .clientId(CONFIG_CLIENT_ID)
+
+
             // The following are only used in PayPalFuturePaymentActivity.
-            .merchantName("Hipster Store")
+            .merchantName("Envago")
             .merchantPrivacyPolicyUri(
-                    Uri.parse("https://www.example.com/privacy"))
+                    Uri.parse("https://www.paypal.com/webapps/mpp/ua/privacy-full"))
             .merchantUserAgreementUri(
-                    Uri.parse("https://www.example.com/legal"));
+                    Uri.parse("https://www.paypal.com/webapps/mpp/ua/useragreement-full"));
 
     PayPalPayment thingToBuy;
     Global global;
@@ -198,6 +203,9 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
         //------------------------------Intent for call paypal service----------------------
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+
+       /* intent.putExtra(PaymentActivity.EXTRA_PAYPAL_ENVIRONMENT, PaymentActivity.ENVIRONMENT_PRODUCTION);
+        intent.putExtra(PaymentActivity.EXTRA_CLIENT_ID, PAYPAL_CLIENT_ID);*/
         startService(intent);
         remanning_place_txt.setText("Remaining places " + getIntent().getExtras().getString(GlobalConstants.remaining_places));
         r_place = Integer.parseInt(getIntent().getExtras().getString(GlobalConstants.remaining_places));
@@ -246,6 +254,11 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                 PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
                 if (confirm != null) {
                     try {
+                        Log.e("object",confirm.toJSONObject().toString(4));
+                        Log.e("object",confirm.getPayment().toJSONObject().toString(4));
+
+
+
                         System.out.println(confirm.toJSONObject().toString(4));
                         System.out.println(confirm.getPayment().toJSONObject().toString(4));
                         dialogWindow();
@@ -399,7 +412,9 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                 if (discount_type.equalsIgnoreCase("")) {
                     leftTotal = Change_total;
                     thingToBuy = new PayPalPayment(new BigDecimal(String.valueOf(leftTotal)), "USD",
-                            "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
+                            "Envago", PayPalPayment.PAYMENT_INTENT_SALE);
+                   /* thingToBuy = new PayPalPayment(new BigDecimal("0.01"), "USD",
+                            "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);*/
                     Intent intent = new Intent(ConfirmDetailsActivity.this, PaymentActivity.class);
                     intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
                     startActivityForResult(intent, REQUEST_CODE_PAYMENT);
@@ -686,7 +701,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                             if (status.equalsIgnoreCase("1")) {
                                 if (discount_type.equalsIgnoreCase("")) {
                                     thingToBuy = new PayPalPayment(new BigDecimal(String.valueOf(Change_total)), "USD",
-                                            "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
+                                            "Envago", PayPalPayment.PAYMENT_INTENT_SALE);
                                     Intent intent = new Intent(ConfirmDetailsActivity.this, PaymentActivity.class);
                                     intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
                                     startActivityForResult(intent, REQUEST_CODE_PAYMENT);
@@ -699,7 +714,7 @@ public class ConfirmDetailsActivity extends Activity implements View.OnClickList
                                         joinEventApi();
                                     } else {
                                         thingToBuy = new PayPalPayment(new BigDecimal(String.valueOf(leftTotal)), "USD",
-                                                "HeadSet", PayPalPayment.PAYMENT_INTENT_SALE);
+                                                "Envago", PayPalPayment.PAYMENT_INTENT_SALE);
                                         Intent intent = new Intent(ConfirmDetailsActivity.this, PaymentActivity.class);
                                         intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
                                         startActivityForResult(intent, REQUEST_CODE_PAYMENT);

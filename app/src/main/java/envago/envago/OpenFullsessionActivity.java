@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -237,6 +236,7 @@ MaterialCalendarView calendarView;
                     Intent i = new Intent(OpenFullsessionActivity.this, ConfirmDetailsActivity.class);
                     i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
                     i.putExtra(GlobalConstants.remaining_places, global.getBookdateArray().get(0).get(GlobalConstants.NUMBER_OF_DAY));
+
                     i.putExtra("pos", String.valueOf(0));
                     startActivity(i);
                 }

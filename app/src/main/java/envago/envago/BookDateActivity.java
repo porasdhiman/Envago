@@ -151,6 +151,7 @@ public class BookDateActivity extends Activity {
                             Intent i=new Intent(context,ConfirmDetailsActivity.class);
                             i.putExtra(GlobalConstants.EVENT_ID, getIntent().getExtras().getString(GlobalConstants.EVENT_ID));
                             i.putExtra(GlobalConstants.remaining_places, list.get(position).get(GlobalConstants.remaining_places));
+
                             i.putExtra("pos", String.valueOf(position));
                             startActivity(i);
                         }

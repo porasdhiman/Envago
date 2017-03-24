@@ -46,14 +46,14 @@ dependencies {
     compile('com.github.worker8:tourguide:1.0.17-SNAPSHOT@aar') {
         transitive = true
     }
-    compile files('libs/PayPalAndroidSDK.jar')
+
     compile 'com.facebook.shimmer:shimmer:0.1.0@aar'
     compile 'com.prolificinteractive:material-calendarview:1.4.2'
     compile 'it.sephiroth.android.library.imagezoom:imagezoom:+'
     compile project(':two_grid_view')
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'com.google.code.gson:gson:2.2.4'
-
+    compile 'com.paypal.sdk:paypal-android-sdk:2.15.3'
 
 
 }

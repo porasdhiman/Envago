@@ -145,8 +145,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
 
     //-----------------------------------Paypal variable
 
-    private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
-    private static final String CONFIG_CLIENT_ID = "ATu7TrT4HhoSprVHhzQYVhVoI_QrBo_-vUDqSMPWnrGJqvOtSyo4rJ-3mAVn-iaW5EyN7oeI3OjG09Jt";
+    private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_PRODUCTION;
+    private static final String CONFIG_CLIENT_ID = "AeVIdBo3Xom815-pzUShWlXQdr3c-SUyfQPvdTwycWJpzSSbD-Mu3DbkybQqmpnjfb7Cy0AwRSJq9o3G";
 
     private static final int REQUEST_CODE_PAYMENT = 1;
     private static final int REQUEST_CODE_FUTURE_PAYMENT = 2;

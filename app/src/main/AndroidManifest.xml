@@ -150,7 +150,7 @@
             android:name=".CallVolunteerForm"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name="com.paypal.android.sdk.payments.PaymentActivity" />
+        <!--<activity android:name="com.paypal.android.sdk.payments.PaymentActivity" />
         <activity android:name="com.paypal.android.sdk.payments.LoginActivity" />
         <activity android:name="com.paypal.android.sdk.payments.PaymentMethodActivity" />
         <activity android:name="com.paypal.android.sdk.payments.PaymentConfirmActivity" />
@@ -164,7 +164,7 @@
 
         <service
             android:name="com.paypal.android.sdk.payments.PayPalService"
-            android:exported="false" />
+            android:exported="false" />-->
 
         <activity
             android:name=".MyAdventures"

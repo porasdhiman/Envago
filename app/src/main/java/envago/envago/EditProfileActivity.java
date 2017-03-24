@@ -231,7 +231,7 @@ public class EditProfileActivity extends Activity {
 
         }
 
-        if (document.length() == 36) {
+        if (!document.contains("JPEG")||!document.contains("PNG")||!document.contains("png")||!document.contains("jpeg")||!document.contains("JPG")) {
             document_edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
