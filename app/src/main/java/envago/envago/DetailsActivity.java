@@ -332,7 +332,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 shareIntent.setType("text/plain");
-                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "I'm using Envago Adventures to go on \n" + header_textview.getText().toString()+ "\nhttps://itunes.apple.com/in/app/envago-adventures/id1140098064?mt=8");
+                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "I'm using Envago Adventures to go on \n" + header_textview.getText().toString()+ "\nhttps://play.google.com/store/apps/details?id=envago.envago&hl=ens");
                 startActivity(shareIntent);
                 /*Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("image*//*");

@@ -151,7 +151,7 @@ public class UserFragment extends Fragment {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 shareIntent.setType("text/plain");
-                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Hey, download this app! https://itunes.apple.com/in/app/envago-adventures/id1140098064?mt=8");
+                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Hey, download this app! https://play.google.com/store/apps/details?id=envago.envago&hl=en");
                 startActivity(shareIntent);
             }
         });
