@@ -114,7 +114,7 @@ Fonts.overrideFonts(context,holder.main_layout);
 
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
-            Picasso.with(context).load(url).placeholder(drawable2).centerCrop().resize(200,160).into(holder.event_img);
+            Picasso.with(context).load(url).placeholder(drawable2).resize(300,260).into(holder.event_img);
         } else {
             holder.event_img.setImageDrawable(drawable2);
         }

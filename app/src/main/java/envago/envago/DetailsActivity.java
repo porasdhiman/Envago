@@ -761,7 +761,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                                     if (url != null && !url.equalsIgnoreCase("null")
                                             && !url.equalsIgnoreCase("")) {
 
-                                        Picasso.with(DetailsActivity.this).load(url).placeholder(drawable).resize(60, 60).transform(new CircleTransform()).into(orginiser_img);
+                                        Picasso.with(DetailsActivity.this).load(url).placeholder(drawable).transform(new CircleTransform()).into(orginiser_img);
                                     } else {
                                         orginiser_img.setImageDrawable(drawable);
                                     }

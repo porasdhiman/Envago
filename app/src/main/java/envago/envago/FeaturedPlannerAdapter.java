@@ -133,31 +133,31 @@ Global global;
         //}
 
 
-        if (list.get(position).get("rating").equalsIgnoreCase("1.00")) {
+        if (list.get(position).get("rating").contains("1")) {
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star_blank);
             holder.star3.setImageResource(R.drawable.star_blank);
             holder.star4.setImageResource(R.drawable.star_blank);
             holder.star5.setImageResource(R.drawable.star_blank);
-        } else if (list.get(position).get("rating").equalsIgnoreCase("2.00")) {
+        } else if (list.get(position).get("rating").contains("2")) {
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star_blank);
             holder.star4.setImageResource(R.drawable.star_blank);
             holder.star5.setImageResource(R.drawable.star_blank);
-        } else if (list.get(position).get("rating").equalsIgnoreCase("3.00")) {
+        } else if (list.get(position).get("rating").contains("3")) {
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star);
             holder.star4.setImageResource(R.drawable.star_blank);
             holder.star5.setImageResource(R.drawable.star_blank);
-        } else if (list.get(position).get("rating").equalsIgnoreCase("4.00")) {
+        } else if (list.get(position).get("rating").contains("4")) {
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star);
             holder.star4.setImageResource(R.drawable.star);
             holder.star5.setImageResource(R.drawable.star_blank);
-        } else if (list.get(position).get("rating").equalsIgnoreCase("5.00")) {
+        } else if (list.get(position).get("rating").contains("5")) {
             holder.star1.setImageResource(R.drawable.star);
             holder.star2.setImageResource(R.drawable.star);
             holder.star3.setImageResource(R.drawable.star);
@@ -181,7 +181,7 @@ Global global;
                 .buildRect(holder.Planner_name.getText().toString().substring(0, 1), color1);
         if (url != null && !url.equalsIgnoreCase("null")
                 && !url.equalsIgnoreCase("")) {
-            Picasso.with(context).load(url).placeholder(drawable2).centerCrop().resize(80, 80).into(holder.planner_img);
+            Picasso.with(context).load(url).placeholder(drawable2).into(holder.planner_img);
            /* imageLoader.displayImage(url, holder.planner_img, options,
                     new SimpleImageLoadingListener() {
                         @Override

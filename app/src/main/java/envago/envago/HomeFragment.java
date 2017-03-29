@@ -209,7 +209,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(String s) {
                 dialog2.dismiss();
-
+                Log.e("ratinf",s);
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
@@ -326,6 +326,7 @@ public class HomeFragment extends Fragment {
                             }
                         }
                         if (featured_planner_list.size() != 0) {
+
                             featured_planners_linear_layout.setVisibility(View.VISIBLE);
                             planner_list_cat.setAdapter(new FeaturedPlannerAdapter(getActivity(), featured_planner_list));
                             CommonUtils.getListViewSize(planner_list_cat);

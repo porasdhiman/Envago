@@ -188,14 +188,15 @@ public class AboutPlannerActivity extends Activity {
 
                                 About_me_txt.setText(data.getString("about_me"));
 
-                                admin_name.setText(data.getString("username"));
+                                admin_name.setText(cap(data.getString("username")));
                                 TextDrawable drawable2 = TextDrawable.builder()
                                         .buildRound(admin_name.getText().toString().substring(0, 1).toUpperCase(), Color.parseColor("#F94444"));
 
                                 String user_url = GlobalConstants.IMAGE_URL + data.getString("image");
+                                Log.e("url",user_url);
                                 if (user_url != null && !user_url.equalsIgnoreCase("null")
                                         && !user_url.equalsIgnoreCase("")) {
-                                    Picasso.with(AboutPlannerActivity.this).load(global.getAdminUrl()).placeholder(drawable2).transform(new CircleTransform()).into(admin_image);
+                                    Picasso.with(AboutPlannerActivity.this).load(user_url).placeholder(drawable2).transform(new CircleTransform()).into(admin_image);
                                 } else {
                                     admin_image.setImageDrawable(drawable2);
                                 }
