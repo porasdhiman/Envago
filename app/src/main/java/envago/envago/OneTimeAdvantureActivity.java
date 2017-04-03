@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -43,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -253,6 +253,8 @@ RelativeLayout start_end_layout;
 
             select_date_txtView.setText(formatdate2(sp.getString(GlobalConstants.EVENT_START_DATE, "")));
             end_date_txtView.setText(formatdate2(sp.getString(GlobalConstants.EVENT_END_DATE, "")));
+            start_date=sp.getString(GlobalConstants.EVENT_START_DATE, "");
+            end_date=sp.getString(GlobalConstants.EVENT_END_DATE, "");
             DateFormat inputFormat = new SimpleDateFormat("dd MMM yyyy");
 
 
@@ -422,7 +424,20 @@ RelativeLayout start_end_layout;
         }
         return callLog;
     }
+    public ArrayList<HashMap<String,String>> dateList() {
+        ArrayList<HashMap<String,String>> callLog = new ArrayList<HashMap<String,String>>();
 
+        Gson gson = new Gson();
+        String json = sp.getString(GlobalConstants.DATE_DATA, "");
+        if (json.isEmpty()) {
+            callLog = new ArrayList<HashMap<String,String>>();
+        } else {
+            Type type = new TypeToken<HashMap<String,String>>() {
+            }.getType();
+            callLog = gson.fromJson(json, type);
+        }
+        return callLog;
+    }
     public Date incrementDateByOne(Date date, int i) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);

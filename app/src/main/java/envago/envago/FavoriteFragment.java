@@ -153,7 +153,7 @@ public class FavoriteFragment extends Fragment {
 
                             if (event_list.size() > 1) {
                                 view_item_pager2.setClipToPadding(false);
-                                view_item_pager2.setPadding(0, 0, 30, 0);
+                                view_item_pager2.setPadding(0, 0, 40, 0);
                                 wishMethod();
                             }
 
@@ -189,7 +189,7 @@ public class FavoriteFragment extends Fragment {
                             cat_pager.setAdapter(new AdvantureFeatureAdapter(getActivity(), planning_event_list));
                             if (planning_event_list.size() > 1) {
                                 cat_pager.setClipToPadding(false);
-                                cat_pager.setPadding(0, 0, 30, 0);
+                                cat_pager.setPadding(0, 0, 40, 0);
                                 plannerPagerMethod();
                             }
 
@@ -223,7 +223,7 @@ public class FavoriteFragment extends Fragment {
 
                             if (goint_to_event_list.size() > 1) {
                                 view_item_pager1.setClipToPadding(false);
-                                view_item_pager1.setPadding(0, 0, 30, 0);
+                                view_item_pager1.setPadding(0, 0, 40, 0);
                                 goingMethod();
                             }
                         }
@@ -270,10 +270,10 @@ public class FavoriteFragment extends Fragment {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == planning_event_list.size() - 1) {
                     cat_pager.setClipToPadding(false);
-                    cat_pager.setPadding(30, 0, 0, 0);
+                    cat_pager.setPadding(40, 0, 0, 0);
                 } else {
                     cat_pager.setClipToPadding(false);
-                    cat_pager.setPadding(0, 0, 30, 0);
+                    cat_pager.setPadding(0, 0, 40, 0);
                 }
             }
 
@@ -295,10 +295,10 @@ public class FavoriteFragment extends Fragment {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == goint_to_event_list.size() - 1) {
                     view_item_pager1.setClipToPadding(false);
-                    view_item_pager1.setPadding(30, 0, 0, 0);
+                    view_item_pager1.setPadding(40, 0, 0, 0);
                 } else {
                     view_item_pager1.setClipToPadding(false);
-                    view_item_pager1.setPadding(0, 0, 30, 0);
+                    view_item_pager1.setPadding(0, 0, 40, 0);
                 }
             }
 
@@ -320,10 +320,10 @@ public class FavoriteFragment extends Fragment {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == event_list.size() - 1) {
                     view_item_pager2.setClipToPadding(false);
-                    view_item_pager2.setPadding(30, 0, 0, 0);
+                    view_item_pager2.setPadding(40, 0, 0, 0);
                 } else {
                     view_item_pager2.setClipToPadding(false);
-                    view_item_pager2.setPadding(0, 0, 30, 0);
+                    view_item_pager2.setPadding(0, 0, 40, 0);
                 }
             }
 

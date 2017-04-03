@@ -148,7 +148,7 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
         ed = sp.edit();
 
         global = (Global) getApplicationContext();
-        start_end_layout=(RelativeLayout)findViewById(R.id.start_end_layout);
+        start_end_layout = (RelativeLayout) findViewById(R.id.start_end_layout);
         back_button_create = (ImageView) findViewById(R.id.back_button_create);
         start_txtView = (TextView) findViewById(R.id.start_date_txtView);
         no_of_days_txtView = (EditText) findViewById(R.id.no_of_days_txtView);
@@ -190,8 +190,11 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
                 list.clear();
                 calendarDays.clear();
                 demolist.clear();
+                dateArray.clear();
                 calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_NONE);
                 calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_MULTIPLE);
+               /* ed.clear();
+                ed.commit();*/
                 ed.putString(GlobalConstants.NUMBER_OF_DAY, "");
                 ed.putString("date type", "");
                 Gson gson = new Gson();
@@ -213,10 +216,13 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
                 if (start_txtView.getText().toString().equalsIgnoreCase("Start")) {
                     Toast.makeText(RequestedActivity.this, "please select start date", Toast.LENGTH_SHORT).show();
 
-                } else if (no_of_days_txtView.getText().toString().length()==0) {
+                } else if (no_of_days_txtView.getText().toString().length() == 0) {
                     Toast.makeText(RequestedActivity.this, "please enter number of days", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
+                    Log.e("dada arry", dateArray.toString());
+                    Log.e("dada arry", demolist.toString());
+                    Log.e("dada arry", list.toString());
+
                     global.setNumberOfDay(no_of_days_txtView.getText().toString().split(" ")[0]);
                     global.setDateType("repeated");
                     ed.putString(GlobalConstants.NUMBER_OF_DAY, global.getNumberOfDay());
@@ -235,17 +241,13 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
                 }
             }
         });
-        no_of_days_txtView.setOnKeyListener(new View.OnKeyListener()
-        {
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if (event.getAction() == KeyEvent.ACTION_DOWN)
-                {
-                    switch (keyCode)
-                    {
+        no_of_days_txtView.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
 
                         case KeyEvent.KEYCODE_ENTER:
-                            if(no_of_days_txtView.getText().toString().length()>0) {
+                            if (no_of_days_txtView.getText().toString().length() > 0) {
                                 calendarView.setVisibility(View.VISIBLE);
                                 submit_button.setVisibility(View.VISIBLE);
                                 clear.setVisibility(View.VISIBLE);
@@ -263,23 +265,23 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
         no_of_days_txtView.setOnTouchListener(this);
         if (sp.getString("date type", "").equalsIgnoreCase("repeated")) {
             if (!sp.getString(GlobalConstants.DATE_DATA, "").equalsIgnoreCase("")) {
-                no_of_days_txtView.setText(sp.getString(GlobalConstants.NUMBER_OF_DAY, "")+" days");
+                no_of_days_txtView.setText(sp.getString(GlobalConstants.NUMBER_OF_DAY, "") + " days");
                 start_txtView.setText(sp.getString(GlobalConstants.EVENT_START_DATE, ""));
                 end_txtView.setText(sp.getString(GlobalConstants.EVENT_END_DATE, ""));
 
                 demolist = loadSharedPreferencesLogList();
                 list = loadSharedPreferencesLogList();
+                dateArray=dateList();
                 calendarDays = list;
 
                 calendarView.addDecorators(new RequestedActivity.EventDecorator(getResources().getColor(R.color.textcolor), calendarDays));
                 DateFormat inputFormat = new SimpleDateFormat("dd MMM yyyy");
 
 
-                Date sDate=null;
+                Date sDate = null;
 
                 try {
                     sDate = inputFormat.parse(start_txtView.getText().toString());
-
 
 
                 } catch (ParseException e) {
@@ -288,7 +290,8 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
 
                 calendarView.setCurrentDate(sDate);
                 i = i + 1;
-                no_of_days_txtView.setSelection(sp.getString(GlobalConstants.NUMBER_OF_DAY, "").length()+5);
+                no_of_days_txtView.setSelection(sp.getString(GlobalConstants.NUMBER_OF_DAY, "").length() + 5);
+
             }
         }
         if (no_of_days_txtView.getText().length() != 0) {
@@ -313,14 +316,26 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
         }
         return callLog;
     }
+    public ArrayList<HashMap<String, String>> dateList() {
+        ArrayList<HashMap<String, String>> callLog = new ArrayList<HashMap<String, String>>();
+
+        Gson gson = new Gson();
+        String json = sp.getString(GlobalConstants.DATE_DATA, "");
+        if (json.isEmpty()) {
+            callLog = new ArrayList<HashMap<String, String>>();
+        } else {
+            Type type = new TypeToken<List<HashMap<String, String>>>() {
+            }.getType();
+            callLog = gson.fromJson(json, type);
+        }
+        return callLog;
+    }
 
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
         if (no_of_days_txtView.getText().length() > 0) {
             if (i == 0) {
                 start_txtView.setText(getSelectedDatesString());
-
-
 
 
                 end_txtView.setText(formatdate2(end_date));
@@ -341,6 +356,7 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
     public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
 
     }
+
     public String formatdate2(String fdate) {
         String datetime = null;
         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -360,6 +376,7 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
 
     private String getSelectedDatesString() {
         if (list.size() == 0) {
+            Log.e("date type", "0");
             date1 = calendarView.getSelectedDate();
             int valye = Integer.parseInt(no_of_days_txtView.getText().toString().split(" ")[0]);
             //calendarView.setSelectedDate(incrementDateByOne(new Date(FORMATTER.format(date.getDate()).toString())));
@@ -393,6 +410,8 @@ public class RequestedActivity extends Activity implements OnDateSelectedListene
             }
             global.setDateArray(dateArray);
         } else {
+            Log.e("date type", "1");
+
             list.clear();
             calendarDays.clear();
             date1 = calendarView.getSelectedDate();
