@@ -6,15 +6,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,7 +63,8 @@ public class HomeFragment extends Fragment {
     Dialog dialog2;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
-
+    int measuredWidth=0;
+    int measuredHeight = 0;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         View v = inflater.inflate(R.layout.homepage_activity, container, false);
@@ -70,6 +75,20 @@ public class HomeFragment extends Fragment {
 
         map_button = (ImageView) v.findViewById(R.id.map_button);
 
+        WindowManager w = getActivity().getWindowManager();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            Point size = new Point();
+            w.getDefaultDisplay().getSize(size);
+            measuredWidth = size.x;
+            measuredHeight = size.y;
+        } else {
+            Display d = w.getDefaultDisplay();
+            measuredWidth = d.getWidth();
+            measuredHeight = d.getHeight();
+        }
+        global.setHeight(measuredHeight);
+        global.setWidth(measuredWidth);
         planner_list_cat = (ListView) v.findViewById(R.id.main_list);
         //  tabs = (ScrollingTabContainerView)findViewById(R.id.tabs);
         shimmer_view_container = (ShimmerFrameLayout) v.findViewById(R.id.shimmer_view_container);
@@ -311,17 +330,35 @@ public class HomeFragment extends Fragment {
                             all_linear_layout.setVisibility(View.VISIBLE);
                             shimmer_view_container.setVisibility(View.GONE);
                             cat_pager.setAdapter(new CatPagerAdapter(getActivity(), catgory_list));
-                            cat_pager.setClipToPadding(false);
-                            cat_pager.setPadding(0, 0, 40, 0);
 
+                            if(measuredWidth>=1440) {
+                                cat_pager.setClipToPadding(false);
+                                cat_pager.setPadding(0, 0, 70, 0);
+
+
+
+                            }else{
+                                cat_pager.setClipToPadding(false);
+                                cat_pager.setPadding(0, 0, 40, 0);
+
+
+                            }
                             catgoryPagerMethod();
                         }
                         if (suggested_event_list.size() != 0) {
                             suggested_linear_layout.setVisibility(View.VISIBLE);
                             view_item_pager2.setAdapter(new AllAdapter(getActivity(), suggested_event_list));
                             if (suggested_event_list.size() > 1) {
-                                view_item_pager2.setClipToPadding(false);
-                                view_item_pager2.setPadding(0, 0, 40, 0);
+                                if(measuredWidth>=1440) {
+                                    view_item_pager2.setClipToPadding(false);
+                                    view_item_pager2.setPadding(0, 0, 70, 0);
+
+                                }else{
+                                    view_item_pager2.setClipToPadding(false);
+                                    view_item_pager2.setPadding(0, 0, 40, 0);
+
+                                }
+
                                 suggestedMethod();
                             }
                         }
@@ -335,8 +372,16 @@ public class HomeFragment extends Fragment {
                             featured_linear_layout.setVisibility(View.VISIBLE);
                             view_item_pager1.setAdapter(new AllAdapter(getActivity(), featured_event_list));
                             if (featured_event_list.size() > 1) {
-                                view_item_pager1.setClipToPadding(false);
-                                view_item_pager1.setPadding(0, 0, 40, 0);
+                                if(measuredWidth>=1440) {
+                                    view_item_pager1.setClipToPadding(false);
+                                    view_item_pager1.setPadding(0, 0, 70, 0);
+
+                                }else{
+                                    view_item_pager1.setClipToPadding(false);
+                                    view_item_pager1.setPadding(0, 0, 40, 0);
+
+                                }
+
                                 featuredMethod();
                             }
                         }
@@ -381,11 +426,28 @@ public class HomeFragment extends Fragment {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == catgory_list.size() - 1) {
-                    cat_pager.setClipToPadding(false);
-                    cat_pager.setPadding(40, 0, 0, 0);
+                    if(measuredWidth>=1440) {
+                        cat_pager.setClipToPadding(false);
+                        cat_pager.setPadding(70, 0, 0, 0);
+
+                    }else{
+                        cat_pager.setClipToPadding(false);
+                        cat_pager.setPadding(40, 0, 0, 0);
+
+                    }
+
                 } else {
-                    cat_pager.setClipToPadding(false);
-                    cat_pager.setPadding(0, 0, 40, 0);
+                    if(measuredWidth>=1440) {
+                        cat_pager.setClipToPadding(false);
+                        cat_pager.setPadding(0, 0, 70, 0);
+
+
+                    }else{
+                        cat_pager.setClipToPadding(false);
+                        cat_pager.setPadding(0, 0, 40, 0);
+
+                    }
+
                 }
             }
 
@@ -405,11 +467,29 @@ public class HomeFragment extends Fragment {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == featured_event_list.size() - 1) {
-                    view_item_pager1.setClipToPadding(false);
-                    view_item_pager1.setPadding(40, 0, 0, 0);
+                    if(measuredWidth>=1440) {
+
+                        view_item_pager1.setClipToPadding(false);
+                        view_item_pager1.setPadding(70, 0, 0, 0);
+
+                    }else{
+                        view_item_pager1.setClipToPadding(false);
+                        view_item_pager1.setPadding(40, 0, 0, 0);
+
+                    }
+
                 } else {
-                    view_item_pager1.setClipToPadding(false);
-                    view_item_pager1.setPadding(0, 0, 40, 0);
+                    if(measuredWidth>=1440) {
+
+                        view_item_pager1.setClipToPadding(false);
+                        view_item_pager1.setPadding(0, 0, 70, 0);
+
+                    }else{
+                        view_item_pager1.setClipToPadding(false);
+                        view_item_pager1.setPadding(0, 0, 40, 0);
+
+                    }
+
                 }
             }
 
@@ -429,11 +509,27 @@ public class HomeFragment extends Fragment {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == suggested_event_list.size() - 1) {
-                    view_item_pager2.setClipToPadding(false);
-                    view_item_pager2.setPadding(40, 0, 0, 0);
+                    if(measuredWidth>=1440) {
+                        view_item_pager2.setClipToPadding(false);
+                        view_item_pager2.setPadding(70, 0, 0, 0);
+
+                    }else{
+                        view_item_pager2.setClipToPadding(false);
+                        view_item_pager2.setPadding(40, 0, 0, 0);
+
+                    }
+
                 } else {
-                    view_item_pager2.setClipToPadding(false);
-                    view_item_pager2.setPadding(0, 0, 40, 0);
+                    if(measuredWidth>=1440) {
+                        view_item_pager2.setClipToPadding(false);
+                        view_item_pager2.setPadding(0, 0, 70, 0);
+
+                    }else{
+                        view_item_pager2.setClipToPadding(false);
+                        view_item_pager2.setPadding(0, 0, 40, 0);
+
+                    }
+
                 }
             }
 
