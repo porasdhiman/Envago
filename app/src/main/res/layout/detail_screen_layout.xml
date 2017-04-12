@@ -37,6 +37,7 @@
             android:textColor="#fff"
             android:textSize="16sp"
             android:textStyle="bold" />
+
         <ImageView
             android:id="@+id/share_img"
             android:layout_width="35dp"
@@ -233,9 +234,11 @@
 
                         android:layout_marginLeft="20dp"
 
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@+id/about_planner"
                         android:layout_toRightOf="@+id/orginiser_img"
                         android:inputType="textCapWords|textCapSentences"
-
+                        android:singleLine="true"
                         android:textColor="#000"
 
                         android:textSize="14sp" />

@@ -114,7 +114,7 @@ public class HomeFragment extends Fragment {
             }
         });
         dialogWindow();
-        get_list();
+       // get_list();
         all_list();
 
         planner_list_cat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -127,7 +127,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        map_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent intent = new Intent(getActivity(), MapsActivity.class);
+                startActivity(intent);
+            }
+        });
         return v;
 
     }
@@ -173,14 +180,7 @@ public class HomeFragment extends Fragment {
 
                         global.setEvent_list(event_list);
 
-                        map_button.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
 
-                                Intent intent = new Intent(getActivity(), MapsActivity.class);
-                                startActivity(intent);
-                            }
-                        });
 
 
                     }

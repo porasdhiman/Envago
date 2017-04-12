@@ -245,8 +245,14 @@ public class ActivityLogin extends Activity implements View.OnTouchListener, Vie
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 finish();
                             } else {
-                                mail_error_txtView.setVisibility(View.VISIBLE);
-                                mail_error_txtView.setText(obj.getString("msg"));
+                                if(obj.getString("msg").contains("password")){
+                                    password_error_txtView.setVisibility(View.VISIBLE);
+                                    password_error_txtView.setText(obj.getString("msg"));
+                                }else{
+                                    mail_error_txtView.setVisibility(View.VISIBLE);
+                                    mail_error_txtView.setText(obj.getString("msg"));
+                                }
+
                             }
 
 
@@ -270,8 +276,13 @@ public class ActivityLogin extends Activity implements View.OnTouchListener, Vie
                 params.put(GlobalConstants.EMAIL, email_editText.getText().toString());
                 params.put(GlobalConstants.PASSWORD, password_editView.getText().toString());
 
-                params.put(GlobalConstants.LATITUDE, global.getLat());
-                params.put(GlobalConstants.LONGITUDE, global.getLong());
+                if(global.getLat().length()==0){
+                    params.put(GlobalConstants.LATITUDE, "0,0");
+                    params.put(GlobalConstants.LONGITUDE, "0.0");
+                }else{
+                    params.put(GlobalConstants.LATITUDE, global.getLat());
+                    params.put(GlobalConstants.LONGITUDE, global.getLong());
+                }
                 params.put(GlobalConstants.DEVICEID, global.getDeviceToken());
                 params.put("device_type", "android");
                 params.put("action", GlobalConstants.LOGIN_ACTION);

@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -76,6 +75,7 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
     Global global;
     String uriPath;
     RelativeLayout main_layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,8 +86,8 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
         FacebookSdk.sdkInitialize(this.getApplicationContext());
 
         setContentView(R.layout.slider_pager_layout);
-        main_layout=(RelativeLayout)findViewById(R.id.main_layout) ;
-        Fonts.overrideFonts1(this,main_layout);
+        main_layout = (RelativeLayout) findViewById(R.id.main_layout);
+        Fonts.overrideFonts1(this, main_layout);
         sp = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         ed = sp.edit();
         // bottom_txt = (TextView) findViewById(R.id.bottom_txt);
@@ -178,37 +178,37 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.slider_sign_up_btn:
-                if(global.getLat().length()==0){
-                    Toast.makeText(SlidePageActivity.this,"Your location is not Enabled and restart your app",Toast.LENGTH_SHORT).show();
-                }else {
+                if (CommonUtils.getConnectivityStatus(SlidePageActivity.this)) {
                     Intent i = new Intent(SlidePageActivity.this, RegisterActivity.class);
                     startActivity(i);
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     finish();
+                } else {
+                    CommonUtils.openInternetDialog(SlidePageActivity.this);
+
                 }
-
-
-
-
 
                 break;
             case R.id.slider_sign_in_layout:
-                if(global.getLat().length()==0){
-                    Toast.makeText(SlidePageActivity.this,"Your location is not Enabled and restart your app",Toast.LENGTH_SHORT).show();
-                }else{
+                if (CommonUtils.getConnectivityStatus(SlidePageActivity.this)) {
+
                     Intent j = new Intent(SlidePageActivity.this, ActivityLogin.class);
                     startActivity(j);
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     finish();
+                } else {
+                    CommonUtils.openInternetDialog(SlidePageActivity.this);
+
                 }
                 break;
             case R.id.slider_fb_btn:
-                if(global.getLat().length()==0){
-                    Toast.makeText(SlidePageActivity.this,"Your location is not Enabled and restart your app",Toast.LENGTH_SHORT).show();
-                }else {
+                if (CommonUtils.getConnectivityStatus(SlidePageActivity.this)) {
                     Login_TV.performClick();
+                } else {
+                    CommonUtils.openInternetDialog(SlidePageActivity.this);
 
                 }
+
                 break;
         }
     }
@@ -302,7 +302,7 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
                             if (status.equalsIgnoreCase("1")) {
                                 JSONObject data = obj.getJSONObject("data");
                                 ed.putString(GlobalConstants.USERID, data.getString(GlobalConstants.USERID));
-                                ed.putString("login type","facebook");
+                                ed.putString("login type", "facebook");
                                 ed.commit();
                                 Intent intent = new Intent(SlidePageActivity.this, Tab_Activity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -347,9 +347,14 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
                 params.put(GlobalConstants.EMAIL, email_mString);
                 params.put(GlobalConstants.USERNAME, username_mString);
 
+                if (global.getLat().length() == 0) {
+                    params.put(GlobalConstants.LATITUDE, "0.0");
+                    params.put(GlobalConstants.LONGITUDE, "0.0");
+                } else {
+                    params.put(GlobalConstants.LATITUDE, global.getLat());
+                    params.put(GlobalConstants.LONGITUDE, global.getLong());
+                }
 
-                params.put(GlobalConstants.LATITUDE, global.getLat());
-                params.put(GlobalConstants.LONGITUDE, global.getLong());
                 params.put("device_type", "android");
 
                 params.put(GlobalConstants.DEVICEID, global.getDeviceToken());

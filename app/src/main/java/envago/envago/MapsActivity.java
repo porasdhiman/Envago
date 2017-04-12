@@ -2,8 +2,10 @@ package envago.envago;
 
 import android.Manifest;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -11,9 +13,11 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -113,6 +117,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
     String months[] = {" ", "Jan", "Feb", "Mar", "Apr", "May",
             "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
             "Dec",};
+    int l = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -265,6 +270,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             if (event_list.size() > 0) {
                 event_list.clear();
             }
+            i = 1;
             dialogWindow();
             get_list();
             places.release();
@@ -385,12 +391,85 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             lat = String.valueOf(mLastLocation.getLatitude());
             lng = String.valueOf(mLastLocation.getLongitude());
 
-            eventLocOnMap();
+            dialogWindow();
+            get_list();
+
 
         } else {
+            checkGPSStatus();
             // Toast.makeText(this, "Please check GPS and restart App", Toast.LENGTH_LONG).show();
         }
         Log.i("search", "Google Places API connected.");
+    }
+
+    public void locationFind() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            lat = String.valueOf(mLastLocation.getLatitude());
+            lng = String.valueOf(mLastLocation.getLongitude());
+
+            global.setLat(lat);
+            global.setLong(lng);
+            dialogWindow();
+            get_list();
+
+        } else {
+            checkGPSStatus();
+            // Toast.makeText(this, "Please check GPS and restart App", Toast.LENGTH_LONG).show();
+        }
+        Log.i("search", "Google Places API connected.");
+    }
+
+    private void checkGPSStatus() {
+        LocationManager locationManager = null;
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
+        if (locationManager == null) {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        }
+        try {
+            gps_enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch (Exception ex) {
+        }
+        try {
+            network_enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch (Exception ex) {
+        }
+        if (!gps_enabled && !network_enabled) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(MapsActivity.this);
+            dialog.setMessage("GPS not enabled");
+            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //this will navigate user to the device location settings screen
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivityForResult(intent, 0);
+                }
+            });
+            AlertDialog alert = dialog.create();
+            alert.show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            locationFind();
+        } else {
+
+        }
     }
 
     @Override
@@ -554,8 +633,13 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
                         }
 
                         global.setEvent_list(event_list);
+                        if (l == 0) {
+                            eventLocOnMap();
+                        } else {
+                            eventLocOnMap1();
+                        }
 
-                        eventLocOnMap1();
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

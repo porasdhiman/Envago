@@ -25,13 +25,11 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
@@ -108,8 +106,8 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
         } else {
             Log.e(TAG, "No valid Google Play Services APK found.");
         }
-global.setLat("30.7046");
-        global.setLong("76.7179");
+     /*   global.setLat("30.7046");
+        global.setLong("76.7179");*/
         String locationPermission = Manifest.permission.ACCESS_FINE_LOCATION;
         String coarselocationPermission = Manifest.permission.ACCESS_COARSE_LOCATION;
         String cameraPermission = Manifest.permission.CAMERA;
@@ -149,7 +147,6 @@ global.setLat("30.7046");
             } else {
 
 
-                if (CommonUtils.getConnectivityStatus(SplashActivity.this)) {
 
                     Handler splashhandler = new Handler();
                     splashhandler.postDelayed(new Runnable() {
@@ -195,17 +192,13 @@ global.setLat("30.7046");
                         }
                     }, 2000);
 
-                } else {
-                    Toast.makeText(SplashActivity.this, "Please check your network connection and restart app", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+
                 // We already have permission, so handle as norma
                 //Toast.makeText(MainActivity.this,gps.getLatitude()+""+   gps.getLongitude(),Toast.LENGTH_SHORT).show();
             }
         } else {
 
 
-            if (CommonUtils.getConnectivityStatus(SplashActivity.this)) {
                 Handler splashhandler = new Handler();
                 splashhandler.postDelayed(new Runnable() {
                     @Override
@@ -240,16 +233,12 @@ global.setLat("30.7046");
                     }
                 }, 2000);
 
-            } else {
-                Toast.makeText(SplashActivity.this, "Please check your network connection and restart app", Toast.LENGTH_SHORT).show();
-                finish();
-            }
+
 
             // Toast.makeText(MainActivity.this,gps.getLatitude()+""+   gps.getLongitude(),Toast.LENGTH_SHORT).show();
         }
 
     }
-
 
 
     @Override
@@ -276,7 +265,7 @@ global.setLat("30.7046");
                         perms.get(Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED) {
                     // All Permissions Granted
 
-                    if (CommonUtils.getConnectivityStatus(SplashActivity.this)) {
+
 
 
                         locatioMethod();
@@ -287,10 +276,7 @@ global.setLat("30.7046");
                         finish();
 
 
-                    } else {
-                        Toast.makeText(SplashActivity.this, "Please check your network connection and restart app", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
+
 
                     // Toast.makeText(MainActivity.this,gps.getLatitude()+""+   gps.getLongitude(),Toast.LENGTH_SHORT).show();
 
@@ -442,10 +428,10 @@ global.setLat("30.7046");
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-        locationRequest = LocationRequest.create();
+       /* locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(30 * 1000);
-        locationRequest.setFastestInterval(5 * 1000);
+        locationRequest.setFastestInterval(2 * 1000);*/
     }
 
     @Override
@@ -487,7 +473,9 @@ global.setLat("30.7046");
             if(mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
                 buildAlertMessageNoGPS();
             }*/
-            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+            global.setLat("0.0");
+            global.setLong("0.0");
+          /*  LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
                     .addLocationRequest(locationRequest);
             builder.setAlwaysShow(true);
             PendingResult<LocationSettingsResult> result =
@@ -497,7 +485,7 @@ global.setLat("30.7046");
                     );
 
             result.setResultCallback(this);
-
+*/
         }
     }
 
