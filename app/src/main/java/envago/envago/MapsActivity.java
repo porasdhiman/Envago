@@ -118,6 +118,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
             "Jun", "Jul", "Aug", "Sept", "Oct", "Nov",
             "Dec",};
     int l = 0;
+    AlertDialog alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -269,6 +270,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
 
             if (event_list.size() > 0) {
                 event_list.clear();
+                global.getEvent_list().clear();
             }
             i = 1;
             dialogWindow();
@@ -390,9 +392,13 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
         if (mLastLocation != null) {
             lat = String.valueOf(mLastLocation.getLatitude());
             lng = String.valueOf(mLastLocation.getLongitude());
-
-            dialogWindow();
-            get_list();
+            if (global.getEvent_list().size() > 0) {
+                eventLocOnMap();
+                l=1;
+            } else {
+                dialogWindow();
+                get_list();
+            }
 
 
         } else {
@@ -417,6 +423,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
         if (mLastLocation != null) {
             lat = String.valueOf(mLastLocation.getLatitude());
             lng = String.valueOf(mLastLocation.getLongitude());
+
 
             global.setLat(lat);
             global.setLong(lng);
@@ -447,8 +454,8 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
         }
         if (!gps_enabled && !network_enabled) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(MapsActivity.this);
-            dialog.setMessage("GPS not enabled");
-            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            dialog.setMessage("Your Location Services are not enabled for Envago Adventure");
+            dialog.setPositiveButton("Allow", new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -457,7 +464,13 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
                     startActivityForResult(intent, 0);
                 }
             });
-            AlertDialog alert = dialog.create();
+            dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alert.dismiss();
+                }
+            });
+            alert = dialog.create();
             alert.show();
         }
     }
@@ -466,10 +479,16 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
+
             locationFind();
         } else {
-
+            locationFind();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override
@@ -635,6 +654,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.On
                         global.setEvent_list(event_list);
                         if (l == 0) {
                             eventLocOnMap();
+                            l=1;
                         } else {
                             eventLocOnMap1();
                         }
