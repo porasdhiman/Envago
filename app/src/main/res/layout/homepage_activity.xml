@@ -227,7 +227,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="4dp"
                     android:layout_marginTop="10dp"
                     android:text="All Categories"
                     android:textColor="@color/textcolor"
@@ -247,9 +247,41 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:layout_marginTop="20dp"
+                    android:background="@color/LightGrey" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/suggested_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/view_top_txtView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:text="Countries"
+                    android:textColor="@color/textcolor"
+                    android:textSize="17sp" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/view_item_pager2"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+
+                    android:layout_marginTop="5dp"></android.support.v4.view.ViewPager>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:background="@color/LightGrey" />
             </LinearLayout>
 
@@ -266,7 +298,7 @@
                     android:id="@+id/view_top_txtView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="4dp"
                     android:layout_marginTop="10dp"
                     android:text="Featured Adventures"
                     android:textColor="@color/textcolor"
@@ -281,44 +313,12 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:background="@color/LightGrey" />
             </LinearLayout>
 
 
-            <LinearLayout
-                android:id="@+id/suggested_linear_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="vertical"
-
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/view_top_txtView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text=" Suggested Adventures"
-                    android:textColor="@color/textcolor"
-                    android:textSize="17sp" />
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/view_item_pager2"
-                    android:layout_width="match_parent"
-                    android:layout_height="280dp"
-
-                    android:layout_marginTop="5dp"></android.support.v4.view.ViewPager>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:background="@color/LightGrey" />
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/featured_planners_linear_layout"
@@ -334,7 +334,7 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="4dp"
                     android:text="Featured Planners"
                     android:textColor="@color/textcolor"
                     android:textSize="17sp" />

@@ -34,6 +34,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.rampo.updatechecker.UpdateChecker;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -63,8 +64,9 @@ public class HomeFragment extends Fragment {
     Dialog dialog2;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
-    int measuredWidth=0;
+    int measuredWidth = 0;
     int measuredHeight = 0;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         View v = inflater.inflate(R.layout.homepage_activity, container, false);
@@ -72,7 +74,9 @@ public class HomeFragment extends Fragment {
         global = (Global) getActivity().getApplicationContext();
         preferences = getActivity().getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         editor = preferences.edit();
-
+        UpdateChecker checker = new UpdateChecker(getActivity()); // If you are in a Activity or a FragmentActivity
+        checker.setSuccessfulChecksRequired(5);
+        checker.start();
         map_button = (ImageView) v.findViewById(R.id.map_button);
 
         WindowManager w = getActivity().getWindowManager();
@@ -114,7 +118,7 @@ public class HomeFragment extends Fragment {
             }
         });
         dialogWindow();
-       // get_list();
+        // get_list();
         all_list();
 
         planner_list_cat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -181,8 +185,6 @@ public class HomeFragment extends Fragment {
                         global.setEvent_list(event_list);
 
 
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -228,7 +230,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(String s) {
                 dialog2.dismiss();
-                Log.e("ratinf",s);
+                Log.e("ratinf", s);
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
@@ -237,26 +239,19 @@ public class HomeFragment extends Fragment {
 
                         // JSONObject data = obj.getJSONObject("data");
                         JSONObject data = obj.getJSONObject("data");
-                        if (data.has("suggested_events")) {
-                            JSONArray events = data.getJSONArray("suggested_events");
+                        if (data.has("countries")) {
+                            JSONArray events = data.getJSONArray("countries");
 
                             for (int i = 0; i < events.length(); i++) {
                                 JSONObject arrobj = events.getJSONObject(i);
 
                                 HashMap<String, String> details = new HashMap<>();
 
-                                details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.ID));
-                                details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
-                                details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
-                                details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
-                                //details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
-                                details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
+                                details.put(GlobalConstants.EVENT_ID, arrobj.getString(GlobalConstants.EVENT_ID));
+                                details.put(GlobalConstants.country_id, arrobj.getString(GlobalConstants.country_id));
+                                details.put(GlobalConstants.NAME, arrobj.getString(GlobalConstants.NAME));
                                 details.put(GlobalConstants.IMAGE, arrobj.getString(GlobalConstants.IMAGE));
-                                JSONArray arr = arrobj.getJSONArray("event_dates");
-                                JSONObject objArr = arr.getJSONObject(0);
-                                details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
-                                details.put(GlobalConstants.Is_SUGGESTED, arrobj.getString(GlobalConstants.Is_SUGGESTED));
-                                //  details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                                details.put(GlobalConstants.EVENT_CAT_COUNT, arrobj.getString(GlobalConstants.EVENT_CAT_COUNT));
 
 
                                 suggested_event_list.add(details);
@@ -331,13 +326,12 @@ public class HomeFragment extends Fragment {
                             shimmer_view_container.setVisibility(View.GONE);
                             cat_pager.setAdapter(new CatPagerAdapter(getActivity(), catgory_list));
 
-                            if(measuredWidth>=1440) {
+                            if (measuredWidth >= 1440) {
                                 cat_pager.setClipToPadding(false);
                                 cat_pager.setPadding(0, 0, 70, 0);
 
 
-
-                            }else{
+                            } else {
                                 cat_pager.setClipToPadding(false);
                                 cat_pager.setPadding(0, 0, 40, 0);
 
@@ -347,13 +341,13 @@ public class HomeFragment extends Fragment {
                         }
                         if (suggested_event_list.size() != 0) {
                             suggested_linear_layout.setVisibility(View.VISIBLE);
-                            view_item_pager2.setAdapter(new AllAdapter(getActivity(), suggested_event_list));
+                            view_item_pager2.setAdapter(new AccordingToCountryAdapter(getActivity(), suggested_event_list));
                             if (suggested_event_list.size() > 1) {
-                                if(measuredWidth>=1440) {
+                                if (measuredWidth >= 1440) {
                                     view_item_pager2.setClipToPadding(false);
                                     view_item_pager2.setPadding(0, 0, 70, 0);
 
-                                }else{
+                                } else {
                                     view_item_pager2.setClipToPadding(false);
                                     view_item_pager2.setPadding(0, 0, 40, 0);
 
@@ -372,11 +366,11 @@ public class HomeFragment extends Fragment {
                             featured_linear_layout.setVisibility(View.VISIBLE);
                             view_item_pager1.setAdapter(new AllAdapter(getActivity(), featured_event_list));
                             if (featured_event_list.size() > 1) {
-                                if(measuredWidth>=1440) {
+                                if (measuredWidth >= 1440) {
                                     view_item_pager1.setClipToPadding(false);
                                     view_item_pager1.setPadding(0, 0, 70, 0);
 
-                                }else{
+                                } else {
                                     view_item_pager1.setClipToPadding(false);
                                     view_item_pager1.setPadding(0, 0, 40, 0);
 
@@ -408,8 +402,8 @@ public class HomeFragment extends Fragment {
                 params.put(GlobalConstants.USERID, CommonUtils.UserID(getActivity()));
 
 
-                params.put("action", "get_featured_entities");
-
+                params.put("action","get_featured_entities_replica");
+                Log.e("all param", params.toString());
 
                 return params;
             }
@@ -426,23 +420,23 @@ public class HomeFragment extends Fragment {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == catgory_list.size() - 1) {
-                    if(measuredWidth>=1440) {
+                    if (measuredWidth >= 1440) {
                         cat_pager.setClipToPadding(false);
                         cat_pager.setPadding(70, 0, 0, 0);
 
-                    }else{
+                    } else {
                         cat_pager.setClipToPadding(false);
                         cat_pager.setPadding(40, 0, 0, 0);
 
                     }
 
                 } else {
-                    if(measuredWidth>=1440) {
+                    if (measuredWidth >= 1440) {
                         cat_pager.setClipToPadding(false);
                         cat_pager.setPadding(0, 0, 70, 0);
 
 
-                    }else{
+                    } else {
                         cat_pager.setClipToPadding(false);
                         cat_pager.setPadding(0, 0, 40, 0);
 
@@ -462,29 +456,30 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
     public void featuredMethod() {
         view_item_pager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == featured_event_list.size() - 1) {
-                    if(measuredWidth>=1440) {
+                    if (measuredWidth >= 1440) {
 
                         view_item_pager1.setClipToPadding(false);
                         view_item_pager1.setPadding(70, 0, 0, 0);
 
-                    }else{
+                    } else {
                         view_item_pager1.setClipToPadding(false);
                         view_item_pager1.setPadding(40, 0, 0, 0);
 
                     }
 
                 } else {
-                    if(measuredWidth>=1440) {
+                    if (measuredWidth >= 1440) {
 
                         view_item_pager1.setClipToPadding(false);
                         view_item_pager1.setPadding(0, 0, 70, 0);
 
-                    }else{
+                    } else {
                         view_item_pager1.setClipToPadding(false);
                         view_item_pager1.setPadding(0, 0, 40, 0);
 
@@ -504,27 +499,28 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
     public void suggestedMethod() {
         view_item_pager2.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == suggested_event_list.size() - 1) {
-                    if(measuredWidth>=1440) {
+                    if (measuredWidth >= 1440) {
                         view_item_pager2.setClipToPadding(false);
                         view_item_pager2.setPadding(70, 0, 0, 0);
 
-                    }else{
+                    } else {
                         view_item_pager2.setClipToPadding(false);
                         view_item_pager2.setPadding(40, 0, 0, 0);
 
                     }
 
                 } else {
-                    if(measuredWidth>=1440) {
+                    if (measuredWidth >= 1440) {
                         view_item_pager2.setClipToPadding(false);
                         view_item_pager2.setPadding(0, 0, 70, 0);
 
-                    }else{
+                    } else {
                         view_item_pager2.setClipToPadding(false);
                         view_item_pager2.setPadding(0, 0, 40, 0);
 
@@ -544,6 +540,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
     public void dialogWindow() {
         dialog2 = new Dialog(getActivity());
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -613,7 +610,6 @@ public class HomeFragment extends Fragment {
 
                 params.put(GlobalConstants.USERID, CommonUtils.UserID(getActivity()));
                 params.put("action", GlobalConstants.GETPROFILE_ACTION);
-
 
 
                 return params;

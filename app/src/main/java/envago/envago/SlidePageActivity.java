@@ -40,6 +40,7 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.rampo.updatechecker.UpdateChecker;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONException;
@@ -86,6 +87,9 @@ public class SlidePageActivity extends FragmentActivity implements View.OnClickL
         FacebookSdk.sdkInitialize(this.getApplicationContext());
 
         setContentView(R.layout.slider_pager_layout);
+        UpdateChecker checker = new UpdateChecker(this); // If you are in a Activity or a FragmentActivity
+        checker.setSuccessfulChecksRequired(5);
+        checker.start();
         main_layout = (RelativeLayout) findViewById(R.id.main_layout);
         Fonts.overrideFonts1(this, main_layout);
         sp = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);

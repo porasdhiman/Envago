@@ -38,7 +38,7 @@ public class GlobalConstants {
     public static String EDIT_PROFILE_ACTION = "edit_profile";
     public static String UPLOAD_DOCUMENT_ACTION = "upload_document";
     public static String GET_EVENT_FILTER = "get_events_filter";
-
+    public static String  get_featured_entities_replica = " get_featured_entities_replica";
 
     public static String EVENT_ID = "event_id";
     public static String EVENT_NAME = "name";
@@ -52,8 +52,8 @@ public class GlobalConstants {
 
     public static String LIKE_STATUS = "like_status";
 
-  // public static String URL = "http://envagoapp.com/envago/webservice.php";
-    public static String URL = "http://envagoapp.com/webservice.php";
+   public static String URL = "http://envagoapp.com/envago/webservice.php";
+   // public static String URL = "http://envagoapp.com/webservice.php";
 
     public static String DETAILS_EVENT_ACTION = "get_single_event";
     public static String VERIFIED_ACTION = "get_document_status";
@@ -77,8 +77,10 @@ public class GlobalConstants {
 
     public static String CODE = "code";
     public static String TREANDING_COUNT = "trending_count";
-  public static String IMAGE_URL = "http://envagoapp.com/uploads/";
- //public static String IMAGE_URL = "http://envagoapp.com/envago/uploads/";
+ // public static String IMAGE_URL = "http://envagoapp.com/uploads/";
+ public static String FLAG_URL = "http://envagoapp.com/envago/web/images/flags/";
+
+ public static String IMAGE_URL = "http://envagoapp.com/envago/uploads/";
     public static String remaining_places = "remaining_places";
     public static String CREATE_DATA = "create_data";
     public static String DATE_DATA = "date_data";
@@ -91,4 +93,10 @@ public class GlobalConstants {
     public static String EVENT_MEETING_LAT = "lat";
     public static String EVENT_MEETING_LNG = "lng";
     public static String WHATS_INCLUDED="included";
+    public static String NAME="name";
+
+
+    public static String country_id="country_id";
+    public static String flag="flag";
+    public static String COUNTRY_NAME="COUNTRY_NAME";
 }

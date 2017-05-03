@@ -877,6 +877,11 @@ ImageView back_button_create;
             Log.e("sub_cat_id", sp.getString(GlobalConstants.EVENT_CAT_ID, ""));
             reqEntity.addPart(GlobalConstants.EVENT_NAME, new StringBody(sp.getString(GlobalConstants.EVENT_NAME, "")));
             Log.e("name", sp.getString(GlobalConstants.EVENT_NAME, ""));
+            reqEntity.addPart(GlobalConstants.country_id, new StringBody(sp.getString(GlobalConstants.country_id, "")));
+            Log.e("country_id", sp.getString(GlobalConstants.country_id, ""));
+
+
+
             if (sp.getString("date type", "").equalsIgnoreCase("one_time")) {
                 reqEntity.addPart("event_type", new StringBody(sp.getString("date type", "")));
                 Log.e("event_type", sp.getString("date type", ""));

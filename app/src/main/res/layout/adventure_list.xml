@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="4dp"
                     android:text="Going to"
                     android:textColor="@color/textcolor"
                     android:textSize="17sp" />
@@ -89,8 +89,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="@color/LightGrey"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"/>
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"/>
 
             </LinearLayout>
 
@@ -106,9 +106,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Planning"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="4dp"
                     android:textColor="@color/textcolor"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    android:id="@+id/textView" />
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/cat_pager"
@@ -124,8 +125,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="@color/LightGrey"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"/>
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"/>
 
             </LinearLayout>
             <!--<com.facebook.shimmer.ShimmerFrameLayout
@@ -302,7 +303,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Wishlist"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="4dp"
                     android:textColor="@color/textcolor"
                     android:textSize="17sp" />
 
@@ -315,8 +316,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="@color/LightGrey"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"/>
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"/>
 
             </LinearLayout>
 

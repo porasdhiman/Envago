@@ -47,9 +47,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="NAME OF ADVENTURE"
-                android:textSize="13sp"
                 android:textColorHint="@color/mainTextColor"
-                 />
+                android:textSize="13sp" />
 
             <EditText
                 android:id="@+id/name_editText"
@@ -62,8 +61,8 @@
                 android:background="@null"
                 android:hint="Name"
                 android:inputType="text"
-                android:textColorHint="@color/LightGrey"
                 android:textColor="#373737"
+                android:textColorHint="@color/LightGrey"
                 android:textSize="14sp" />
 
             <TextView
@@ -97,9 +96,8 @@
                 android:layout_marginTop="10dp"
                 android:text="Difficulty"
                 android:textAllCaps="true"
-                android:textSize="13sp"
                 android:textColorHint="@color/mainTextColor"
-                 />
+                android:textSize="13sp" />
 
             <SeekBar
                 android:id="@+id/seekBar"
@@ -185,9 +183,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="CATEGORY"
-                android:textSize="13sp"
                 android:textColorHint="@color/mainTextColor"
-                />
+                android:textSize="13sp" />
 
             <Spinner
                 android:id="@+id/cat_editText"
@@ -225,6 +222,70 @@
 
                 android:background="@color/LightGrey" />
 
+            <TextView
+                android:id="@+id/country_txtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:text="COUNTRY"
+                android:textColorHint="@color/mainTextColor"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/flag_img"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/country_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/email_txtView"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="Please Select"
+                    android:inputType="textEmailAddress"
+
+                    android:textColor="#373737"
+                    android:textColorHint="@color/LightGrey"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/country_error_txtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@null"
+                android:inputType="textEmailAddress"
+                android:textColor="#ff0000"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
+
+                android:background="@color/LightGrey" />
+
 
             <TextView
                 android:id="@+id/meeting_txtView"
@@ -233,9 +294,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="MEETING POINT"
-                android:textSize="13sp"
                 android:textColorHint="@color/mainTextColor"
-               />
+                android:textSize="13sp" />
 
             <AutoCompleteTextView
                 android:id="@+id/meeting_editText"
@@ -249,8 +309,8 @@
                 android:hint="Please Select"
                 android:inputType="textEmailAddress"
 
-                android:textColorHint="@color/LightGrey"
                 android:textColor="#373737"
+                android:textColorHint="@color/LightGrey"
                 android:textSize="14sp" />
 
             <TextView
@@ -283,9 +343,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="MEETING TIME"
-                android:textSize="13sp"
                 android:textColorHint="@color/mainTextColor"
-                 />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/meeting_time_editText"
@@ -298,8 +357,8 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="Please Select"
-                android:textColorHint="@color/LightGrey"
                 android:textColor="#373737"
+                android:textColorHint="@color/LightGrey"
 
                 android:textSize="14sp" />
 
@@ -333,9 +392,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="ADVENTURE DESCRIPTION"
-                android:textSize="13sp"
                 android:textColorHint="@color/mainTextColor"
-             />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/desc_editText"
@@ -351,8 +409,8 @@
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
 
-                android:textColorHint="@color/LightGrey"
                 android:textColor="#373737"
+                android:textColorHint="@color/LightGrey"
                 android:textSize="14sp" />
 
             <TextView
@@ -385,8 +443,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="PLACES/EVENT"
-                android:textSize="13sp"
-                android:textColorHint="@color/mainTextColor" />
+                android:textColorHint="@color/mainTextColor"
+                android:textSize="13sp" />
 
             <EditText
                 android:id="@+id/place_editText"
@@ -399,8 +457,8 @@
                 android:background="@null"
                 android:hint="Please Select"
                 android:inputType="number"
-                android:textColorHint="@color/LightGrey"
                 android:textColor="#373737"
+                android:textColorHint="@color/LightGrey"
 
                 android:textSize="14sp" />
 
@@ -434,8 +492,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="PRICE"
-                android:textSize="13sp"
-                android:textColorHint="@color/mainTextColor" />
+                android:textColorHint="@color/mainTextColor"
+                android:textSize="13sp" />
 
             <EditText
                 android:id="@+id/pricing_editText"
@@ -449,8 +507,8 @@
                 android:hint="$"
 
                 android:inputType="number"
-                android:textColorHint="@color/LightGrey"
                 android:textColor="#373737"
+                android:textColorHint="@color/LightGrey"
                 android:textSize="14sp" />
 
             <TextView
@@ -528,9 +586,9 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="Disclaimer"
-                android:textSize="14sp"
                 android:textAllCaps="true"
-                android:textColorHint="@color/mainTextColor" />
+                android:textColorHint="@color/mainTextColor"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/disclaimer_editText"
@@ -544,8 +602,8 @@
                 android:hint="Write something"
                 android:inputType="textEmailAddress"
 
-                android:textColorHint="@color/LightGrey"
                 android:textColor="#373737"
+                android:textColorHint="@color/LightGrey"
                 android:textSize="14sp" />
 
             <TextView
@@ -578,9 +636,9 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:text="WHAT'S INCLUDED"
-                android:textSize="14sp"
                 android:textAllCaps="true"
-                android:textColorHint="@color/mainTextColor"/>
+                android:textColorHint="@color/mainTextColor"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/whts_editText"
@@ -593,8 +651,8 @@
                 android:background="@null"
                 android:hint="Please select"
                 android:inputType="textEmailAddress"
-                android:textColorHint="@color/LightGrey"
                 android:textColor="@color/Black"
+                android:textColorHint="@color/LightGrey"
                 android:textSize="14sp" />
 
             <TextView

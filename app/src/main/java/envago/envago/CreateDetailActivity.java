@@ -1,12 +1,14 @@
 package envago.envago;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,18 +24,28 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -45,11 +57,19 @@ import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.Time;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 //import java.sql.Time;
 
@@ -61,7 +81,7 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
         GoogleApiClient.ConnectionCallbacks, View.OnClickListener, View.OnTouchListener {
     EditText name_editText, place_editText, pricing_editText, crtieria_editText;
     TextView name_error_txtView, meeting_time_error_txtView, meeting_error_txtView, desc_error_txtView, place_error_txtView, pricing_error_txtView,
-            crtieria_error_txtView, disclaimer_error_txtView, whts_error_txtView, whts_editText, desc_editText, meeting_time_editText, cat_error_txtView, disclaimer_editText;
+            crtieria_error_txtView, disclaimer_error_txtView, whts_error_txtView, whts_editText, desc_editText, meeting_time_editText, cat_error_txtView, disclaimer_editText, country_error_txtView;
     Spinner cat_editText;
     private Calendar calendar;
     private int hour;
@@ -85,7 +105,10 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
     SharedPreferences sp;
     SharedPreferences.Editor ed;
     String[] catArray = {"Select", "Air", "Earth", "Water", "Rock &amp; Ice ", "Go Volunteer"};
-    TextView name_txtView,diff_txtView,cat_txtView,meeting_txtView,meeting_time_txtView,adventure_txtView,place_txtView,prcie_txtView,whts_txtView;
+    TextView name_txtView, diff_txtView, cat_txtView, meeting_txtView, meeting_time_txtView, adventure_txtView, place_txtView, prcie_txtView, whts_txtView, country_editText, country_txtView;
+    ArrayList<HashMap<String, String>> name_list = new ArrayList<>();
+    Dialog dialog2;
+    ImageView flag_img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,17 +155,14 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                 if (position == 0) {
                     ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.LightGrey));
                     ((TextView) parent.getChildAt(0)).setTextSize(14);
-                }else if(position == 5) {
+                } else if (position == 5) {
                     ((TextView) parent.getChildAt(0)).setTextColor(Color.parseColor("#373737"));
                     ((TextView) parent.getChildAt(0)).setTextSize(14);
                     global.setEvent_cat_id(String.valueOf(11));
 
                     catgory = cat_editText.getSelectedItem().toString();
 
-                }
-
-
-                else {
+                } else {
                     ((TextView) parent.getChildAt(0)).setTextColor(Color.parseColor("#373737"));
                     ((TextView) parent.getChildAt(0)).setTextSize(14);
                     global.setEvent_cat_id(String.valueOf(position));
@@ -189,26 +209,26 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
 
     public void init() {
 
-
-        name_txtView=(TextView)findViewById(R.id.name_txtView);
-        diff_txtView=(TextView)findViewById(R.id.diff_txtView);
-        cat_txtView=(TextView)findViewById(R.id.cat_txtView);
-        meeting_txtView=(TextView)findViewById(R.id.meeting_txtView);
-        meeting_time_txtView=(TextView)findViewById(R.id.meeting_time_txtView);
-        adventure_txtView=(TextView)findViewById(R.id.adventure_txtView);
-        place_txtView=(TextView)findViewById(R.id.place_txtView);
-        prcie_txtView=(TextView)findViewById(R.id.prcie_txtView);
-        whts_txtView=(TextView)findViewById(R.id.whts_txtView);
-
-        Fonts.overrideFontHeavy(CreateDetailActivity.this,name_txtView);
-        Fonts.overrideFontHeavy(CreateDetailActivity.this,diff_txtView);
-        Fonts.overrideFontHeavy(CreateDetailActivity.this,cat_txtView);
-        Fonts.overrideFontHeavy(CreateDetailActivity.this,meeting_txtView);
-        Fonts.overrideFontHeavy(CreateDetailActivity.this,meeting_time_txtView);
-        Fonts.overrideFontHeavy(CreateDetailActivity.this,adventure_txtView);
-        Fonts.overrideFontHeavy(CreateDetailActivity.this,place_txtView);
-        Fonts.overrideFontHeavy(CreateDetailActivity.this,whts_txtView);
-
+        country_txtView = (TextView) findViewById(R.id.country_txtView);
+        name_txtView = (TextView) findViewById(R.id.name_txtView);
+        diff_txtView = (TextView) findViewById(R.id.diff_txtView);
+        cat_txtView = (TextView) findViewById(R.id.cat_txtView);
+        meeting_txtView = (TextView) findViewById(R.id.meeting_txtView);
+        meeting_time_txtView = (TextView) findViewById(R.id.meeting_time_txtView);
+        adventure_txtView = (TextView) findViewById(R.id.adventure_txtView);
+        place_txtView = (TextView) findViewById(R.id.place_txtView);
+        prcie_txtView = (TextView) findViewById(R.id.prcie_txtView);
+        whts_txtView = (TextView) findViewById(R.id.whts_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this, country_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this, name_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this, diff_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this, cat_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this, meeting_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this, meeting_time_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this, adventure_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this, place_txtView);
+        Fonts.overrideFontHeavy(CreateDetailActivity.this, whts_txtView);
+        flag_img = (ImageView) findViewById(R.id.flag_img);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
         name_editText = (EditText) findViewById(R.id.name_editText);
         meeting_time_editText = (TextView) findViewById(R.id.meeting_time_editText);
@@ -224,7 +244,8 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
         desc_error_txtView = (TextView) findViewById(R.id.desc_error_txtView);
         place_error_txtView = (TextView) findViewById(R.id.place_error_txtView);
         pricing_error_txtView = (TextView) findViewById(R.id.pricing_error_txtView);
-        // crtieria_error_txtView = (TextView) findViewById(R.id.crtieria_error_txtView);
+        country_editText = (TextView) findViewById(R.id.country_editText);
+        country_error_txtView = (TextView) findViewById(R.id.country_error_txtView);
         disclaimer_error_txtView = (TextView) findViewById(R.id.disclaimer_error_txtView);
         whts_error_txtView = (TextView) findViewById(R.id.whts_error_txtView);
         cat_error_txtView = (TextView) findViewById(R.id.cat_error_txtView);
@@ -237,6 +258,7 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
         whts_editText.setOnClickListener(this);
         submit_button.setOnClickListener(this);
         name_editText.setOnTouchListener(this);
+        country_editText.setOnClickListener(this);
         meeting_time_editText.setOnTouchListener(this);
         desc_editText.setOnTouchListener(this);
         place_editText.setOnTouchListener(this);
@@ -246,6 +268,7 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
         whts_editText.setOnTouchListener(this);
         cat_editText.setOnTouchListener(this);
         mAutocompleteView.setOnTouchListener(this);
+        country_editText.setOnTouchListener(this);
         pricing_editText.setText("$");
         pricing_editText.setSelection(1);
 
@@ -259,7 +282,7 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
             place_editText.setText(sp.getString(GlobalConstants.EVENT_PLACE, ""));
         }
         if (!sp.getString(GlobalConstants.EVENT_PRICE, "").equalsIgnoreCase("")) {
-            pricing_editText.setText("$"+sp.getString(GlobalConstants.EVENT_PRICE, ""));
+            pricing_editText.setText("$" + sp.getString(GlobalConstants.EVENT_PRICE, ""));
         }
         if (!sp.getString(GlobalConstants.EVENT_METTING_POINT, "").equalsIgnoreCase("")) {
             mAutocompleteView.setText(sp.getString(GlobalConstants.EVENT_METTING_POINT, ""));
@@ -275,52 +298,52 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
         }
         if (!sp.getString(GlobalConstants.EVENT_LEVEL, "").equalsIgnoreCase("")) {
 
-            seekBar.setProgress(Integer.parseInt(sp.getString(GlobalConstants.EVENT_LEVEL, ""))-1);
+            seekBar.setProgress(Integer.parseInt(sp.getString(GlobalConstants.EVENT_LEVEL, "")) - 1);
         }
         if (!sp.getString(GlobalConstants.WHATS_INCLUDED, "").equalsIgnoreCase("")) {
 
             whts_editText.setText(sp.getString(GlobalConstants.WHATS_INCLUDED, ""));
         }
+        if (!sp.getString(GlobalConstants.COUNTRY_NAME, "").equalsIgnoreCase("")) {
 
-        place_editText.addTextChangedListener(new TextWatcher()
-        {
-            public void afterTextChanged(Editable s)
-            {
+            country_editText.setText(sp.getString(GlobalConstants.COUNTRY_NAME, ""));
+            flag_img.setVisibility(View.VISIBLE);
+            Picasso.with(CreateDetailActivity.this).load(sp.getString(GlobalConstants.flag, "")).into(flag_img);
+
+        }
+        place_editText.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
                 String x = s.toString();
-                if(x.startsWith("0"))
-                {
+                if (x.startsWith("0")) {
                     place_editText.setText("1");
                     place_editText.setSelection(x.length());
 
                 }
             }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
         });
-        pricing_editText.addTextChangedListener(new TextWatcher()
-        {
-            public void afterTextChanged(Editable s)
-            {
+        pricing_editText.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
                 String x = s.toString();
-                if(x.startsWith("0"))
-                {
+                if (x.startsWith("0")) {
                     pricing_editText.setText("1");
                     pricing_editText.setSelection(x.length());
 
                 }
             }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
         });
@@ -330,8 +353,8 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                     switch (keyCode) {
 
                         case KeyEvent.KEYCODE_ENTER:
-                            if(!pricing_editText.getText().toString().contains("$")){
-                                pricing_editText.setText("$"+pricing_editText.getText().toString());
+                            if (!pricing_editText.getText().toString().contains("$")) {
+                                pricing_editText.setText("$" + pricing_editText.getText().toString());
 
 
                             }
@@ -343,6 +366,11 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                 return false;
             }
         });
+        if (global.getCountryNameList().size() > 0) {
+
+        } else {
+            get_list();
+        }
 
     }
 
@@ -390,7 +418,9 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
             case R.id.meeting_editText:
                 meeting_error_txtView.setVisibility(View.GONE);
                 break;
-
+            case R.id.country_editText:
+                country_error_txtView.setVisibility(View.GONE);
+                break;
 
         }
         return false;
@@ -399,6 +429,9 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.country_editText:
+                dialogWindow();
+                break;
             case R.id.meeting_time_editText:
                 timePicker();
                 break;
@@ -421,10 +454,10 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                 if (name_editText.getText().toString().length() == 0) {
                     name_error_txtView.setText("Please enter name of adventure");
                     name_error_txtView.setVisibility(View.VISIBLE);
-                } else if (meeting_time_editText.getText().toString().equalsIgnoreCase("Please Select")||meeting_time_editText.getText().toString().length()==0) {
+                } else if (meeting_time_editText.getText().toString().equalsIgnoreCase("Please Select") || meeting_time_editText.getText().toString().length() == 0) {
                     meeting_time_error_txtView.setText("Please enter time");
                     meeting_time_error_txtView.setVisibility(View.VISIBLE);
-                } else if (desc_editText.getText().toString().equalsIgnoreCase("Write a description")||desc_editText.getText().toString().length()==0) {
+                } else if (desc_editText.getText().toString().equalsIgnoreCase("Write a description") || desc_editText.getText().toString().length() == 0) {
                     desc_error_txtView.setText("Please enter decription");
                     desc_error_txtView.setVisibility(View.VISIBLE);
                 } else if (place_editText.getText().toString().length() == 0) {
@@ -436,10 +469,10 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                 } /*else if (crtieria_editText.getText().toString().length() == 0) {
                     crtieria_error_txtView.setText("Please enter Criteria/eligibility");
                     crtieria_error_txtView.setVisibility(View.VISIBLE);
-                }*/ else if (disclaimer_editText.getText().toString().equalsIgnoreCase("Write something")||disclaimer_editText.getText().toString().length()==0) {
+                }*/ else if (disclaimer_editText.getText().toString().equalsIgnoreCase("Write something") || disclaimer_editText.getText().toString().length() == 0) {
                     disclaimer_error_txtView.setText("Please enter disclaimer");
                     disclaimer_error_txtView.setVisibility(View.VISIBLE);
-                } else if (whts_editText.getText().toString().equalsIgnoreCase("Please select")||whts_editText.getText().toString().length()==0) {
+                } else if (whts_editText.getText().toString().equalsIgnoreCase("Please select") || whts_editText.getText().toString().length() == 0) {
                     whts_error_txtView.setText("Please enter what's included");
                     whts_error_txtView.setVisibility(View.VISIBLE);
                 } else if (catgory.length() == 0) {
@@ -448,8 +481,10 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                 } else if (mAutocompleteView.getText().toString().length() == 0) {
                     meeting_error_txtView.setText("Please enter meeting place");
                     meeting_error_txtView.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else if (country_editText.getText().toString().length() == 0) {
+                    country_error_txtView.setText("Please enter country name");
+                    country_error_txtView.setVisibility(View.VISIBLE);
+                } else {
                     global.setEvent_name(name_editText.getText().toString());
                     global.setEvent_time(meeting_time_editText.getText().toString());
                     global.setEvent_place(place_editText.getText().toString());
@@ -469,7 +504,7 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
                     ed.putString(GlobalConstants.EVENT_DISCLAIMER, disclaimer_editText.getText().toString());
                     ed.putString(GlobalConstants.EVENT_CAT_NAME, catgory);
 
-                    ed.putString(GlobalConstants.EVENT_CAT_ID,global.getEvent_cat_id());
+                    ed.putString(GlobalConstants.EVENT_CAT_ID, global.getEvent_cat_id());
                     ed.commit();
                     finish();
                 }
@@ -482,22 +517,22 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            if (!sp.getString(GlobalConstants.EVENT_DESCRIPTION,"").equalsIgnoreCase("")) {
-                desc_editText.setText(sp.getString(GlobalConstants.EVENT_DESCRIPTION,""));
-            }else{
+            if (!sp.getString(GlobalConstants.EVENT_DESCRIPTION, "").equalsIgnoreCase("")) {
+                desc_editText.setText(sp.getString(GlobalConstants.EVENT_DESCRIPTION, ""));
+            } else {
                 desc_editText.setText("");
             }
         } else if (requestCode == 2) {
-            if (!sp.getString(GlobalConstants.WHATS_INCLUDED,"").equalsIgnoreCase("")) {
-                whts_editText.setText(sp.getString(GlobalConstants.WHATS_INCLUDED,""));
-            }else{
+            if (!sp.getString(GlobalConstants.WHATS_INCLUDED, "").equalsIgnoreCase("")) {
+                whts_editText.setText(sp.getString(GlobalConstants.WHATS_INCLUDED, ""));
+            } else {
                 whts_editText.setText("");
 
             }
         } else if (requestCode == 3) {
-            if (!sp.getString(GlobalConstants.EVENT_DISCLAIMER,"").equalsIgnoreCase("")) {
-                disclaimer_editText.setText(sp.getString(GlobalConstants.EVENT_DISCLAIMER,""));
-            }else{
+            if (!sp.getString(GlobalConstants.EVENT_DISCLAIMER, "").equalsIgnoreCase("")) {
+                disclaimer_editText.setText(sp.getString(GlobalConstants.EVENT_DISCLAIMER, ""));
+            } else {
                 disclaimer_editText.setText("");
 
             }
@@ -650,5 +685,96 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
         Format formatter;
         formatter = new SimpleDateFormat("h:mm a");
         return formatter.format(tme);
+    }
+
+
+    //----------------------------------------Get list on map-------------------------------
+    public void get_list() {
+        StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+
+
+                try {
+                    JSONObject obj = new JSONObject(s);
+                    String res = obj.getString("success");
+
+                    if (res.equalsIgnoreCase("1")) {
+
+                        // JSONObject data = obj.getJSONObject("data");
+
+                        JSONArray events = obj.getJSONArray("data");
+                        for (int i = 0; i < events.length(); i++) {
+                            JSONObject arrobj = events.getJSONObject(i);
+
+                            HashMap<String, String> details = new HashMap<>();
+                            details.put(GlobalConstants.ID, arrobj.getString(GlobalConstants.ID));
+                            details.put(GlobalConstants.NAME, arrobj.getString(GlobalConstants.NAME));
+                            details.put(GlobalConstants.flag, arrobj.getString(GlobalConstants.flag));
+                            name_list.add(details);
+
+                        }
+
+                        global.setCountryNameList(name_list);
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+
+
+                params.put("action", "get_country_list");
+
+
+                return params;
+            }
+        };
+
+        cat_request.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(CreateDetailActivity.this);
+        requestQueue.add(cat_request);
+    }
+
+    //---------------------------Progrees Dialog-----------------------
+    public void dialogWindow() {
+        dialog2 = new Dialog(this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+        dialog2.setContentView(R.layout.country_list_name_dialog);
+        ListView country_list = (ListView) dialog2.findViewById(R.id.country_list);
+        country_list.setAdapter(new CountryNameAdapter(CreateDetailActivity.this, global.getCountryNameList()));
+        // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
+        country_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                flag_img.setVisibility(View.VISIBLE);
+                String url=GlobalConstants.FLAG_URL + global.getCountryNameList().get(position).get(GlobalConstants.flag);
+                Picasso.with(CreateDetailActivity.this).load(url).into(flag_img);
+                country_editText.setText(global.getCountryNameList().get(position).get(GlobalConstants.NAME));
+
+                ed.putString(GlobalConstants.COUNTRY_NAME,country_editText.getText().toString());
+                ed.putString(GlobalConstants.flag,url);
+                ed.putString(GlobalConstants.country_id,global.getCountryNameList().get(position).get(GlobalConstants.ID));
+                ed.commit();
+                dialog2.dismiss();
+            }
+        });
+        dialog2.show();
     }
 }

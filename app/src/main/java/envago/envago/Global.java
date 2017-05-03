@@ -650,6 +650,16 @@ public int current_tab=0;
     }
 
     String selectedPath="";
+
+    public ArrayList<HashMap<String, String>> getCountryNameList() {
+        return countryNameList;
+    }
+
+    public void setCountryNameList(ArrayList<HashMap<String, String>> countryNameList) {
+        this.countryNameList = countryNameList;
+    }
+
+    ArrayList<HashMap<String,String>> countryNameList=new ArrayList<>();
     @Override
     public void onCreate() {
         super.onCreate();

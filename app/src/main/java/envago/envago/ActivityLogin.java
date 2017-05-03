@@ -65,6 +65,7 @@ public class ActivityLogin extends Activity implements View.OnTouchListener, Vie
         global = (Global) getApplicationContext();
         sp = getSharedPreferences(GlobalConstants.PREFNAME, Context.MODE_PRIVATE);
         ed = sp.edit();
+
         main_layout = (RelativeLayout) findViewById(R.id.main_layout);
         Fonts.overrideFonts1(this, main_layout);
         email_txtView = (TextView) findViewById(R.id.email_txtView);

@@ -39,7 +39,7 @@ import java.util.Map;
  * Created by worksdelight on 17/01/17.
  */
 
-public class AccordingToCountry extends Activity{
+public class AccordingToCountry extends Activity {
     ListView ad_items;
     TextView headtext;
     ArrayList<HashMap<String, String>> event_list = new ArrayList<>();
@@ -47,7 +47,7 @@ public class AccordingToCountry extends Activity{
     Global global;
     Dialog dialog2;
 
-    ImageView list_back_img,search_btn;
+    ImageView list_back_img, search_btn;
 
 
     @Override
@@ -66,26 +66,24 @@ public class AccordingToCountry extends Activity{
 
         ad_items = (ListView) findViewById(R.id.ad_list);
 
-        list_back_img=(ImageView)findViewById(R.id.list_back_img);
+        list_back_img = (ImageView) findViewById(R.id.list_back_img);
         list_back_img.setImageResource(0);
-        search_btn=(ImageView)findViewById(R.id.search_button);
+        search_btn = (ImageView) findViewById(R.id.search_button);
         String category_name = getIntent().getExtras().getString(GlobalConstants.EVENT_NAME);
 
 
         headtext.setText(category_name);
 
-        id=getIntent().getExtras().getString(GlobalConstants.ID);
-
-
+        id = getIntent().getExtras().getString(GlobalConstants.ID);
 
 
         get_list();
         ad_items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i=new Intent(AccordingToCountry.this,DetailsActivity.class);
-                i.putExtra(GlobalConstants.EVENT_ID,event_list.get(position).get(GlobalConstants.EVENT_ID));
-                i.putExtra("user","non user");
+                Intent i = new Intent(AccordingToCountry.this, DetailsActivity.class);
+                i.putExtra(GlobalConstants.EVENT_ID, event_list.get(position).get(GlobalConstants.EVENT_ID));
+                i.putExtra("user", "non user");
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
@@ -105,14 +103,14 @@ public class AccordingToCountry extends Activity{
             @Override
             public void onResponse(String s) {
 
-
+                Log.e("response", s);
                 try {
                     JSONObject obj = new JSONObject(s);
                     String res = obj.getString("success");
 
                     if (res.equalsIgnoreCase("1")) {
 
-                         JSONObject data = obj.getJSONObject("data");
+                        JSONObject data = obj.getJSONObject("data");
 
                         JSONArray events = data.getJSONArray("events");
                         for (int i = 0; i < events.length(); i++) {
@@ -127,8 +125,8 @@ public class AccordingToCountry extends Activity{
                             details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
-                            JSONArray arr=arrobj.getJSONArray("event_dates");
-                            JSONObject objArr=arr.getJSONObject(0);
+                            JSONArray arr = arrobj.getJSONArray("event_dates");
+                            JSONObject objArr = arr.getJSONObject(0);
                             details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));
                             details.put(GlobalConstants.LONGITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
 
@@ -137,7 +135,7 @@ public class AccordingToCountry extends Activity{
 
 
                         }
-                        Log.e("event list",event_list.toString());
+                        Log.e("event list", event_list.toString());
 
                         if (event_list.size() > 0) {
                             ad_items.setVisibility(View.VISIBLE);
@@ -166,7 +164,6 @@ public class AccordingToCountry extends Activity{
                 Map<String, String> params = new HashMap<>();
 
                 params.put(GlobalConstants.USERID, CommonUtils.UserID(AccordingToCountry.this));
-
 
 
                 params.put("country_id", id);
