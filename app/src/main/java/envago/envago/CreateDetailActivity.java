@@ -430,7 +430,9 @@ public class CreateDetailActivity extends FragmentActivity implements GoogleApiC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.country_editText:
-                dialogWindow();
+                if(global.getCountryNameList().size()!=0) {
+                    dialogWindow();
+                }
                 break;
             case R.id.meeting_time_editText:
                 timePicker();

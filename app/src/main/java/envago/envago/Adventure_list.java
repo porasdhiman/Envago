@@ -170,7 +170,7 @@ public class Adventure_list extends Activity {
 
                         } else {
                             j = j + 1;
-
+                            page_value = Integer.parseInt(obj.getString("page"));
                             for (int i = 0; i < events.length(); i++) {
                                 JSONObject arrobj = events.getJSONObject(i);
 
@@ -183,6 +183,7 @@ public class Adventure_list extends Activity {
                                 details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
                                 details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                                 details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
+
                                 JSONArray arr = arrobj.getJSONArray("event_dates");
                                 JSONObject objArr = arr.getJSONObject(0);
                                 details.put(GlobalConstants.EVENT_START_DATE, objArr.getString(GlobalConstants.EVENT_START_DATE));

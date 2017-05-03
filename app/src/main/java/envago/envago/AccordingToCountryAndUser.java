@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,12 +34,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
- * Created by worksdelight on 17/01/17.
+ * Created by worksdelight on 03/05/17.
  */
 
-public class AccordingToCountry extends Activity {
+public class AccordingToCountryAndUser extends Activity {
     ListView ad_items;
     TextView headtext;
     ArrayList<HashMap<String, String>> event_list = new ArrayList<>();
@@ -50,8 +48,7 @@ public class AccordingToCountry extends Activity {
 
     ImageView list_back_img, search_btn;
 
-    boolean isLoading = false;
-    int j = 1, page_value;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +80,7 @@ public class AccordingToCountry extends Activity {
         ad_items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(AccordingToCountry.this, DetailsActivity.class);
+                Intent i = new Intent(AccordingToCountryAndUser.this, DetailsActivity.class);
                 i.putExtra(GlobalConstants.EVENT_ID, event_list.get(position).get(GlobalConstants.EVENT_ID));
                 i.putExtra("user", "non user");
                 startActivity(i);
@@ -96,44 +93,6 @@ public class AccordingToCountry extends Activity {
                 finish();
             }
         });
-
-        ad_items.setOnScrollListener(new AbsListView.OnScrollListener() {
-
-            @Override
-
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-                // Ignore this method
-
-            }
-
-
-            @Override
-
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-                Log.i("Main", totalItemCount + "");
-
-
-                int lastIndexInScreen = visibleItemCount + firstVisibleItem;
-
-
-                if (lastIndexInScreen >= totalItemCount && !isLoading) {
-
-                    // It is time to load more items
-                    if (page_value >= j) {
-                        isLoading = true;
-                        dialogWindow();
-                        get_list();
-                    }
-
-
-                }
-
-            }
-
-        });
-
 
     }
     //--------------------------------List-API----------------------------
@@ -149,8 +108,7 @@ public class AccordingToCountry extends Activity {
                     String res = obj.getString("success");
 
                     if (res.equalsIgnoreCase("1")) {
-                        j = j + 1;
-                        page_value = Integer.parseInt(obj.getString("page"));
+
                         JSONObject data = obj.getJSONObject("data");
 
                         JSONArray events = data.getJSONArray("events");
@@ -178,27 +136,12 @@ public class AccordingToCountry extends Activity {
                         }
                         Log.e("event list", event_list.toString());
 
+                        if (event_list.size() > 0) {
+                            ad_items.setVisibility(View.VISIBLE);
 
+                            ad_items.setAdapter(new Adventure_list_adapter(getApplicationContext(), event_list));
+                            list_back_img.setVisibility(View.GONE);
 
-                        if (page_value >= j) {
-                            isLoading = false;
-                            if (event_list.size() > 0) {
-                                ad_items.setVisibility(View.VISIBLE);
-
-                                ad_items.setAdapter(new Adventure_list_adapter(getApplicationContext(), event_list));
-                                list_back_img.setVisibility(View.GONE);
-
-                            }
-
-                        } else {
-
-                            if (event_list.size() > 0) {
-                                ad_items.setVisibility(View.VISIBLE);
-
-                                ad_items.setAdapter(new Adventure_list_adapter(getApplicationContext(), event_list));
-                                list_back_img.setVisibility(View.GONE);
-
-                            }
                         }
 
                     }
@@ -219,14 +162,12 @@ public class AccordingToCountry extends Activity {
 
                 Map<String, String> params = new HashMap<>();
 
-                params.put(GlobalConstants.USERID, CommonUtils.UserID(AccordingToCountry.this));
+                params.put(GlobalConstants.USERID, CommonUtils.UserID(AccordingToCountryAndUser.this));
 
 
                 params.put("country_id", id);
 
-                params.put(GlobalConstants.RESPONSE_TYPE, "list");
-                params.put("page", String.valueOf(j));
-                params.put("perpage", "10");
+
                 params.put("action", "get_events_with_country_id");
 
                 Log.e("paramsssssssss", params.toString());
@@ -236,7 +177,7 @@ public class AccordingToCountry extends Activity {
 
         cat_request.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        RequestQueue requestQueue = Volley.newRequestQueue(AccordingToCountry.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(AccordingToCountryAndUser.this);
         requestQueue.add(cat_request);
     }
 
@@ -255,3 +196,4 @@ public class AccordingToCountry extends Activity {
         dialog2.show();
     }
 }
+
