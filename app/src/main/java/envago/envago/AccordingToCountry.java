@@ -150,7 +150,7 @@ public class AccordingToCountry extends Activity {
 
                     if (res.equalsIgnoreCase("1")) {
                         j = j + 1;
-                        page_value = Integer.parseInt(obj.getString("page"));
+                        page_value = Integer.parseInt(obj.getString("next_page"));
                         JSONObject data = obj.getJSONObject("data");
 
                         JSONArray events = data.getJSONArray("events");
@@ -226,7 +226,7 @@ public class AccordingToCountry extends Activity {
 
                 params.put(GlobalConstants.RESPONSE_TYPE, "list");
                 params.put("page", String.valueOf(j));
-                params.put("perpage", "10");
+                params.put("perpage", "20");
                 params.put("action", "get_events_with_country_id");
 
                 Log.e("paramsssssssss", params.toString());

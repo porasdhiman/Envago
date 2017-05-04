@@ -294,7 +294,7 @@ public class FavoriteFragment extends Fragment {
         cat_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == planning_event_list.size() - 1) {
+               /* if (position == planning_event_list.size() - 1) {
                     if(global.getWidth()>=1440) {
                         cat_pager.setClipToPadding(false);
                         cat_pager.setPadding(70, 0, 0, 0);
@@ -305,7 +305,7 @@ public class FavoriteFragment extends Fragment {
 
                     }
 
-                } else {
+                } else {*/
                     if(global.getWidth()>=1440) {
                         cat_pager.setClipToPadding(false);
                         cat_pager.setPadding(0, 0, 70, 0);
@@ -317,7 +317,7 @@ public class FavoriteFragment extends Fragment {
                     }
 
                 }
-            }
+           // }
 
             @Override
             public void onPageSelected(int position) {
@@ -335,7 +335,7 @@ public class FavoriteFragment extends Fragment {
         view_item_pager1.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == goint_to_event_list.size() - 1) {
+               /* if (position == goint_to_event_list.size() - 1) {
                     if(global.getWidth()>=1440) {
                         view_item_pager1.setClipToPadding(false);
                         view_item_pager1.setPadding(70, 0, 0, 0);
@@ -347,7 +347,7 @@ public class FavoriteFragment extends Fragment {
 
                     }
 
-                } else {
+                } else {*/
                     if(global.getWidth()>=1440) {
                         view_item_pager1.setClipToPadding(false);
                         view_item_pager1.setPadding(0, 0, 70, 0);
@@ -360,7 +360,7 @@ public class FavoriteFragment extends Fragment {
 
 
                 }
-            }
+           // }
 
             @Override
             public void onPageSelected(int position) {
@@ -378,7 +378,7 @@ public class FavoriteFragment extends Fragment {
         view_item_pager2.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == event_list.size() - 1) {
+               /* if (position == event_list.size() - 1) {
                     if(global.getWidth()>=1440) {
                         view_item_pager2.setClipToPadding(false);
                         view_item_pager2.setPadding(70, 0, 0, 0);
@@ -389,7 +389,7 @@ public class FavoriteFragment extends Fragment {
 
                     }
 
-                } else {
+                } else {*/
                     if(global.getWidth()>=1440) {
                         view_item_pager2.setClipToPadding(false);
                         view_item_pager2.setPadding(0, 0, 70, 0);
@@ -401,7 +401,7 @@ public class FavoriteFragment extends Fragment {
                     }
 
                 }
-            }
+            //}
 
             @Override
             public void onPageSelected(int position) {

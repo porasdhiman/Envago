@@ -202,7 +202,7 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
                         }else{
                             j = j + 1;
                             // JSONObject data = obj.getJSONObject("data");
-                            page_value = Integer.parseInt(obj.getString("page"));
+                            page_value = Integer.parseInt(obj.getString("next_page"));
                             for (int i = 0; i < events.length(); i++) {
                                 JSONObject arrobj = events.getJSONObject(i);
 

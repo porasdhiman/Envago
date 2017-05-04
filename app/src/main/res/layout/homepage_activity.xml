@@ -227,7 +227,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
                     android:text="All Categories"
                     android:textColor="@color/textcolor"
@@ -265,7 +265,7 @@
                     android:id="@+id/view_top_txtView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="5dp"
                     android:text="Countries"
                     android:textColor="@color/textcolor"
                     android:textSize="17sp" />
@@ -298,7 +298,7 @@
                     android:id="@+id/view_top_txtView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
                     android:text="Featured Adventures"
                     android:textColor="@color/textcolor"
@@ -334,7 +334,7 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="5dp"
                     android:text="Featured Planners"
                     android:textColor="@color/textcolor"
                     android:textSize="17sp" />

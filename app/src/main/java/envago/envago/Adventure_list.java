@@ -170,7 +170,7 @@ public class Adventure_list extends Activity {
 
                         } else {
                             j = j + 1;
-                            page_value = Integer.parseInt(obj.getString("page"));
+                            page_value = Integer.parseInt(obj.getString("next_page"));
                             for (int i = 0; i < events.length(); i++) {
                                 JSONObject arrobj = events.getJSONObject(i);
 

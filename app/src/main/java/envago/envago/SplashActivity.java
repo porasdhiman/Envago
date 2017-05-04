@@ -106,8 +106,8 @@ public class SplashActivity extends Activity implements GoogleApiClient.Connecti
         } else {
             Log.e(TAG, "No valid Google Play Services APK found.");
         }
-        global.setLat("30.7046");
-        global.setLong("76.7179");
+        /*global.setLat("30.7046");
+        global.setLong("76.7179");*/
         String locationPermission = Manifest.permission.ACCESS_FINE_LOCATION;
         String coarselocationPermission = Manifest.permission.ACCESS_COARSE_LOCATION;
         String cameraPermission = Manifest.permission.CAMERA;
