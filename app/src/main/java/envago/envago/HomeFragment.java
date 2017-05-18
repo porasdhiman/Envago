@@ -49,7 +49,7 @@ import java.util.Map;
  * Created by vikas on 21-09-2016.
  */
 public class HomeFragment extends Fragment {
-    LinearLayout featured_planners_linear_layout, suggested_linear_layout, all_linear_layout, featured_linear_layout, main_layout;
+    LinearLayout featured_planners_linear_layout, suggested_linear_layout, all_linear_layout, featured_linear_layout, main_layout,activity_linear_layout;
     ListView planner_list_cat;
     public int[] images = {R.drawable.air, R.drawable.earth, R.drawable.water, R.drawable.rockice, R.drawable.volunteer};
     ImageView map_button, plus_button;
@@ -59,7 +59,8 @@ public class HomeFragment extends Fragment {
     ArrayList<HashMap<String, String>> catgory_list = new ArrayList<>();
     ArrayList<HashMap<String, String>> featured_planner_list = new ArrayList<>();
     ArrayList<HashMap<String, String>> featured_event_list = new ArrayList<>();
-    ViewPager view_item_pager1, view_item_pager2, cat_pager;
+    ArrayList<HashMap<String, String>> activity_event_list = new ArrayList<>();
+    ViewPager view_item_pager1, view_item_pager2, cat_pager,activity_view_item_pager2;
     ShimmerFrameLayout shimmer_view_container;
     Dialog dialog2;
     SharedPreferences preferences;
@@ -100,12 +101,14 @@ public class HomeFragment extends Fragment {
         main_layout = (LinearLayout) v.findViewById(R.id.main_layout);
         Fonts.overrideFonts1(getActivity(), main_layout);
         plus_button = (ImageView) v.findViewById(R.id.plus_button);
+        activity_linear_layout=(LinearLayout)v.findViewById(R.id.activity_linear_layout);
         featured_planners_linear_layout = (LinearLayout) v.findViewById(R.id.featured_planners_linear_layout);
         suggested_linear_layout = (LinearLayout) v.findViewById(R.id.suggested_linear_layout);
         featured_linear_layout = (LinearLayout) v.findViewById(R.id.featured_linear_layout);
         all_linear_layout = (LinearLayout) v.findViewById(R.id.all_linear_layout);
         view_item_pager1 = (ViewPager) v.findViewById(R.id.view_item_pager1);
         view_item_pager2 = (ViewPager) v.findViewById(R.id.view_item_pager2);
+        activity_view_item_pager2=(ViewPager)v.findViewById(R.id.activity_view_item_pager2);
         cat_pager = (ViewPager) v.findViewById(R.id.cat_pager);
         plus_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,6 +242,26 @@ public class HomeFragment extends Fragment {
 
                         // JSONObject data = obj.getJSONObject("data");
                         JSONObject data = obj.getJSONObject("data");
+                        if (data.has("activities")) {
+                            JSONArray events = data.getJSONArray("activities");
+
+                            for (int i = 0; i < events.length(); i++) {
+                                JSONObject arrobj = events.getJSONObject(i);
+
+                                HashMap<String, String> details = new HashMap<>();
+
+                                details.put(GlobalConstants.ID, arrobj.getString(GlobalConstants.ID));
+
+                                details.put(GlobalConstants.TITLE, arrobj.getString(GlobalConstants.TITLE));
+                                details.put(GlobalConstants.IMAGE, arrobj.getString(GlobalConstants.IMAGE));
+                                details.put(GlobalConstants.EVENT_CAT_COUNT, arrobj.getString(GlobalConstants.EVENT_CAT_COUNT));
+
+
+                                activity_event_list.add(details);
+
+                            }
+                        }
+
                         if (data.has("countries")) {
                             JSONArray events = data.getJSONArray("countries");
 
@@ -321,6 +344,8 @@ public class HomeFragment extends Fragment {
                             }
                         }
 
+
+
                         if (catgory_list.size() != 0) {
                             all_linear_layout.setVisibility(View.VISIBLE);
                             shimmer_view_container.setVisibility(View.GONE);
@@ -339,6 +364,27 @@ public class HomeFragment extends Fragment {
                             }
                             catgoryPagerMethod();
                         }
+
+                        if (activity_event_list.size() != 0) {
+                            activity_linear_layout.setVisibility(View.VISIBLE);
+                            shimmer_view_container.setVisibility(View.GONE);
+                            activity_view_item_pager2.setAdapter(new ActivityAdapter(getActivity(), activity_event_list));
+
+                            if (measuredWidth >= 1440) {
+                                activity_view_item_pager2.setClipToPadding(false);
+                                activity_view_item_pager2.setPadding(0, 0, 70, 0);
+
+
+                            } else {
+                                activity_view_item_pager2.setClipToPadding(false);
+                                activity_view_item_pager2.setPadding(0, 0, 40, 0);
+
+
+                            }
+                            activityPagerMethod();
+                        }
+
+
                         if (suggested_event_list.size() != 0) {
                             suggested_linear_layout.setVisibility(View.VISIBLE);
                             view_item_pager2.setAdapter(new AccordingToCountryAdapter(getActivity(), suggested_event_list));
@@ -414,6 +460,49 @@ public class HomeFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(cat_request);
     }
+
+    public void activityPagerMethod() {
+        cat_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+               /* if (position == catgory_list.size() - 1) {
+                    if (measuredWidth >= 1440) {
+                        cat_pager.setClipToPadding(false);
+                        cat_pager.setPadding(70, 0, 0, 0);
+
+                    } else {
+                        cat_pager.setClipToPadding(false);
+                        cat_pager.setPadding(40, 0, 0, 0);
+
+                    }
+
+                } else {*/
+                if (measuredWidth >= 1440) {
+                    activity_view_item_pager2.setClipToPadding(false);
+                    activity_view_item_pager2.setPadding(0, 0, 70, 0);
+
+
+                } else {
+                    activity_view_item_pager2.setClipToPadding(false);
+                    activity_view_item_pager2.setPadding(0, 0, 40, 0);
+
+                }
+
+            }
+            // }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
 
     public void catgoryPagerMethod() {
         cat_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

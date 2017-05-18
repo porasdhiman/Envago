@@ -52,6 +52,7 @@ public class AccordingToCountry extends Activity {
 
     boolean isLoading = false;
     int j = 1, page_value;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +79,7 @@ public class AccordingToCountry extends Activity {
 
         id = getIntent().getExtras().getString(GlobalConstants.ID);
 
-
+        dialogWindow();
         get_list();
         ad_items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -142,7 +143,7 @@ public class AccordingToCountry extends Activity {
         StringRequest cat_request = new StringRequest(Request.Method.POST, GlobalConstants.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-
+                dialog2.dismiss();
                 Log.e("response", s);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -163,7 +164,7 @@ public class AccordingToCountry extends Activity {
                             details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
                             details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
                             details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
-                            details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                            details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LATITUDE));
                             details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                             details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
                             JSONArray arr = arrobj.getJSONArray("event_dates");
@@ -177,7 +178,6 @@ public class AccordingToCountry extends Activity {
 
                         }
                         Log.e("event list", event_list.toString());
-
 
 
                         if (page_value >= j) {
@@ -211,7 +211,7 @@ public class AccordingToCountry extends Activity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                dialog2.dismiss();
             }
         }) {
             @Override
@@ -250,7 +250,7 @@ public class AccordingToCountry extends Activity {
         dialog2.setContentView(R.layout.progrees_dialog);
         AVLoadingIndicatorView loaderView = (AVLoadingIndicatorView) dialog2.findViewById(R.id.loader_view);
         loaderView.show();
-
+        loaderView.setVisibility(View.GONE);
         // progress_dialog=ProgressDialog.show(LoginActivity.this,"","Loading...");
         dialog2.show();
     }

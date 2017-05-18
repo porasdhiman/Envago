@@ -212,7 +212,7 @@ public class SearchByGoogleApiLocation extends FragmentActivity implements Googl
                                 details.put(GlobalConstants.EVENT_NAME, arrobj.getString(GlobalConstants.EVENT_NAME));
                                 details.put(GlobalConstants.EVENT_LOC, arrobj.getString(GlobalConstants.EVENT_LOC));
                                 details.put(GlobalConstants.EVENT_PRICE, arrobj.getString(GlobalConstants.EVENT_PRICE));
-                                details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LONGITUDE));
+                                details.put(GlobalConstants.LATITUDE, arrobj.getString(GlobalConstants.LATITUDE));
                                 details.put(GlobalConstants.EVENT_FAV, arrobj.getString(GlobalConstants.EVENT_FAV));
                                 details.put(GlobalConstants.EVENT_IMAGES, arrobj.getString(GlobalConstants.EVENT_IMAGES));
                                 JSONArray arr = arrobj.getJSONArray("event_dates");

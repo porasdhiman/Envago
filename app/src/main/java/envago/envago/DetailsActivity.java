@@ -1192,6 +1192,8 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
             if (polyLineOptions != null) {
                 mMap.addPolyline(polyLineOptions);
 
+            }else{
+
             }
             dialog2.dismiss();
 
