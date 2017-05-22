@@ -152,7 +152,7 @@ public class AccordingToActivity extends Activity {
                         page_value = Integer.parseInt(obj.getString("next_page"));
                         JSONObject data = obj.getJSONObject("data");
 
-                        JSONArray events = data.getJSONArray("event");
+                        JSONArray events = data.getJSONArray("events");
                         for (int i = 0; i < events.length(); i++) {
                             JSONObject arrobj = events.getJSONObject(i);
 
