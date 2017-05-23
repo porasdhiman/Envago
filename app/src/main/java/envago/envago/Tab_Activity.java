@@ -16,7 +16,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -202,7 +201,7 @@ public class Tab_Activity extends TabActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        Toast.makeText(Tab_Activity.this, error.toString(), Toast.LENGTH_LONG).show();
+                       // Toast.makeText(Tab_Activity.this, error.toString(), Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override
