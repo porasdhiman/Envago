@@ -299,7 +299,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="Activities"
+                    android:text="Themes"
                     android:textColor="@color/textcolor"
                     android:textSize="17sp" />
 
@@ -333,7 +333,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
-                    android:text="Featured Adventures"
+                    android:text="Popular"
                     android:textColor="@color/textcolor"
                     android:textSize="17sp" />
 

@@ -52,8 +52,8 @@ public class GlobalConstants {
 
     public static String LIKE_STATUS = "like_status";
 
-   public static String URL = "http://envagoapp.com/envago/webservice.php";
-   //public static String URL = "http://envagoapp.com/webservice.php";
+   //public static String URL = "http://envagoapp.com/envago/webservice.php";
+   public static String URL = "http://envagoapp.com/webservice.php";
 
     public static String DETAILS_EVENT_ACTION = "get_single_event";
     public static String VERIFIED_ACTION = "get_document_status";
@@ -77,11 +77,11 @@ public class GlobalConstants {
 
     public static String CODE = "code";
     public static String TREANDING_COUNT = "trending_count";
- //public static String IMAGE_URL = "http://envagoapp.com/uploads/";
-   // public static String FLAG_URL="http://envagoapp.com/web/images/flags/";
- public static String FLAG_URL = "http://envagoapp.com/envago/web/images/flags/";
+ public static String IMAGE_URL = "http://envagoapp.com/uploads/";
+    public static String FLAG_URL="http://envagoapp.com/web/images/flags/";
+// public static String FLAG_URL = "http://envagoapp.com/envago/web/images/flags/";
 
- public static String IMAGE_URL = "http://envagoapp.com/envago/uploads/";
+// public static String IMAGE_URL = "http://envagoapp.com/envago/uploads/";
     public static String remaining_places = "remaining_places";
     public static String CREATE_DATA = "create_data";
     public static String DATE_DATA = "date_data";
