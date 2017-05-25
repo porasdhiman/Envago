@@ -342,6 +342,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="right"
                     android:layout_marginRight="8dp"
+                    android:layout_marginTop="4dp"
 
                     android:text="More..."
                     android:textColor="@color/textcolor"
@@ -652,6 +653,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
                         android:layout_marginRight="8dp"
+                        android:layout_marginTop="4dp"
 
                         android:text="More..."
                         android:textColor="@color/textcolor"

@@ -433,7 +433,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                     more_txtView.setText("More...");
 
                     ViewGroup.LayoutParams params = admin_description.getLayoutParams();
-                    params.height = 50;
+                    params.height = 52;
                     admin_description.setLayoutParams(params);
                 }
                 break;
@@ -447,7 +447,7 @@ public class DetailsActivity extends FragmentActivity implements View.OnClickLis
                     more_dis_txtView.setText("More...");
 
                     ViewGroup.LayoutParams params = Disclaimer_txtView.getLayoutParams();
-                    params.height = 50;
+                    params.height = 52;
                     Disclaimer_txtView.setLayoutParams(params);
                 }
                 break;
